@@ -9,16 +9,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dataview/datav-vue3": "^0.0.0-test.1672506674342",
     "axios": "^1.4.0",
+    "cesium": "^1.119.0",
     "countup.js": "^2.6.2",
     "echarts": "^5.4.2",
     "echarts-wordcloud": "^2.1.0",
     "ol": "^9.2.4",
+    "pinia": "^2.1.7",
+    "vite-plugin-cesium": "^1.2.22",
     "vue": "^3.2.47"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
     "autoprefixer": "^10.4.14",
+    "copy-webpack-plugin": "^12.0.2",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.23",
     "sass": "^1.77.8",
     "tailwindcss": "^3.3.2",
