@@ -2,27 +2,30 @@
 	<div class="map relative">
 		<div ref="target" class="w-full h-full"></div>
 		<!-- 专题栏 -->
-		<div class="top-tabs w-full flex items-center justify-center absolute top-0  z-10 ">
-			<div :class="` t-item hover:cursor-pointer px-2 m-1  ${currentTopTab === tab.value ? 'bg-lime-400' : ''}`"
-				v-for="tab in topTabs" :key="tab.value" @click="topTabChange(tab.value)">{{ tab.name }}</div>
+		<div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0  z-10 ">
+			<div class="tabs-container px-4 flex mt-4">
+				<div :class="` t-item hover:cursor-pointer px-2 m-1 font-bold  ${currentTopTab === tab.value ? 'text-[#75fbfd]' : ''}`"
+					v-for="tab in topTabs" :key="tab.value" @click="topTabChange(tab.value)">{{ tab.name }}</div>
+			</div>
 		</div>
 		<!-- 导航栏 -->
-		<div class="bottom-tabs w-full flex items-center justify-center absolute bottom-0  z-10 ">
+		<div
+			class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0  z-10 ">
 			<div :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`"
-				:class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'text-amber-300' : ''}  px-2 m-1`"
+				:class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'filter-drop-shadow' : ''}  px-2 m-1`"
 				v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-				<div class="icon w-10 h-10 bg-[url('assets/imgs/icon-b.png')] bg-cover bg-slate-400"></div>
+				<div class="blink w-10 h-10 bg-[url('assets/imgs/icon-b.png')] bg-cover"></div>
 				<div class="t-item-name">{{ tab.name }}</div>
 			</div>
 		</div>
 		<!-- 图层栏 -->
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
 
-		<div class="layer-tabs flex absolute top-1/2 z-10">
+		<div class="layer-tabs flex absolute left-1/4 top-1/2 z-10">
 			<ul>
 				<li v-for="(tab, index) in layerTabs" :key="tab.value"
 					:style="`transform: translateX(${computerLayout(layerTabs.length, index)}px)`"
-					:class="`layer-tab bg-zinc-700 ml-2 px-4 relative hover:cursor-pointer`"
+					:class="`layer-tab bg-zinc-700 ml-2 my-10 px-4 relative hover:cursor-pointer`"
 					@click="currentLayerTab = tab.value">
 					<div :class="`layer-tab-name mt-4 ${currentLayerTab === tab.value ? 'bg-lime-400' : ''}`"> {{
 						tab.name }}
@@ -40,6 +43,29 @@
 				</li>
 			</ul>
 		</div>
+
+		<!-- 右下角图例 -->
+
+		<div class="legend absolute bg-slate-400 right-1/4 mr-10 bottom-20 z-10">
+			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
+			<div class="legend-content">
+				<div class="legend-item flex items-center  px-10">
+					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
+					<div class="legend-item-name">管线</div>
+					<div class="legend-item-desc">管线1</div>
+				</div>
+				<div class="legend-item flex items-center  px-10">
+					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
+					<div class="legend-item-name">设施</div>
+					<div class="legend-item-desc">设施1</div>
+				</div>
+				<div class="legend-item flex items-center  px-10">
+					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
+					<div class="legend-item-name">设备</div>
+					<div class="legend-item-desc">设备1</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -49,7 +75,7 @@ import 'ol/ol.css'
 import { Map, View } from 'ol'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
-import { fromLonLat } from 'ol/proj'
+import { fromLonLat, toLonLat } from 'ol/proj'
 import GeoJSON from 'ol/format/GeoJSON'
 import { boundingExtent, getCenter } from 'ol/extent'
 import Style from 'ol/style/Style'
@@ -57,6 +83,7 @@ import Fill from 'ol/style/Fill'
 import Stroke from 'ol/style/Stroke'
 import Text from 'ol/style/Text'
 import Overlay from 'ol/Overlay'
+import { toStringHDMS } from 'ol/coordinate'
 import { useGlobalStore } from "@/store";
 import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
@@ -87,7 +114,7 @@ import {register} from "ol/proj/proj4";
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = ref('overview')
-const currentBottomTab = ref('overview')
+const currentBottomTab = ref('underground-pipeline')
 const currentLayerTab = ref('pipeline')
 const map = ref(null);
 const isCesiumMap = ref(false);
@@ -284,6 +311,35 @@ const initOpenLayersMap = () => {
     }),
   });
 
+  // 地图弹窗
+  const infoOverlay = new Overlay({
+    element: document.createElement('div'),
+    positioning: 'bottom-center',
+    offset: [0, -30],
+    autoPan: true,
+    autoPanAnimation: {
+      duration: 250,
+    },
+  });
+  map.value.addOverlay(infoOverlay);
+
+  // 绑定点击事件
+  map.value.on('singleclick', function (evt) {
+    const coordinate = evt.coordinate;
+    const hdms = toStringHDMS(toLonLat(coordinate));
+
+    const element = infoOverlay.getElement();
+    element.innerHTML = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay"><p>${hdms}</p></div>`;
+    infoOverlay.setPosition(coordinate);
+    // 放大地图
+    map.value.getView().animate({
+      center: coordinate,
+      zoom: 10,
+      duration: 500,
+      easing: Cesium.EasingFunction.LINEAR_NONE,
+    });
+  });
+
 	//map.value.getView().fit([116.103580,30.710719,122.090304,35.212659], { size: map.value.getSize(), maxZoom: 20 });
 };
 
@@ -296,6 +352,7 @@ const initCesiumMap = async () => {
 
 	cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
 };
+
 
 onMounted(() => {
 	initOpenLayersMap()
@@ -315,23 +372,52 @@ const toggleMap = () => {
 <style lang="scss" scoped>
 @use "sass:math";
 
+@keyframes blink {
+	0% {
+		transform: rotate3d(0, 0, 1, 0deg)
+	}
+
+	50% {
+		transform: rotate3d(0, 0, 1, 180deg)
+	}
+
+	100% {
+		transform: rotate3d(0, 0, 1, 0deg)
+	}
+}
+
+.blink {
+	transition: all 4s ease-in-out;
+	transform-origin: center center;
+	animation: blink 5s infinite;
+}
+
 .info-content {
 	padding: 10px;
 	background-color: #fff;
 }
 
 .top-tabs {
-	left: 50%;
-	transform: translateX(-50%);
-}
-
-.bottom-tabs {
-	left: 50%;
-	transform: translateX(-50%);
+	.tabs-container {
+		// 背景半透明
+		background-color: rgba(0, 0, 0, 0.5);
+	}
 }
 
 .layer-tabs {
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+.filter-drop-shadow {
+	filter: drop-shadow(2px 4px 6px red);
+	color: #7fcc58;
+}
+
+.info-overlay {
+	background-color: rgb(18, 2, 2);
+	border: 1px solid black;
+	padding: 5px;
+	color: #7fcc58;
 }
 </style>
