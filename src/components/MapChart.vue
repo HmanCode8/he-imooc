@@ -30,7 +30,7 @@
 					<div :class="`layer-tab-name mt-4 ${currentLayerTab === tab.value ? 'bg-lime-400' : ''}`"> {{
 						tab.name }}
 					</div>
-					<div class="layer-tab-detail absolute left-14 w-0 opacity-0 hover:w-20 bg-slate-600"
+					<div class="layer-tab-detail absolute left-20 w-20 bg-orange-800"
 						v-if="tab.detail && currentLayerTab === tab.value">
 						<div class="layer-tab-title">{{ tab.detail.title }}</div>
 						<div class="layer-tab-content">
@@ -397,7 +397,7 @@ const toggleMap = () => {
 .blink {
 	transition: all 4s ease-in-out;
 	transform-origin: center center;
-	animation: blink 5s infinite;
+	// animation: blink 5s infinite;
 }
 
 .info-content {

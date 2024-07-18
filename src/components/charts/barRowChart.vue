@@ -85,6 +85,7 @@ const renderChart = () => {
     })
 
     const option = {
+
         backgroundColor: "#012337",
         //你的代码
         tooltip: {
