@@ -1,7 +1,6 @@
 <template>
-    <div class="w-full h-1/2">
-        <div ref="target" class="w-full h-full"></div>
-    </div>
+    <div ref="target" v-resize-ob="handleResize" :class="`w-full h-full`"></div>
+
 </template>
 
 <script setup>
@@ -16,12 +15,19 @@ const props = defineProps({
 })
 
 const target = ref(null)
+const width = ref(0)
 let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value)
     renderChart()
 })
 
+const handleResize = (size) => {
+    console.log(size)
+    // 重新设置图表大小
+    width.value = size.width
+    mChart.resize()
+}
 const renderChart = () => {
     const data = [
         { label: "星期一", peri: 2, do: 1 },
@@ -87,17 +93,17 @@ const renderChart = () => {
                 type: 'shadow'
             }
         },
-        legend: {
-            show: true,
-            top: 10,
-            right: 10,
-            // data: ["", ""],
-        },
+        // legend: {
+        //     show: true,
+        //     top: 10,
+        //     right: 10,
+        //     // data: ["", ""],
+        // },
         grid: {
-            top: 50,
-            left: 100,
-            bottom: 50,
-            right: 50
+            top: 10,
+            left: 50,
+            bottom: 10,
+            right: 0
         },
         xAxis: {
             type: 'value',
@@ -152,7 +158,7 @@ const renderChart = () => {
                 name: "",
                 data: YData,
                 type: 'bar',
-                barWidth: 12,
+                barWidth: 10,
                 // label: {
                 //   show: true,
                 //   position: 'right',

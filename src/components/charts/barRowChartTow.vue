@@ -1,7 +1,5 @@
 <template>
-    <div class="w-full h-1/2">
-        <div ref="target" class="w-full h-full"></div>
-    </div>
+    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
 </template>
 
 <script setup>
@@ -22,16 +20,21 @@ onMounted(() => {
     renderChart()
 })
 
+const handleResize = () => {
+    mChart.resize()
+}
+
 const renderChart = () => {
-    let data = [50, 60, 70, 20, 30];
-    let className = ['西安市', '汉中市', '榆林市', '延安市', '宝鸡市'];
+    let data = [50, 60, 70, 20, 30, 40, 50, 60, 70, 30, 40, 50, 60, 70, 20,];
+    let className = ['西安市', '汉中市', '榆林市', '延安市', '宝鸡市', '安康市', '铜川市', '商洛市', '汉中市', '铜川市']
     let colorList = ['#39B3FF'];
     let defaultData = data.map((v) => 1);
     const option = {
         grid: {
-            left: '5%',
-            right: '5%',
-            bottom: '5%',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
             containLabel: true
         },
         tooltip: {
