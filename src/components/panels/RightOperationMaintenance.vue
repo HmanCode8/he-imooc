@@ -22,7 +22,7 @@ const arr1 = [
     },
     {
         name: '建成区',
-        value: 10000
+        value: 100
     }
 ]
 
@@ -32,7 +32,7 @@ const arr1 = [
 <template>
     <div class="overview">
         <FristLevelTitle title="综合监控"></FristLevelTitle>
-        <SecondLevelTitle title="基础概况"></SecondLevelTitle>
+        <SecondLevelTitle title="基础概况21"></SecondLevelTitle>
         <div class="overview-content">
             <div class="l w-1/3">
                 <ul class="flex flex-col">
@@ -46,9 +46,14 @@ const arr1 = [
                 </ul>
             </div>
         </div>
-        <div class="chart-list h-full w-full">
-            <BarRowChartTow class="w-1/2 h-1/4" />
-            <pipeChart class="w-full h-1/4" />
+        <div class="overview-content w-full h-full flex flex-wrap">
+            <div class="w-1/2 h-1/4 ">
+                <BarRowChartTow />
+            </div>
+            <div class="w-1/2 h-1/4 ">
+                <pipeChart />
+
+            </div>
         </div>
     </div>
 </template>

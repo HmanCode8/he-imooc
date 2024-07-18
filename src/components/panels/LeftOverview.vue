@@ -44,8 +44,8 @@ const arr1 = [
                 </ul>
             </div>
         </div>
-        <div class="chart-list h-full w-full">
-            <PipeChart class="w-full h-1/3" />
+        <div class="chart-list h-1/3 w-full">
+            <PipeChart />
         </div>
     </div>
 </template>

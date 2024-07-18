@@ -14,7 +14,7 @@
 			<div :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`"
 				:class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'filter-drop-shadow' : ''}  px-2 m-1`"
 				v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-				<div class="icon w-10 h-10 bg-[url('assets/imgs/icon-b.png')] bg-cover bg-slate-400"></div>
+				<div class="blink w-10 h-10 bg-[url('assets/imgs/icon-b.png')] bg-cover"></div>
 				<div class="t-item-name">{{ tab.name }}</div>
 			</div>
 		</div>
@@ -379,6 +379,26 @@ const toggleMap = () => {
 
 <style lang="scss" scoped>
 @use "sass:math";
+
+@keyframes blink {
+	0% {
+		transform: rotate3d(0, 0, 1, 0deg)
+	}
+
+	50% {
+		transform: rotate3d(0, 0, 1, 180deg)
+	}
+
+	100% {
+		transform: rotate3d(0, 0, 1, 0deg)
+	}
+}
+
+.blink {
+	transition: all 4s ease-in-out;
+	transform-origin: center center;
+	animation: blink 5s infinite;
+}
 
 .info-content {
 	padding: 10px;

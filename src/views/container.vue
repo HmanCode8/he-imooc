@@ -8,7 +8,7 @@
                 <div
                     class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white  flex overflow-hidden">
                     <div
-                        class="left-panel overflow-auto absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-50 bg-slate-800  p-3 flex flex-col">
+                        class="left-panel overflow-auto absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-50 bg-slate-800 p-1 flex flex-col">
                         <!-- <div class="shaw-inner absolute w-full h-full rounded-full"></div> -->
                         <!-- 条件渲染的动态组件 -->
                         <LeftPipeAnaly class=" w-full h-full box-border pb-4"
@@ -23,12 +23,12 @@
                         <LeftWarningDisposal class=" w-full h-full box-border pb-4"
                             v-if="currentComponent === 'warning-disposal'" />
                     </div>
-                    <div class="w-full  flex flex-col mx-auto">
+                    <div class="w-full flex flex-col">
                         <!-- 数据展示图 -->
                         <MapChart @changeComponent="changeComponent" class="bg-opacity-50  flex-1" />
                     </div>
                     <div
-                        class="right-panel overflow-auto absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-50 bg-slate-800 p-3 flex flex-col">
+                        class="right-panel overflow-auto absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-50 bg-slate-800 p-1 flex flex-col">
                         <!-- 条件渲染的动态组件 -->
                         <RightPipeAnaly class=" w-full h-full box-border pb-4"
                             v-if="currentComponent === 'infrastructure'" />
