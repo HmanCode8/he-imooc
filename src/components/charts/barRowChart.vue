@@ -86,7 +86,7 @@ const renderChart = () => {
 
     const option = {
 
-        backgroundColor: "#012337",
+        // backgroundColor: "#012337",
         //你的代码
         tooltip: {
             trigger: 'axis',
@@ -101,10 +101,10 @@ const renderChart = () => {
         //     // data: ["", ""],
         // },
         grid: {
-            top: 10,
+            top: 20,
             left: 50,
             bottom: 10,
-            right: 0
+            right: 10
         },
         xAxis: {
             type: 'value',

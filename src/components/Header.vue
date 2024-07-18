@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { ref, defineProps, onMounted, onUnmounted } from 'vue';
+import { ref, toRef, onMounted, onUnmounted } from 'vue';
 
+const emits = defineEmits(['onChageSizeType']);
+const props = defineProps({
+    sizeType: {
+        type: String,
+        default: 'small'
+    }
+});
+const sizeType = toRef(props.sizeType);
 
 const nowDate = ref(new Date().toLocaleTimeString());
-const timeId = ref(null);
+const timeId = ref<any>(null);
 
 // 计算星期
 const week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
@@ -15,6 +23,9 @@ const month = date.getMonth() + 1;
 const day = date.getDate();
 const weekday = week[date.getDay()];
 
+const onChage = () => {
+    emits('onChageSizeType', sizeType.value === 'small' ? 'big' : 'small');
+};
 
 // 定时刷新当前时间
 onMounted(() => {
@@ -37,12 +48,13 @@ onUnmounted(() => {
             <span class="mx-3">|</span>
             <!-- 当前日期： -->
             <span class="font-bold font-[Electronic]"> {{ year }}年{{ month }}月{{ day }}日</span>
-            <span>（{{ weekday }}）</span>
+            <span class="font-bold font-[Electronic">（{{ weekday }}）</span>
             <!-- 定位城市： -->
             <span class="mx-3">|</span>
             <span class="font-bold font-[Electronic]"> 盐城市</span>
         </div>
-        <div class="title font-serif text-2xl absolute left-1/2 translate-x-[-50%] font-bold text-gradient">盐城市生命线综合监管平台
+        <div class="title font-serif text-2xl absolute left-1/2 translate-x-[-50%] font-bold text-gradient"
+            @click="onChage">盐城市生命线综合监管平台
         </div>
         <!-- 天气-->
         <div class="weather flex font-[Electronic] items-center text-gradient">

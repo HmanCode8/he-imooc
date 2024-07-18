@@ -4,7 +4,7 @@
 		<!-- 专题栏 -->
 		<div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0  z-10 ">
 			<div class="tabs-container px-4 flex mt-4">
-				<div :class="` t-item hover:cursor-pointer px-2 m-1 font-bold  ${currentTopTab === tab.value ? 'text-[#75fbfd]' : ''}`"
+				<div :class="`t-item hover:cursor-pointer px-2 m-1 font-bold  ${currentTopTab === tab.value ? 'text-[#75fbfd]' : ''}`"
 					v-for="tab in topTabs" :key="tab.value" @click="topTabChange(tab.value)">{{ tab.name }}</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 		<!-- 图层栏 -->
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
 
-		<div class="layer-tabs flex absolute left-1/4 top-1/2 z-10">
+		<div class="layer-tabs flex absolute left-1/4 top-1/2 translate-y-[-50%] z-10">
 			<ul>
 				<li v-for="(tab, index) in layerTabs" :key="tab.value"
 					:style="`transform: translateX(${computerLayout(layerTabs.length, index)}px)`"
@@ -89,28 +89,15 @@ import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import _ from 'lodash'
 
-// 颜色列表
-const colors = [
-	'#319FD3',
-	'#FFC0CB',
-	'#FFA500',
-	'#FFD700',
-	'#808080',
-	'#008080',
-	'#00FFFF',
-	'#000080',
-	'#800080',
-	'#FF00FF'
-]
 
 // 引入盐城的GeoJSON数据
-import yanchengGeoJson from '@/assets/MapData/yancheng.json'
+// import yanchengGeoJson from '@/assets/MapData/yancheng.json'
 import TileLayer from "ol/layer/Tile";
-import {WMTS} from "ol/source";
+import { WMTS } from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
-import {get as getProjection} from 'ol/proj';
-import {register} from "ol/proj/proj4";
+import { get as getProjection } from 'ol/proj';
+import { register } from "ol/proj/proj4";
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = ref('overview')
@@ -268,77 +255,77 @@ const computerLayout = (size, index) => {
 }
 
 const initOpenLayersMap = () => {
-  // 引入4490坐标系定义
-  proj4.defs("EPSG:4490","+proj=longlat +ellps=GRS80 +no_defs +type=crs")
-  register(proj4)
-  const projection = getProjection('EPSG:4490');
-  const size = 1.4078260158586589;
-  const resolutions = new Array(19);
-  const matrixIds = new Array(19);
-  for (let z = 0; z < 20; ++z) {
-    // generate resolutions and matrixIds arrays for this WMTS
-    resolutions[z] = size / Math.pow(2, z);
-    matrixIds[z] = z;
-  }
-  // 加载午夜蓝风格天地图
-  const baseLayer = new TileLayer({
-    source: new WMTS({
-      url: "https://jiangsu.tianditu.gov.cn/historyraster/rest/services/historyVector/js_sldt_blue/MapServer/WMTS",
-      layer: "historyVector_js_sldt_blue",
-      matrixSet: "default",
-      style: "default",
-      projection: projection,
-      format: "image/png",
-      tileGrid: new WMTSTileGrid({
-        origin: [-180,90],
-        resolutions: resolutions,
-        matrixIds: matrixIds
-      })
-    })
-  })
+	// 引入4490坐标系定义
+	proj4.defs("EPSG:4490", "+proj=longlat +ellps=GRS80 +no_defs +type=crs")
+	register(proj4)
+	const projection = getProjection('EPSG:4490');
+	const size = 1.4078260158586589;
+	const resolutions = new Array(19);
+	const matrixIds = new Array(19);
+	for (let z = 0; z < 20; ++z) {
+		// generate resolutions and matrixIds arrays for this WMTS
+		resolutions[z] = size / Math.pow(2, z);
+		matrixIds[z] = z;
+	}
+	// 加载午夜蓝风格天地图
+	const baseLayer = new TileLayer({
+		source: new WMTS({
+			url: "https://jiangsu.tianditu.gov.cn/historyraster/rest/services/historyVector/js_sldt_blue/MapServer/WMTS",
+			layer: "historyVector_js_sldt_blue",
+			matrixSet: "default",
+			style: "default",
+			projection: projection,
+			format: "image/png",
+			tileGrid: new WMTSTileGrid({
+				origin: [-180, 90],
+				resolutions: resolutions,
+				matrixIds: matrixIds
+			})
+		})
+	})
 
 	//工具配置
-  map.value = new Map({
-    target: target.value,
-    layers: [baseLayer],
-    controls: [],
-    view: new View({
-      center: [120.181, 33.349],
-      zoom: 14,
-      maxZoom: 20,
-      minZoom: 8,
-      projection: projection
-    }),
-  });
+	map.value = new Map({
+		target: target.value,
+		layers: [baseLayer],
+		controls: [],
+		view: new View({
+			center: [120.181, 33.349],
+			zoom: 14,
+			maxZoom: 20,
+			minZoom: 8,
+			projection: projection
+		}),
+	});
 
-  // 地图弹窗
-  const infoOverlay = new Overlay({
-    element: document.createElement('div'),
-    positioning: 'bottom-center',
-    offset: [0, -30],
-    autoPan: true,
-    autoPanAnimation: {
-      duration: 250,
-    },
-  });
-  map.value.addOverlay(infoOverlay);
+	// 地图弹窗
+	const infoOverlay = new Overlay({
+		element: document.createElement('div'),
+		positioning: 'bottom-center',
+		offset: [0, -30],
+		autoPan: true,
+		autoPanAnimation: {
+			duration: 250,
+		},
+	});
+	map.value.addOverlay(infoOverlay);
 
-  // 绑定点击事件
-  map.value.on('singleclick', function (evt) {
-    const coordinate = evt.coordinate;
-    const hdms = toStringHDMS(toLonLat(coordinate));
+	// 绑定点击事件
+	map.value.on('singleclick', function (evt) {
+		const coordinate = evt.coordinate;
+		const hdms = toStringHDMS(toLonLat(coordinate));
 
-    const element = infoOverlay.getElement();
-    element.innerHTML = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay"><p>${hdms}</p></div>`;
-    infoOverlay.setPosition(coordinate);
-    // 放大地图
-    map.value.getView().animate({
-      center: coordinate,
-      zoom: 10,
-      duration: 500,
-      easing: Cesium.EasingFunction.LINEAR_NONE,
-    });
-  });
+		const element = infoOverlay.getElement();
+		element.innerHTML = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay"><p>${hdms}</p></div>`;
+		infoOverlay.setPosition(coordinate);
+		// 放大地图
+		// map.value.getView().animate({
+		//   center: coordinate,
+		//   zoom: 10,
+		//   duration: 500,
+		//   easing: Cesium.EasingFunction.LINEAR_NONE,
+		// });
+	});
 
 	//map.value.getView().fit([116.103580,30.710719,122.090304,35.212659], { size: map.value.getSize(), maxZoom: 20 });
 };
@@ -402,11 +389,6 @@ const toggleMap = () => {
 		// 背景半透明
 		background-color: rgba(0, 0, 0, 0.5);
 	}
-}
-
-.layer-tabs {
-	top: 50%;
-	transform: translateY(-50%);
 }
 
 .filter-drop-shadow {

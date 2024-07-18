@@ -3,6 +3,7 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
+import PipeIconChart from '../charts/PipeIconChart.vue';
 
 
 const list = ref([
@@ -73,6 +74,9 @@ const tabs = ref([
                 </div>
             </template>
         </ThirdLevelTitle>
+        <div class="w-full h-1/4">
+            <PipeIconChart />
+        </div>
     </div>
 </template>
 

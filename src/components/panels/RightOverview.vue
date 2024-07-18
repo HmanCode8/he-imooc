@@ -45,8 +45,8 @@ const arr1 = [
                 </ul>
             </div>
         </div>
-        <div class="chart-list h-full w-full">
-            <barRowChart class="w-1/2 h-1/3" />
+        <div class="chart-list w-1/2 h-1/3">
+            <barRowChart class="" />
         </div>
     </div>
 </template>

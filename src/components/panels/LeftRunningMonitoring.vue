@@ -4,7 +4,7 @@ import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 
-import BarRowChartTowThird from '../charts/BarRowChartTowThird.vue'
+import BarRowChartThird from '../charts/BarRowChartThird.vue'
 
 const list = ref([
     {
@@ -75,7 +75,7 @@ const tabs = ref([
             </template>
         </ThirdLevelTitle>
         <div class="w-full h-1/2">
-            <BarRowChartTowThird />
+            <BarRowChartThird />
         </div>
     </div>
 </template>

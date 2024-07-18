@@ -2,45 +2,30 @@
     <div class="w-fullh-full bg-[#051439]">
         <div class="w-full h-full 8k:w-3/3 4k:h-1/2 8k:m-auto flex flex-col 4k:text-sm 8k:text-lg">
             <!-- 头部组件 -->
-            <Header />
+            <Header @onChageSizeType="(k) => sizeType = k" />
             <!-- 主体组件 -->
             <div class="main-panel relative">
+                <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
                 <div
                     class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white  flex overflow-hidden">
                     <div
-                        class="left-panel overflow-auto absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-50 bg-slate-800 p-1 flex flex-col">
-                        <!-- <div class="shaw-inner absolute w-full h-full rounded-full"></div> -->
+                        :class="`left-panel  overflow-auto absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-50 bg-slate-950  p-1 flex flex-col`">
                         <!-- 条件渲染的动态组件 -->
-                        <LeftPipeAnaly class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'infrastructure'" />
-                        <LeftOverview class=" w-full h-full box-border pb-4" v-if="currentComponent === 'overview'" />
-                        <LeftProjectManagement class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'project-management'" />
-                        <LeftOperationMaintenance class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'operation-maintenance'" />
-                        <LeftRunningMonitoring class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'running-monitoring'" />
-                        <LeftWarningDisposal class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'warning-disposal'" />
+                        <component :is="currentComponentMap[currentComponent][0]"
+                            class="w-full h-full box-border pb-4" />
+
                     </div>
                     <div class="w-full flex flex-col">
                         <!-- 数据展示图 -->
                         <MapChart @changeComponent="changeComponent" class="bg-opacity-50  flex-1" />
                     </div>
+                    <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
                     <div
-                        class="right-panel overflow-auto absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-50 bg-slate-800 p-1 flex flex-col">
+                        class="right-panel overflow-auto absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-50 bg-slate-950 p-1 flex flex-col">
                         <!-- 条件渲染的动态组件 -->
-                        <RightPipeAnaly class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'infrastructure'" />
-                        <RightOverview class=" w-full h-full box-border pb-4" v-if="currentComponent === 'overview'" />
-                        <RightProjectManagement class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'project-management'" />
-                        <RightOperationMaintenance class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'operation-maintenance'" />
-                        <RightRunningMonitoring class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'running-monitoring'" />
-                        <RightWarningDisposal class=" w-full h-full box-border pb-4"
-                            v-if="currentComponent === 'warning-disposal'" />
+                        <component :is="currentComponentMap[currentComponent][1]"
+                            class="w-full h-full box-border pb-4" />
+
                     </div>
                 </div>
             </div>
@@ -82,7 +67,19 @@ const store = useGlobalStore()
 
 const data = ref(null)
 
+const sizeType = ref('small')
+
 const currentComponent = ref('overview')
+
+// 组件映射对象
+const currentComponentMap = {
+    'infrastructure': [LeftPipeAnaly, RightPipeAnaly],
+    'overview': [LeftOverview, RightOverview],
+    'project-management': [LeftProjectManagement, RightProjectManagement],
+    'operation-maintenance': [LeftOperationMaintenance, RightOperationMaintenance],
+    'running-monitoring': [LeftRunningMonitoring, RightRunningMonitoring],
+    'warning-disposal': [LeftWarningDisposal, RightWarningDisposal]
+};
 
 
 const changeComponent = (value) => {
@@ -117,11 +114,6 @@ loadData()
         // background: linear-gradient(to right, #000 80%, #272626 50%, #343131 6%);
         // opacity: 0.8;
 
-        .shaw-inner {
-            z-index: 11;
-            // background: #000;
-            left: 100%;
-        }
     }
 }
 </style>
