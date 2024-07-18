@@ -105,6 +105,12 @@ const colors = [
 
 // 引入盐城的GeoJSON数据
 import yanchengGeoJson from '@/assets/MapData/yancheng.json'
+import TileLayer from "ol/layer/Tile";
+import {WMTS} from "ol/source";
+import WMTSTileGrid from "ol/tilegrid/WMTS";
+import proj4 from "proj4";
+import {get as getProjection} from 'ol/proj';
+import {register} from "ol/proj/proj4";
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = ref('overview')
@@ -262,93 +268,79 @@ const computerLayout = (size, index) => {
 }
 
 const initOpenLayersMap = () => {
-	// 创建一个VectorSource并加载GeoJSON数据
-	const vectorSource = new VectorSource({
-		features: new GeoJSON().readFeatures(yanchengGeoJson, {
-			featureProjection: 'EPSG:3857' // 将GeoJSON数据投影到Web Mercator
-		})
-	});
-	// 应用样式并为每个要素设置文本
-	vectorSource.getFeatures().forEach((feature, index) => {
-		const name = feature.get('name'); // 假设GeoJSON中有一个字段叫'name'，包含板块名称
-		feature.setStyle(
-			new Style({
-				fill: new Fill({
-					color: colors[index]
-				}),
-				stroke: new Stroke({
-					color: '#319FD3',
-					width: 2
-				}),
-				text: new Text({
-					text: name,
-					font: '12px Calibri,sans-serif',
-					fill: new Fill({
-						color: '#000'
-					}),
-					stroke: new Stroke({
-						color: '#fff',
-						width: 3
-					})
-				})
-			})
-		);
-	});
+  // 引入4490坐标系定义
+  proj4.defs("EPSG:4490","+proj=longlat +ellps=GRS80 +no_defs +type=crs")
+  register(proj4)
+  const projection = getProjection('EPSG:4490');
+  const size = 1.4078260158586589;
+  const resolutions = new Array(19);
+  const matrixIds = new Array(19);
+  for (let z = 0; z < 20; ++z) {
+    // generate resolutions and matrixIds arrays for this WMTS
+    resolutions[z] = size / Math.pow(2, z);
+    matrixIds[z] = z;
+  }
+  // 加载午夜蓝风格天地图
+  const baseLayer = new TileLayer({
+    source: new WMTS({
+      url: "https://jiangsu.tianditu.gov.cn/historyraster/rest/services/historyVector/js_sldt_blue/MapServer/WMTS",
+      layer: "historyVector_js_sldt_blue",
+      matrixSet: "default",
+      style: "default",
+      projection: projection,
+      format: "image/png",
+      tileGrid: new WMTSTileGrid({
+        origin: [-180,90],
+        resolutions: resolutions,
+        matrixIds: matrixIds
+      })
+    })
+  })
 
-	// 创建一个VectorLayer并将VectorSource添加到该图层
-	const vectorLayer = new VectorLayer({
-		source: vectorSource,
-		style: {}
-	});
+	//工具配置
+  map.value = new Map({
+    target: target.value,
+    layers: [baseLayer],
+    controls: [],
+    view: new View({
+      center: [120.181, 33.349],
+      zoom: 14,
+      maxZoom: 20,
+      minZoom: 8,
+      projection: projection
+    }),
+  });
 
-	const extent = boundingExtent(
-		vectorSource.getFeatures().map((feature) => feature.getGeometry().getExtent())
-	);
-	const center = getCenter(extent);
+  // 地图弹窗
+  const infoOverlay = new Overlay({
+    element: document.createElement('div'),
+    positioning: 'bottom-center',
+    offset: [0, -30],
+    autoPan: true,
+    autoPanAnimation: {
+      duration: 250,
+    },
+  });
+  map.value.addOverlay(infoOverlay);
 
-	// 工具配置
-	map.value = new Map({
-		target: target.value,
-		layers: [vectorLayer],
-		controls: [],
-		view: new View({
-			center: center,
-			zoom: 14,
-			maxZoom: 18,
-			minZoom: 8,
-		}),
-	});
+  // 绑定点击事件
+  map.value.on('singleclick', function (evt) {
+    const coordinate = evt.coordinate;
+    const hdms = toStringHDMS(toLonLat(coordinate));
 
-	// 地图弹窗
-	const infoOverlay = new Overlay({
-		element: document.createElement('div'),
-		positioning: 'bottom-center',
-		offset: [0, -30],
-		autoPan: true,
-		autoPanAnimation: {
-			duration: 250,
-		},
-	});
-	map.value.addOverlay(infoOverlay);
+    const element = infoOverlay.getElement();
+    element.innerHTML = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay"><p>${hdms}</p></div>`;
+    infoOverlay.setPosition(coordinate);
+    // 放大地图
+    map.value.getView().animate({
+      center: coordinate,
+      zoom: 10,
+      duration: 500,
+      easing: Cesium.EasingFunction.LINEAR_NONE,
+    });
+  });
 
-	// 绑定点击事件
-	map.value.on('singleclick', function (evt) {
-		const coordinate = evt.coordinate;
-		const hdms = toStringHDMS(toLonLat(coordinate));
-
-		const element = infoOverlay.getElement();
-		element.innerHTML = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay"><p>${hdms}</p></div>`;
-		infoOverlay.setPosition(coordinate);
-		// 放大地图
-		map.value.getView().animate({
-			center: coordinate,
-			zoom: 10,
-			duration: 500,
-			easing: Cesium.EasingFunction.LINEAR_NONE,
-		});
-	});
-
-	map.value.getView().fit(extent, { size: map.value.getSize(), maxZoom: 14 });
+	//map.value.getView().fit([116.103580,30.710719,122.090304,35.212659], { size: map.value.getSize(), maxZoom: 20 });
 };
 
 const initCesiumMap = async () => {
