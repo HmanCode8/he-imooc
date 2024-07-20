@@ -15,10 +15,14 @@ const props = defineProps({
 
 <template>
     <!-- 有插槽传tabs -->
-    <div class="third-level-title flex items-center">
-        <div class="icon w-4 h-4 mr-2 bg-[#76c8fa]"></div>
-        <div class="title text-sm">{{ title }}</div>
-        <slot name="tabs"></slot>
+    <div class="third-level-title flex justify-between border-b bg-gray-500 items-center">
+        <div class="flex items-center w-1/3">
+            <div class="icon w-2 h-2 mr-2 bg-[#76c8fa]"></div>
+            <div class="title text-sm">{{ title }}</div>
+        </div>
+        <div>
+            <slot name="tabs"></slot>
+        </div>
     </div>
 </template>
 

@@ -2,64 +2,81 @@
 	<div class="map relative">
 		<div ref="target" class="w-full h-full"></div>
 		<!-- 专题栏 -->
-		<div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0  z-10 ">
-			<div class="tabs-container px-4 flex mt-4">
-				<div :class="`t-item hover:cursor-pointer px-2 m-1 font-bold  ${currentTopTab === tab.value ? 'text-[#75fbfd]' : ''}`"
+		<div
+			class="top-tabs  w-full flex  items-center justify-center absolute left-1/2 translate-x-[-50%] top-0  z-10 ">
+			<div class="tabs-container bg-[url('assets/imgs/to-tabs-bg.png')]  bg-cover flex justify-between p-2  mt-4">
+				<div :class="`t-item hover:cursor-pointer m-2 font-bold  ${currentTopTab === tab.value ? 'text-[#75fbfd]' : ''}`"
 					v-for="tab in topTabs" :key="tab.value" @click="topTabChange(tab.value)">{{ tab.name }}</div>
+				<!-- <el-segmented v-model="currentTopTab" :options="topTabs">
+					<template #default="{ item }">
+						<div class="">
+							<el-icon size="20">
+								<component :is="item.icon" />
+							</el-icon>
+							<div class="">{{ item.name }}</div>
+						</div>
+					</template>
+</el-segmented> -->
+
 			</div>
+
+
 		</div>
 		<!-- 导航栏 -->
+		<!-- :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`" -->
 		<div
 			class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0  z-10 ">
-			<div :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`"
-				:class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'filter-drop-shadow' : ''}  px-2 m-1`"
+			<div :class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
 				v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-				<div class="blink w-10 h-10 bg-[url('assets/imgs/icon-b.png')] bg-cover"></div>
+				<div :class="`blink w-10 h-10 bg-[url('assets/imgs/icon-b-2.svg')] bg-cover`">
+				</div>
 				<div class="t-item-name">{{ tab.name }}</div>
 			</div>
 		</div>
 		<!-- 图层栏 -->
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
+		<!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-		<div class="layer-tabs flex absolute left-1/4 top-1/2 translate-y-[-50%] z-10">
-			<ul>
-				<li v-for="(tab, index) in layerTabs" :key="tab.value"
-					:style="`transform: translateX(${computerLayout(layerTabs.length, index)}px)`"
-					:class="`layer-tab bg-zinc-700 ml-2 my-10 px-4 relative hover:cursor-pointer`"
-					@click="currentLayerTab = tab.value">
-					<div :class="`layer-tab-name mt-4 ${currentLayerTab === tab.value ? 'bg-lime-400' : ''}`"> {{
-						tab.name }}
-					</div>
-					<div class="layer-tab-detail absolute left-20 w-20 bg-orange-800"
-						v-if="tab.detail && currentLayerTab === tab.value">
-						<div class="layer-tab-title">{{ tab.detail.title }}</div>
-						<div class="layer-tab-content">
-							<div v-for="(item, index) in tab.detail.content" :key="index" class="layer-tab-item">
-								<div class="layer-tab-item-name">{{ item.name }}</div>
+		<div class="layer-tabs bg-[#215291] flex absolute left-1/4 top-1/2 translate-y-[-50%] z-10">
+			<div class="layer-bg w-full h-full">
+				<ul class="">
+					<li v-for="(tab, index) in layerTabs" :key="tab.value"
+						:class="`layer-tab my-10 px-4 relative hover:cursor-pointer`"
+						@click="currentLayerTab = tab.value">
+						<div :class="`layer-tab-name mt-2 ${currentLayerTab === tab.value ? 'bg-lime-400' : ''}`"> {{
+							tab.name }}
+						</div>
+						<div class="layer-tab-detail absolute left-20 w-20 bg-orange-800"
+							v-if="tab.detail && currentLayerTab === tab.value">
+							<div class="layer-tab-title">{{ tab.detail.title }}</div>
+							<div class="layer-tab-content">
+								<div v-for="(item, index) in tab.detail.content" :key="index" class="layer-tab-item">
+									<div class="layer-tab-item-name">{{ item.name }}</div>
+								</div>
 							</div>
 						</div>
-					</div>
 
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 
 		<!-- 右下角图例 -->
 
 		<div class="legend absolute bg-slate-400 right-1/4 mr-10 bottom-20 z-10">
 			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
-			<div class="legend-content">
-				<div class="legend-item flex items-center  px-10">
+			<div class="legend-content px-1">
+				<div class="legend-item flex items-center ">
 					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
 					<div class="legend-item-name">管线</div>
 					<div class="legend-item-desc">管线1</div>
 				</div>
-				<div class="legend-item flex items-center  px-10">
+				<div class="legend-item flex items-center ">
 					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
 					<div class="legend-item-name">设施</div>
 					<div class="legend-item-desc">设施1</div>
 				</div>
-				<div class="legend-item flex items-center  px-10">
+				<div class="legend-item flex items-center">
 					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
 					<div class="legend-item-name">设备</div>
 					<div class="legend-item-desc">设备1</div>
@@ -241,11 +258,10 @@ const topTabChange = (value) => {
 	currentTopTab.value = value
 }
 
-const computerLayout = (size, index) => {
-	const initStyle10 = 10
+const computerLayout = (size, index, initStyle = 10) => {
 	let styles = []
 	for (let key = 0; key <= size; key++) {
-		styles.push(initStyle10 * key)
+		styles.push(initStyle * key)
 	}
 	const newStyles = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
 	const newStyles1 = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
@@ -253,6 +269,60 @@ const computerLayout = (size, index) => {
 	const nextstyles = [...newStyles1, ...(size % 2 === 0 ? _.reverse(newStyles1) : _.tail(_.reverse(newStyles1)))]
 	return size === 10 ? nextstyles[index] : arr[index]
 }
+
+const openDB = () => {
+	return new Promise((resolve, reject) => {
+		const request = indexedDB.open('TileCacheDB', 1);
+
+		request.onupgradeneeded = (event) => {
+			const db = event.target.result;
+			if (!db.objectStoreNames.contains('tiles')) {
+				db.createObjectStore('tiles', { keyPath: 'url' });
+			}
+		};
+
+		request.onsuccess = (event) => {
+			resolve(event.target.result);
+		};
+
+		request.onerror = (event) => {
+			reject('Error opening IndexedDB: ', event.target.errorCode);
+		};
+	});
+};
+
+const loadTile = (url, tile, db) => {
+	const transaction = db.transaction(['tiles'], 'readonly');
+	const store = transaction.objectStore('tiles');
+	const request = store.get(url);
+
+	request.onsuccess = () => {
+		if (request.result) {
+			const tileUrlFunction = tile.getTileUrlFunction();
+			tile.getImage().src = tileUrlFunction(tile.getTileCoord(), 1, ol.proj.get('EPSG:3857'));
+		} else {
+			fetch(url)
+				.then(response => response.blob())
+				.then(blob => {
+					const objectURL = URL.createObjectURL(blob);
+					tile.getImage().src = objectURL;
+
+					const transaction = db.transaction(['tiles'], 'readwrite');
+					const store = transaction.objectStore('tiles');
+					store.put({ url, blob });
+				})
+				.catch(err => {
+					console.error('Failed to fetch tile:', err);
+					tile.setState(3); // Set tile state to error
+				});
+		}
+	};
+
+	request.onerror = (event) => {
+		console.error('Error fetching tile from IndexedDB:', event.target.errorCode);
+	};
+};
+
 
 const initOpenLayersMap = () => {
 	// 引入4490坐标系定义
@@ -385,15 +455,39 @@ const toggleMap = () => {
 }
 
 .top-tabs {
+
+	// background-color: #b01f1f;
 	.tabs-container {
 		// 背景半透明
-		background-color: rgba(0, 0, 0, 0.5);
+		// background-color: rgba(142, 45, 45, 0.5);
+		background-size: 100% 100%;
+	}
+
+	.el-segmented {
+		background-color: transparent;
+		color: rgb(216, 228, 228);
+		--el-segmented-item-selected-color: var(--el-text-color-primary);
+		--el-segmented-item-selected-bg-color: #2b92c6;
+		// --el-border-radius-base: 16px;
 	}
 }
 
-.filter-drop-shadow {
+.bottom-tabs {
+
+	//循环
+	@for $i from 1 through 10 {
+		.blink-#{$i} {
+			animation: blink 1s infinite;
+			// background-image: url('@/assets/imgs/iocn-b-1.svg');
+		}
+	}
+}
+
+.select-active {
 	filter: drop-shadow(2px 4px 6px red);
 	color: #7fcc58;
+	transform: translateY(-20px);
+	transition: all 0.3s ease-in-out;
 }
 
 .info-overlay {

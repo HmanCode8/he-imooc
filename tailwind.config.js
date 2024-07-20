@@ -4,7 +4,11 @@ export default {
   darkMode: "media", // or'media' or 'class'
   theme: {
     extend: {
-      // 您可以在这里添加自定义扩展
+      backgroundImage: {
+        // #529de9 25%, ##59b5db 50%, #6ce9c8 75%
+        "custom-gradient":
+          "linear-gradient(to right, #529de9 25%, #59b5db 50%, #6ce9c8 75%)",
+      },
       screens: {
         "4k": "1080px",
         "8k": "3840px",

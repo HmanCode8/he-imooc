@@ -16,6 +16,7 @@
     "echarts": "^5.5.1",
     "echarts-gl": "^2.0.9",
     "echarts-wordcloud": "^2.1.0",
+    "element-plus": "^2.7.7",
     "ol": "^9.2.4",
     "pinia": "^2.1.7",
     "proj4": "2.11.0",
@@ -30,6 +31,8 @@
     "postcss": "^8.4.23",
     "sass": "^1.77.8",
     "tailwindcss": "^3.3.2",
+    "unplugin-auto-import": "^0.18.0",
+    "unplugin-vue-components": "^0.27.3",
     "vite": "^4.3.2"
   }
 }

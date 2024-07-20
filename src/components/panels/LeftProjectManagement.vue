@@ -3,8 +3,20 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
+import AutoLoadTabs from '../common/AutoLoadTabs.vue'
 
-
+const tabs1 = ref([
+    { id: 1, name: 'Tab 1' },
+    { id: 2, name: 'Tab 2' },
+    { id: 3, name: 'Tab 3' },
+    { id: 4, name: 'Tab 4' },
+    { id: 5, name: 'Tab 5' },
+    { id: 6, name: 'Tab 6' },
+    { id: 7, name: 'Tab 7' },
+    { id: 8, name: 'Tab 8' },
+    { id: 9, name: 'Tab 9' },
+    { id: 10, name: 'Tab 10' },
+]);
 const list = ref([
     {
         name: '官网',
@@ -63,16 +75,17 @@ const tabs = ref([
             </li>
         </ul>
         <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-        <ThirdLevelTitle title="官网管线">
+        <ThirdLevelTitle title="官网管线2">
             <!-- tabs插槽 -->
             <template v-slot:tabs>
-                <div class="tabs">
+                <div class="tabs flex">
                     <div class="tab-item flex items-center" v-for="tab in tabs" :key="tab.value">
-                        <div class="tab-item-title" :class="{ active: tab.value == tabs[0].value }">{{ tab.name }}</div>
+                        dad
                     </div>
                 </div>
             </template>
         </ThirdLevelTitle>
+        <AutoLoadTabs :tabs="tabs1" />
     </div>
 </template>
 

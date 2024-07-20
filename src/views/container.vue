@@ -9,7 +9,7 @@
                 <div
                     class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white  flex overflow-hidden">
                     <div
-                        :class="`left-panel  overflow-auto absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-50 bg-slate-950  p-1 flex flex-col`">
+                        :class="`left-panel  overflow-auto bg-[#102242]  absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                         <!-- 条件渲染的动态组件 -->
                         <component :is="currentComponentMap[currentComponent][0]"
                             class="w-full h-full box-border pb-4" />
@@ -21,8 +21,9 @@
                     </div>
                     <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
                     <div
-                        class="right-panel overflow-auto absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-50 bg-slate-950 p-1 flex flex-col">
+                        class="right-panel overflow-auto bg-[#102242]  absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
                         <!-- 条件渲染的动态组件 -->
+                        <!-- <div class="inner-bg absolute left-0 top-0 w-full h-full "></div> -->
                         <component :is="currentComponentMap[currentComponent][1]"
                             class="w-full h-full box-border pb-4" />
 
@@ -69,7 +70,7 @@ const data = ref(null)
 
 const sizeType = ref('small')
 
-const currentComponent = ref('overview')
+const currentComponent = ref('infrastructure')
 
 // 组件映射对象
 const currentComponentMap = {
@@ -83,7 +84,6 @@ const currentComponentMap = {
 
 
 const changeComponent = (value) => {
-    console.log(value)
     currentComponent.value = value
 }
 
@@ -110,10 +110,21 @@ loadData()
 <style scoped lang="scss">
 .main-panel {
     .left-panel {
-        // 背景渐变
-        // background: linear-gradient(to right, #000 80%, #272626 50%, #343131 6%);
-        // opacity: 0.8;
+        // background-image: url('@/assets/imgs/panel.svg');
+        // background-size: cover;
+        // /*或者使用 contain*/
+        // background-position: center;
+    }
 
+    .right-panel {
+        .inner-bg {
+            // background-image: url('@/assets/imgs/panel.svg');
+            // background-size: cover;
+            // //只要背景图旋转就可以了
+            // transform: rotate(180deg);
+            // /*或者使用 contain*/
+            // background-position: center;
+        }
     }
 }
 </style>

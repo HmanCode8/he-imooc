@@ -53,9 +53,10 @@ onUnmounted(() => {
             <span class="mx-3">|</span>
             <span class="font-bold font-[Electronic]"> 盐城市</span>
         </div>
-        <div class="title font-serif text-2xl absolute left-1/2 translate-x-[-50%] font-bold text-gradient"
-            @click="onChage">盐城市生命线综合监管平台
-        </div>
+        <h2 class="title font-serif absolute text-2xl left-1/2 translate-x-[-50%] font-bold text-gradient"
+            @click="onChage">
+            盐城市生命线综合监管平台
+        </h2>
         <!-- 天气-->
         <div class="weather flex font-[Electronic] items-center text-gradient">
             <!-- 阴东南风:<3级 温度: 231C-29C -->
