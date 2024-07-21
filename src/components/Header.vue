@@ -41,7 +41,7 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="bg-[url('assets/imgs/header-bg.png')] relative bg-cover bg-center h-12 mb-1 text-[#e4f9fe] text-center p-2 flex justify-between items-center ">
+        class="bg-[url('assets/imgs/header-bg.png')] bg-custom-size relative bg-center h-12 mb-1 text-[#e4f9fe] text-center p-2 flex justify-between items-center ">
         <!-- 日期展示 ：当前时间年月日，星期 天气-->
         <div class="date flex items-center text-gradient">
             <span class="font-bold font-[Electronic] text-xl "> {{ nowDate }}</span>

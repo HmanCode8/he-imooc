@@ -23,119 +23,75 @@ onMounted(() => {
 const handleResize = () => {
     mChart.resize()
 }
-
+const data = [
+    { range: '5年以下', value: 20, colorStart: '#334d69', colorEnd: '#4a5757' },
+    { range: '5~10年', value: 35, colorStart: '#4a5757', colorEnd: '#e6c643' },
+    { range: '10~15年', value: 15, colorStart: '#334d69', colorEnd: '#4a5757' },
+    { range: '15~20年', value: 40, colorStart: '#4a5757', colorEnd: '#e6c643' },
+    { range: '20年以上', value: 30, colorStart: '#334d69', colorEnd: '#4a5757' },
+];
 const renderChart = () => {
-    let data = [50, 60, 70, 20, 30, 40, 50, 60, 70, 30, 40, 50, 60, 70, 20,];
-    let className = ['西安市', '汉中市', '榆林市', '延安市', '宝鸡市', '安康市', '铜川市', '商洛市', '汉中市', '铜川市']
-    let colorList = ['#39B3FF'];
-    let defaultData = data.map((v) => 1);
+
     const option = {
+        // backgroundColor: '#0A2E5E',
         grid: {
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
+            left: '3%',
+            right: '15%',
+            top: '3%',
+            bottom: '3%',
             containLabel: true
         },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'none'
-            },
-            formatter: function (params) {
-                return params[0].name + '<br/>' +
-                    "<span style='display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:rgba(36,207,233,0.9)'></span>" +
-                    params[0].seriesName + ' : ' + params[0].value + '%'
-            }
-        },
-        backgroundColor: 'rgb(20,28,52)',
-        xAxis: [
-            {
-                show: false,
-                type: 'value'
-            },
-            {
-                show: false,
-                type: 'value',
-                min: 0,
-                max: 1
-            }
-        ],
-        yAxis: [{
-            type: 'category',
-            inverse: true,
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: '#fff'
-                },
-            },
-            splitLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            axisLine: {
-                show: false
-            },
-            data: className
-        },
-
-        {
+        xAxis: {
             show: false,
+            type: 'value',
+            max: 46.04
+        },
+        yAxis: {
             type: 'category',
-            data: className
-        }
-        ],
+            data: data.map(item => item.range),
+            axisLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: {
+                color: '#fff',
+                fontSize: 14
+            }
+        },
         series: [
             {
-                name: '同比增长比例',
                 type: 'bar',
-                itemStyle: {
-                    normal: {
-                        barBorderRadius: 0,
-                        color: {
-                            type: 'linear',
-                            colorStops: [{
-                                offset: 0,
-                                color: "rgba(255, 255, 255, 0)",
-                            },
-                            {
-                                offset: 1,
-                                color: "rgba(0, 255, 233, 1)",
-                            },
-                            ],
-                        },
-
-                    },
-                },
-                barWidth: 5,
-                emphasis: {
-                    disabled: true,
-                    focus: 'none'
-                },
-                data: data
+                data: data.map(item => ({
+                    value: item.value,
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: item.colorStart }, // 起始颜色
+                            { offset: 1, color: item.colorEnd }   // 结束颜色
+                        ])
+                    }
+                })),
+                barWidth: '30%',
+                // label: {
+                //     show: true,
+                //     position: 'right',
+                //     formatter: '{c} km',
+                //     color: '#fff'
+                // }
             },
             {
-                name: '背景',
                 type: 'bar',
-                barWidth: 10,
-                data: defaultData,
-                emphasis: {
-                    disabled: true,
-                    focus: 'none'
-                },
-                xAxisIndex: 1,
-                yAxisIndex: 1,
+                data: data.map(() => 46.04),
+                barGap: '-100%',
+                barWidth: '30%',
                 itemStyle: {
-                    normal: {
-                        color: 'rgba(45, 243, 226, 0.10)',
-                        barBorderRadius: 0,
-
-                    }
+                    color: 'rgba(255, 255, 255, 0.1)'
                 },
-            },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '46.04 km',
+                    color: '#fff',
+                    fontSize: 12
+                }
+            }
         ]
     };
     mChart.setOption(option)

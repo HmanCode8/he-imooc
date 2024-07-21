@@ -3,76 +3,111 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
+import Bar3dChart from '../charts/Bar3dChart.vue';
+import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
 
 
-const list = ref([
+const roadAnaly = ref([
     {
-        name: '官网',
-        value: 100
+        name: '道路',
+        total: '59条'
     },
     {
-        name: '微信',
-        value: 30
+        name: '公里数',
+        total: '453km'
     },
     {
-        name: '微博',
-        value: 20
+        name: '路灯',
+        total: '12个'
     },
     {
-        name: '官网',
-        value: 100
-    },
-    {
-        name: '微信',
-        value: 30
-    },
-    {
-        name: '其他',
-        value: 10
+
+        name: '总功率',
+        total: '1000kW'
     }
 ])
 
-const tabs = ref([
-    {
-        name: '类型',
-        value: 'type'
-    },
-    {
-
-        name: '分区',
-        value: 'partition'
-    }
+const pipeChartdata = ref([
+    { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
+    { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
+    { name: '大丰区', percentage: 24, distance: '15km', color: '#36A2EB' },
+    { name: '建湖县', percentage: 24, distance: '25km', color: '#FFA07A' },
+    { name: '阜宁县', percentage: 24, distance: '25km', color: '#4BC0C0' },
+    { name: '滨海县', percentage: 24, distance: '25km', color: '#FF6384' },
+    { name: '响水县', percentage: 24, distance: '25km', color: '#FFCE56' },
+    { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
+    { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
 ])
 </script>
 
 <template>
     <div class="pipe-analy">
-        <FristLevelTitle title="官网分析"></FristLevelTitle>
-        <SecondLevelTitle title="报警来源"></SecondLevelTitle>
-        <ul class="flex flex-wrap">
-            <li class="flex m-2" v-for="item in list" :key="item.name">
-                <div class="flex flex-col justify-between">
-                    <div class="icon w-10 h-10 rounded-full bg-blue-500"></div>
+        <FristLevelTitle title="场站分析" />
+        <div class="pipe-analy-content w-full flex flex-wrap justify-between">
+            <div class="8k:w-1/2 4k:w-full h-60">
+                <ThirdLevelTitle title="总数" />
+                <Bar3dChart />
+            </div>
+            <div class="8k:w-1/2 4k:w-full h-60">
+                <ThirdLevelTitle title="总数" />
+                <Bar3dChart />
+            </div>
+            <div>
 
-                    <div class="text-sm text-blue-500 ml-2">{{ item.name }}</div>
-                </div>
-                <div class="flex flex-col justify-between">
-                    <div class="t">管线：163Km</div>
-                    <div class="t">管点：163Km</div>
-                </div>
-            </li>
-        </ul>
-        <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-        <ThirdLevelTitle title="官网管线">
-            <!-- tabs插槽 -->
-            <template v-slot:tabs>
-                <div class="tabs">
-                    <div class="tab-item flex items-center" v-for="tab in tabs" :key="tab.value">
-                        <div class="tab-item-title" :class="{ active: tab.value == tabs[0].value }">{{ tab.name }}</div>
+            </div>
+        </div>
+
+        <div class="w-full flex flex-wrap justify-between">
+            <div class="8k:w-1/2 4k:w-full">
+                <FristLevelTitle title="道路分析" />
+                <div class="analy-list w-full flex flex-wrap justify-between">
+                    <div v-for="(item, index) in roadAnaly" :key="index"
+                        class="analy-item w-[45%] flex justify-between p-2 m-1 bg-lime-400 items-center">
+                        <div class="analy-item-name">{{ item.name }}</div>
+                        <div class="analy-item-total">{{ item.total }}</div>
                     </div>
                 </div>
-            </template>
-        </ThirdLevelTitle>
+            </div>
+            <div class="8k:w-1/2 4k:w-full">
+                <FristLevelTitle title="桥梁分析" />
+                <div class="analy-list w-full flex flex-wrap justify-between">
+                    <div v-for="(item, index) in roadAnaly" :key="index"
+                        class="analy-item w-[45%] flex justify-between p-2 m-1 bg-lime-400 items-center">
+                        <div class="analy-item-name">{{ item.name }}</div>
+                        <div class="analy-item-total">{{ item.total }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="w-full flex flex-wrap justify-between">
+            <div class="8k:w-1/2 4k:w-full flex flex-col">
+                <div>
+                    <FristLevelTitle title="类型分析" />
+                    <div class="w-full flex">
+                        <div class="chart-container w-full h-60">
+                            <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+
+                        </div>
+                    </div>
+                </div>
+                <FristLevelTitle title="类型分析" />
+                <div class="analy-list w-full flex flex-wrap justify-between">
+                    <div class="chart-container w-full h-60">
+                        <Bar3dChart />
+
+                    </div>
+                </div>
+            </div>
+            <div class="8k:w-1/2 4k:w-full">
+                <FristLevelTitle title="桥梁分析" />
+                <div class="chart-container w-full h-96">
+                    <Bar3dChart />
+
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

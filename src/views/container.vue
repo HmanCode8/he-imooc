@@ -4,12 +4,12 @@
             <!-- 头部组件 -->
             <Header @onChageSizeType="(k) => sizeType = k" />
             <!-- 主体组件 -->
-            <div class="main-panel relative">
+            <div class="main-panel text-[12px] relative">
                 <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
                 <div
                     class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white  flex overflow-hidden">
                     <div
-                        :class="`left-panel  overflow-auto bg-[#102242]  absolute w-1/4 z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
+                        :class="`left-panel  overflow-auto bg-[#102242]  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                         <!-- 条件渲染的动态组件 -->
                         <component :is="currentComponentMap[currentComponent][0]"
                             class="w-full h-full box-border pb-4" />
@@ -21,7 +21,7 @@
                     </div>
                     <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
                     <div
-                        class="right-panel overflow-auto bg-[#102242]  absolute w-1/4 z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
+                        class="right-panel overflow-auto bg-[#102242]  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
                         <!-- 条件渲染的动态组件 -->
                         <!-- <div class="inner-bg absolute left-0 top-0 w-full h-full "></div> -->
                         <component :is="currentComponentMap[currentComponent][1]"

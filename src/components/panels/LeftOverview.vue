@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useEffct } from 'vue'
+import { useEffct, ref } from 'vue'
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
@@ -76,7 +76,7 @@ const oldList = [
         rate2: 90,
     },
     {
-        name: '第三方施工',
+        name: '三破',
         des1: '第三方施工巡检完成率',
         des2: '第三方施工巡检计划量',
         rate1: 70,
@@ -101,6 +101,21 @@ const arr1 = [
     }
 ]
 
+const olds = ref([
+    {
+        name: '燃气',
+        value: 50
+    },
+    {
+        name: '供水',
+        value: 70
+    },
+    {
+
+        name: '排水',
+        value: 60
+    }
+])
 
 </script>
 
@@ -169,13 +184,9 @@ const arr1 = [
             <DoubleBarLineChart />
         </div>
 
-
-        <SecondLevelTitle class="mt-4" title="运行维护"></SecondLevelTitle>
-
         <div class="old flex w-full justify-end">
             <ul class="flex flex-wrap w-full">
-                <li v-for="item in oldList" :key="item.name"
-                    class="text-sm 4k:w-full 8k:w-[24%] my-2 flex items-center mx-1">
+                <li v-for="item in oldList" :key="item.name" class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
                     <div class="flex flex-col">
                         <div class="icon w-8 h-8 rounded-full bg-slate-400"></div>
                         <div class="text-center">{{ item.name }}</div>
@@ -192,6 +203,17 @@ const arr1 = [
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <SecondLevelTitle class="mt-4" title="运行维护"></SecondLevelTitle>
+        <div class="flex">
+            <div class="font-bold w-1/3 text-lg mb-2">老旧改造完成率</div>
+            <div class="flex w-2/3 justify-between">
+                <div v-for="item in olds" :key="item.name" class="flex items-center">
+                    <div class="w-1/2 text-center">{{ item.name }}</div>
+                    <div class="w-1/2 text-center">{{ item.value }}%</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

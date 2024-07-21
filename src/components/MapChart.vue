@@ -37,33 +37,31 @@
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
 		<!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-		<div class="layer-tabs bg-[#215291] flex absolute left-1/4 top-1/2 translate-y-[-50%] z-10">
-			<div class="layer-bg w-full h-full">
-				<ul class="">
-					<li v-for="(tab, index) in layerTabs" :key="tab.value"
-						:class="`layer-tab my-10 px-4 relative hover:cursor-pointer`"
-						@click="currentLayerTab = tab.value">
-						<div :class="`layer-tab-name mt-2 ${currentLayerTab === tab.value ? 'bg-lime-400' : ''}`"> {{
-							tab.name }}
-						</div>
-						<div class="layer-tab-detail absolute left-20 w-20 bg-orange-800"
-							v-if="tab.detail && currentLayerTab === tab.value">
-							<div class="layer-tab-title">{{ tab.detail.title }}</div>
-							<div class="layer-tab-content">
-								<div v-for="(item, index) in tab.detail.content" :key="index" class="layer-tab-item">
-									<div class="layer-tab-item-name">{{ item.name }}</div>
-								</div>
+		<div class="layer-tabs bg-[#215291] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+			<ul class="w-16 flex flex-col items-center justify-center">
+				<li v-for="(tab, index) in layerTabs" :key="tab.value"
+					:class="`layer-tab w-full text-center relative hover:cursor-pointer`"
+					@click="currentLayerTab = tab.value">
+					<div :class="`layer-tab-name py-2 ${currentLayerTab === tab.value ? 'border-b' : ''}`"> {{
+						tab.name }}
+					</div>
+					<div class="layer-tab-detail absolute left-20 w-20 bg-orange-800"
+						v-if="tab.detail && currentLayerTab === tab.value">
+						<div class="layer-tab-title">{{ tab.detail.title }}</div>
+						<div class="layer-tab-content">
+							<div v-for="(item, index) in tab.detail.content" :key="index" class="layer-tab-item">
+								<div class="layer-tab-item-name">{{ item.name }}</div>
 							</div>
 						</div>
+					</div>
 
-					</li>
-				</ul>
-			</div>
+				</li>
+			</ul>
 		</div>
 
 		<!-- 右下角图例 -->
 
-		<div class="legend absolute bg-slate-400 right-1/4 mr-10 bottom-20 z-10">
+		<div class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
 			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
 			<div class="legend-content px-1">
 				<div class="legend-item flex items-center ">

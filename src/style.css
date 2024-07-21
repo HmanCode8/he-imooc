@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,#app {
+  height: 100%;
+}
+
+
+
+
 @font-face {
   font-family: 'Electronic';
   src: url('./assets/fonts/FX-LED.ttf') format('truetype');

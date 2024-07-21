@@ -1,5 +1,19 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+    <div class="w-full flex">
+        <div class="chart-container w-1/3 h-60">
+            <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+        </div>
+        <div class="legend w-2/3 flex flex-wrap">
+            <div class="item flex  w-[45%] border-b m-[1px] items-center" v-for="(item, index) in legend" :key="index">
+                <div :style="`background-color:${item.color}`" class="w-2 h-2"></div>
+                <div class="name">{{ item.name }}</div>
+                <div class="percentage">({{ item.percentage }}%)</div>
+                <div class="distance">{{ item.distance }}</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -11,6 +25,16 @@ const props = defineProps({
     data: {
         type: Object,
         required: true
+    },
+    legend: {
+        type: Array,
+        default: () => [
+            { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
+            { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
+            { name: '大丰区', percentage: 24, distance: '15km', color: '#36A2EB' },
+            { name: '建湖县', percentage: 24, distance: '25km', color: '#FFA07A' },
+            { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
+        ]
     }
 })
 

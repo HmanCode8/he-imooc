@@ -8,6 +8,13 @@ export default {
         // #529de9 25%, ##59b5db 50%, #6ce9c8 75%
         "custom-gradient":
           "linear-gradient(to right, #529de9 25%, #59b5db 50%, #6ce9c8 75%)",
+        "custom-bg-size": "background-size: 100% 100%;",
+      },
+      backgroundSize: {
+        "custom-size": "100% 100%",
+      },
+      height: {
+        "custom-height": "calc(100vh - 5rem)", // 示例：计算高度
       },
       screens: {
         "4k": "1080px",

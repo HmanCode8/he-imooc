@@ -1,5 +1,18 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div class="">
+        <div class="chart-container w-1/3 h-60">
+            <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+        </div>
+        <div class="legend w-2/3 flex flex-wrap">
+            <div class="item flex  w-[45%] border-b m-[1px] items-center" v-for="(item, index) in legend" :key="index">
+                <div :style="`background-color:${item.color}`" class="w-2 h-2"></div>
+                <div class="name">{{ item.name }}</div>
+                <div class="percentage">({{ item.percentage }}%)</div>
+                <div class="distance">{{ item.distance }}</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -12,6 +25,9 @@ const props = defineProps({
     data: {
         type: Object,
         required: true
+    },
+    legend: {
+        type: Array
     }
 })
 
@@ -168,7 +184,6 @@ const renderChart = () => {
         // 向每个 series-surface 传入不同的参数方程 series-surface.parametricEquation，也就是实现每一个扇形。
         for (let i = 0; i < series.length; i++) {
             endValue = startValue + series[i].pieData.value;
-            console.log(series[i]);
             series[i].pieData.startRatio = startValue / sumValue;
             series[i].pieData.endRatio = endValue / sumValue;
             series[i].parametricEquation = getParametricEquation(
@@ -186,49 +201,24 @@ const renderChart = () => {
         }
         return series;
     }
-    // 传入数据生成 option
     const optionsData = [
-        {
-            name: "猪",
-            value: 256,
-            itemStyle: {
-                //   opacity: 0.5,
-                color: "#f00",
-            },
-        },
-
-        {
-            name: "鸡",
-            value: 2356,
-            itemStyle: {
-                //   opacity: 0.5,
-                color: "#00EDFE",
-            },
-        },
-        {
-            name: "牛",
-            value: 2018,
-            itemStyle: {
-                //   opacity: 0.5,
-                color: "#FEDB4B",
-            },
-        },
-        {
-            name: "鸭",
-            value: 1998,
-            itemStyle: {
-                //   opacity: 0.5,
-                color: "#FE7C2F",
-            },
-        },
-    ];
+        { name: '亭湖区', value: 28, itemStyle: { color: '#FF6384' } },
+        { name: '盐都区', value: 22, itemStyle: { color: '#FFCE56' } },
+        { name: '大丰区', value: 30, itemStyle: { color: '#36A2EB' } },
+        { name: '建湖县', value: 26, itemStyle: { color: '#FFA07A' } },
+        { name: '阜宁县', value: 24, itemStyle: { color: '#4BC0C0' } },
+        { name: '滨海县', value: 27, itemStyle: { color: '#FF6384' } },
+        { name: '响水县', value: 23, itemStyle: { color: '#FFCE56' } },
+        { name: '东台市', value: 35, itemStyle: { color: '#36A2EB' } },
+        { name: '射阳县', value: 29, itemStyle: { color: '#FFA07A' } },
+    ]
     const series = getPie3D(optionsData, 0.8, 240, 28, 26, 0.5);
     series.push({
         name: "pie2d",
         type: "pie",
         label: {
             opacity: 1,
-            fontSize: 14,
+            fontSize: 10,
             lineHeight: 20,
             textStyle: {
                 fontSize: 14,
@@ -250,24 +240,7 @@ const renderChart = () => {
     });
     // 准备待返回的配置项，把准备好的 legendData、series 传入。
     let option = {
-        // legend: {
-        //     show: true,
-        //     tooltip: {
-        //         show: true,
-        //     },
-        //     orient: "vertical",
-        //     data: ["猪", "鸡", "牛", "鸭"],
-        //     top: "center",
-        //     itemGap: 14,
-        //     itemHeight: 8,
-        //     itemWidth: 17,
-        //     right: "2%",
-        //     textStyle: {
-        //         color: "#fff",
-        //         fontSize: 12,
-        //     },
-        // },
-        animation: true,
+        // animation: true,
         tooltip: {
             formatter: (params) => {
                 if (
@@ -327,7 +300,7 @@ const renderChart = () => {
         },
         grid3D: {
             show: false,
-            boxHeight: 0.01,
+            boxHeight: 2,
             //top: '30%',
             bottom: "50%",
             // environment: "rgba(255,255,255,0)",
