@@ -1,37 +1,28 @@
 <template>
-    <div class="w-fullh-full bg-[#051439] ">
-        <div class="w-full h-full 8k:w-full 4k:h-1/2 8k:m-auto flex flex-col 4k:text-sm 8k:text-lg">
-            <!-- 头部组件 -->
-            <Header @onChageSizeType="(k) => sizeType = k" />
-            <!-- 主体组件 -->
-            <div class="main-panel text-[12px] relative">
-                <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
-                <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white flex overflow-hidden">
-                    <div
-                        :class="`left-panel  overflow-auto bg-[#102242]  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
-                        <!-- 条件渲染的动态组件 -->
-                        <component :is="currentComponentMap[currentComponent][0]"
-                            class="w-full h-full box-border pb-4" />
+    <div class="w-full h-full bg-[#051439] ">
+        <!-- 头部组件 -->
+        <Header @onChageSizeType="(k) => sizeType = k" />
+        <!-- 主体组件 -->
+        <div class="main-panel relative">
+            <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
+            <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white flex overflow-hidden">
+                <div
+                    :class="`left-panel 8k:pr-10 4k:pr-6 overflow-auto  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
+                    <!-- 条件渲染的动态组件 -->
+                    <component :is="currentComponentMap[currentComponent][0]" class="w-full h-full box-border pb-4" />
 
-                    </div>
+                </div>
+                <div class="w-full h-full flex flex-col">
+                    <!-- 数据展示图 -->
+                    <MapChart class="bg-opacity-50  flex-1" />
+                </div>
+                <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
+                <div
+                    class="right-panel 8k:pl-10 overflow-auto  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
+                    <!-- 条件渲染的动态组件 -->
+                    <!-- <div class="inner-bg absolute left-0 top-0 w-full h-full "></div> -->
+                    <component :is="currentComponentMap[currentComponent][1]" class="w-full h-full box-border pb-4" />
 
-
-                    <div class="w-full h-full flex flex-col">
-                        <!-- 数据展示图 -->
-                        <MapChart @changeComponent="changeComponent" class="bg-opacity-50  flex-1" />
-                    </div>
-
-
-
-                    <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
-                    <div
-                        class="right-panel overflow-auto bg-[#102242]  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
-                        <!-- 条件渲染的动态组件 -->
-                        <!-- <div class="inner-bg absolute left-0 top-0 w-full h-full "></div> -->
-                        <component :is="currentComponentMap[currentComponent][1]"
-                            class="w-full h-full box-border pb-4" />
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -74,7 +65,7 @@ const data = ref(null)
 
 const sizeType = ref('small')
 
-const currentComponent = ref('infrastructure')
+const currentComponent = ref('')
 
 // 组件映射对象
 const currentComponentMap = {
@@ -87,13 +78,10 @@ const currentComponentMap = {
 };
 
 
-const changeComponent = (value) => {
-    console.log('value', value)
-    currentComponent.value = value
-}
-
 watch(() => store.componentId, (value) => {
-    console.log('value', value)
+    currentComponent.value = value
+}, {
+    immediate: true
 })
 
 // 加载数据函数
@@ -115,21 +103,16 @@ loadData()
 <style scoped lang="scss">
 .main-panel {
     .left-panel {
-        // background-image: url('@/assets/imgs/panel.svg');
-        // background-size: cover;
-        // /*或者使用 contain*/
-        // background-position: center;
+        background-image: url('@/assets/imgs/panel-left.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
     }
 
     .right-panel {
-        .inner-bg {
-            // background-image: url('@/assets/imgs/panel.svg');
-            // background-size: cover;
-            // //只要背景图旋转就可以了
-            // transform: rotate(180deg);
-            // /*或者使用 contain*/
-            // background-position: center;
-        }
+        background-image: url('@/assets/imgs/panel-right.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
     }
+
 }
 </style>

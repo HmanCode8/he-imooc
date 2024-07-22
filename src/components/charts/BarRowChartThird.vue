@@ -5,6 +5,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
+import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
     data: {
@@ -17,14 +18,14 @@ const target = ref(null)
 let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value)
-    renderChart()
 })
 
-const handleResize = () => {
+const handleResize = (size) => {
+    const fontSize = useRootFontSize()
+    renderChart(fontSize)
     mChart.resize()
 }
-
-const renderChart = () => {
+const renderChart = (fontSize) => {
     const datas = [
         { name: "taskA", percent: "58", total: "158111", finished: "82311" },
         { name: "taskB", percent: "76", total: "16522", finished: "9873" },
@@ -65,7 +66,7 @@ const renderChart = () => {
                 axisLabel: {
                     lineHeight: 0,
                     verticalAlign: "bottom",
-                    fontSize: 11,
+                    fontSize,
                     color: "#e6a635",
                     formatter: "{value}"
                 },
@@ -87,7 +88,7 @@ const renderChart = () => {
                 axisLabel: {
                     lineHeight: 0,
                     verticalAlign: "bottom",
-                    fontSize: 10,
+                    fontSize,
                     color: "#19E5E6",
                     formatter: "{value}"
                 },

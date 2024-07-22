@@ -1,10 +1,9 @@
 <script setup>
-import { ref} from "vue";
+import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
 import PipeChart from "../charts/pipeChart.vue";
-import BarRowChartTow from "../charts/barRowChartTow.vue";
 import Bar3dChartOMSecond from "../charts/Bar3dChartOMSecond.vue";
 import DoubleBarChart from "../charts/DoubleBarChart.vue";
 import pipeChart from "../charts/pipeChart.vue";
@@ -130,7 +129,7 @@ const Pie3DChartData = ref([
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
         <div v-for="(item, index) in liquidChartData" :key="index">
           <LiquidChart :liquidData="item" />
-        </div>        
+        </div>
       </div>
     </div>
   </div>

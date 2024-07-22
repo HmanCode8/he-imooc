@@ -6,7 +6,7 @@
 import { h, onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
 import 'echarts-gl'
-import { Label } from 'cesium';
+import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
     data: {
@@ -15,52 +15,40 @@ const props = defineProps({
     }
 })
 
+
 const target = ref(null)
 let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value)
-    renderChart()
+
 })
 
 const handleResize = (size) => {
-    console.log('resize', size)
+    const fontSize = useRootFontSize()
+    renderChart(fontSize)
     mChart.resize()
 }
-
-// const data = [
-//     { range: '<110', value: 190000 },
-//     { range: '110~250', value: 270000 },
-//     { range: '250~630', value: 200000 },
-//     { range: '大于630', value: 150000 }
-// ];
 
 var xData = ['<110', '110~250', '250~630', '大于630']
 var data1 = [190000, 270000, 200000, 150000];
 
 
-const renderChart = () => {
+const renderChart = (fontSize) => {
     const option = {
-        // backgroundColor: "#000000",
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
+                type: 'shadow',
             },
-            formatter: function (parms) {
-                var str =
-                    '月份：' +
-                    parms[0].axisValue +
-                    '</br>' +
-                    parms[0].marker +
-                    '预警项目:' +
-                    parms[0].value
+            formatter: function (params) {
+                var str = `类别：${params[0].axisValue}</br>${params[0].marker} 预警项目: ${params[0].value}`;
                 return str;
             },
         },
         legend: {
             show: false,
             data: ['预警项目'],
-            textStyle: { fontSize: 12, color: '#fff' },
+            textStyle: { fontSize, color: '#fff' },
             itemWidth: 12,
             itemHeight: 12,
             itemGap: 15,
@@ -70,7 +58,7 @@ const renderChart = () => {
         textStyle: {
             color: '#ffffff',
         },
-        color: ['#24F3FF', '#24F3FF', '#FDBF47', '#FDBF47'],
+        color: ['#61d2e0', '#61d2e0', '#FDBF47', '#FDBF47'],
         grid: {
             containLabel: true,
             left: '6%',
@@ -90,7 +78,7 @@ const renderChart = () => {
                 show: false,
             },
             axisLabel: {
-                margin: 10, //刻度标签与轴线之间的距离。
+                margin: 10,
                 textStyle: {
                     fontFamily: 'Microsoft YaHei',
                     color: '#ffffff',
@@ -109,13 +97,12 @@ const renderChart = () => {
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: '#B5B5B5',
+                    color: '#61d2e0',
                 },
             },
             splitLine: {
                 lineStyle: {
-                    // 使用深浅的间隔色
-                    color: ['#B5B5B5'],
+                    color: ['#61d2e0'],
                     type: 'dashed',
                     opacity: 0.5,
                 },
@@ -126,7 +113,6 @@ const renderChart = () => {
             {
                 name: "预警项目",
                 data: data1,
-                stack: 'zs',
                 type: 'bar',
                 barMaxWidth: 'auto',
                 barWidth: 22,

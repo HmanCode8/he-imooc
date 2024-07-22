@@ -4,7 +4,7 @@ import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
-import BarRowChartTow from '../charts/BarRowChartTow.vue';
+import BarRowChart from '../charts/BarRowChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
 
@@ -103,7 +103,7 @@ const pipeChartdata = ref([
 
                 <div class="w-full flex">
                     <div class="chart-container w-full h-60">
-                        <BarRowChartTow />
+                        <BarRowChart />
                     </div>
                 </div>
             </div>

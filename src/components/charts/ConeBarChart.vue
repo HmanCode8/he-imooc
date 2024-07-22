@@ -5,6 +5,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
+import useRootFontSize from '@/hooks/useRootFontSize';
+
 
 const props = defineProps({
     data: {
@@ -31,22 +33,23 @@ const target = ref(null);
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
-    renderChart();
-    window.addEventListener('resize', handleResize);
 });
 
 const handleResize = () => {
+    const rootFontSize = useRootFontSize();
+    renderChart(rootFontSize.value);
     if (mChart) {
         mChart.resize();
     }
 };
 
+
 let xLabel = ["2018", "2019", "2020", "2021", "2022"];
 let dataValue = [20, 30, 20, 25, 35];
 
-const renderChart = () => {
+const renderChart = (fontSize) => {
     const option = {
-        // backgroundColor: '#00266b',
+        backgroundColor: '#f00',
         tooltip: {
             show: true,
             trigger: "axis", //axis , item
@@ -56,7 +59,7 @@ const renderChart = () => {
             borderRadius: 0,
             textStyle: {
                 color: "#BCE9FC",
-                fontSize: 16,
+                fontSize,
                 align: "left"
             }
         },
@@ -81,7 +84,7 @@ const renderChart = () => {
                     //坐标轴刻度标签的相关设置
                     textStyle: {
                         color: "#FFFFFF",
-                        fontSize: 12
+                        fontSize
                     }
                 },
                 splitLine: {
@@ -103,7 +106,7 @@ const renderChart = () => {
                 name: "(万元)",
                 nameTextStyle: {
                     color: "white",
-                    fontSize: 12,
+                    fontSize,
                     padding: [0, 0, 0, -30]
                 },
                 // minInterval: 1,
@@ -125,7 +128,7 @@ const renderChart = () => {
                     show: true,
                     textStyle: {
                         color: "#fff",
-                        fontSize: 12
+                        fontSize
                     }
                 },
                 axisTick: {
@@ -144,7 +147,7 @@ const renderChart = () => {
                         position: "top",
                         textStyle: {
                             color: "#d1ae36",
-                            fontSize: 12
+                            fontSize
                         }
                     }
                 },

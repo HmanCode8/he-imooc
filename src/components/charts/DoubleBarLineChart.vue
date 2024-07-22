@@ -5,6 +5,8 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
+import useRootFontSize from '@/hooks/useRootFontSize';
+
 
 const props = defineProps({
     data: {
@@ -16,15 +18,18 @@ const props = defineProps({
 const target = ref(null)
 let mChart = null
 onMounted(() => {
-    mChart = echarts.init(target.value)
-    renderChart()
-})
+    mChart = echarts.init(target.value);
+});
 
 const handleResize = () => {
-    mChart.resize()
-}
+    const rootFontSize = useRootFontSize();
+    renderChart(rootFontSize.value);
+    if (mChart) {
+        mChart.resize();
+    }
+};
 
-const renderChart = () => {
+const renderChart = (fontSize) => {
     const chartData = [
         { name: '燃气', completed: 220, planned: 600, rate: 72 },
         { name: '供水', completed: 100, planned: 160, rate: 24 },
@@ -41,7 +46,7 @@ const renderChart = () => {
             text: '巡检总览',
             textStyle: {
                 color: '#fff',
-                fontSize: 14
+                fontSize // 设置标题字体大小
             },
             right: '1%',
             top: '3%'
@@ -55,7 +60,8 @@ const renderChart = () => {
         legend: {
             data: ['巡检完成量', '计划巡检量', '巡检完成率'],
             textStyle: {
-                color: '#fff'
+                color: '#fff',
+                fontSize // 设置图例字体大小
             },
             top: '3%',
             left: '1%'
@@ -71,8 +77,11 @@ const renderChart = () => {
             data: chartData.map(item => item.name),
             axisLine: {
                 lineStyle: {
-                    color: '#fff'
+                    color: '#fff',
                 }
+            },
+            axisLabel: {
+                fontSize // 设置 x 轴标签字体大小
             }
         },
         yAxis: [
@@ -83,7 +92,8 @@ const renderChart = () => {
                 max: 200,
                 interval: 50,
                 axisLabel: {
-                    formatter: '{value}'
+                    formatter: '{value}',
+                    fontSize // 设置 y 轴标签字体大小
                 },
                 axisLine: {
                     lineStyle: {
@@ -124,6 +134,7 @@ const renderChart = () => {
             }
         ]
     };
+
     mChart.setOption(option)
 }
 </script>

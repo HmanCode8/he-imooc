@@ -4,20 +4,17 @@
 		<!-- 专题栏 -->
 		<div
 			class="top-tabs  w-full flex  items-center justify-center absolute left-1/2 translate-x-[-50%] top-0  z-10 ">
-			<div class="tabs-container bg-[url('assets/imgs/to-tabs-bg.png')]  bg-cover flex justify-between p-2  mt-4">
-				<div :class="`t-item hover:cursor-pointer m-2 font-bold  ${currentTopTab === tab.value ? 'text-[#75fbfd]' : ''}`"
-					v-for="tab in topTabs" :key="tab.value" @click="topTabChange(tab.value)">{{ tab.name }}</div>
-				<!-- <el-segmented v-model="currentTopTab" :options="topTabs">
-					<template #default="{ item }">
-						<div class="">
-							<el-icon size="20">
-								<component :is="item.icon" />
-							</el-icon>
-							<div class="">{{ item.name }}</div>
-						</div>
-					</template>
-</el-segmented> -->
-
+			<div
+				class="tabs-container bg-[url('assets/imgs/t-tabs.png')] w-1/3 h-20  bg-cover flex justify-between px-10  mt-4">
+				<div :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${currentTopTab === tab.value ? 'text-[#75fbfd] ' : ''}`"
+					v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
+					<div>
+						{{ tab.name }}
+					</div>
+					<div v-if="currentTopTab === tab.value"
+						class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4">
+					</div>
+				</div>
 			</div>
 
 
@@ -26,7 +23,7 @@
 		<!-- :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`" -->
 		<div
 			class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0  z-10 ">
-			<div :class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
+			<div :class="`flex flex-col font-bold items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
 				v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
 				<div :class="`blink-${index + 1} w-10 h-10 bg-cover`">
 				</div>
@@ -85,7 +82,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRef, watch } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
 import VectorLayer from 'ol/layer/Vector'
@@ -113,15 +110,17 @@ import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
 import { get as getProjection } from 'ol/proj';
 import { register } from "ol/proj/proj4";
+
+
 const global = useGlobalStore()
 const target = ref(null)
-const currentTopTab = ref('overview')
+const currentTopTab = toRef(global.componentId)
 const currentBottomTab = ref('underground-pipeline')
 const currentLayerTab = ref('pipeline')
 const map = ref(null);
 const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
-const emits = defineEmits(['changeComponent'])
+
 
 const topTabs = ref([
 	{
@@ -250,77 +249,21 @@ const layerTabs = ref([
 	}
 ])
 
-const topTabChange = (value) => {
-	global.setMapCurrentTab(value)
-	emits('changeComponent', value)
+
+watch(() => global.componentId, (value) => {
 	currentTopTab.value = value
-}
-
-const computerLayout = (size, index, initStyle = 10) => {
-	let styles = []
-	for (let key = 0; key <= size; key++) {
-		styles.push(initStyle * key)
-	}
-	const newStyles = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
-	const newStyles1 = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
-	const arr = [..._.reverse(newStyles), ...newStyles1]
-	const nextstyles = [...newStyles1, ...(size % 2 === 0 ? _.reverse(newStyles1) : _.tail(_.reverse(newStyles1)))]
-	return size === 10 ? nextstyles[index] : arr[index]
-}
-
-const openDB = () => {
-	return new Promise((resolve, reject) => {
-		const request = indexedDB.open('TileCacheDB', 1);
-
-		request.onupgradeneeded = (event) => {
-			const db = event.target.result;
-			if (!db.objectStoreNames.contains('tiles')) {
-				db.createObjectStore('tiles', { keyPath: 'url' });
-			}
-		};
-
-		request.onsuccess = (event) => {
-			resolve(event.target.result);
-		};
-
-		request.onerror = (event) => {
-			reject('Error opening IndexedDB: ', event.target.errorCode);
-		};
-	});
-};
-
-const loadTile = (url, tile, db) => {
-	const transaction = db.transaction(['tiles'], 'readonly');
-	const store = transaction.objectStore('tiles');
-	const request = store.get(url);
-
-	request.onsuccess = () => {
-		if (request.result) {
-			const tileUrlFunction = tile.getTileUrlFunction();
-			tile.getImage().src = tileUrlFunction(tile.getTileCoord(), 1, ol.proj.get('EPSG:3857'));
-		} else {
-			fetch(url)
-				.then(response => response.blob())
-				.then(blob => {
-					const objectURL = URL.createObjectURL(blob);
-					tile.getImage().src = objectURL;
-
-					const transaction = db.transaction(['tiles'], 'readwrite');
-					const store = transaction.objectStore('tiles');
-					store.put({ url, blob });
-				})
-				.catch(err => {
-					console.error('Failed to fetch tile:', err);
-					tile.setState(3); // Set tile state to error
-				});
-		}
-	};
-
-	request.onerror = (event) => {
-		console.error('Error fetching tile from IndexedDB:', event.target.errorCode);
-	};
-};
-
+})
+// const computerLayout = (size, index, initStyle = 10) => {
+// 	let styles = []
+// 	for (let key = 0; key <= size; key++) {
+// 		styles.push(initStyle * key)
+// 	}
+// 	const newStyles = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
+// 	const newStyles1 = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
+// 	const arr = [..._.reverse(newStyles), ...newStyles1]
+// 	const nextstyles = [...newStyles1, ...(size % 2 === 0 ? _.reverse(newStyles1) : _.tail(_.reverse(newStyles1)))]
+// 	return size === 10 ? nextstyles[index] : arr[index]
+// }
 
 const initOpenLayersMap = () => {
 	// 引入4490坐标系定义
@@ -410,7 +353,7 @@ const initCesiumMap = async () => {
 
 
 onMounted(() => {
-	initOpenLayersMap()
+	// initOpenLayersMap()
 })
 const toggleMap = () => {
 	if (isCesiumMap.value) {
@@ -484,10 +427,20 @@ const toggleMap = () => {
 }
 
 .select-active {
-	filter: drop-shadow(2px 4px 6px red);
-	color: #7fcc58;
+	// filter: drop-shadow(2px 4px 6px red);
+	color: #00FAFF;
+	background-image: url('@/assets/imgs/icon-b-active.png');
+	background-size: 100% 100%;
 	transform: translateY(-20px);
+	// background-position: center center;
 	transition: all 0.3s ease-in-out;
+	// background-repeat: no-repeat;
+}
+
+.t-item-line {
+	background-image: url('@/assets/imgs/t-tabs-active.png');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .info-overlay {

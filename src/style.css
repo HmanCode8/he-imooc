@@ -2,13 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html {
+  font-size: 12px; /* 默认 */
+}
+
+@media (min-width: 3840px) { /* 4k 分辨率 */
+  html {
+    font-size: 16px; /* 调整基准值 */
+  }
+}
+@media (min-width: 9999px) { /* 浏览器预览测试的最大值 */
+  html {
+    font-size: 41px; /* 调整基准值 */
+  }
+}
+@media (min-width: 11520px) { /* 12k 分辨率 */
+  html {
+    font-size: 48px; /* 调整基准值 */
+  }
+}
 html,
 body,#app {
   height: 100%;
 }
-
-
-
 
 @font-face {
   font-family: 'Electronic';
