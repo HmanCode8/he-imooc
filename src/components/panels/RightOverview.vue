@@ -5,6 +5,7 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import PipeChart from '../charts/PipeChart.vue'
 import barRowChart from '../charts/BarRowChart.vue'
+import Tablechart from '../charts/Tablechart.vue'
 
 import { useGlobalStore } from "@/store";
 
@@ -203,7 +204,7 @@ const riskData = [
         </div>
 
         <div>
-            <div class="grid grid-cols-5 bg-sky-400 px-3 justify-between w-full">
+            <div class="grid grid-cols-5 bg-[#1c3d6d] px-3 justify-between w-full">
                 <div class="">类型</div>
                 <div class="">报警数</div>
                 <div class="">已核查</div>
@@ -211,14 +212,14 @@ const riskData = [
                 <div class="">已办结</div>
             </div>
             <div class="table-body">
-                <div class=" grid grid-cols-5  px-3 justify-between w-full">
+                <div class=" grid grid-cols-5 bg-[#081f51]  px-3 justify-between w-full">
                     <div class="">排水报警</div>
                     <div class="">10</div>
                     <div class="">4</div>
                     <div class="">6</div>
                     <div class="">12</div>
                 </div>
-                <div class=" grid grid-cols-5  px-3 justify-between w-full">
+                <div class=" grid grid-cols-5 bg-[#142d5d] px-3 justify-between w-full">
                     <div class="">第三方施工报警</div>
                     <div class="">10</div>
                     <div class="">4</div>

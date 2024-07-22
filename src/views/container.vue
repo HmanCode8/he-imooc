@@ -1,6 +1,6 @@
 <template>
     <div class="w-fullh-full bg-[#051439]">
-        <div class="w-full h-full 8k:w-3/3 4k:h-1/2 8k:m-auto flex flex-col 4k:text-sm 8k:text-lg">
+        <div class="w-full h-full 8k:w-full 4k:h-1/2 8k:m-auto flex flex-col 4k:text-sm 8k:text-lg">
             <!-- 头部组件 -->
             <Header @onChageSizeType="(k) => sizeType = k" />
             <!-- 主体组件 -->
@@ -15,10 +15,15 @@
                             class="w-full h-full box-border pb-4" />
 
                     </div>
-                    <div class="w-full flex flex-col">
+
+
+                    <div class="w-full h-full flex flex-col">
                         <!-- 数据展示图 -->
                         <MapChart @changeComponent="changeComponent" class="bg-opacity-50  flex-1" />
                     </div>
+
+
+
                     <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
                     <div
                         class="right-panel overflow-auto bg-[#102242]  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
@@ -74,16 +79,17 @@ const currentComponent = ref('infrastructure')
 
 // 组件映射对象
 const currentComponentMap = {
-    'infrastructure': [LeftPipeAnaly, RightPipeAnaly],
-    'overview': [LeftOverview, RightOverview],
-    'project-management': [LeftProjectManagement, RightProjectManagement],
-    'operation-maintenance': [LeftOperationMaintenance, RightOperationMaintenance],
-    'running-monitoring': [LeftRunningMonitoring, RightRunningMonitoring],
-    'warning-disposal': [LeftWarningDisposal, RightWarningDisposal]
+    'infrastructure': [LeftPipeAnaly, RightPipeAnaly], // 基础设施
+    'overview': [LeftOverview, RightOverview], // 总览
+    'project-management': [LeftProjectManagement, RightProjectManagement], // 项目管理
+    'operation-maintenance': [LeftOperationMaintenance, RightOperationMaintenance], // 运维管理
+    'running-monitoring': [LeftRunningMonitoring, RightRunningMonitoring],  // 运行监控
+    'warning-disposal': [LeftWarningDisposal, RightWarningDisposal] // 报警处置
 };
 
 
 const changeComponent = (value) => {
+    console.log('value', value)
     currentComponent.value = value
 }
 

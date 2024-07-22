@@ -4,79 +4,105 @@ import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 
-import BarRowChartThird from '../charts/BarRowChartThird.vue'
+import ConeBarChart from '../charts/ConeBarChart.vue'
 
-const list = ref([
+const data = ref([
     {
-        name: '官网',
-        value: 100
+        name: '燃气',
+        onLine: 100,
+        offLine: 200,
+        total: 300
     },
     {
-        name: '微信',
-        value: 30
+        name: '电力',
+        onLine: 100,
+        offLine: 200,
+        total: 300
     },
     {
-        name: '微博',
-        value: 20
+        name: '水电',
+        onLine: 100,
+        offLine: 200,
+        total: 300
     },
     {
-        name: '官网',
-        value: 100
+        name: '热力',
+        onLine: 100,
+        offLine: 200,
+        total: 300
     },
-    {
-        name: '微信',
-        value: 30
-    },
-    {
-        name: '其他',
-        value: 10
-    }
 ])
 
-const tabs = ref([
-    {
-        name: '类型',
-        value: 'type'
-    },
-    {
+const runningData = ref(
+    [
+        {
+            name: '覆盖率',
+            value: 122.45
+        },
 
-        name: '分区',
-        value: 'partition'
-    }
-])
+        {
+            name: '设备总数',
+            value: 1212
+        },
+        {
+            name: '在线率',
+            value: 62.1
+        }
+    ]
+)
 </script>
 
 <template>
     <div class="pipe-analy">
-        <FristLevelTitle title="官网分析"></FristLevelTitle>
-        <SecondLevelTitle title="报警来源"></SecondLevelTitle>
-        <ul class="flex flex-wrap">
-            <li class="flex m-2" v-for="item in list" :key="item.name">
-                <div class="flex flex-col justify-between">
-                    <div class="icon w-10 h-10 rounded-full bg-blue-500"></div>
+        <FristLevelTitle title="设施概况"></FristLevelTitle>
+        <SecondLevelTitle title="状态分析"></SecondLevelTitle>
+        <div class="flex justify-around">
+            <div class="flex items-center">物联网设备 <div class="icon w-8 h-2 bg-green-500"></div> <span>1854</span>台</div>
+            <div class="flex items-center">在线设备 <div class="icon w-8 h-2 bg-green-500"></div> <span>1234</span>台</div>
+            <div class="flex items-center">在线率 <div class="icon w-8 h-2 bg-green-500"></div> <span>621</span>%</div>
+        </div>
 
-                    <div class="text-sm text-blue-500 ml-2">{{ item.name }}</div>
+        <div class="flex items-center justify-between">
+            <div class="flex w-1/3 items-center flex-wrap">
+                <div v-for="item in data" class="flex w-1/2 flex-col bg-yellow-500 items-center">
+                    <div>在线：{{ item.onLine }}</div>
+                    <div>离线：{{ item.offLine }}</div>
+                    <div>{{ item.name }}</div>
                 </div>
-                <div class="flex flex-col justify-between">
-                    <div class="t">管线：163Km</div>
-                    <div class="t">管点：163Km</div>
+            </div>
+            <div class="flex w-1/3 items-center flex-wrap">
+                中间
+            </div>
+            <div class="flex w-1/3 items-center flex-wrap">
+                <div v-for="item in data" class="flex w-1/2 flex-col bg-yellow-500 items-center">
+                    <div>在线：{{ item.onLine }}</div>
+                    <div>离线：{{ item.offLine }}</div>
+                    <div>{{ item.name }}</div>
                 </div>
-            </li>
-        </ul>
-        <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-        <ThirdLevelTitle title="官网管线">
-            <!-- tabs插槽 -->
-            <template v-slot:tabs>
-                <div class="tabs">
-                    <div class="tab-item flex items-center" v-for="tab in tabs" :key="tab.value">
-                        <div class="tab-item-title" :class="{ active: tab.value == tabs[0].value }">{{ tab.name }}</div>
+            </div>
+        </div>
+
+        <SecondLevelTitle title="布设分析"></SecondLevelTitle>
+        <div class="flex flex-wrap justify-between">
+            <div class="8k:w-1/2 4k:w-full flex justify-between">
+                <div class="flex flex-col items-center">
+                    <div v-for="item in runningData" class="flex flex-col items-center">
+                        <div>{{ item.value }}</div>
+                        <div>{{ item.name }}</div>
                     </div>
                 </div>
-            </template>
-        </ThirdLevelTitle>
-        <div class="w-full h-1/2">
-            <BarRowChartThird />
+                <div>
+                    <ThirdLevelTitle title="设备类型" />
+                    <div>
+                        大大大
+                    </div>
+                </div>
+            </div>
+            <div class="8k:w-1/2 4k:w-full h-60">
+                <ConeBarChart />
+            </div>
         </div>
+
     </div>
 </template>
 
