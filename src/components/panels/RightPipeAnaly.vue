@@ -63,9 +63,12 @@ const pipeChartdata = ref([
                 <FristLevelTitle title="道路分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in roadAnaly" :key="index"
-                        class="analy-item w-[45%] flex justify-between p-2 m-1 bg-lime-400 items-center">
-                        <div class="analy-item-name">{{ item.name }}</div>
-                        <div class="analy-item-total">{{ item.total }}</div>
+                        class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-[url('assets/imgs/road-item-1.png')] bg-cover"></div>
+                            <div class="analy-item-name px-1">{{ item.name }}</div>
+                        </div>
+                        <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
                     </div>
                 </div>
             </div>
@@ -73,9 +76,12 @@ const pipeChartdata = ref([
                 <FristLevelTitle title="桥梁分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in roadAnaly" :key="index"
-                        class="analy-item w-[45%] flex justify-between p-2 m-1 bg-lime-400 items-center">
-                        <div class="analy-item-name">{{ item.name }}</div>
-                        <div class="analy-item-total">{{ item.total }}</div>
+                        class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-[url('assets/imgs/road-item-1.png')] bg-cover"></div>
+                            <div class="analy-item-name px-1">{{ item.name }}</div>
+                        </div>
+                        <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
                     </div>
                 </div>
             </div>
@@ -85,7 +91,7 @@ const pipeChartdata = ref([
         <div class="w-full flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full flex flex-col">
                 <div>
-                    <FristLevelTitle title="类型分析" />
+                    <SecondLevelTitle title="类型分析" />
                     <div class="w-full flex">
                         <div class="chart-container w-full h-60">
                             <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
@@ -93,7 +99,7 @@ const pipeChartdata = ref([
                         </div>
                     </div>
                 </div>
-                <FristLevelTitle title="类型分析" />
+                <SecondLevelTitle title="密度分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
                     <div class="chart-container w-full h-60">
                         <Bar3dChart />
@@ -102,7 +108,7 @@ const pipeChartdata = ref([
                 </div>
             </div>
             <div class="8k:w-1/2 4k:w-full">
-                <FristLevelTitle title="桥梁分析" />
+                <SecondLevelTitle title="养护分析" />
                 <div class="chart-container w-full h-96">
                     <Bar3dChart />
 
@@ -112,4 +118,11 @@ const pipeChartdata = ref([
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.analy-item {
+    background-image: url('@/assets/imgs/road-item-bg.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+</style>

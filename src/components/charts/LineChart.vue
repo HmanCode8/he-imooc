@@ -5,6 +5,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
+import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
     data: {
@@ -27,15 +28,16 @@ const props = defineProps({
     },
 });
 
+
 const target = ref(null);
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
-    renderChart();
-    window.addEventListener('resize', handleResize);
 });
 
 const handleResize = () => {
+    const rootFontSize = useRootFontSize();
+    renderChart(rootFontSize.value);
     if (mChart) {
         mChart.resize();
     }
@@ -43,9 +45,9 @@ const handleResize = () => {
 
 let xLabel = ["2018", "2019", "2020", "2021", "2022"];
 let dataValue = [20, 30, 20, 25, 35];
-const renderChart = () => {
+const renderChart = (fontSize = 12) => {
     const option = {
-        // backgroundColor: '#00266b',
+        // backgroundColor: '#f00',
         tooltip: {
             show: true,
             trigger: "axis", //axis , item
@@ -55,7 +57,7 @@ const renderChart = () => {
             borderRadius: 0,
             textStyle: {
                 color: "#BCE9FC",
-                fontSize: 16,
+                fontSize: fontSize,
                 align: "left"
             }
         },
@@ -77,8 +79,8 @@ const renderChart = () => {
                 },
                 axisLabel: {
                     textStyle: {
-                        color: "#FFFFFF",
-                        fontSize: 12
+                        color: "#f00",
+                        fontSize: fontSize
                     }
                 },
                 splitLine: {
@@ -91,7 +93,7 @@ const renderChart = () => {
                 axisTick: {
                     show: false
                 },
-                data: ['分输站', '母站', '门站', '调压站']
+                data: xLabel
             }
         ],
         yAxis: [
@@ -99,7 +101,7 @@ const renderChart = () => {
                 name: "单位：个",
                 nameTextStyle: {
                     color: "white",
-                    fontSize: 12,
+                    fontSize: fontSize,
                     padding: [0, 0, 0, -40]
                 },
                 type: "value",
@@ -120,7 +122,7 @@ const renderChart = () => {
                     show: true,
                     textStyle: {
                         color: "#fff",
-                        fontSize: 12
+                        fontSize: fontSize
                     }
                 },
                 axisTick: {
@@ -139,7 +141,7 @@ const renderChart = () => {
                         position: "top",
                         textStyle: {
                             color: "#d1ae36",
-                            fontSize: 12
+                            fontSize: fontSize
                         }
                     }
                 },
@@ -168,7 +170,7 @@ const renderChart = () => {
                     }
                 },
                 symbol: "path://M0,0 L10,0 L5,-20 Z", // 定义三角形路径
-                data: [30, 25, 20, 15],
+                data: dataValue,
                 z: 10 // 确保三角形在最前面
             },
             {
@@ -183,7 +185,7 @@ const renderChart = () => {
                 },
                 symbolOffset: [0, 0], // 偏移使背景梯形位置正确
                 symbolSize: ['150%', '100%'], // 调整梯形大小
-                data: [30, 25, 20, 15],
+                data: dataValue,
                 z: 5 // 确保梯形在三角形后面
             }
         ],

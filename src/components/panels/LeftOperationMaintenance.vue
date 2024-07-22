@@ -1,10 +1,10 @@
-<script setup lang="ts">
-import { ref, useEffct } from "vue";
+<script setup>
+import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
 import PipeChart from "../charts/pipeChart.vue";
-import BarRowChartTow from "../charts/barRowChartTow.vue";
+import BarRowChart from "../charts/BarRowChart.vue";
 
 import { useGlobalStore } from "@/store";
 
@@ -105,11 +105,8 @@ const pipeChartdata = ref([
       <div class="8k:w-1/2 4k:w-full">
         <ThirdLevelTitle class="w-full" title="上报问题数量"></ThirdLevelTitle>
         <div class="w-full flex">
-          <div
-            class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center"
-            v-for="(item, index) in problems"
-            :key="index"
-          >
+          <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center" v-for="(item, index) in problems"
+            :key="index">
             <div class="icon w-4 h-4 bg-slate-500"></div>
             <div class>
               <div class="name">{{ item.name }}(个)</div>
@@ -130,12 +127,9 @@ const pipeChartdata = ref([
         <ThirdLevelTitle class="w-full" title="巡检完成率"></ThirdLevelTitle>
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex">
-            <div
-              class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex flex-col items-center"
-              v-for="(item, index) in completionRate"
-              :key="index"
-            >
-              <div class="pipe-point">{{ item.rate }}</div>             
+            <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex flex-col items-center"
+              v-for="(item, index) in completionRate" :key="index">
+              <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
               <div class="icon w-4 h-4 bg-slate-500"></div>
             </div>
@@ -154,11 +148,8 @@ const pipeChartdata = ref([
       <div class="8k:w-1/2 4k:w-full">
         <ThirdLevelTitle class="w-full" title="发现问题数量"></ThirdLevelTitle>
         <div class="w-full flex">
-          <div
-            class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center"
-            v-for="(item, index) in problems"
-            :key="index"
-          >
+          <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center" v-for="(item, index) in problems"
+            :key="index">
             <div class="icon w-4 h-4 bg-slate-500"></div>
             <div class>
               <div class="name">{{ item.name }}(个)</div>
@@ -179,12 +170,9 @@ const pipeChartdata = ref([
         <ThirdLevelTitle class="w-full" title="管养完成率"></ThirdLevelTitle>
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex">
-            <div
-              class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex flex-col items-center"
-              v-for="(item, index) in completionRate"
-              :key="index"
-            >
-              <div class="pipe-point">{{ item.rate }}</div>             
+            <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex flex-col items-center"
+              v-for="(item, index) in completionRate" :key="index">
+              <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
               <div class="icon w-4 h-4 bg-slate-500"></div>
             </div>
