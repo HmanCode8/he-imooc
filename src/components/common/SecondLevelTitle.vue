@@ -14,9 +14,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="first-level-title ml-2 flex items-center border-b border-gray-300 pb-1 mb-4">
-        <div class="icon w-2 h-2 mr-2 bg-[#76c8fa]"></div>
-        <div class="title text-sm">{{ title }}</div>
+    <div class="first-level-title bg-[url('assets/imgs/title-h-two.png')] h-8 bg-cover flex items-center ">
+        <!-- <div class="icon w-4 h-4 mr-2 bg-[#76c8fa]"></div> -->
+        <h2 class="title text-white 4k:ml-8 8k:ml-16 mt-[-14px]">{{ title }}</h2>
     </div>
 </template>
 
