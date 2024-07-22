@@ -14,24 +14,7 @@ const changeStore = () => {
     global.setNavActive('/dashboard')
 }
 
-const legend = [
-    {
-        name: '巡检完成量',
-        value: 'success',
-        color: '#4299E1'
-    },
-    {
-        name: '计划巡检量',
-        value: 'plan',
-        color: '#F59E0B'
-    },
-    {
-        name: '巡检完成率',
-        value: 'rate',
-        color: '#3B82F6'
-    }
-]
-// data: ['燃气', '供水', '雨水', '污水', '道路', '桥梁', '第三方施工', '路灯'],
+
 const oldList = [
     {
         name: '燃气',

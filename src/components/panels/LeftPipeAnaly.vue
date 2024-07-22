@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
@@ -8,6 +8,7 @@ import BarRowChartTow from '../charts/BarRowChartTow.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
 
+const pipeActive = ref('燃气管线')
 const pipes = ref([
     {
         name: '燃气管线',
@@ -46,6 +47,9 @@ const pipes = ref([
 
 ])
 
+const changeActive = (name) => {
+    pipeActive.value = name
+}
 const pipeChartdata = ref([
     { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
     { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
@@ -66,16 +70,18 @@ const pipeChartdata = ref([
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
         <!-- 第一部分 -->
         <div>
-            <div class="pipe-list flex flex-wrap">
-                <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center" v-for="(item, index) in pipes"
-                    :key="index">
-                    <div class="icon  w-4 h-4 bg-slate-500"></div>
+            <div class="pipe-list flex justify-between px-1 flex-wrap">
+                <div class="pipe-item 4k:w-full 8k:w-[32%] hover:cursor-pointer  flex items-center bg-[url('assets/imgs/pipe-remak-item.png')] bg-cover"
+                    v-for="(item, index) in pipes" @click="changeActive(item.name)" :key="index">
+                    <div :class="`pipe-icon-${index + 1}  w-28 h-24 bg-cover`"></div>
                     <div class="">
-                        <div class="name">{{ item.name }}</div>
-                        <div class="line">———————</div>
-                        <div>
-                            <div class="pipe-line">管线长度：{{ item.pipeLine }}公里</div>
-                            <div class="pipe-point">管线点数：{{ item.pipePoint }}个</div>
+                        <div :class="`${pipeActive === item.name ? 'text-[#FFCC00]' : ''} font-bold px-2`">
+                            {{ item.name }}</div>
+                        <!-- <div class="line">———————</div> -->
+                        <div class="text-[#89C3DF] mt-6 flex">
+                            <div class="pipe-line px-2">管线(km)：<span class="text-white">{{ item.pipeLine
+                                    }}</span> 公里</div>
+                            <div class="pipe-point">管点(个)： <span class="text-white">{{ item.pipePoint }}</span>个</div>
                         </div>
                     </div>
                 </div>
@@ -131,4 +137,10 @@ const pipeChartdata = ref([
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@for $i from 1 through 6 {
+    .pipe-icon-#{$i} {
+        background-image: url('@/assets/imgs/pipe-bg-#{$i}.png');
+    }
+}
+</style>
