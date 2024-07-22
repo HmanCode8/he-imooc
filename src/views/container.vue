@@ -1,13 +1,12 @@
 <template>
-    <div class="w-fullh-full bg-[#051439]">
+    <div class="w-fullh-full bg-[#051439] ">
         <div class="w-full h-full 8k:w-full 4k:h-1/2 8k:m-auto flex flex-col 4k:text-sm 8k:text-lg">
             <!-- 头部组件 -->
             <Header @onChageSizeType="(k) => sizeType = k" />
             <!-- 主体组件 -->
             <div class="main-panel text-[12px] relative">
                 <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
-                <div
-                    class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white  flex overflow-hidden">
+                <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white flex overflow-hidden">
                     <div
                         :class="`left-panel  overflow-auto bg-[#102242]  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                         <!-- 条件渲染的动态组件 -->
