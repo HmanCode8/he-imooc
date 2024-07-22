@@ -15,6 +15,7 @@
     "countup.js": "^2.6.2",
     "echarts": "^5.5.1",
     "echarts-gl": "^2.0.9",
+    "echarts-liquidfill": "^3.1.0",
     "echarts-wordcloud": "^2.1.0",
     "element-plus": "^2.7.7",
     "ol": "^9.2.4",

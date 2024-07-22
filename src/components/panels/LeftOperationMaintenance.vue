@@ -5,6 +5,7 @@ import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
 import PipeChart from "../charts/pipeChart.vue";
 import BarRowChart from "../charts/BarRowChart.vue";
+import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
 
 import { useGlobalStore } from "@/store";
 
@@ -90,12 +91,16 @@ const pipeChartdata = ref([
   { name: "东台市", percentage: 24, distance: "45km", color: "#36A2EB" },
   { name: "射阳县", percentage: 24, distance: "25km", color: "#FFA07A" }
 ]);
+
+const barChartData = ref({
+  xData: ['燃气', '供水', '雨水', '污水', '道路', '桥梁', '路灯'],
+  yData: [90, 50, 20, 30, 80, 60, 50],
+});
 </script>
 
 <template>
   <div class="pipe-analy">
     <FristLevelTitle title="巡检巡查"></FristLevelTitle>
-
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
         <ThirdLevelTitle class="w-full" title="巡检次数"></ThirdLevelTitle>
@@ -120,7 +125,7 @@ const pipeChartdata = ref([
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-60">
         <ThirdLevelTitle title="巡检及时率"></ThirdLevelTitle>
-        <Bar3dChart />
+        <Bar3dChartOMFirst :barData="barChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
@@ -163,7 +168,7 @@ const pipeChartdata = ref([
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-60">
         <ThirdLevelTitle title="管养及时率"></ThirdLevelTitle>
-        <Bar3dChart />
+        <Bar3dChartOMFirst :barData="barChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
