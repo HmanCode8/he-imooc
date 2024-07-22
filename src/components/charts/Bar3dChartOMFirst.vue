@@ -40,25 +40,25 @@ const renderChart = () => {
       },
       formatter: function(parms) {
         var str =
-          "月份：" +
+          "类型:" +
           parms[0].axisValue +
           "</br>" +
           parms[0].marker +
-          "预警项目:" +
+          "巡检及时率:" +
           parms[0].value;
         return str;
       }
     },
-    legend: {
-      show: false,
-      data: ["预警项目"],
-      textStyle: { fontSize: 12, color: "#fff" },
-      itemWidth: 12,
-      itemHeight: 12,
-      itemGap: 15,
-      top: "-1%",
-      right: "2%"
-    },
+    // legend: {
+    //   show: false,
+    //   data: ["预警项目"],
+    //   textStyle: { fontSize: 12, color: "#fff" },
+    //   itemWidth: 12,
+    //   itemHeight: 12,
+    //   itemGap: 15,
+    //   top: "-1%",
+    //   right: "2%"
+    // },
     textStyle: {
       color: "#ffffff"
     },
@@ -90,13 +90,15 @@ const renderChart = () => {
       }
     },
     yAxis: {
-      name: "个",
+      name: "单位：个",
+      nameLocation: 'end',
       nameTextStyle: {
-        verticalAlign: "middle",
-        align: "right"
+        align: "left",
+        padding: [0, 0, 0, 380]
       },
       type: "value",
       min: 0,
+      max:100,
       boundaryGap: ["20%", "60%"],
       axisLine: {
         show: true,
@@ -112,16 +114,21 @@ const renderChart = () => {
           opacity: 0.5
         }
       },
-      axisLabel: {}
+      axisLabel: {
+        formatter: '{value}%'
+      },
+      axisLine:{
+        show:false
+      }
     },
     series: [
       {
-        name: "预警项目",
+        name: "巡检及时率",
         data: props.barData.yData,
         stack: "zs",
         type: "bar",
         barMaxWidth: "auto",
-        barWidth: 22,
+        barWidth: 22,        
         itemStyle: {
           color: {
             x: 0,
@@ -133,11 +140,11 @@ const renderChart = () => {
             colorStops: [
               {
                 offset: 0,
-                color: "#0FA0FF"
-              },
+                color: "#01EBFA"
+              },              
               {
                 offset: 1,
-                color: "#24F3FF"
+                color: "#00676D"
               }
             ]
           }
