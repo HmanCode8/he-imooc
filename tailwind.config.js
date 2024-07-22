@@ -14,12 +14,13 @@ export default {
         "custom-size": "100% 100%",
       },
       height: {
-        "custom-height": "calc(100vh - 5rem)", // 示例：计算高度
+        "custom-height": "calc(100vh - 3rem)", // 示例：计算高度
       },
       screens: {
         "4k": "1080px",
         "8k": "3840px",
-        "12k": "11520px", // 您的目标尺寸
+        // "12k": "11520px", // 您的目标尺寸
+        "12k": "9999px", // 您的目标尺寸
       },
       // 在这里添加自定义的宽度、高度和其他尺寸x
       spacing: {

@@ -28,7 +28,7 @@
 			class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0  z-10 ">
 			<div :class="`flex flex-col items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
 				v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-				<div :class="`blink w-10 h-10 bg-[url('assets/imgs/icon-b-2.svg')] bg-cover`">
+				<div :class="`blink-${index + 1} w-10 h-10 bg-cover`">
 				</div>
 				<div class="t-item-name">{{ tab.name }}</div>
 			</div>
@@ -475,10 +475,12 @@ const toggleMap = () => {
 	//循环
 	@for $i from 1 through 10 {
 		.blink-#{$i} {
-			animation: blink 1s infinite;
-			// background-image: url('@/assets/imgs/iocn-b-1.svg');
+			// 这里可以添加你想要的样式
+			background-image: url('@/assets/imgs/icon-b-#{$i}.png');
+			// 其他样式...
 		}
 	}
+
 }
 
 .select-active {

@@ -3,6 +3,7 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
+import LineChart from '../charts/LineChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
 
@@ -46,11 +47,11 @@ const pipeChartdata = ref([
         <div class="pipe-analy-content w-full flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full h-60">
                 <ThirdLevelTitle title="总数" />
-                <Bar3dChart />
+                <LineChart />
             </div>
             <div class="8k:w-1/2 4k:w-full h-60">
                 <ThirdLevelTitle title="总数" />
-                <Bar3dChart />
+                <LineChart />
             </div>
             <div>
 
