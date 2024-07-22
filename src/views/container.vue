@@ -65,7 +65,7 @@ const data = ref(null)
 
 const sizeType = ref('small')
 
-const currentComponent = ref('infrastructure')
+const currentComponent = ref('')
 
 // 组件映射对象
 const currentComponentMap = {
@@ -79,7 +79,9 @@ const currentComponentMap = {
 
 
 watch(() => store.componentId, (value) => {
-    console.log('value', value)
+    currentComponent.value = value
+}, {
+    immediate: true
 })
 
 // 加载数据函数
