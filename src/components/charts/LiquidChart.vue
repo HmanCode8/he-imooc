@@ -1,5 +1,5 @@
 <template>
-  <div ref="target" v-resize-ob="handleResize" class="w-40 h-20"></div>
+  <div ref="target" v-resize-ob="handleResize" class="w-36 h-20"></div>
 </template>
 
 <script setup>
