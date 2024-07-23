@@ -71,6 +71,13 @@ const oldList = [
         des2: '路灯巡检计划量',
         rate1: 60,
         rate2: 70,
+    },
+    {
+        name: '路灯',
+        des1: '路灯巡检完成率',
+        des2: '路灯巡检计划量',
+        rate1: 60,
+        rate2: 70,
     }
 ]
 const arr1 = [
@@ -108,45 +115,21 @@ const olds = ref([
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
         <div class="overview-content flex">
             <div class="l w-1/3">
-                <ul class="flex flex-col">
-                    <li class="flex items-center" v-for="item in arr1" :key="item.name">
-                        <div class="icon w-8 h-8 bg-slate-500 rounded-full"></div>
-                        <div class="flex">
-                            <div>{{ item.name }}</div>
+                <ul class="flex w-full m-4 flex-col">
+                    <li class="flex w-full py-4 px-2 items-center" v-for="item in arr1" :key="item.name">
+                        <div class="icon w-1/4 h-16 m-2 bg-[url(assets/imgs/overview/ic-exapnd.png)] bg-cover"></div>
+                        <div class="flex justify-between w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-cover">
+                            <div>{{ item.name }} <span class="ml-2">(km)</span></div>
                             <div class="px-2">{{ item.value }}</div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="r w-2/3">
-                <div class="flex justify-around items-center mb-4">
-                    <div>
-                        <ul class="flex flex-col">
-                            <li>
-                                <div>管线 <span>58.2</span><span>km</span></div>
-                            </li>
-                            <li>
-                                <div>场站 <span>67</span><span>个</span></div>
-                            </li>
-                            <li>
-                                <div>设备 <span>1788</span><span>个</span></div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>中间</div>
-                    <div>
-                        <ul class="flex flex-col">
-                            <li>
-                                <div>管线 <span>58.2</span><span>km</span></div>
-                            </li>
-                            <li>
-                                <div>场站 <span>67</span><span>个</span></div>
-                            </li>
-                            <li>
-                                <div>设备 <span>1788</span><span>个</span></div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="flex justify-center border h-full items-center mb-4">
+
+                    <div class="w-1/3 h-40 bg-[url(assets/imgs/overview/o-center.png)] bg-cover"></div>
+
                 </div>
             </div>
         </div>
@@ -154,34 +137,26 @@ const olds = ref([
         <SecondLevelTitle title="巡检巡查"></SecondLevelTitle>
 
         <div class="h-1/3 w-full">
-
-            <!-- <div class="legend flex justify-end">
-                <ul class="flex ">
-                    <li v-for="item in legend" :key="item.name" class="text-sm flex items-center mx-1">
-                        <div :class="`icon h-2 w-2 rounded-sm mr-2 bg-${item.value}`"></div>
-                        <div class="text-center">{{ item.name }}</div>
-                    </li>
-                </ul>
-                <div class="h2">巡检完成率</div>
-            </div> -->
             <DoubleBarLineChart />
         </div>
 
         <div class="old flex w-full justify-end">
             <ul class="flex flex-wrap w-full">
-                <li v-for="item in oldList" :key="item.name" class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
+                <li v-for="(item, index) in oldList" :key="item.name" class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
                     <div class="flex flex-col">
-                        <div class="icon w-8 h-8 rounded-full bg-slate-400"></div>
+                        <div :class="`check-icon-${index + 1} w-16 h-16`"></div>
                         <div class="text-center">{{ item.name }}</div>
                     </div>
                     <div class="flex items-center m-2 flex-col">
                         <div>
-                            <p>{{ item.rate1 }}%</p>
-                            <p>{{ item.des1 }}</p>
+                            <p class="text-[#89C3DF]">{{ item.des1 }}</p>
+                            <p class="text-xl font-bold">{{ item.rate1 }}%</p>
+
                         </div>
                         <div>
-                            <p>{{ item.rate2 }}%</p>
-                            <p>{{ item.des2 }}</p>
+                            <p class="text-[#89C3DF]">{{ item.des2 }}</p>
+                            <p class="text-xl font-bold">{{ item.rate2 }}%</p>
+
                         </div>
                     </div>
                 </li>
@@ -213,6 +188,14 @@ const olds = ref([
 
     .bg-rate {
         background-color: #3B82F6;
+    }
+}
+
+@for $i from 1 through 9 {
+    .check-icon-#{$i} {
+        background-image: url('@/assets/imgs/overview/check-icon-#{$i}.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
     }
 }
 </style>

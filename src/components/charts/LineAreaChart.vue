@@ -52,9 +52,9 @@ const renderChart = (fontSize = 12) => {
                     show: true,
                 },
                 splitArea: {
-                    color: '#f00',
+                    color: '#fff',
                     lineStyle: {
-                        color: '#f00',
+                        color: '#fff',
                     },
                 },
                 axisLabel: {

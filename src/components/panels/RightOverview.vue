@@ -60,13 +60,13 @@ const riskData = [
 
         <div class="overview-content flex flex-wrap justify-between w-full ">
             <!-- 风险总数 -->
-
             <div class="risk-count 4k:w-full 8k:w-[45%]  mx-3">
                 <div class="flex w-full bg-custom-gradient p-2">
                     <div class="risk-title font-bold">风险总数 <span class="text-[#9faf70]">{{ 145 }}</span>个</div>
                     <div class="level flex">
-                        <div class="level-item flex items-center mx-1" v-for="item in riskLevel" :key="item.value">
-                            <div class="icon w-2 h-2 bg-amber-300"></div>
+                        <div class="level-item flex items-center mx-1" v-for="(item, index) in riskLevel"
+                            :key="item.value">
+                            <div :class="`warning-icon-${index + 1} w-16 h-16`"></div>
                             <div class="level-item-name">{{ item.name }}</div>
                         </div>
                     </div>
@@ -233,4 +233,14 @@ const riskData = [
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.level-item {
+    @for $i from 1 through 3 {
+        .warning-icon-#{$i} {
+            background-image: url('@/assets/o/o-title-item-#{$i}.svg');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+    }
+}
+</style>

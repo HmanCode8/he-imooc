@@ -105,7 +105,7 @@ const Pie3DChartData = ref([
   { name: "污水", value: 99, color: "#FFA07A" },
   { name: "道路", value: 60, color: "#0F7C7C" },
   { name: "桥梁", value: 23, color: "#0F7C7C" },
-  { name: "路灯", value: 25, color: "#3B40A2" }
+  { name: "路灯", value: 25, color: "#3B40A2" },
 ]);
 </script>
 

@@ -49,7 +49,7 @@ let dataValue = [20, 30, 20, 25, 35];
 
 const renderChart = (fontSize) => {
     const option = {
-        backgroundColor: '#f00',
+        // backgroundColor: '#f00',
         tooltip: {
             show: true,
             trigger: "axis", //axis , item

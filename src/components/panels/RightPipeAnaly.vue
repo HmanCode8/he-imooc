@@ -65,7 +65,7 @@ const pipeChartdata = ref([
                     <div v-for="(item, index) in roadAnaly" :key="index"
                         class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-[url('assets/imgs/road-item-1.png')] bg-cover"></div>
+                            <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
                         <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
@@ -78,7 +78,7 @@ const pipeChartdata = ref([
                     <div v-for="(item, index) in roadAnaly" :key="index"
                         class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-[url('assets/imgs/road-item-1.png')] bg-cover"></div>
+                            <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
                         <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>

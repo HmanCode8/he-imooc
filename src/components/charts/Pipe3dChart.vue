@@ -1,17 +1,19 @@
-    <template>
-        <div class="">
-            <div class="chart-container w-full h-60">
-                <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
-
-            </div>
+<template>
+    <div class>
+        <div class="chart-container w-full h-60">
+            <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
         </div>
-    </template>
+    </div>
+</template>
 
 <script setup>
-import { h, onMounted, ref, watch, toRef } from 'vue'
-import * as echarts from 'echarts'
-import 'echarts-gl'
+import { h, onMounted, ref, watch } from "vue";
+import * as echarts from "echarts";
+import "echarts-gl";
+import { Label } from "cesium";
+import bgimage from "@/assets/imgs/title-h-third.png";
 import useRootFontSize from '@/hooks/useRootFontSize';
+
 
 const props = defineProps({
     data: {
@@ -20,16 +22,27 @@ const props = defineProps({
     },
     legend: {
         type: Array
+    },
+    pieChartData: {
+        type: Object,
+        required: true,
+        default: [
+            { name: "燃气", value: 60, color: "#FF6384" },
+            { name: "供水", value: 23, color: "#FFCE56" },
+            { name: "雨水", value: 25, color: "#36A2EB" },
+            { name: "污水", value: 99, color: "#FFA07A" },
+            { name: "道路", value: 60, color: "#0F7C7C" },
+            { name: "桥梁", value: 23, color: "#0F7C7C" },
+            { name: "路灯", value: 25, color: "#3B40A2" },
+        ]
     }
-})
+});
 
-const target = ref(null)
-let mChart = null
+const target = ref(null);
+let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
-
-const data = ref([])
 
 const handleResize = () => {
     const rootFontSize = useRootFontSize();
@@ -39,10 +52,15 @@ const handleResize = () => {
     }
 };
 const renderChart = (fontSize) => {
-    const colorList = ['rgba(69, 244, 245,  0.9)', 'rgba(7, 166, 255,  0.9)', 'rgba(255, 208, 118,  0.9)', 'rgba(109, 148, 198, 0.9)', 'rgba(255, 255, 255,  0.9)']
-
     // 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
-    function getParametricEquation(startRatio, endRatio, isSelected, isHovered, k, h) {
+    function getParametricEquation(
+        startRatio,
+        endRatio,
+        isSelected,
+        isHovered,
+        k,
+        h
+    ) {
         // 计算
         let midRatio = (startRatio + endRatio) / 2;
 
@@ -56,7 +74,7 @@ const renderChart = (fontSize) => {
         // }
         isSelected = false;
         // 通过扇形内径/外径的值，换算出辅助参数 k（默认值 1/3）
-        k = typeof k !== 'undefined' ? k : 1 / 3;
+        k = typeof k !== "undefined" ? k : 1 / 3;
 
         // 计算选中效果分别在 x 轴、y 轴方向上的位移（未选中，则位移均为 0）
         let offsetX = isSelected ? Math.sin(midRadian) * 0.1 : 0;
@@ -70,31 +88,39 @@ const renderChart = (fontSize) => {
             u: {
                 min: -Math.PI,
                 max: Math.PI * 3,
-                step: Math.PI / 32,
+                step: Math.PI / 32
             },
 
             v: {
                 min: 0,
                 max: Math.PI * 2,
-                step: Math.PI / 20,
+                step: Math.PI / 20
             },
 
             x: function (u, v) {
                 if (u < startRadian) {
-                    return offsetX + Math.cos(startRadian) * (1 + Math.cos(v) * k) * hoverRate;
+                    return (
+                        offsetX + Math.cos(startRadian) * (1 + Math.cos(v) * k) * hoverRate
+                    );
                 }
                 if (u > endRadian) {
-                    return offsetX + Math.cos(endRadian) * (1 + Math.cos(v) * k) * hoverRate;
+                    return (
+                        offsetX + Math.cos(endRadian) * (1 + Math.cos(v) * k) * hoverRate
+                    );
                 }
                 return offsetX + Math.cos(u) * (1 + Math.cos(v) * k) * hoverRate;
             },
 
             y: function (u, v) {
                 if (u < startRadian) {
-                    return offsetY + Math.sin(startRadian) * (1 + Math.cos(v) * k) * hoverRate;
+                    return (
+                        offsetY + Math.sin(startRadian) * (1 + Math.cos(v) * k) * hoverRate
+                    );
                 }
                 if (u > endRadian) {
-                    return offsetY + Math.sin(endRadian) * (1 + Math.cos(v) * k) * hoverRate;
+                    return (
+                        offsetY + Math.sin(endRadian) * (1 + Math.cos(v) * k) * hoverRate
+                    );
                 }
                 return offsetY + Math.sin(u) * (1 + Math.cos(v) * k) * hoverRate;
             },
@@ -107,7 +133,7 @@ const renderChart = (fontSize) => {
                     return Math.sin(u) * h * 0.1;
                 }
                 return Math.sin(v) > 0 ? 1 * h * 0.1 : -1;
-            },
+            }
         };
     }
 
@@ -119,7 +145,7 @@ const renderChart = (fontSize) => {
         let endValue = 0;
         let legendData = [];
         let k =
-            typeof internalDiameterRatio !== 'undefined'
+            typeof internalDiameterRatio !== "undefined"
                 ? (1 - internalDiameterRatio) / (1 + internalDiameterRatio)
                 : 1 / 3;
 
@@ -128,25 +154,30 @@ const renderChart = (fontSize) => {
             sumValue += pieData[i].value;
 
             let seriesItem = {
-                name: typeof pieData[i].name === 'undefined' ? `series${i}` : pieData[i].name,
-                type: 'surface',
+                name:
+                    typeof pieData[i].name === "undefined"
+                        ? `series${i}`
+                        : pieData[i].name,
+                type: "surface",
                 parametric: true,
                 wireframe: {
-                    show: false,
+                    show: false
                 },
                 pieData: pieData[i],
                 pieStatus: {
                     selected: false,
                     hovered: false,
-                    k: 1 / 10,
-                },
+                    k: 1 / 10
+                }
             };
 
-            if (typeof pieData[i].itemStyle != 'undefined') {
+            if (typeof pieData[i].itemStyle != "undefined") {
                 let itemStyle = {};
 
-                typeof pieData[i].itemStyle.color != 'undefined' ? (itemStyle.color = pieData[i].itemStyle.color) : null;
-                typeof pieData[i].itemStyle.opacity != 'undefined'
+                typeof pieData[i].itemStyle.color != "undefined"
+                    ? (itemStyle.color = pieData[i].itemStyle.color)
+                    : null;
+                typeof pieData[i].itemStyle.opacity != "undefined"
                     ? (itemStyle.opacity = pieData[i].itemStyle.opacity)
                     : null;
 
@@ -178,26 +209,26 @@ const renderChart = (fontSize) => {
 
         // // 补充一个透明的圆环，用于支撑高亮功能的近似实现。
         series.push({
-            name: 'mouseoutSeries',
-            type: 'surface',
+            name: "mouseoutSeries",
+            type: "surface",
             parametric: true,
             wireframe: {
-                show: false,
+                show: false
             },
             itemStyle: {
                 opacity: 0.1,
-                color: '#E1E8EC',
+                color: "#E1E8EC"
             },
             parametricEquation: {
                 u: {
                     min: 0,
                     max: Math.PI * 2,
-                    step: Math.PI / 20,
+                    step: Math.PI / 20
                 },
                 v: {
                     min: 0,
                     max: Math.PI,
-                    step: Math.PI / 20,
+                    step: Math.PI / 20
                 },
                 x: function (u, v) {
                     return ((Math.sin(v) * Math.sin(u) + Math.sin(u)) / Math.PI) * 2;
@@ -207,32 +238,32 @@ const renderChart = (fontSize) => {
                 },
                 z: function (u, v) {
                     return Math.cos(v) > 0 ? -0.5 : -5;
-                },
-            },
+                }
+            }
         });
 
         // // 补充一个透明的圆环，用于支撑高亮功能的近似实现。
         series.push({
-            name: 'mouseoutSeries',
-            type: 'surface',
+            name: "mouseoutSeries",
+            type: "surface",
             parametric: true,
             wireframe: {
-                show: false,
+                show: false
             },
             itemStyle: {
                 opacity: 0.1,
-                color: 'rgba(101, 153, 164, 0.24)',
+                color: "rgba(101, 153, 164, 0.24)"
             },
             parametricEquation: {
                 u: {
                     min: 0,
                     max: Math.PI * 2,
-                    step: Math.PI / 20,
+                    step: Math.PI / 20
                 },
                 v: {
                     min: 0,
                     max: Math.PI,
-                    step: Math.PI / 20,
+                    step: Math.PI / 20
                 },
                 x: function (u, v) {
                     return ((Math.sin(v) * Math.sin(u) + Math.sin(u)) / Math.PI) * 2;
@@ -242,31 +273,31 @@ const renderChart = (fontSize) => {
                 },
                 z: function (u, v) {
                     return Math.cos(v) > 0 ? -5 : -7;
-                },
-            },
+                }
+            }
         });
         series.push({
-            name: 'mouseoutSeries',
-            type: 'surface',
+            name: "mouseoutSeries",
+            type: "surface",
 
             parametric: true,
             wireframe: {
-                show: false,
+                show: false
             },
             itemStyle: {
                 opacity: 0.1,
-                color: '#E1E8EC',
+                color: "#E1E8EC"
             },
             parametricEquation: {
                 u: {
                     min: 0,
                     max: Math.PI * 2,
-                    step: Math.PI / 20,
+                    step: Math.PI / 20
                 },
                 v: {
                     min: 0,
                     max: Math.PI,
-                    step: Math.PI / 20,
+                    step: Math.PI / 20
                 },
                 x: function (u, v) {
                     return ((Math.sin(v) * Math.sin(u) + Math.sin(u)) / Math.PI) * 2.2;
@@ -276,68 +307,77 @@ const renderChart = (fontSize) => {
                 },
                 z: function (u, v) {
                     return Math.cos(v) > 0 ? -7 : -7;
-                },
-            },
+                }
+            }
         });
 
         // 准备待返回的配置项，把准备好的 legendData、series 传入。
         let option = {
+            //   title: {
+            //     text: "总数            324个",
+            //     textStyle: {
+            //       color: "#fff",
+            //       fontFamily:"PangMenZhengDao",
+            //     },
+            //     right:15,
+            //     top:20
+            //   },
             legend: {
-                icon: 'none',
-                orient: 'vertical',
+                icon: "none",
+                orient: "vertical", // 改为垂直排列
                 data: pieData.map((dItem, dIndex) => {
                     return {
                         name: dItem.name,
                         textStyle: {
                             rich: {
                                 iconName: {
-                                    width: 6,
-                                    height: 6,
-                                    backgroundColor: colorList[dIndex],
+                                    width: 12,
+                                    height: 12,
+                                    backgroundColor: dItem.itemStyle.color
                                 },
                                 percent: {
-                                    color: colorList[dIndex],
+                                    color: dItem.itemStyle.color
                                 },
                                 name: {
                                     fontSize,
                                     width: 20,
-                                    padding: [0, 0, 0, 10],
+                                    padding: [0, 0, 0, 10]
                                 },
                                 value: {
-                                    fontFamily: 'PangMenZhengDao',
+                                    fontFamily: "PangMenZhengDao",
                                     fontSize,
                                     width: 20,
                                     padding: [0, 0, 0, 30]
                                 },
                                 percent: {
-                                    fontFamily: 'PangMenZhengDao',
+                                    fontFamily: "PangMenZhengDao",
                                     fontSize,
                                     padding: [0, 0, 0, 30]
                                 },
                                 unit: {
-                                    color: '#ACDCE4',
+                                    color: "#ACDCE4",
                                     fontSize,
                                     padding: [0, 0, 0, 5]
                                 }
                             }
-                        },
-                    }
+                        }
+                    };
                 }),
-                right: '5%',
-                top: '10%',
-                itemGap: 10,
+                left: "40%", // 调整位置
+                top: "26%", // 调整位置
+                itemGap: 10, // 调整间距
                 itemWidth: 12,
                 itemHeight: 12,
                 selectedMode: false, // Disable legend selection
                 textStyle: {
-                    color: '#fff',
+                    color: "#fff",
                     fontSize,
-                    fontFamily: 'Source Han Sans CN',
+                    fontFamily: "Source Han Sans CN",
                     rich: {
                         name: {
                             fontSize,
                             width: 40,
-                            padding: [0, 0, 0, 10],
+                            padding: [0, 0, 0, 10]
                         },
                         value: {
                             fontSize,
@@ -362,43 +402,75 @@ const renderChart = (fontSize) => {
                     for (let i = 0; i < datas.length; i++) {
                         total += Number(datas[i].value);
                     }
-                    const arr = [
-                        `{iconName|}{name|${name}}{percent|(${((target / total) * 100).toFixed(0)}%)}{value|${obj.value}km}`
-                    ];
-                    return arr.join('')
+                    const arr = [`{iconName|}{name|${name}}{percent|(${(target / total * 100).toFixed(2)}%)}{value|${obj.value}个}`];
+                    return arr.join("");
                 }
             },
+
 
             xAxis3D: {},
             yAxis3D: {},
             zAxis3D: {},
             grid3D: {
                 viewControl: {
-                    autoRotate: true, // Auto-rotate
+                    autoRotate: true // Auto-rotate
                 },
-                left: '2%',
-                top: '2%',
-                width: '20%',
+                left: "2%",
+                top: "2%",
+                width: "40%",
                 show: false,
-                boxHeight: 60,
+                boxHeight: 60
             },
             series: series,
+            graphic: [
+                {
+                    type: "text",
+                    left: "44%",
+                    top: "15%",
+                    style: {
+                        text: "总数",
+                        textAlign: "center",
+                        fill: "#fff",
+                        fontSize
+                    }
+                },
+                {
+                    type: "text",
+                    right: "10%",
+                    top: "15%",
+                    style: {
+                        text: "324个",
+                        textAlign: "center",
+                        fontSize,
+                        fill: "#ffff00"
+                    }
+                },
+                {
+                    type: "image",
+                    left: "44%",
+                    top: "20%",
+                    style: {
+                        image: bgimage,
+                        width: 250,
+                        height: 10
+                    }
+                }
+            ]
         };
         return option;
     }
 
-
-    const serData = data.value.map((dItem, index) => {
+    const serData = props.pieChartData.map((dItem, index) => {
         return {
             ...dItem,
             value: Number(dItem.value),
             itemStyle: {
-                color: colorList[index]
-            },
-        }
-    })
+                color: dItem.color
+            }
+        };
+    });
     // 传入数据生成 option
-    const option = getPie3D(serData, 0.7);
+    const option = getPie3D(serData, 0.8);
     mChart.setOption(option);
-}
+};
 </script>

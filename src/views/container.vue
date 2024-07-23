@@ -103,13 +103,13 @@ loadData()
 <style scoped lang="scss">
 .main-panel {
     .left-panel {
-        background-image: url('@/assets/imgs/panel-left.png');
+        background-image: url('@/assets/imgs/main/panel-left.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
 
     .right-panel {
-        background-image: url('@/assets/imgs/panel-right.png');
+        background-image: url('@/assets/imgs/main/panel-right.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }

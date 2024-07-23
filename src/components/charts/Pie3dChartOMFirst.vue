@@ -315,15 +315,15 @@ const renderChart = (fontSize) => {
       //   },
       legend: {
         icon: "none",
-        orient: "horizontal",
+        orient: "vertical", // 改为垂直排列
         data: pieData.map((dItem, dIndex) => {
           return {
             name: dItem.name,
             textStyle: {
               rich: {
                 iconName: {
-                  width: 16,
-                  height: 16,
+                  width: 12,
+                  height: 12,
                   backgroundColor: dItem.itemStyle.color
                 },
                 percent: {
@@ -354,9 +354,9 @@ const renderChart = (fontSize) => {
             }
           };
         }),
-        left: "40%",
-        top: "30%",
-        itemGap: 15,
+        left: "40%", // 调整位置
+        top: "26%", // 调整位置
+        itemGap: 10, // 调整间距
         itemWidth: 12,
         itemHeight: 12,
         selectedMode: false, // Disable legend selection
@@ -397,6 +397,7 @@ const renderChart = (fontSize) => {
           return arr.join("");
         }
       },
+
 
       xAxis3D: {},
       yAxis3D: {},
@@ -482,7 +483,6 @@ const renderChart = (fontSize) => {
       }
     };
   });
-  console.log("ppppppppppppppp", serData);
   // 传入数据生成 option
   const option = getPie3D(serData, 0.8);
   mChart.setOption(option);

@@ -111,7 +111,7 @@ const list = ref([
 
 <style scoped lang="scss">
 .tray-item-l {
-    background-image: url('@/assets/imgs/tray-item-l.png');
+    background-image: url('@/assets/imgs/project/tray-item-l.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -124,7 +124,7 @@ const list = ref([
 
 @for $i from 1 through 10 {
     .type-icon-#{$i} {
-        background-image: url('@/assets/imgs/type-item-#{$i}.png');
+        background-image: url('@/assets/imgs/project/type-item-#{$i}.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
