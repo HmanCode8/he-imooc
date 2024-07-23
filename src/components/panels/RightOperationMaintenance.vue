@@ -107,32 +107,84 @@ const Pie3DChartData = ref([
     <FristLevelTitle title="安全专项检查"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
-        <ThirdLevelTitle class="w-full" title="检查次数"></ThirdLevelTitle>
+        <SecondLevelTitle class="w-full" title="检查次数"></SecondLevelTitle>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80">
-        <ThirdLevelTitle title="上报问题数量"></ThirdLevelTitle>
+        <SecondLevelTitle title="上报问题数量"></SecondLevelTitle>
         <Bar3dChartOMSecond :barData="barChartData" />
       </div>
     </div>
     <div class="flex w-full h-1/3 flex-wrap justify-between">
-      <ThirdLevelTitle title="整改已完成/未完成数量"></ThirdLevelTitle>
+      <SecondLevelTitle class="w-full" title="整改已完成/未完成数量"></SecondLevelTitle>
       <DoubleBarChart :barData="doubleBarData" />
     </div>
 
     <FristLevelTitle title="维护维修  次数/频率"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full h-80 flex">
+        <div class="longstrip flex flex-col items-center pt-2">
+          <div class="star">
+          </div>
+          <div class="text">
+            维修次数
+          </div>
+          <div class="star">            
+          </div>
+          <div class="line">            
+          </div>
+        </div>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
-      <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
-        <div v-for="(item, index) in liquidChartData" :key="index">
-          <LiquidChart :liquidData="item" />
+      
+      <div class="8k:w-1/2 4k:w-full h-80 flex">
+        <div class="longstrip flex flex-col items-center pt-2">
+          <div class="star">
+          </div>
+          <div class="text">
+            维修次数
+          </div>
+          <div class="star">            
+          </div>
+          <div class="line">            
+          </div>
+        </div>
+        <div class="flex flex-wrap">
+          <div v-for="(item, index) in liquidChartData" :key="index">
+            <LiquidChart :liquidData="item" />
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.longstrip{
+  margin:10px;
+  width: 35px;
+  height: 180px;
+  background: linear-gradient(rgba(0,202,255,0.43) 0%, rgba(0,201,255,0) 100%);
+  .star{
+    width: 6px;
+    height: 8px;
+    background: #00D9FF;
+    border: 1px solid #FFFFFF;
+    transform: rotate(45deg);
+  }
+  .text{
+    height: 100px;
+    line-height: 100px; text-align: center;
+    writing-mode: vertical-rl; /* 从右到左的垂直书写模式 */
+    text-orientation: mixed; /* 文字方向 */
+  }
+  .line{
+    width: 1px;
+    height: 120px;
+    border: 2px solid;
+    margin-top:10px;
+    border-image: linear-gradient(180deg, rgba(0, 219, 255, 1), rgba(151, 151, 151, 0)) 2 2;
+  }
+}
+</style>
