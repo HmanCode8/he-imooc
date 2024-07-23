@@ -1,79 +1,186 @@
-<script setup lang="ts">
-import { ref, defineProps } from 'vue';
-import FristLevelTitle from '../common/FirstLevelTitle.vue'
-import SecondLevelTitle from '../common/SecondLevelTitle.vue'
-import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
-
+<script setup>
+import { ref, defineProps } from "vue";
+import FristLevelTitle from "../common/FirstLevelTitle.vue";
+import SecondLevelTitle from "../common/SecondLevelTitle.vue";
+import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
+import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
+import WarningHBarChart from "../charts/WarningHBarChart.vue";
+import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
 
 const list = ref([
-    {
-        name: '官网',
-        value: 100
-    },
-    {
-        name: '微信',
-        value: 30
-    },
-    {
-        name: '微博',
-        value: 20
-    },
-    {
-        name: '官网',
-        value: 100
-    },
-    {
-        name: '微信',
-        value: 30
-    },
-    {
-        name: '其他',
-        value: 10
-    }
-])
+  {
+    name: "官网",
+    value: 100
+  },
+  {
+    name: "微信",
+    value: 30
+  },
+  {
+    name: "微博",
+    value: 20
+  },
+  {
+    name: "官网",
+    value: 100
+  },
+  {
+    name: "微信",
+    value: 30
+  },
+  {
+    name: "其他",
+    value: 10
+  }
+]);
 
 const tabs = ref([
-    {
-        name: '类型',
-        value: 'type'
-    },
-    {
+  {
+    name: "类型",
+    value: "type"
+  },
+  {
+    name: "分区",
+    value: "partition"
+  }
+]);
 
-        name: '分区',
-        value: 'partition'
-    }
-])
+const Pie3DChartData = ref([
+  { name: "燃气", value: 60, color: "#FF6384" },
+  { name: "供水", value: 23, color: "#FFCE56" },
+  { name: "雨水", value: 25, color: "#36A2EB" },
+  { name: "污水", value: 99, color: "#FFA07A" },
+  { name: "道路", value: 60, color: "#0F7C7C" },
+  { name: "桥梁", value: 23, color: "#0F7C7C" },
+  { name: "路灯", value: 25, color: "#3B40A2" }
+]);
+
+const barChartData = ref({
+  xData: ["燃气", "供水", "阀门井"],
+  yData: [1.5, 2.0, 0.7],
+  unit: "h",
+  max: "2",
+  grid:{
+      containLabel: true,
+      left: "6%",
+      top: "15%",
+      bottom: "16%",
+      right: "6%"
+    },
+});
 </script>
 
 <template>
-    <div class="pipe-analy">
-        <FristLevelTitle title="官网分析"></FristLevelTitle>
-        <SecondLevelTitle title="报警来源"></SecondLevelTitle>
-        <ul class="flex flex-wrap">
-            <li class="flex m-2" v-for="item in list" :key="item.name">
-                <div class="flex flex-col justify-between">
-                    <div class="icon w-10 h-10 rounded-full bg-blue-500"></div>
+  <div class="pipe-analy">
+    <FristLevelTitle title="事件处置分析"></FristLevelTitle>
+    <div class="flex w-full flex-wrap justify-between">
+      <div class="8k:w-1/2 4k:w-full h-80">
+        <SecondLevelTitle title="处置阶段分析"></SecondLevelTitle>
+        <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
+      </div>
 
-                    <div class="text-sm text-blue-500 ml-2">{{ item.name }}</div>
-                </div>
-                <div class="flex flex-col justify-between">
-                    <div class="t">管线：163Km</div>
-                    <div class="t">管点：163Km</div>
-                </div>
-            </li>
-        </ul>
-        <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-        <ThirdLevelTitle title="官网管线">
-            <!-- tabs插槽 -->
-            <template v-slot:tabs>
-                <div class="tabs">
-                    <div class="tab-item flex items-center" v-for="tab in tabs" :key="tab.value">
-                        <div class="tab-item-title" :class="{ active: tab.value == tabs[0].value }">{{ tab.name }}</div>
-                    </div>
-                </div>
-            </template>
-        </ThirdLevelTitle>
+      <div class="8k:w-1/2 4k:w-full h-80">
+        <SecondLevelTitle title="完成情况分析"></SecondLevelTitle>
+        <div class="w-full h-full flex">
+          <WarningHBarChart />
+        </div>
+      </div>
     </div>
+    <div class="flex w-full flex-wrap justify-between">
+      <div class="8k:w-1/2 4k:w-full h-80">
+        <SecondLevelTitle title="响应时长"></SecondLevelTitle>
+        <Bar3dChartOMFirst :barData="barChartData" />
+      </div>
+
+      <div class="8k:w-1/2 4k:w-full h-80">
+        <SecondLevelTitle title="处置时长"></SecondLevelTitle>
+        <div class="w-full h-full flex">
+          <WarningConeBarChart />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex w-full flex-wrap justify-between">
+      <div class="8k:w-1/2 4k:w-full h-80">
+        <SecondLevelTitle title="平均效率"></SecondLevelTitle>
+        <div class="w-full h-full">
+          <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center w-full">
+            <div class></div>
+            <div class>区域</div>
+            <div class>数量/个</div>
+            <div class>占比/%</div>
+          </div>
+          <div class="table-body">
+            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
+              <div class>1</div>
+              <div class>盐城市盐都区</div>
+              <div class>18</div>
+              <div class>24%</div>
+            </div>
+            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
+              <div class>2</div>
+              <div class>盐城市盐都区</div>
+              <div class>18</div>
+              <div class>24%</div>
+            </div>
+            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
+              <div class>3</div>
+              <div class>盐城市盐都区</div>
+              <div class>18</div>
+              <div class>24%</div>
+            </div>
+            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
+              <div class>4</div>
+              <div class>盐城市盐都区</div>
+              <div class>18</div>
+              <div class>24%</div>
+            </div>
+            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
+              <div class>5</div>
+              <div class>盐城市盐都区</div>
+              <div class>18</div>
+              <div class>24%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="8k:w-1/2 4k:w-full h-80">
+        <div class="flex">
+          <div class>
+            <div class="name">72个</div>
+            <div class="pipe-point">待签收</div>
+            <div class="icon w-4 h-4 bg-slate-500"></div>
+          </div>
+
+          <div class>
+            <div class="name">0个</div>
+            <div class="pipe-point">处置中</div>
+            <div class="icon w-4 h-4 bg-slate-500"></div>
+          </div>
+
+          <div class>
+            <div class="name">7个</div>
+            <div class="pipe-point">已办结</div>
+            <div class="icon w-4 h-4 bg-slate-500"></div>
+          </div>
+
+          <div class>
+            <div class="name">100%</div>
+            <div class="pipe-point">按时办结率</div>
+            <div class="icon w-4 h-4 bg-slate-500"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.item:nth-child(odd) {
+  background-color: #142d5d;
+}
+.item:nth-child(even) {
+  background-color: #012451;
+}
+</style>
