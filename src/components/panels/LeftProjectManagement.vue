@@ -3,6 +3,7 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import PipeIconChart from '../charts/PipeIconChart.vue';
+import Tablechart from '../charts/Tablechart.vue';
 
 
 const tabs1 = ref([
@@ -85,6 +86,8 @@ const list = ref([
             </div>
         </div>
         <!-- 第二部分 -->
+        <SecondLevelTitle title="项目类型"></SecondLevelTitle>
+
         <div class="w-full 8k:h-1/3  flex justify-between items-center flex-wrap">
             <div v-for="(item, index) in list" :key="index" class="8k:w-1/5 4k:w-1/3 flex items-center mb-4">
                 <div :class="` w-20 h-20 type-icon-${index + 1}`"></div>
@@ -98,12 +101,12 @@ const list = ref([
         <!-- 第三部分 -->
         <div class="w-full 8k:h-1/3  flex justify-between flex-wrap">
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="官网分析"></SecondLevelTitle>
+                <SecondLevelTitle title="项目规模"></SecondLevelTitle>
                 <PipeIconChart class="w-full h-60" />
             </div>
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-                <PipeIconChart class="w-full h-60" />
+                <SecondLevelTitle title="项目分布"></SecondLevelTitle>
+                <Tablechart class="w-full h-60" />
             </div>
         </div>
     </div>

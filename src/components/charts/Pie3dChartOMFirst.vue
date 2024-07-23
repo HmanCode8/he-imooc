@@ -11,7 +11,7 @@ import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import { Label } from "cesium";
-import bgimage from "@/assets/imgs/title-h-third.png";
+import bgimage from "@/assets/imgs/main/title-h-third.png";
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 
