@@ -115,20 +115,75 @@ const olds = ref([
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
         <div class="overview-content flex flex-wrap justify-between">
             <div class="l 4k:w-full 8k:w-[40%]">
-                <ul class="flex w-full m-4 flex-col">
-                    <li class="flex w-full py-4 px-2 items-center" v-for="item, index in arr1" :key="item.name">
+                <ul class="flex w-full flex-col">
+                    <li class="flex w-full px-2 items-center" v-for="item, index in arr1" :key="item.name">
                         <div :class="`base-icon-${index + 1} w-20 h-20 `">
                         </div>
-                        <div class="flex justify-between w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-cover">
+                        <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-cover">
                             <div>{{ item.name }} <span class="ml-2">(km)</span></div>
                             <div class="px-2">{{ item.value }}</div>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="l 4k:w-full 8k:w-[60%]">
+            <div class="l 4k:w-full relative 8k:w-[60%]">
+                <div class="flex absolute flex-col w-full h-full items-center justify-center">
+                    <div class="flex h-1/4 items-center justify-center  w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                    <div class="flex h-1/4 items-center justify-around w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                    <div class="flex h-1/4 items-center justify-between w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                    <div class="flex h-1/4 items-center justify-center  w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex justify-center h-48 items-center mb-4">
-                    <div class="o-center w-1/2 h-full"></div>
+                    <div class="o-center w-1/2 h-full">
+                    </div>
                 </div>
             </div>
         </div>
@@ -213,6 +268,13 @@ const olds = ref([
         background-image: url('@/assets/imgs/overview/check-icon-#{$i}.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
+    }
+}
+
+@for $i from 1 through 4 {
+    .base-item-#{$i} {
+        top: ($i - 1) * 15%;
+        width: ($i - 1) * 25%;
     }
 }
 </style>

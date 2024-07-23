@@ -6,6 +6,7 @@ import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import LineChart from '../charts/LineChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
+import Tablechart from '../charts/Tablechart.vue';
 
 
 const roadAnaly = ref([
@@ -110,7 +111,7 @@ const pipeChartdata = ref([
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="养护分析" />
                 <div class="chart-container w-full h-96">
-                    <Bar3dChart />
+                    <Tablechart />
 
                 </div>
             </div>

@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { useEffct } from 'vue'
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
-import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
-import PipeChart from '../charts/PipeChart.vue'
-import barRowChart from '../charts/BarRowChart.vue'
 import Tablechart from '../charts/Tablechart.vue'
 
 import { useGlobalStore } from "@/store";
@@ -88,7 +84,6 @@ const riskData = [
                             <div class="risk-item-name">{{ item.name }}</div>
                         </div>
                         <div class="risk-item-value">{{ item.data }}件</div>
-
                     </div>
                 </div>
             </div>
@@ -108,14 +103,14 @@ const riskData = [
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%]  m-1 flex  justify-between" v-for="item in riskData" :key="item.name">
+                    <div class="risk-item w-[45%] bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                        v-for="item in riskData" :key="item.name">
                         <div class="flex items-center">
                             <div :style="{ backgroundColor: item.color }" class="icon w-2 h-2 mx-1"></div>
 
                             <div class="risk-item-name">{{ item.name }}</div>
                         </div>
                         <div class="risk-item-value">{{ item.data }}件</div>
-
                     </div>
                 </div>
             </div>
@@ -200,30 +195,7 @@ const riskData = [
 
 
         <div class="w-full">
-            <div class="grid grid-cols-5 bg-[#1c3d6d] px-3 justify-between w-full">
-                <div class="">类型</div>
-                <div class="">报警数</div>
-                <div class="">已核查</div>
-                <div class="">已签收</div>
-                <div class="">已办结</div>
-            </div>
-            <div class="table-body">
-                <div class=" grid grid-cols-5 bg-[#081f51]  px-3 justify-between w-full">
-                    <div class="">排水报警</div>
-                    <div class="">10</div>
-                    <div class="">4</div>
-                    <div class="">6</div>
-                    <div class="">12</div>
-                </div>
-                <div class=" grid grid-cols-5 bg-[#142d5d] px-3 justify-between w-full">
-                    <div class="">第三方施工报警</div>
-                    <div class="">10</div>
-                    <div class="">4</div>
-                    <div class="">6</div>
-                    <div class="">12</div>
-                </div>
-
-            </div>
+            <Tablechart />
         </div>
     </div>
 </template>
@@ -231,7 +203,7 @@ const riskData = [
 <style scoped lang="scss">
 .level-item {
     @for $i from 1 through 3 {
-        .warning-item-#{$i} {
+        .warning-icon-#{$i} {
             background-image: url('@/assets/imgs/overview/level-#{$i}.png');
             background-size: 100% 100%;
             background-repeat: no-repeat;
