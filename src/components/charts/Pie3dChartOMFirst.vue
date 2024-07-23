@@ -12,6 +12,8 @@ import * as echarts from "echarts";
 import "echarts-gl";
 import { Label } from "cesium";
 import bgimage from "@/assets/imgs/title-h-third.png";
+import useRootFontSize from '@/hooks/useRootFontSize';
+
 
 const props = defineProps({
   data: {
@@ -31,23 +33,16 @@ const target = ref(null);
 let mChart = null;
 onMounted(() => {
   mChart = echarts.init(target.value);
-  renderChart();
 });
 
-const handleResize = size => {
-  console.log("resize", size);
-  mChart.resize();
+const handleResize = () => {
+  const rootFontSize = useRootFontSize();
+  renderChart(rootFontSize.value);
+  if (mChart) {
+    mChart.resize();
+  }
 };
-
-const renderChart = () => {
-  const colorList = [
-    "rgba(69, 244, 245,  0.9)",
-    "rgba(7, 166, 255,  0.9)",
-    "rgba(255, 208, 118,  0.9)",
-    "rgba(109, 148, 198, 0.9)",
-    "rgba(255, 255, 255,  0.9)"
-  ];
-
+const renderChart = (fontSize) => {
   // 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
   function getParametricEquation(
     startRatio,
@@ -93,7 +88,7 @@ const renderChart = () => {
         step: Math.PI / 20
       },
 
-      x: function(u, v) {
+      x: function (u, v) {
         if (u < startRadian) {
           return (
             offsetX + Math.cos(startRadian) * (1 + Math.cos(v) * k) * hoverRate
@@ -107,7 +102,7 @@ const renderChart = () => {
         return offsetX + Math.cos(u) * (1 + Math.cos(v) * k) * hoverRate;
       },
 
-      y: function(u, v) {
+      y: function (u, v) {
         if (u < startRadian) {
           return (
             offsetY + Math.sin(startRadian) * (1 + Math.cos(v) * k) * hoverRate
@@ -121,7 +116,7 @@ const renderChart = () => {
         return offsetY + Math.sin(u) * (1 + Math.cos(v) * k) * hoverRate;
       },
 
-      z: function(u, v) {
+      z: function (u, v) {
         if (u < -Math.PI * 0.5) {
           return Math.sin(u);
         }
@@ -226,13 +221,13 @@ const renderChart = () => {
           max: Math.PI,
           step: Math.PI / 20
         },
-        x: function(u, v) {
+        x: function (u, v) {
           return ((Math.sin(v) * Math.sin(u) + Math.sin(u)) / Math.PI) * 2;
         },
-        y: function(u, v) {
+        y: function (u, v) {
           return ((Math.sin(v) * Math.cos(u) + Math.cos(u)) / Math.PI) * 2;
         },
-        z: function(u, v) {
+        z: function (u, v) {
           return Math.cos(v) > 0 ? -0.5 : -5;
         }
       }
@@ -261,13 +256,13 @@ const renderChart = () => {
           max: Math.PI,
           step: Math.PI / 20
         },
-        x: function(u, v) {
+        x: function (u, v) {
           return ((Math.sin(v) * Math.sin(u) + Math.sin(u)) / Math.PI) * 2;
         },
-        y: function(u, v) {
+        y: function (u, v) {
           return ((Math.sin(v) * Math.cos(u) + Math.cos(u)) / Math.PI) * 2;
         },
-        z: function(u, v) {
+        z: function (u, v) {
           return Math.cos(v) > 0 ? -5 : -7;
         }
       }
@@ -295,13 +290,13 @@ const renderChart = () => {
           max: Math.PI,
           step: Math.PI / 20
         },
-        x: function(u, v) {
+        x: function (u, v) {
           return ((Math.sin(v) * Math.sin(u) + Math.sin(u)) / Math.PI) * 2.2;
         },
-        y: function(u, v) {
+        y: function (u, v) {
           return ((Math.sin(v) * Math.cos(u) + Math.cos(u)) / Math.PI) * 2.2;
         },
-        z: function(u, v) {
+        z: function (u, v) {
           return Math.cos(v) > 0 ? -7 : -7;
         }
       }
@@ -335,24 +330,24 @@ const renderChart = () => {
                   color: dItem.itemStyle.color
                 },
                 name: {
-                  fontSize: 14,
+                  fontSize,
                   width: 20,
                   padding: [0, 0, 0, 10]
                 },
                 value: {
                   fontFamily: "PangMenZhengDao",
-                  fontSize: 14,
+                  fontSize,
                   width: 20,
                   padding: [0, 0, 0, 30]
                 },
                 percent: {
                   fontFamily: "PangMenZhengDao",
-                  fontSize: 14,
+                  fontSize,
                   padding: [0, 0, 0, 30]
                 },
                 unit: {
                   color: "#ACDCE4",
-                  fontSize: 14,
+                  fontSize,
                   padding: [0, 0, 0, 5]
                 }
               }
@@ -367,25 +362,25 @@ const renderChart = () => {
         selectedMode: false, // Disable legend selection
         textStyle: {
           color: "#fff",
-          fontSize: 12,
+          fontSize,
           fontFamily: "Source Han Sans CN",
           rich: {
             name: {
-              fontSize: 12,
+              fontSize,
               width: 40,
               padding: [0, 0, 0, 10]
             },
             value: {
-              fontSize: 12,
+              fontSize,
               width: 20,
               padding: [0, 0, 0, 30]
             },
             percent: {
-              fontSize: 12,
+              fontSize,
               padding: [0, 0, 0, 30]
             },
             unit: {
-              fontSize: 12,
+              fontSize,
               padding: [0, 0, 0, 5]
             }
           }
@@ -426,7 +421,7 @@ const renderChart = () => {
             text: "总数",
             textAlign: "center",
             fill: "#fff",
-            fontSize: 16
+            fontSize
           }
         },
         {
@@ -436,7 +431,7 @@ const renderChart = () => {
           style: {
             text: "324个",
             textAlign: "center",
-            fontSize: 20,
+            fontSize,
             fill: "#ffff00"
           }
         },

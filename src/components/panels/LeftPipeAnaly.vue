@@ -3,7 +3,7 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
-import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
+import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import BarRowChart from '../charts/BarRowChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
@@ -94,7 +94,7 @@ const pipeChartdata = ref([
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full" title="行政区划分析"></ThirdLevelTitle>
-                <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+                <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
 
             </div>
             <!-- 管龄分析 -->
@@ -131,7 +131,7 @@ const pipeChartdata = ref([
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-                <PipeIconChart />
+                <PipeIconChart class="w-full h-60" />
             </div>
         </div>
     </div>

@@ -3,7 +3,8 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
-import PipeIconChart from '../charts/PipeIconChart.vue';
+import BarRowChart from '../charts/BarRowChart.vue';
+import LineAreaChart from '../charts/LineAreaChart.vue';
 
 
 const list = ref([
@@ -48,36 +49,92 @@ const tabs = ref([
 
 <template>
     <div class="pipe-analy">
-        <FristLevelTitle title="官网分析"></FristLevelTitle>
-        <SecondLevelTitle title="报警来源"></SecondLevelTitle>
-        <ul class="flex flex-wrap">
-            <li class="flex m-2" v-for="item in list" :key="item.name">
-                <div class="flex flex-col justify-between">
-                    <div class="icon w-10 h-10 rounded-full bg-blue-500"></div>
+        <FristLevelTitle title="第三方施工项目"></FristLevelTitle>
+        <div class="flex flex-wrap justify-between">
+            <div class="8k:w-1/2 4k:w-full">
+                <SecondLevelTitle class="w-full" title="施工类型" />
 
-                    <div class="text-sm text-blue-500 ml-2">{{ item.name }}</div>
-                </div>
-                <div class="flex flex-col justify-between">
-                    <div class="t">管线：163Km</div>
-                    <div class="t">管点：163Km</div>
-                </div>
-            </li>
-        </ul>
-        <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-        <ThirdLevelTitle title="官网管线">
-            <!-- tabs插槽 -->
-            <template v-slot:tabs>
-                <div class="tabs">
-                    <div class="tab-item flex items-center" v-for="tab in tabs" :key="tab.value">
-                        <div class="tab-item-title" :class="{ active: tab.value == tabs[0].value }">{{ tab.name }}</div>
+                <div class="w-full flex justify-around">
+                    <div
+                        class="p-item w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project-item-2.png')]">
+                        <div>223</div>
+                        <div class="flex flex-col justify-around items-center">
+                            <div>项目总数</div>
+                            <div>(个)</div>
+                        </div>
+                    </div>
+                    <div class="p-item  flex items-center justify-center">中间</div>
+                    <div
+                        class="p-item w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project-item-1.png')]">
+                        <div>223</div>
+                        <div class="flex flex-col justify-around items-center">
+                            <div>项目总数</div>
+                            <div>(个)</div>
+                        </div>
                     </div>
                 </div>
-            </template>
-        </ThirdLevelTitle>
-        <div class="w-full h-1/4">
-            <PipeIconChart />
+            </div>
+
+            <div class="8k:w-1/2 4k:w-full">
+                <SecondLevelTitle class="w-full" title="施工类型" />
+
+                <div class="w-full flex">
+                    <div class="chart-container w-full h-60">
+                        <BarRowChart />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            <div class="chart-container w-full h-80">
+                <LineAreaChart />
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-between">
+            <div class="8k:w-1/2 4k:w-full">
+                <SecondLevelTitle class="w-full" title="施工类型" />
+
+                <div class="w-full flex justify-around">
+                    <div
+                        class="p-item w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project-item-2.png')]">
+                        <div>223</div>
+                        <div class="flex flex-col justify-around items-center">
+                            <div>项目总数</div>
+                            <div>(个)</div>
+                        </div>
+                    </div>
+                    <div class="p-item  flex items-center justify-center">中间</div>
+                    <div
+                        class="p-item w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project-item-1.png')]">
+                        <div>223</div>
+                        <div class="flex flex-col justify-around items-center">
+                            <div>项目总数</div>
+                            <div>(个)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="8k:w-1/2 4k:w-full">
+                <SecondLevelTitle class="w-full" title="施工类型" />
+
+                <div class="w-full flex">
+                    <div class="chart-container w-full h-60">
+                        <BarRowChart />
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.p-item {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+</style>

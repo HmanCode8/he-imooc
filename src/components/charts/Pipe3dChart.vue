@@ -8,7 +8,7 @@
     </template>
 
 <script setup>
-import { h, onMounted, ref, watch } from 'vue'
+import { h, onMounted, ref, watch, toRef } from 'vue'
 import * as echarts from 'echarts'
 import 'echarts-gl'
 import useRootFontSize from '@/hooks/useRootFontSize';
@@ -28,6 +28,8 @@ let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
+
+const data = ref([])
 
 const handleResize = () => {
     const rootFontSize = useRootFontSize();
@@ -385,31 +387,8 @@ const renderChart = (fontSize) => {
         return option;
     }
 
-    const data =
-        [
-            {
-                name: '性能测试',
-                value: 134,
-            },
-            {
-                name: '安全',
-                value: 56,
 
-            },
-            {
-                name: '功能',
-                value: 57,
-            },
-            {
-                name: '代码',
-                value: 11,
-            },
-            {
-                name: '易用性',
-                value: 51,
-            },
-        ]
-    const serData = data.map((dItem, index) => {
+    const serData = data.value.map((dItem, index) => {
         return {
             ...dItem,
             value: Number(dItem.value),

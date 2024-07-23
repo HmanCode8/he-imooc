@@ -5,7 +5,7 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import LineChart from '../charts/LineChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
-import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
+import Pipe3dChart from '../charts/Pipe3dChart.vue';
 
 
 const roadAnaly = ref([
@@ -94,7 +94,7 @@ const pipeChartdata = ref([
                     <SecondLevelTitle title="类型分析" />
                     <div class="w-full flex">
                         <div class="chart-container w-full h-60">
-                            <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+                            <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
 
                         </div>
                     </div>
