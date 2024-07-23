@@ -75,12 +75,30 @@ const warningType = ref([
         v-for="(item, index) in warningData"
         :key="index"
       >
+      <div v-show="index%2===0">
         <div class="icon w-4 h-4 bg-slate-500"></div>
         <div class>
           <div class="name">{{ item.name }}</div>
           <div class="pipe-point">{{ item.value }}(个)</div>
         </div>
-      </div>
+        </div>
+      </div>   
+
+      <div>pppppppppppppp</div>
+
+      <div
+        class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 items-center"
+        v-for="(item, index) in warningData"
+        :key="index"
+      >
+      <div v-show="index%2!==0">
+        <div class="icon w-4 h-4 bg-slate-500"></div>
+        <div class>
+          <div class="name">{{ item.name }}</div>
+          <div class="pipe-point">{{ item.value }}(个)</div>
+        </div>
+        </div>
+      </div>    
     </div>
 
     <div class="flex w-full flex-wrap justify-between">

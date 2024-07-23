@@ -145,32 +145,28 @@ const barChartData = ref({
         </div>
       </div>
 
-      <div class="8k:w-1/2 4k:w-full h-80">
-        <div class="flex">
-          <div class>
+      <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
+      <!-- <div class="h-80 flex flex-wrap"> -->
+          <!-- <div class="w-40 h-35 bg-[url('assets/imgs/average1.png')] bg-cover bg-center  flex flex-col items-center ml-5 "> -->
+          <div class="signfor">
             <div class="name">72个</div>
             <div class="pipe-point">待签收</div>
-            <div class="icon w-4 h-4 bg-slate-500"></div>
           </div>
 
-          <div class>
+          <!-- <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-40 flex flex-col items-center">
             <div class="name">0个</div>
             <div class="pipe-point">处置中</div>
-            <div class="icon w-4 h-4 bg-slate-500"></div>
           </div>
 
-          <div class>
+          <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-40 flex flex-col items-center">
             <div class="name">7个</div>
             <div class="pipe-point">已办结</div>
-            <div class="icon w-4 h-4 bg-slate-500"></div>
           </div>
 
-          <div class>
+          <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-40 flex flex-col items-center">
             <div class="name">100%</div>
             <div class="pipe-point">按时办结率</div>
-            <div class="icon w-4 h-4 bg-slate-500"></div>
-          </div>
-        </div>
+          </div> -->
       </div>
     </div>
   </div>
@@ -182,5 +178,17 @@ const barChartData = ref({
 }
 .item:nth-child(even) {
   background-color: #012451;
+}
+
+.signfor{
+  width:105px;
+  height:80px;
+  background-image: url('@/assets/imgs/average1.png');
+  background-size:cover;
+  background-position: center;
+  display:flex;
+  flex-direction:column;
+  justify-center:center;
+  items-center:center;
 }
 </style>
