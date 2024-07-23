@@ -6,6 +6,7 @@ import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
 import PipeChart from "../charts/pipeChart.vue";
 import BarRowChart from "../charts/BarRowChart.vue";
 import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
+import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
 
 import { useGlobalStore } from "@/store";
 
@@ -96,6 +97,16 @@ const barChartData = ref({
   xData: ['燃气', '供水', '雨水', '污水', '道路', '桥梁', '路灯'],
   yData: [90, 50, 20, 30, 80, 60, 50],
 });
+
+const Pie3DChartData = ref([
+  { name: "燃气", value: 60, color: "#FF6384" },
+  { name: "供水", value: 23, color: "#FFCE56" },
+  { name: "雨水", value: 25, color: "#36A2EB" },
+  { name: "污水", value: 99, color: "#FFA07A" },
+  { name: "道路", value: 60, color: "#0F7C7C" },
+  { name: "桥梁", value: 23, color: "#0F7C7C" },
+  { name: "路灯", value: 25, color: "#3B40A2" }
+]);
 </script>
 
 <template>
@@ -104,7 +115,7 @@ const barChartData = ref({
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
         <ThirdLevelTitle class="w-full" title="巡检次数"></ThirdLevelTitle>
-        <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+        <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
@@ -147,7 +158,7 @@ const barChartData = ref({
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
         <ThirdLevelTitle class="w-full" title="管养次数"></ThirdLevelTitle>
-        <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+        <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
