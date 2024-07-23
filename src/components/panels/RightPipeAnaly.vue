@@ -120,7 +120,7 @@ const pipeChartdata = ref([
 
 <style scoped lang="scss">
 .analy-item {
-    background-image: url('@/assets/imgs/road-item-bg.png');
+    background-image: url('@/assets/imgs/infrastructure/road-item-bg.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;

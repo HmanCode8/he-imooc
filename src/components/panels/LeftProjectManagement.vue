@@ -117,7 +117,7 @@ const list = ref([
 }
 
 .tray-item-r {
-    background-image: url('@/assets/imgs/tray-item-r.png');
+    background-image: url('@/assets/imgs/project/tray-item-r.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
