@@ -5,7 +5,7 @@
 		<div
 			class="top-tabs  w-full flex  items-center justify-center absolute left-1/2 translate-x-[-50%] top-0  z-10 ">
 			<div
-				class="tabs-container bg-[url('assets/imgs/t-tabs.png')] w-1/3 h-20  bg-cover flex justify-between px-10  mt-4">
+				class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20  bg-cover flex justify-between px-10  mt-4">
 				<div :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${currentTopTab === tab.value ? 'text-[#75fbfd] ' : ''}`"
 					v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
 					<div>
@@ -34,26 +34,14 @@
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
 		<!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-		<div class="layer-tabs bg-[#215291] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
-			<ul class="w-16 flex flex-col items-center justify-center">
-				<li v-for="(tab, index) in layerTabs" :key="tab.value"
-					:class="`layer-tab w-full text-center relative hover:cursor-pointer`"
-					@click="currentLayerTab = tab.value">
-					<div :class="`layer-tab-name py-2 ${currentLayerTab === tab.value ? 'border-b' : ''}`"> {{
-						tab.name }}
-					</div>
-					<div class="layer-tab-detail absolute left-20 w-20 bg-orange-800"
-						v-if="tab.detail && currentLayerTab === tab.value">
-						<div class="layer-tab-title">{{ tab.detail.title }}</div>
-						<div class="layer-tab-content">
-							<div v-for="(item, index) in tab.detail.content" :key="index" class="layer-tab-item">
-								<div class="layer-tab-item-name">{{ item.name }}</div>
-							</div>
-						</div>
-					</div>
-
-				</li>
-			</ul>
+		<div class="layer-tabs bg-[#0e2a62] w-24 h-[90%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+			<div class="layer-bg bg-[url('assets/imgs/main/layer-tabs.png')] z-40 w-1/3 ">
+				<div class="img-list">
+					<div v-for="(i, index) in 9 " :key="index"></div>
+				</div>
+			</div>
+			<div class="layer-shaw h-full w-2/3 bottom-0">
+			</div>
 		</div>
 
 		<!-- 右下角图例 -->
@@ -419,9 +407,27 @@ const toggleMap = () => {
 	@for $i from 1 through 10 {
 		.blink-#{$i} {
 			// 这里可以添加你想要的样式
-			background-image: url('@/assets/imgs/icon-b-#{$i}.png');
+			background-image: url('@/assets/imgs/main/icon-b-#{$i}.png');
 			// 其他样式...
 		}
+	}
+
+}
+
+.layer-tabs {
+	.layer-bg {
+		background-size: 100% 100%;
+
+		.i-img {
+			background-image: url('@/assets/imgs/main/base.png');
+			background-size: 100% 100%;
+		}
+	}
+
+	.layer-shaw {
+		// 左上角开始渐变背景
+		// background: linear-gradient(180deg, #0e2a62 50%, #0e2a62 30%, #051335 20%);
+		background-color: raba(0, 0, 0, .5);
 	}
 
 }
@@ -429,7 +435,7 @@ const toggleMap = () => {
 .select-active {
 	// filter: drop-shadow(2px 4px 6px red);
 	color: #00FAFF;
-	background-image: url('@/assets/imgs/icon-b-active.png');
+	background-image: url('@/assets/imgs/main/icon-b-active.png');
 	background-size: 100% 100%;
 	transform: translateY(-20px);
 	// background-position: center center;
@@ -438,7 +444,7 @@ const toggleMap = () => {
 }
 
 .t-item-line {
-	background-image: url('@/assets/imgs/t-tabs-active.png');
+	background-image: url('@/assets/imgs/main/t-tabs-active.png');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }

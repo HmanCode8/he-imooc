@@ -48,6 +48,12 @@ let dataValue = [20, 30, 20, 25, 35];
 const renderChart = (fontSize = 12) => {
     const option = {
         // backgroundColor: '#f00',
+        grid: {
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10
+        },
         tooltip: {
             show: true,
             trigger: "axis", //axis , item
@@ -79,7 +85,7 @@ const renderChart = (fontSize = 12) => {
                 },
                 axisLabel: {
                     textStyle: {
-                        color: "#f00",
+                        color: "#fff",
                         fontSize: fontSize
                     }
                 },

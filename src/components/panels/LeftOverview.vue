@@ -71,6 +71,13 @@ const oldList = [
         des2: '路灯巡检计划量',
         rate1: 60,
         rate2: 70,
+    },
+    {
+        name: '路灯',
+        des1: '路灯巡检完成率',
+        des2: '路灯巡检计划量',
+        rate1: 60,
+        rate2: 70,
     }
 ]
 const arr1 = [
@@ -106,46 +113,76 @@ const olds = ref([
     <div class="overview">
         <FristLevelTitle title="综合监控"></FristLevelTitle>
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
-        <div class="overview-content flex">
-            <div class="l w-1/3">
-                <ul class="flex flex-col">
-                    <li class="flex items-center" v-for="item in arr1" :key="item.name">
-                        <div class="icon w-8 h-8 bg-slate-500 rounded-full"></div>
-                        <div class="flex">
-                            <div>{{ item.name }}</div>
+        <div class="overview-content flex flex-wrap justify-between">
+            <div class="l 4k:w-full 8k:w-[40%]">
+                <ul class="flex w-full flex-col">
+                    <li class="flex w-full px-2 items-center" v-for="item, index in arr1" :key="item.name">
+                        <div :class="`base-icon-${index + 1} w-20 h-20 `">
+                        </div>
+                        <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-cover">
+                            <div>{{ item.name }} <span class="ml-2">(km)</span></div>
                             <div class="px-2">{{ item.value }}</div>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="r w-2/3">
-                <div class="flex justify-around items-center mb-4">
-                    <div>
-                        <ul class="flex flex-col">
-                            <li>
-                                <div>管线 <span>58.2</span><span>km</span></div>
-                            </li>
-                            <li>
-                                <div>场站 <span>67</span><span>个</span></div>
-                            </li>
-                            <li>
-                                <div>设备 <span>1788</span><span>个</span></div>
-                            </li>
-                        </ul>
+            <div class="l 4k:w-full relative 8k:w-[60%]">
+                <div class="flex absolute flex-col w-full h-full items-center justify-center">
+                    <div class="flex h-1/4 items-center justify-center  w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
                     </div>
-                    <div>中间</div>
-                    <div>
-                        <ul class="flex flex-col">
-                            <li>
-                                <div>管线 <span>58.2</span><span>km</span></div>
-                            </li>
-                            <li>
-                                <div>场站 <span>67</span><span>个</span></div>
-                            </li>
-                            <li>
-                                <div>设备 <span>1788</span><span>个</span></div>
-                            </li>
-                        </ul>
+                    <div class="flex h-1/4 items-center justify-around w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                    <div class="flex h-1/4 items-center justify-between w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                    <div class="flex h-1/4 items-center justify-center  w-full">
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                        <div
+                            class="flex w-1/3 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
+
+                            <div>路灯 <span class="font-bold text-xl">4567</span> 个</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center h-48 items-center mb-4">
+                    <div class="o-center w-1/2 h-full">
                     </div>
                 </div>
             </div>
@@ -154,34 +191,26 @@ const olds = ref([
         <SecondLevelTitle title="巡检巡查"></SecondLevelTitle>
 
         <div class="h-1/3 w-full">
-
-            <!-- <div class="legend flex justify-end">
-                <ul class="flex ">
-                    <li v-for="item in legend" :key="item.name" class="text-sm flex items-center mx-1">
-                        <div :class="`icon h-2 w-2 rounded-sm mr-2 bg-${item.value}`"></div>
-                        <div class="text-center">{{ item.name }}</div>
-                    </li>
-                </ul>
-                <div class="h2">巡检完成率</div>
-            </div> -->
             <DoubleBarLineChart />
         </div>
 
         <div class="old flex w-full justify-end">
             <ul class="flex flex-wrap w-full">
-                <li v-for="item in oldList" :key="item.name" class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
+                <li v-for="(item, index) in oldList" :key="item.name" class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
                     <div class="flex flex-col">
-                        <div class="icon w-8 h-8 rounded-full bg-slate-400"></div>
+                        <div :class="`check-icon-${index + 1} w-16 h-16`"></div>
                         <div class="text-center">{{ item.name }}</div>
                     </div>
                     <div class="flex items-center m-2 flex-col">
                         <div>
-                            <p>{{ item.rate1 }}%</p>
-                            <p>{{ item.des1 }}</p>
+                            <p class="text-[#89C3DF]">{{ item.des1 }}</p>
+                            <p class="text-xl font-bold">{{ item.rate1 }}%</p>
+
                         </div>
                         <div>
-                            <p>{{ item.rate2 }}%</p>
-                            <p>{{ item.des2 }}</p>
+                            <p class="text-[#89C3DF]">{{ item.des2 }}</p>
+                            <p class="text-xl font-bold">{{ item.rate2 }}%</p>
+
                         </div>
                     </div>
                 </li>
@@ -213,6 +242,39 @@ const olds = ref([
 
     .bg-rate {
         background-color: #3B82F6;
+    }
+}
+
+.base-icon-1 {
+    background-image: url('@/assets/imgs/overview/ic-exapnd.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.base-icon-2 {
+    background-image: url('@/assets/imgs/overview/ic-build.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.o-center {
+    background-image: url('@/assets/imgs/overview/o-center.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+@for $i from 1 through 9 {
+    .check-icon-#{$i} {
+        background-image: url('@/assets/imgs/overview/check-icon-#{$i}.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+}
+
+@for $i from 1 through 4 {
+    .base-item-#{$i} {
+        top: ($i - 1) * 15%;
+        width: ($i - 1) * 25%;
     }
 }
 </style>

@@ -1,42 +1,75 @@
-<template>
-    <el-table :data="tableData" :header-cell-style="{
-        background: '#162444',
-        color: '#ffffff',
-        fontWeight: 'bold',
-        textAlign: 'center'
-    }" :cell-style="{
-        background: rowIndex % 2 === 0 ? '#003366' : '#004080',
-        color: '#ffffff',
-        textAlign: 'center'
-    }" style="width: 100%">
-        <el-table-column prop="region" label="区域"></el-table-column>
-        <el-table-column prop="total" label="底数(座)"></el-table-column>
-        <el-table-column prop="class1" label="I类"></el-table-column>
-        <el-table-column prop="class2" label="II类"></el-table-column>
-        <el-table-column prop="class3" label="III类"></el-table-column>
-        <el-table-column prop="class4" label="IV类"></el-table-column>
-        <el-table-column prop="class5" label="V类"></el-table-column>
-    </el-table>
-</template>
+<script setup>
+import { defineProps } from 'vue'
 
-<script>
-export default {
-    name: 'CustomTable',
-    data() {
-        return {
-            tableData: [
-                { region: '市直', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '盐都区', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '亭湖区', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '大丰区', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '城南新区', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '滨海县', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '射阳县', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 },
-                { region: '阜宁县', total: 207, class1: 2, class2: 78, class3: 67, class4: 28, class5: 22 }
-            ]
-        }
+defineProps({
+    columns: {
+        type: Array,
+        default: () => [
+            { title: 'Name', key: 'name' },
+            { title: 'Age', key: 'age' },
+            { title: 'Address', key: 'address' }
+        ]
+    },
+    tableData: {
+        type: Array,
+        default: () => [
+            { name: 'John Doe', age: 30, address: '123 Main St' },
+            { name: 'Jane Smith', age: 25, address: '456 Elm St' },
+            { name: 'Sam Green', age: 35, address: '789 Oak St' },
+            { name: 'John Doe', age: 30, address: '123 Main St' },
+            { name: 'Jane Smith', age: 25, address: '456 Elm St' },
+            { name: 'Sam Green', age: 35, address: '789 Oak St' },
+            { name: 'John Doe', age: 30, address: '123 Main St' },
+            { name: 'Jane Smith', age: 25, address: '456 Elm St' },
+            { name: 'Sam Green', age: 35, address: '789 Oak St' }
+        ]
     }
-}
+})
 </script>
 
-<style scoped></style>
+<template>
+    <div class="table-container w-full">
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="col in columns" :key="col.key">{{ col.title }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
+                    <td v-for="col in columns" :key="col.key">{{ row[col.key] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<style scoped>
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #1c3c6f;
+    color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #132d5c;
+}
+
+tbody tr:hover {
+    background-color: #4276b2;
+}
+</style>

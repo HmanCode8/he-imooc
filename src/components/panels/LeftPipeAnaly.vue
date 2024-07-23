@@ -3,7 +3,7 @@ import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
-import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
+import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import BarRowChart from '../charts/BarRowChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
@@ -46,6 +46,15 @@ const pipes = ref([
     },
 
 ])
+const Pie3DChartData = ref([
+    { name: "燃气", value: 60, color: "#FF6384" },
+    { name: "供水", value: 23, color: "#FFCE56" },
+    { name: "雨水", value: 25, color: "#36A2EB" },
+    { name: "污水", value: 99, color: "#FFA07A" },
+    { name: "道路", value: 60, color: "#0F7C7C" },
+    { name: "桥梁", value: 23, color: "#0F7C7C" },
+    { name: "路灯", value: 25, color: "#3B40A2" },
+]);
 
 const changeActive = (name) => {
     pipeActive.value = name
@@ -71,7 +80,7 @@ const pipeChartdata = ref([
         <!-- 第一部分 -->
         <div>
             <div class="pipe-list flex justify-between px-1 flex-wrap">
-                <div class="pipe-item 4k:w-full 8k:w-[32%] hover:cursor-pointer  flex items-center bg-[url('assets/imgs/pipe-remak-item.png')] bg-cover"
+                <div class="pipe-item 4k:w-full 8k:w-[32%] hover:cursor-pointer  flex items-center bg-[url('assets/imgs/infrastructure/pipe-remak-item.png')] bg-cover"
                     v-for="(item, index) in pipes" @click="changeActive(item.name)" :key="index">
                     <div :class="`pipe-icon-${index + 1}  w-28 h-24 bg-cover`"></div>
                     <div class="">
@@ -94,7 +103,7 @@ const pipeChartdata = ref([
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full" title="行政区划分析"></ThirdLevelTitle>
-                <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+                <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
 
             </div>
             <!-- 管龄分析 -->
@@ -114,24 +123,15 @@ const pipeChartdata = ref([
 
                 <div class="w-full flex">
                     <div class="chart-container w-full h-60">
-                        <Bar3dChart />
+                        <Bar3dChart :pieChartData="Pie3DChartData" />
                     </div>
-                    <!-- <div class="legend w-1/2 flex flex-wrap">
-                        <div class="item flex  w-[45%] border-b m-[1px] items-center"
-                            v-for="(item, index) in pipeChartdata" :key="index">
-                            <div :style="`background-color:${item.color}`" class="w-2 h-2"></div>
-                            <div class="name">{{ item.name }}</div>
-                            <div class="percentage">({{ item.percentage }}%)</div>
-                            <div class="distance">{{ item.distance }}</div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-                <PipeIconChart />
+                <PipeIconChart class="w-full h-60" />
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@ const pipeChartdata = ref([
 <style scoped lang="scss">
 @for $i from 1 through 6 {
     .pipe-icon-#{$i} {
-        background-image: url('@/assets/imgs/pipe-bg-#{$i}.png');
+        background-image: url('@/assets/imgs/infrastructure/pipe-bg-#{$i}.png');
     }
 }
 </style>

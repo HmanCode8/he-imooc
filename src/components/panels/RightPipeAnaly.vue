@@ -5,7 +5,8 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import LineChart from '../charts/LineChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
-import Pipe3dChartTwo from '../charts/Pipe3dChartTwo.vue';
+import Pipe3dChart from '../charts/Pipe3dChart.vue';
+import Tablechart from '../charts/Tablechart.vue';
 
 
 const roadAnaly = ref([
@@ -65,7 +66,7 @@ const pipeChartdata = ref([
                     <div v-for="(item, index) in roadAnaly" :key="index"
                         class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-[url('assets/imgs/road-item-1.png')] bg-cover"></div>
+                            <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
                         <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
@@ -78,7 +79,7 @@ const pipeChartdata = ref([
                     <div v-for="(item, index) in roadAnaly" :key="index"
                         class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-[url('assets/imgs/road-item-1.png')] bg-cover"></div>
+                            <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
                         <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
@@ -94,7 +95,7 @@ const pipeChartdata = ref([
                     <SecondLevelTitle title="类型分析" />
                     <div class="w-full flex">
                         <div class="chart-container w-full h-60">
-                            <Pipe3dChartTwo class="w-full h-full flex" :legend="pipeChartdata" />
+                            <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
 
                         </div>
                     </div>
@@ -110,7 +111,7 @@ const pipeChartdata = ref([
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="养护分析" />
                 <div class="chart-container w-full h-96">
-                    <Bar3dChart />
+                    <Tablechart />
 
                 </div>
             </div>
@@ -120,7 +121,7 @@ const pipeChartdata = ref([
 
 <style scoped lang="scss">
 .analy-item {
-    background-image: url('@/assets/imgs/road-item-bg.png');
+    background-image: url('@/assets/imgs/infrastructure/road-item-bg.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;

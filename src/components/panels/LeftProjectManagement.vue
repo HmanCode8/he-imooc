@@ -37,55 +37,60 @@ const list = ref([
     <div class="pipe-analy">
         <div class="8k:h-1/3">
             <FristLevelTitle title="2024年全市城乡建设重点项目"></FristLevelTitle>
-            <SecondLevelTitle title="报警来源"></SecondLevelTitle>
+            <SecondLevelTitle title="项目概览"></SecondLevelTitle>
 
             <!-- 第一部分 -->
             <div class="w-full  flex justify-between flex-wrap">
-                <div class="8k:w-1/2 4k:w-full flex  justify-between items-center mb-4">
-                    <div class="flex flex-col items-center">
-                        <div>建设中</div>
-                        <div><span>20</span>个</div>
-                        <div>占比：20%</div>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="font-bold text-2xl">987</div>
-                        <h2>项目总数</h2>
-                        <div>（个）</div>
+                <div class="w-full flex flex-wrap justify-between items-center mb-4">
+
+                    <div class="tray-item-l flex 8k:w-1/2 4k:w-full h-40 items-center">
+                        <div class="w-1/3 text-center">
+                            <div>建设中</div>
+                            <div><span class="text-2xl font-bold">20</span>个</div>
+                            <div>占比：20%</div>
+                        </div>
+                        <div class="w-1/3 text-center">
+                            <div><span class="text-2xl font-bold">20</span>个</div>
+                            <div class="text-2xl font-bold">项目总数</div>
+                            <div>(个)</div>
+                        </div>
+                        <div class="w-1/3 text-center">
+                            <div>建设中</div>
+                            <div>20个</div>
+                            <div>占比：20%</div>
+                        </div>
                     </div>
 
-                    <div class="flex flex-col items-center">
-                        <div>建设中</div>
-                        <div><span>20</span>个</div>
-                        <div>占比：20%</div>
-                    </div>
-                </div>
-                <div class="8k:w-1/2 4k:w-full flex justify-between items-center mb-4">
-                    <div class="flex flex-col items-center">
-                        <div>建设中</div>
-                        <div><span>20</span>个</div>
-                        <div>占比：20%</div>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="font-bold text-2xl">987</div>
-                        <h2>项目总数</h2>
-                        <div>（个）</div>
+
+                    <div class="tray-item-r flex 8k:w-1/2 4k:w-full h-40 items-center">
+                        <div class="w-1/3 text-center">
+                            <div>建设中</div>
+                            <div><span class="text-2xl font-bold">20</span>个</div>
+                            <div>占比：20%</div>
+                        </div>
+                        <div class="w-1/3 text-center">
+                            <div><span class="text-2xl font-bold">20</span>个</div>
+                            <div class="text-2xl font-bold">项目总数</div>
+                            <div>(个)</div>
+                        </div>
+                        <div class="w-1/3 text-center">
+                            <div>建设中</div>
+                            <div>20个</div>
+                            <div>占比：20%</div>
+                        </div>
                     </div>
 
-                    <div class="flex flex-col items-center">
-                        <div>建设中</div>
-                        <div><span>20</span>个</div>
-                        <div>占比：20%</div>
-                    </div>
                 </div>
+
             </div>
         </div>
         <!-- 第二部分 -->
         <div class="w-full 8k:h-1/3  flex justify-between items-center flex-wrap">
-            <div v-for="(item, index) in list" :key="index" class="8k:w-1/5 4k:w-1/3 flex  items-center mb-4">
-                <div class="icon w-4 h-4 bg-lime-400"></div>
-                <div class="flex flex-col items-center">
+            <div v-for="(item, index) in list" :key="index" class="8k:w-1/5 4k:w-1/3 flex items-center mb-4">
+                <div :class="` w-20 h-20 type-icon-${index + 1}`"></div>
+                <div class="flex h-20 flex-col items-center justify-center px-2 ">
                     <div class="">{{ item.category }}(个)</div>
-                    <div class="">{{ item.count }}</div>
+                    <div class="text-xl font-bold">{{ item.count }}</div>
                 </div>
             </div>
         </div>
@@ -94,14 +99,34 @@ const list = ref([
         <div class="w-full 8k:h-1/3  flex justify-between flex-wrap">
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-                <PipeIconChart />
+                <PipeIconChart class="w-full h-60" />
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="官网分析"></SecondLevelTitle>
-                <PipeIconChart />
+                <PipeIconChart class="w-full h-60" />
             </div>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.tray-item-l {
+    background-image: url('@/assets/imgs/project/tray-item-l.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.tray-item-r {
+    background-image: url('@/assets/imgs/project/tray-item-r.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+@for $i from 1 through 10 {
+    .type-icon-#{$i} {
+        background-image: url('@/assets/imgs/project/type-item-#{$i}.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+}
+</style>

@@ -2,9 +2,6 @@
 import { ref, defineProps } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
-
-import Pipe3dChart from "../charts/Pipe3dChartTwo.vue";
 import WarningAreaChart from "../charts/WarningAreaChart.vue";
 
 const list = ref([
@@ -70,12 +67,7 @@ const warningType = ref([
     <FristLevelTitle title="预警事件分析"></FristLevelTitle>
     <SecondLevelTitle title="预警来源"></SecondLevelTitle>
     <div class="w-full h-60 flex">
-      <div
-        class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 items-center"
-        v-for="(item, index) in warningData"
-        :key="index"
-      >
-      <div v-show="index%2===0">
+      <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 items-center" v-for="(item, index) in warningData" :key="index">
         <div class="icon w-4 h-4 bg-slate-500"></div>
         <div class>
           <div class="name">{{ item.name }}</div>
@@ -190,9 +182,10 @@ const warningType = ref([
 
 <style scoped lang="scss">
 .item:nth-child(odd) {
-background-color: #142d5d;
+  background-color: #142d5d;
 }
+
 .item:nth-child(even) {
-    background-color: #012451;
+  background-color: #012451;
 }
 </style>
