@@ -118,7 +118,7 @@ const riskData = [
             <div class="waring-item  p-2 4k:w-full 8k:w-[45%]">
                 <div class="flex justify-between  w-full">
                     <div class="flex items-center">
-                        <div class="h-10 w-10 rounded-full bg-[url('assets/imgs/h-item-to.png')]">
+                        <div class="h-10 w-10 rounded-full">
 
                         </div>
                         <div class="flex flex-col justify-center">
@@ -135,7 +135,7 @@ const riskData = [
                 </div>
                 <div class="flex justify-between w-full">
                     <div class="flex items-center">
-                        <div class="h-10 w-10 rounded-full bg-[url('assets/imgs/h-item-to.png')]">
+                        <div class="h-10 w-10 rounded-full">
 
                         </div>
                         <div class="flex flex-col justify-center">

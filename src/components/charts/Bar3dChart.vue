@@ -25,7 +25,7 @@ onMounted(() => {
 
 const handleResize = (size) => {
     const fontSize = useRootFontSize()
-    renderChart(fontSize)
+    renderChart(fontSize.value)
     mChart.resize()
 }
 
@@ -82,6 +82,7 @@ const renderChart = (fontSize) => {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei',
                     color: '#ffffff',
+                    fontSize, // 修改 x 轴字体大小
                 },
             },
         },
@@ -107,7 +108,11 @@ const renderChart = (fontSize) => {
                     opacity: 0.5,
                 },
             },
-            axisLabel: {},
+            axisLabel: {
+                textStyle: {
+                    fontSize, // 修改 y 轴字体大小
+                },
+            },
         },
         series: [
             {
@@ -149,6 +154,7 @@ const renderChart = (fontSize) => {
             },
         ],
     };
+
     mChart.setOption(option)
 }
 </script>

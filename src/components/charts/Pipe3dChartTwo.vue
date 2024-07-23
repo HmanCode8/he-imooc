@@ -11,7 +11,7 @@
 import { h, onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
 import 'echarts-gl'
-import { Label } from 'cesium';
+import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
     data: {
@@ -26,16 +26,17 @@ const props = defineProps({
 const target = ref(null)
 let mChart = null
 onMounted(() => {
-    mChart = echarts.init(target.value)
-    renderChart()
-})
+    mChart = echarts.init(target.value);
+});
 
-const handleResize = (size) => {
-    console.log('resize', size)
-    mChart.resize()
-}
-
-const renderChart = () => {
+const handleResize = () => {
+    const rootFontSize = useRootFontSize();
+    renderChart(rootFontSize.value);
+    if (mChart) {
+        mChart.resize();
+    }
+};
+const renderChart = (fontSize) => {
     const colorList = ['rgba(69, 244, 245,  0.9)', 'rgba(7, 166, 255,  0.9)', 'rgba(255, 208, 118,  0.9)', 'rgba(109, 148, 198, 0.9)', 'rgba(255, 255, 255,  0.9)']
 
     // 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
@@ -296,24 +297,24 @@ const renderChart = () => {
                                     color: colorList[dIndex],
                                 },
                                 name: {
-                                    fontSize: 12,
+                                    fontSize,
                                     width: 20,
                                     padding: [0, 0, 0, 10],
                                 },
                                 value: {
                                     fontFamily: 'PangMenZhengDao',
-                                    fontSize: 12,
+                                    fontSize,
                                     width: 20,
                                     padding: [0, 0, 0, 30]
                                 },
                                 percent: {
                                     fontFamily: 'PangMenZhengDao',
-                                    fontSize: 12,
+                                    fontSize,
                                     padding: [0, 0, 0, 30]
                                 },
                                 unit: {
                                     color: '#ACDCE4',
-                                    fontSize: 12,
+                                    fontSize,
                                     padding: [0, 0, 0, 5]
                                 }
                             }
@@ -328,25 +329,25 @@ const renderChart = () => {
                 selectedMode: false, // Disable legend selection
                 textStyle: {
                     color: '#fff',
-                    fontSize: 12,
+                    fontSize,
                     fontFamily: 'Source Han Sans CN',
                     rich: {
                         name: {
-                            fontSize: 12,
+                            fontSize,
                             width: 40,
                             padding: [0, 0, 0, 10],
                         },
                         value: {
-                            fontSize: 12,
+                            fontSize,
                             width: 20,
                             padding: [0, 0, 0, 30]
                         },
                         percent: {
-                            fontSize: 12,
+                            fontSize,
                             padding: [0, 0, 0, 30]
                         },
                         unit: {
-                            fontSize: 12,
+                            fontSize,
                             padding: [0, 0, 0, 5]
                         }
                     }
