@@ -38,8 +38,8 @@
 			<div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
 				<div class="img-list flex flex-col justify-around items-center h-[80%]">
 					<div :class="`layer-item-${index + 1} w-1/2 h-[9%] relative hover:cursor-pointer`"
-						@click="onLayerOnchange(i.value)" v-for="(i, index) in layers " :key="i.value">
-						<div v-if="currentLayerTab === i.value"
+						@click="onLayerOnchange(i.name)" v-for="(i, index) in layers " :key="i.name">
+						<div v-if="currentLayerTab === i.name"
 							class="w-full h-full layer-active absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')]">
 						</div>
 					</div>
@@ -52,10 +52,11 @@
 			</div>
 
 			<div class="layer-shaw h-full w-1/2  bottom-0">
-				<div v-for="c in currentItem" :key="c.value">
-					<div v-for="i in c.detail" :key="i.value">
-						<div class=" font-bold">{{ i.name }}</div>
-						<div>{{ i.value }}</div>
+				<div v-for="sub in currentItem" :key="sub.name" class="layer-item-name">
+          <div class="layer-item-name-text font-bold">{{ sub.name }}</div>
+					<div v-for="item in sub.children" :key="item.name" class="layer-item-name-text">
+						<div :class="`layer-item-name-text hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
+                 @click="updateLayer(item)">{{ item.name }}</div>
 					</div>
 				</div>
 			</div>
@@ -67,22 +68,17 @@
 			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
 			<div class="legend-content px-1">
 				<div class="legend-item flex items-center ">
-					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
-					<div class="legend-item-name">管线</div>
+					<img class="legend-item-color w-4 h-4 bg-lime-400" alt="管线1" />
 					<div class="legend-item-desc">管线1</div>
-				</div>
-				<div class="legend-item flex items-center ">
-					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
-					<div class="legend-item-name">设施</div>
-					<div class="legend-item-desc">设施1</div>
-				</div>
-				<div class="legend-item flex items-center">
-					<div class="legend-item-color w-4 h-4 bg-lime-400"></div>
-					<div class="legend-item-name">设备</div>
-					<div class="legend-item-desc">设备1</div>
 				</div>
 			</div>
 		</div>
+    <div ref="popupCom" class="popup">
+      <span class="icon-close" @click="closePopup">✖</span>
+      <div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" v-for="(value,key) in popupObject">
+        <p>{{ key }}:{{ value }}</p>
+      </div>
+    </div>
 	</div>
 </template>
 
@@ -106,52 +102,31 @@ import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import _ from 'lodash'
 
-
-// 引入盐城的GeoJSON数据
-// import yanchengGeoJson from '@/assets/MapData/yancheng.json'
+import layerConfigUrl from '/config/layer.json?url'
+import ImageLayer from "ol/layer/Image";
 import TileLayer from "ol/layer/Tile";
-import { WMTS } from "ol/source";
+import {ImageWMS, WMTS} from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
-import { get as getProjection } from 'ol/proj';
-import { register } from "ol/proj/proj4";
+import {get as getProjection} from 'ol/proj';
+import {register} from "ol/proj/proj4";
+import Feature from "ol/Feature";
+import {WKT} from "ol/format";
 
-const labels = [
-	{
-		name: "基础",
-		value: "foundation",
-		children: [
-			{ name: "示范区", value: "demonstration_area", detail: [{ name: "示范区", value: "100" }, { name: "示范区", value: "100" }] },
-			{ name: "建成区", value: "built_area" }
-		]
-	},
-	{ name: "燃气", value: "gas", children: [{}] },
-	{
-		name: "供水", value: "water_supply", children: [
-			{ name: "示范区", value: "demonstration_area", detail: [{ name: "示范区", value: "20" }, { name: "示范区", value: "90" }] },
-			{ name: "建成区", value: "built_area" }
-		]
-	},
-	{ name: "雨水", value: "rainwater", children: [{}] },
-	{ name: "污水", value: "sewage", children: [{}] },
-	{ name: "道路", value: "road", children: [{}] },
-	{
-		name: "桥梁", value: "bridge", children: [
-			{ name: "示范区", value: "demonstration_area", detail: [{ name: "示范区", value: "120" }, { name: "示范区", value: "390" }] },
-			{ name: "建成区", value: "built_area" }
-		]
-	},
-	{ name: "项目", value: "project", children: [{}] },
-	{ name: "综合", value: "comprehensive", children: [{}] },
-	{ name: "路灯", value: "street_lamp", children: [{}] }
-];
-const layers = ref(labels)
+const layers = ref([])
+const geoJsonParser = new GeoJSON()
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = toRef(global.componentId)
 const currentBottomTab = ref('underground-pipeline')
-const currentLayerTab = ref('foundation')
+const currentLayerTab = ref(null);
+const loadedLayerGroup = ref([]);
+const layerConfig = ref(null);
 const map = ref(null);
+const popupCom = ref(null);
+const popupObject = ref({});
+const infoOverlay = ref(null);
+const legendGroup = ref([]);
 const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
 
@@ -231,10 +206,11 @@ const onLayerOnchange = (val) => {
 	currentLayerTab.value = val
 }
 
-const currentItem = computed(() => _.get(_.find(layers.value, (item) => item.value === currentLayerTab.value), 'children', []))
+const currentItem = computed(() => _.get(_.find(layers.value, (item) => item.name === currentLayerTab.value), 'children', []))
 
 watch(() => global.componentId, (value) => {
 	currentTopTab.value = value
+  setDefaultLayers(value);
 })
 // const computerLayout = (size, index, initStyle = 10) => {
 // 	let styles = []
@@ -248,81 +224,245 @@ watch(() => global.componentId, (value) => {
 // 	return size === 10 ? nextstyles[index] : arr[index]
 // }
 
-const initOpenLayersMap = () => {
-	// 引入4490坐标系定义
-	proj4.defs("EPSG:4490", "+proj=longlat +ellps=GRS80 +no_defs +type=crs")
-	register(proj4)
-	const projection = getProjection('EPSG:4490');
-	const size = 1.4078260158586589;
-	const resolutions = new Array(19);
-	const matrixIds = new Array(19);
-	for (let z = 0; z < 20; ++z) {
-		// generate resolutions and matrixIds arrays for this WMTS
-		resolutions[z] = size / Math.pow(2, z);
-		matrixIds[z] = z;
-	}
-	// 加载午夜蓝风格天地图
-	const baseLayer = new TileLayer({
-		source: new WMTS({
-			url: "https://jiangsu.tianditu.gov.cn/historyraster/rest/services/historyVector/js_sldt_blue/MapServer/WMTS",
-			layer: "historyVector_js_sldt_blue",
-			matrixSet: "default",
-			style: "default",
-			projection: projection,
-			format: "image/png",
-			tileGrid: new WMTSTileGrid({
-				origin: [-180, 90],
-				resolutions: resolutions,
-				matrixIds: matrixIds
-			})
-		})
-	})
+// 深拷贝对象
+const deepCopy = (source) => {
+  const target = {};
+  for (let index in source) {
+    target[index] = source[index];
+  }
+  return target;
+}
 
-	//工具配置
-	map.value = new Map({
-		target: target.value,
-		layers: [baseLayer],
-		controls: [],
-		view: new View({
-			center: [120.181, 33.349],
-			zoom: 14,
-			maxZoom: 20,
-			minZoom: 8,
-			projection: projection
-		}),
-	});
-
-	// 地图弹窗
-	const infoOverlay = new Overlay({
-		element: document.createElement('div'),
-		positioning: 'bottom-center',
-		offset: [0, -30],
-		autoPan: true,
-		autoPanAnimation: {
-			duration: 250,
-		},
-	});
-	map.value.addOverlay(infoOverlay);
-
-	// 绑定点击事件
-	map.value.on('singleclick', function (evt) {
-		const coordinate = evt.coordinate;
-		const hdms = toStringHDMS(toLonLat(coordinate));
-
-		const element = infoOverlay.getElement();
-		element.innerHTML = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay"><p>${hdms}</p></div>`;
-		infoOverlay.setPosition(coordinate);
-		// 放大地图
-		// map.value.getView().animate({
-		//   center: coordinate,
-		//   zoom: 10,
-		//   duration: 500,
-		//   easing: Cesium.EasingFunction.LINEAR_NONE,
-		// });
-	});
-
-	//map.value.getView().fit([116.103580,30.710719,122.090304,35.212659], { size: map.value.getSize(), maxZoom: 20 });
+const createLayer = (config, group = null) => {
+  let layer = null;
+  if ("WMTS" === config.type) {
+    let matrixIds = new Array(config.resolutions.length);
+    for (let z = 0; z < matrixIds.length; ++z) {
+      matrixIds[z] = z;
+    }
+    layer = new TileLayer({
+      source: new WMTS({
+        url: config.url,
+        layer: config.layer,
+        matrixSet: config.matrixSet,
+        style: config.style,
+        projection: config.projection,
+        format: config.format,
+        tileGrid: new WMTSTileGrid({
+          origin: config.origin,
+          extent: config.extent,
+          resolutions: config.resolutions,
+          matrixIds: matrixIds
+        })
+      })
+    });
+  } else if (config.type.endsWith("WMS")) {
+    layer = new ImageLayer({
+      source: new ImageWMS({
+        url: config.url,
+        projection: config.projection,
+        params: {"LAYERS": config.layer, "FORMAT": config.format ? config.format : "image/png"}
+      })
+    });
+  }
+  if (null != layer) {
+    layer.set("layerName",config.name);
+    layer.set("layerGroup", group ? group : currentTopTab.value);
+    layer.set("layerType", config.type);
+    layer.set("detailLayer", config.detailLayer ? config.detailLayer : "");
+    layer.set("legendLayer", config.legendLayer ? config.legendLayer : "");
+  }
+  return layer;
 };
+
+const initOpenLayersMap = () => {
+  fetch(layerConfigUrl)
+      .then(response => response.text())
+      .then(text => {
+        layerConfig.value = JSON.parse(text)
+        if (layerConfig.value.hasOwnProperty("customProjections")) {
+          let projectionArr = []
+          for (let key in layerConfig.value.customProjections) {
+            projectionArr.push([key, layerConfig.value.customProjections[key]])
+          }
+          proj4.defs(projectionArr)
+        }
+        register(proj4)
+
+        let baseLayerConfig = layerConfig.value["baseLayer"]["raster"];
+        const baseLayers = baseLayerConfig.map(v => createLayer(getLayerSource(v), "base"));
+        //工具配置
+        map.value = new Map({
+          target: target.value,
+          layers: baseLayers,
+          controls: [],
+          view: new View({
+            center: [120.2327, 33.4905],
+            zoom: 10,
+            maxZoom: 20,
+            minZoom: 8,
+            projection: layerConfig.value.systemProjection
+          }),
+        });
+
+        setDefaultLayers(currentTopTab.value);
+
+        // 地图弹窗
+        infoOverlay.value = new Overlay({
+          element: popupCom.value,
+          positioning: 'bottom-center',
+          offset: [0, -30],
+          autoPan: true,
+          autoPanAnimation: {
+            duration: 250,
+          },
+        });
+        map.value.addOverlay(infoOverlay.value);
+
+        // 绑定点击事件
+        map.value.on('singleclick', async (evt)=> {
+
+          const viewResolution = evt.map.getView().getResolution();
+          const projection=evt.map.getView().getProjection();
+          let layers = evt.map.getAllLayers();
+          for (let index in layers) {
+            if (layers[index].get("detailLayer") && 0 < layers[index].get("detailLayer").length) {
+              const url = layers[index].getSource().getFeatureInfoUrl(evt.coordinate, viewResolution, projection, {
+                "INFO_FORMAT": "arcgis_WMS" === layers[index].get("layerType") ? "application/geo+json" : "application/json",
+                "QUERY_LAYERS": layers[index].get("detailLayer"),
+                "FEATURE_COUNT": 1
+              })
+              if (url) {
+                const features = await fetch(url).then(response => response.text()).then(text => geoJsonParser.readFeatures(text));
+                if (0 < features.length) {
+                  const showFeature = features[0].getProperties();
+                  popupObject.value = showFeature;
+                  /*let detailHtml = `<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;" class="info-overlay">`;
+                  const element = infoOverlay.getElement();
+                  for (let key in showFeature) {
+                    if ("geometry" !== key) {
+                      detailHtml += `<p>${key}:${showFeature[key]}</p>`;
+                    }
+                  }
+                  detailHtml += `</dev>`;
+                  element.innerHTML = detailHtml;*/
+                  infoOverlay.value.setPosition(evt.coordinate);
+                  return;
+                }
+              }
+            }
+          }
+        });
+      });
+};
+
+const closePopup = () => {
+  infoOverlay.value.setPosition(undefined);
+};
+
+const getLayerSource = (sourceName) => {
+  return deepCopy(layerConfig.value["layerList"].find(v => v["name"] === sourceName));
+}
+
+const setDefaultLayers = (moduleName) => {
+  let defaultLayerGroup = ["base", moduleName];
+  map.value.getLayers().forEach(v => {
+    if (!defaultLayerGroup.includes(v.get("layerGroup"))) {
+      map.value.removeLayer(v);
+    }
+  });
+  loadedLayerGroup.value.length = 0;
+  if (layerConfig.value["layerTrees"].hasOwnProperty(moduleName)) {
+    layers.value = layerConfig.value["layerTrees"][moduleName];
+    currentLayerTab.value = layers.value[0].name;
+    const defaultLoadLayerList = traverseLayerDefine(layers.value).filter(v => v.defaultLoad);
+    const groupedLayerMap = Object.groupBy(defaultLoadLayerList,({source})=>source);
+    for (let sourceName in groupedLayerMap) {
+      loadedLayerGroup.value = loadedLayerGroup.value.concat(groupedLayerMap[sourceName].map(v => v.name));
+      const loadLayerStr = groupedLayerMap[sourceName].filter(v => v.layer).map(v => v.layer).join(",");
+      const showDetailLayerStr = groupedLayerMap[sourceName].filter(v => v.showDetail).map(v => v.layer).join(",");
+      const showLegendLayerStr = groupedLayerMap[sourceName].filter(v => v.showLegend).map(v => v.layer).join(",");
+      const layerParam = {"source": sourceName,"layer":loadLayerStr,"detailLayer":showDetailLayerStr,"legendLayer":showLegendLayerStr};
+      addLayer(layerParam)
+    }
+  }
+}
+
+const traverseLayerDefine = (layerList) => {
+  let layerDefines = [];
+  layerList.forEach(v=>{
+    if ("layer" === v.type) {
+      layerDefines.push(v)
+    }
+    if (v.children) {
+      layerDefines.push(traverseLayerDefine(v.children));
+    }
+  })
+  return layerDefines.flat(Infinity);
+}
+
+const updateLayer = (layerParam) => {
+  if ("layer" !== layerParam.type) {
+    return;
+  }
+  if (loadedLayerGroup.value.includes(layerParam.name)) {
+    loadedLayerGroup.value = loadedLayerGroup.value.filter(layer => layer !== layerParam.name);
+    const layer = map.value.getAllLayers().find(v => layerParam.source === v.get("layerName"));
+    if (layer) {
+      if (layerParam.layer) {
+        const layerArr = layerParam.layer.split(",")
+        const newLayerStr = layer.getSource().getParams()["LAYERS"].split(",").filter(l => !layerArr.includes(l)).join(",");
+        if (0 < newLayerStr.length) {
+          layer.set("detailLayer", layer.get("detailLayer").split(",").filter(l => !layerArr.includes(l)).join(","));
+          layer.set("legendLayer", layer.get("legendLayer").split(",").filter(l => !layerArr.includes(l)).join(","));
+          layer.getSource().getParams()["LAYERS"] = newLayerStr;
+          layer.getSource().changed();
+          return;
+        }
+      }
+      map.value.removeLayer(layer);
+    }
+  } else {
+    loadedLayerGroup.value.push(layerParam.name);
+    const layer = map.value.getAllLayers().find(v => layerParam.source === v.get("layerName"));
+    if (layer) {
+      if (layerParam.layer) {
+        const layerArr = layerParam.layer.split(",")
+        const newLayerStr = layer.getSource().getParams()["LAYERS"].split(",").concat(layerArr).join(",");
+        if(layerParam.showDetail){
+          layer.set("detailLayer", layer.get("detailLayer").split(",").concat(layerArr).join(","));
+        }
+        if(layerParam.showLegend){
+          layer.set("legendLayer", layer.get("legendLayer").split(",").concat(layerArr).join(","));
+        }
+        layer.getSource().getParams()["LAYERS"] = newLayerStr;
+        layer.getSource().changed();
+      }
+    }else{
+      const initParam = deepCopy(layerParam);
+      initParam["detailLayer"] = layerParam.showDetail ? layerParam.layer : "";
+      initParam["legendLayer"] = layerParam.showLegend ? layerParam.layer : "";
+      addLayer(initParam);
+    }
+  }
+}
+
+const addLayer = (layerValue) => {
+  const layerParam = getLayerSource(layerValue["source"]);
+  layerParam["detailLayer"] = layerValue["detailLayer"];
+  layerParam["legendLayer"] = layerValue["legendLayer"];
+  if (!layerParam["layer"] && layerValue["layer"]) {
+    layerParam["layer"] = layerValue["layer"];
+  }
+  const layer = createLayer(layerParam)
+  map.value.addLayer(layer);
+  if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
+    const legendUrl = layer.getSource().getLegendUrl(map.value.getView().getResolution(), {"LAYER": layerValue["legendLayer"]});
+    if (legendUrl) {
+      fetch(legendUrl);
+    }
+  }
+}
 
 const initCesiumMap = async () => {
 	Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmMwNmM1My03NzI4LTQ0NDUtOTBiYy1hM2I2ZmUxZDNmOWUiLCJpZCI6MjI4NzQzLCJpYXQiOjE3MjExMzU1OTZ9.bZrwv5u7g418lGuDhTuRqkrWJDHAFWGGd1TiTbsM9dU';
@@ -436,7 +576,7 @@ const toggleMap = () => {
 	.layer-shaw {
 		// 左上角开始渐变背景
 		// background: linear-gradient(180deg, #0e2a62 50%, #0e2a62 30%, #051335 20%);
-		background-color: raba(0, 0, 0, .5);
+		background-color: rgba(0, 0, 0, .5);
 	}
 
 }
@@ -457,6 +597,10 @@ const toggleMap = () => {
 	// background-repeat: no-repeat;
 }
 
+.select-item {
+  color: #00FAFF;
+}
+
 .t-item-line {
 	background-image: url('@/assets/imgs/main/t-tabs-active.png');
 	background-size: 100% 100%;
@@ -468,5 +612,39 @@ const toggleMap = () => {
 	border: 1px solid black;
 	padding: 5px;
 	color: #7fcc58;
+}
+
+.popup {
+  width: 300px;
+  height: 100px;
+  background: #fff;
+  position: absolute;
+  top: -115px;
+  left: -150px;
+  box-sizing: border-box;
+  padding: 10px;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .icon-close {
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    cursor: pointer;
+  }
+
+  .content {
+    margin-top: 14px;
+  }
 }
 </style>
