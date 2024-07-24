@@ -10,7 +10,6 @@ import { useGlobalStore } from "@/store";
 const global = useGlobalStore()
 
 const changeStore = () => {
-    console.log(global.navActive)
     global.setNavActive('/dashboard')
 }
 
@@ -117,7 +116,7 @@ const olds = ref([
             <div class="l 4k:w-full 8k:w-[40%]">
                 <ul class="flex w-full flex-col">
                     <li class="flex w-full px-2 items-center" v-for="item, index in arr1" :key="item.name">
-                        <div :class="`base-icon-${index + 1} w-20 h-20 `">
+                        <div :class="`base-icon-${index + 1}  bg-size w-20 h-20 `">
                         </div>
                         <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-cover">
                             <div>{{ item.name }} <span class="ml-2">(km)</span></div>
@@ -182,7 +181,7 @@ const olds = ref([
                 </div>
 
                 <div class="flex justify-center h-48 items-center mb-4">
-                    <div class="o-center w-1/2 h-full">
+                    <div class="o-center bg-size w-1/2 h-full">
                     </div>
                 </div>
             </div>
@@ -247,20 +246,14 @@ const olds = ref([
 
 .base-icon-1 {
     background-image: url('@/assets/imgs/overview/ic-exapnd.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 
 .base-icon-2 {
     background-image: url('@/assets/imgs/overview/ic-build.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 
 .o-center {
     background-image: url('@/assets/imgs/overview/o-center.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 
 @for $i from 1 through 9 {

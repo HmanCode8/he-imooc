@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, defineProps, computed, nextTick } from 'vue';
+import { ref, reactive, computed, nextTick } from 'vue';
 
 const props = defineProps({
     tabs: {

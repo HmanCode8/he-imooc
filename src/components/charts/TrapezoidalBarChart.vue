@@ -3,25 +3,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { h, onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
-    legend: {
-        type: Array,
-        default: () => [
-            { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
-            { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
-            { name: '大丰区', percentage: 24, distance: '15km', color: '#36A2EB' },
-            { name: '建湖县', percentage: 24, distance: '25km', color: '#FFA07A' },
-            { name: '阜宁县', percentage: 24, distance: '25km', color: '#4BC0C0' },
-            { name: '滨海县', percentage: 24, distance: '25km', color: '#FF6384' },
-            { name: '响水县', percentage: 24, distance: '25km', color: '#FFCE56' },
-            { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
-            { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
-        ],
-    },
 });
 
 
@@ -43,12 +29,21 @@ let xLabel = ["2018", "2019", "2020", "2021", "2022"];
 let dataValue = [20, 30, 20, 25, 35];
 const renderChart = (fontSize = 12) => {
     const option = {
-        // backgroundColor: '#f00',
+        title: {
+            text: '单位：个',
+            right: 10, // 右边距
+            top: 10, // 上边距
+            textStyle: {
+                color: 'white',
+                fontSize: fontSize
+            }
+        },
         grid: {
-            top: 10,
-            bottom: 10,
+            top: '10%',
+            bottom: '10%',
             left: 10,
-            right: 10
+            right: 10,
+            containLabel: true
         },
         tooltip: {
             show: true,
@@ -62,13 +57,6 @@ const renderChart = (fontSize = 12) => {
                 fontSize: fontSize,
                 align: "left"
             }
-        },
-        grid: {
-            left: "7%",
-            right: "7%",
-            top: "15%",
-            bottom: "10%",
-            containLabel: true
         },
         xAxis: [
             {
@@ -100,12 +88,6 @@ const renderChart = (fontSize = 12) => {
         ],
         yAxis: [
             {
-                name: "单位：个",
-                nameTextStyle: {
-                    color: "white",
-                    fontSize: fontSize,
-                    padding: [0, 0, 0, -40]
-                },
                 type: "value",
                 splitLine: {
                     show: true,
@@ -142,7 +124,7 @@ const renderChart = (fontSize = 12) => {
                         show: true,
                         position: "top",
                         textStyle: {
-                            color: "#d1ae36",
+                            color: "#fff",
                             fontSize: fontSize
                         }
                     }
