@@ -10,6 +10,7 @@ export default {
           "linear-gradient(to right, #529de9 25%, #59b5db 50%, #6ce9c8 75%)",
         "custom-bg-size": "background-size: 100% 100%",
         "custom-no-repeat": "background-repeat: no-repeat",
+        "custom-gradient-yj":"linear-gradient(-18deg, #1890FF, #1EE7E7)",
       },
       backgroundSize: {
         "custom-size": "100% 100%",
@@ -27,6 +28,9 @@ export default {
       spacing: {
         "2160p": "2160px", // 对应高度
       },
+      borderRadius: {
+        'custom': '2px',  // 自定义边框半径
+      }
     },
   },
   plugins: [],

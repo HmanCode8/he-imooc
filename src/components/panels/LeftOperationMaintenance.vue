@@ -20,6 +20,10 @@ const problems = ref([
     number: 100
   },
   {
+    name: "雨水",
+    number: 100
+  },
+  {
     name: "污水",
     number: 100
   },
@@ -44,6 +48,10 @@ const completionRate = ref([
   },
   {
     name: "供水",
+    rate: "68%"
+  },
+  {
+    name: "雨水",
     rate: "68%"
   },
   {
@@ -96,6 +104,14 @@ const pipeChartdata = ref([
 const barChartData = ref({
   xData: ['燃气', '供水', '雨水', '污水', '道路', '桥梁', '路灯'],
   yData: [90, 50, 20, 30, 80, 60, 50],
+  // grid:{
+  //     containLabel: true,
+  //     left: "6%",
+  //     top: "5%",
+  //     bottom: "20%",
+  //     right: "6%"
+  //   },
+  
 });
 
 const Pie3DChartData = ref([
@@ -114,19 +130,19 @@ const Pie3DChartData = ref([
     <FristLevelTitle title="巡检巡查"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
-        <ThirdLevelTitle class="w-full" title="巡检次数"></ThirdLevelTitle>
+        <SecondLevelTitle class="w-full" title="巡检次数"></SecondLevelTitle>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
-        <ThirdLevelTitle class="w-full" title="上报问题数量"></ThirdLevelTitle>
-        <div class="w-full flex">
-          <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center" v-for="(item, index) in problems"
+        <SecondLevelTitle class="w-full" title="上报问题数量"></SecondLevelTitle>
+        <div class="w-full flex flex-wrap">
+          <div class="pipe-item 4k:w-[45%] 8k:w-[20%] m-2 flex" v-for="(item, index) in problems"
             :key="index">
-            <div class="icon w-4 h-4 bg-slate-500"></div>
-            <div class>
-              <div class="name">{{ item.name }}(个)</div>
-              <div class="pipe-point">{{ item.number }}</div>
+            <div :class="`inspection_${index+1}  w-20 h-16 bg-cover bg-center`"></div>
+            <div class="ml-4">
+              <div class="problemType">{{ item.name}}(个)</div>
+              <div class="problemNumber">{{ item.number }}</div>
             </div>
           </div>
         </div>
@@ -135,19 +151,18 @@ const Pie3DChartData = ref([
 
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-60">
-        <ThirdLevelTitle title="巡检及时率"></ThirdLevelTitle>
+        <SecondLevelTitle title="巡检及时率"></SecondLevelTitle>
         <Bar3dChartOMFirst :barData="barChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
-        <ThirdLevelTitle class="w-full" title="巡检完成率"></ThirdLevelTitle>
+        <SecondLevelTitle class="w-full" title="巡检完成率"></SecondLevelTitle>
         <div class="w-full flex">
-          <div class="chart-container w-full h-60 flex">
-            <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex flex-col items-center"
+          <div class="chart-container w-full h-60 flex flex-wrap">
+            <div :class="`inspection_success_${(index+1)%2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`" 
               v-for="(item, index) in completionRate" :key="index">
               <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
-              <div class="icon w-4 h-4 bg-slate-500"></div>
             </div>
           </div>
         </div>
@@ -157,19 +172,19 @@ const Pie3DChartData = ref([
     <FristLevelTitle title="设施管养"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
-        <ThirdLevelTitle class="w-full" title="管养次数"></ThirdLevelTitle>
+        <SecondLevelTitle class="w-full" title="管养次数"></SecondLevelTitle>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
-        <ThirdLevelTitle class="w-full" title="发现问题数量"></ThirdLevelTitle>
-        <div class="w-full flex">
-          <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex items-center" v-for="(item, index) in problems"
+        <SecondLevelTitle class="w-full" title="发现问题数量"></SecondLevelTitle>
+        <div class="w-full flex flex-wrap">
+          <div class="pipe-item 4k:w-[45%] 8k:w-[20%] m-2 flex" v-for="(item, index) in problems"
             :key="index">
-            <div class="icon w-4 h-4 bg-slate-500"></div>
-            <div class>
-              <div class="name">{{ item.name }}(个)</div>
-              <div class="pipe-point">{{ item.number }}</div>
+            <div :class="`inspection_${index+1}  w-20 h-16 bg-cover bg-center`"></div>
+            <div class="ml-4">
+              <div class="problemType">{{ item.name}}(个)</div>
+              <div class="problemNumber">{{ item.number }}</div>
             </div>
           </div>
         </div>
@@ -178,19 +193,18 @@ const Pie3DChartData = ref([
 
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-60">
-        <ThirdLevelTitle title="管养及时率"></ThirdLevelTitle>
+        <SecondLevelTitle title="管养及时率"></SecondLevelTitle>
         <Bar3dChartOMFirst :barData="barChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
-        <ThirdLevelTitle class="w-full" title="管养完成率"></ThirdLevelTitle>
+        <SecondLevelTitle class="w-full" title="管养完成率"></SecondLevelTitle>
         <div class="w-full flex">
-          <div class="chart-container w-full h-60 flex">
-            <div class="pipe-item 4k:w-[45%] 8k:w-[30%] m-2 flex flex-col items-center"
+          <div class="chart-container w-full h-60 flex flex-wrap">
+            <div :class="`inspection_success_${(index+1)%2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`" 
               v-for="(item, index) in completionRate" :key="index">
               <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
-              <div class="icon w-4 h-4 bg-slate-500"></div>
             </div>
           </div>
         </div>
@@ -199,4 +213,31 @@ const Pie3DChartData = ref([
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@for $i from 1 through 7 {
+    .inspection_#{$i} {
+        background-image: url('@/assets/imgs/inspection_#{$i}.png');
+    }
+}
+
+.problemNumber{
+  // font-size:14px;
+  font-family: "PingFangSC, PingFang SC";
+  font-weight: 800;
+  background-image: linear-gradient(to top, #42BBD9, #FFFFFF); /* 渐变色 */
+  -webkit-background-clip: text; /* 只剪裁文本 */
+  -webkit-text-fill-color: transparent; /* 填充颜色透明，以显示背景 */
+}
+
+.problemType{
+  // font-size:16px;
+  font-family: "PingFangSC, PingFang SC";
+  font-weight: 800;
+}
+@for $i from 0 through 7 {
+.inspection_success_#{$i} {
+    background-image: url('@/assets/imgs/inspection-success-#{$i%2+1}.png');
+}
+}
+
+</style>

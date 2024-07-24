@@ -59,13 +59,14 @@ const renderChart = () => {
       color: "#ffffff"
     },
     color: ["#24F3FF", "#24F3FF", "#FDBF47", "#FDBF47"],
-    grid: {
-      containLabel: true,
-      left: "6%",
-      top: "20%",
-      bottom: "6%",
-      right: "6%"
-    },
+    grid:
+      props.barData.grid ? props.barData.grid : {
+        containLabel: true,
+        left: "6%",
+        top: "20%",
+        bottom: "6%",
+        right: "6%"
+      },
     xAxis: {
       type: "category",
       data: props.barData.xData,
@@ -86,7 +87,7 @@ const renderChart = () => {
       }
     },
     yAxis: {
-      name: "单位：个",
+      name: props.barData.unit ? "单位：" + props.barData.unit : "单位：个",
       nameLocation: 'end',
       nameTextStyle: {
         align: "left",
@@ -94,7 +95,7 @@ const renderChart = () => {
       },
       type: "value",
       min: 0,
-      max: 100,
+      max: props.barData.max ? props.barData.max : 100,
       boundaryGap: ["20%", "60%"],
       axisLine: {
         show: true,
@@ -111,7 +112,7 @@ const renderChart = () => {
         }
       },
       axisLabel: {
-        formatter: '{value}%'
+        formatter: props.barData.unit ? '{value}' : '{value}%'
       },
       axisLine: {
         show: false

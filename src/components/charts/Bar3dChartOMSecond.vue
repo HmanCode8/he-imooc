@@ -63,8 +63,8 @@ const renderChart = () => {
     grid: {
       containLabel: true,
       left: "6%",
-      top: "20%",
-      bottom: "6%",
+      top: "10%",
+      bottom: "16%",
       right: "6%"
     },
     xAxis: {
