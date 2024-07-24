@@ -1,5 +1,9 @@
-<script setup lang="ts">
+<script setup>
+import { provide } from 'vue'
 import container from './views/container.vue'
+
+import gsap from 'gsap';
+provide('gsap', gsap); // 提供gsap实例给子组件
 
 </script>
 

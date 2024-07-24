@@ -50,6 +50,9 @@ const pipeChartdata = ref([
     { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
     { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
 ])
+const onTabChange = (value) => {
+    console.log(value)
+}
 </script>
 
 <template>

@@ -10,10 +10,6 @@ import "echarts-liquidfill";
 import { Label } from "cesium";
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
   liquidData: {
     type: Object,
     required: true
@@ -28,26 +24,26 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-  console.log("resize", size);
+
   mChart.resize();
 };
 
 const renderChart = () => {
   const option = {
     title: {
-          text: props.liquidData.name,
-          textStyle: {
-            fontSize: 14,
-            color: "rgba(255, 255, 255, 0.7)",
-            rich: {
-              a: {
-                fontSize: 30,
-              },
-            },
+      text: props.liquidData.name,
+      textStyle: {
+        fontSize: 14,
+        color: "rgba(255, 255, 255, 0.7)",
+        rich: {
+          a: {
+            fontSize: 30,
           },
-          x: "center",
-          y: "60%",
         },
+      },
+      x: "center",
+      y: "60%",
+    },
     series: [
       {
         type: "liquidFill",
@@ -55,21 +51,21 @@ const renderChart = () => {
         data: [props.liquidData.number],
         color: [props.liquidData.color],
         label: {
-            normal: {
-                textStyle: {
-                    fontSize:28,       // 字体大小
-                    color: '#fff',   // 字体颜色
-                    fontFamily: 'Arial',// 字体系列
-                    fontWeight: 'bold', // 字体粗细
-                    textShadowColor: 'rgba(0, 0, 0, 0.5)', // 文字阴影颜色
-                    textShadowBlur: 10  // 文字阴影模糊半径
-                },
-                formatter: function(param) {
-                    return (param.value * 100).toFixed(2);  // 格式化数值
-                }
+          normal: {
+            textStyle: {
+              fontSize: 28,       // 字体大小
+              color: '#fff',   // 字体颜色
+              fontFamily: 'Arial',// 字体系列
+              fontWeight: 'bold', // 字体粗细
+              textShadowColor: 'rgba(0, 0, 0, 0.5)', // 文字阴影颜色
+              textShadowBlur: 10  // 文字阴影模糊半径
+            },
+            formatter: function (param) {
+              return (param.value * 100).toFixed(2);  // 格式化数值
             }
+          }
         },
-        
+
 
         backgroundStyle: {
           color: {

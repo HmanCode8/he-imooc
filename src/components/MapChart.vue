@@ -8,7 +8,7 @@
 				class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20  bg-cover flex justify-between px-10  mt-4">
 				<div :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${currentTopTab === tab.value ? 'text-[#75fbfd] ' : ''}`"
 					v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
-					<div>
+					<div class=" font-[YouSheBiaoTiHei]">
 						{{ tab.name }}
 					</div>
 					<div v-if="currentTopTab === tab.value"

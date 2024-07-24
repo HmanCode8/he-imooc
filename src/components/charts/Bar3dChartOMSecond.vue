@@ -9,10 +9,7 @@ import "echarts-gl";
 import { Label } from "cesium";
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
+
   barData: {
     type: Object,
     required: true
@@ -27,7 +24,7 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-  console.log("resize", size);
+
   mChart.resize();
 };
 
@@ -38,7 +35,7 @@ const renderChart = () => {
       axisPointer: {
         type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
       },
-      formatter: function(parms) {
+      formatter: function (parms) {
         var str =
           "类型:" +
           parms[0].axisValue +

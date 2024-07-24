@@ -9,10 +9,7 @@ import "echarts-gl";
 import { Label } from "cesium";
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
+
   barData: {
     type: Object,
     required: true
@@ -27,7 +24,7 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-  console.log("resize", size);
+
   mChart.resize();
 };
 
@@ -72,11 +69,11 @@ const renderChart = () => {
         },
         // 设置折线的颜色
         lineStyle: {
-            color: '#00ABD8' // 在这里设置线的颜色
+          color: '#00ABD8' // 在这里设置线的颜色
         },
         // 可选：设置拐点（点）的样式
         itemStyle: {
-            color: '#00ABD8' // 设置点的颜色，保持一致
+          color: '#00ABD8' // 设置点的颜色，保持一致
         }
       }
     ],

@@ -9,10 +9,6 @@ import "echarts-gl";
 import { Label } from "cesium";
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
   barData: {
     type: Object,
     required: true
@@ -27,7 +23,7 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-  console.log("resize", size);
+
   mChart.resize();
 };
 
@@ -41,7 +37,7 @@ const renderChart = () => {
       textStyle: {
         color: "#fff"
       },
-      itemHeight: 3,      
+      itemHeight: 3,
     },
     calculable: true,
     xAxis: [

@@ -9,10 +9,7 @@ import bgimage from "@/assets/imgs/main/title-h-third.png";
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
-    data: {
-        type: Object,
-        required: true
-    },
+
     legend: {
         type: Array,
         default: () => [

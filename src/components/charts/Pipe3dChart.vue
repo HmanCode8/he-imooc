@@ -16,16 +16,13 @@ import useRootFontSize from '@/hooks/useRootFontSize';
 
 
 const props = defineProps({
-    data: {
-        type: Object,
-        required: true
-    },
+
     legend: {
         type: Array
     },
     pieChartData: {
         type: Object,
-        required: true,
+        required: false,
         default: [
             { name: "燃气", value: 60, color: "#FF6384" },
             { name: "供水", value: 23, color: "#FFCE56" },

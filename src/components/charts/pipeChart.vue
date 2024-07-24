@@ -8,10 +8,7 @@ import * as echarts from 'echarts'
 import { Label } from 'cesium';
 
 const props = defineProps({
-    data: {
-        type: Object,
-        required: true
-    }
+
 })
 
 const target = ref(null)

@@ -6,7 +6,7 @@
         <div class="main-panel relative">
             <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
             <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white flex overflow-hidden">
-                <div
+                <div ref="leftPanelRef"
                     :class="`left-panel 8k:pr-10 4k:pr-6 overflow-auto  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                     <!-- 条件渲染的动态组件 -->
                     <component :is="currentComponentMap[currentComponent][0]" class="w-full h-full box-border pb-4" />
@@ -17,7 +17,7 @@
                     <MapChart class="bg-opacity-50  flex-1" />
                 </div>
                 <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
-                <div
+                <div ref="rightPanelRef"
                     class="right-panel 8k:pl-10 overflow-auto  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
                     <!-- 条件渲染的动态组件 -->
                     <!-- <div class="inner-bg absolute left-0 top-0 w-full h-full "></div> -->
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-
+import { inject, ref, watch } from 'vue'
 // 头部组件
 import Header from '@/components/Header.vue'
 // 地图组件
@@ -55,9 +55,10 @@ import RightWarningDisposal from '@/components/panels/RightWarningDisposal.vue'
 // 地图工具函数
 import { createPopupLayer } from '@/utils/map/popupLayer'
 
-import { ref, watch } from 'vue'
 import { getVisualization } from '@/api/visualization.js'
 import { useGlobalStore } from '@/store'  // 引入全局状态管理
+
+const gsap = inject('gsap')
 
 const store = useGlobalStore()
 
@@ -66,6 +67,9 @@ const data = ref(null)
 const sizeType = ref('small')
 
 const currentComponent = ref('')
+
+const leftPanelRef = ref(null)
+const rightPanelRef = ref(null)
 
 // 组件映射对象
 const currentComponentMap = {
@@ -80,6 +84,9 @@ const currentComponentMap = {
 
 watch(() => store.componentId, (value) => {
     currentComponent.value = value
+    // gsap.fromTo(leftPanelRef.value, { opacity: 0, x: -200 }, { opacity: 1, x: 0, duration: 1, ease: 'linear' })
+    // gsap.fromTo(rightPanelRef.value, { opacity: 0, x: 200 }, { opacity: 1, x: 0, duration: 1, ease: 'linear' })
+
 }, {
     immediate: true
 })

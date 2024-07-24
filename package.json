@@ -18,6 +18,7 @@
     "echarts-liquidfill": "^3.1.0",
     "echarts-wordcloud": "^2.1.0",
     "element-plus": "^2.7.7",
+    "gsap": "^3.12.5",
     "ol": "^9.2.4",
     "pinia": "^2.1.7",
     "proj4": "2.11.0",

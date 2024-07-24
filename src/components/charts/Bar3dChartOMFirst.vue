@@ -9,10 +9,6 @@ import "echarts-gl";
 import { Label } from "cesium";
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
   barData: {
     type: Object,
     required: true
@@ -27,7 +23,7 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-  console.log("resize", size);
+
   mChart.resize();
 };
 
@@ -38,7 +34,7 @@ const renderChart = () => {
       axisPointer: {
         type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
       },
-      formatter: function(parms) {
+      formatter: function (parms) {
         var str =
           "类型:" +
           parms[0].axisValue +
@@ -98,7 +94,7 @@ const renderChart = () => {
       },
       type: "value",
       min: 0,
-      max:100,
+      max: 100,
       boundaryGap: ["20%", "60%"],
       axisLine: {
         show: true,
@@ -117,8 +113,8 @@ const renderChart = () => {
       axisLabel: {
         formatter: '{value}%'
       },
-      axisLine:{
-        show:false
+      axisLine: {
+        show: false
       }
     },
     series: [
@@ -128,7 +124,7 @@ const renderChart = () => {
         stack: "zs",
         type: "bar",
         barMaxWidth: "auto",
-        barWidth: 22,        
+        barWidth: 22,
         itemStyle: {
           color: {
             x: 0,
@@ -141,7 +137,7 @@ const renderChart = () => {
               {
                 offset: 0,
                 color: "#01EBFA"
-              },              
+              },
               {
                 offset: 1,
                 color: "#00676D"
