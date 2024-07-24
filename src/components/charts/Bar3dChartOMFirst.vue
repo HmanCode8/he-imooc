@@ -7,6 +7,7 @@ import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import { Label } from "cesium";
+import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
   barData: {
@@ -23,18 +24,19 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-
+  const fontSize = useRootFontSize();
+  renderChart(fontSize.value);
   mChart.resize();
 };
 
-const renderChart = () => {
+const renderChart = fontSize => {
   const option = {
     tooltip: {
       trigger: "axis",
       axisPointer: {
         type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
       },
-      formatter: function (parms) {
+      formatter: function(parms) {
         var str =
           "类型:" +
           parms[0].axisValue +
@@ -59,14 +61,15 @@ const renderChart = () => {
       color: "#ffffff"
     },
     color: ["#24F3FF", "#24F3FF", "#FDBF47", "#FDBF47"],
-    grid:
-      props.barData.grid ? props.barData.grid : {
-        containLabel: true,
-        left: "6%",
-        top: "20%",
-        bottom: "6%",
-        right: "6%"
-      },
+    grid: props.barData.grid
+      ? props.barData.grid
+      : {
+          containLabel: true,
+          left: "6%",
+          top: "20%",
+          bottom: "6%",
+          right: "6%"
+        },
     xAxis: {
       type: "category",
       data: props.barData.xData,
@@ -82,13 +85,14 @@ const renderChart = () => {
         margin: 10, //刻度标签与轴线之间的距离。
         textStyle: {
           fontFamily: "Microsoft YaHei",
-          color: "#ffffff"
+          color: "#ffffff",
+          fontSize
         }
       }
     },
     yAxis: {
       name: props.barData.unit ? "单位：" + props.barData.unit : "单位：个",
-      nameLocation: 'end',
+      nameLocation: "end",
       nameTextStyle: {
         align: "left",
         padding: [0, 0, 0, 380]
@@ -112,7 +116,10 @@ const renderChart = () => {
         }
       },
       axisLabel: {
-        formatter: props.barData.unit ? '{value}' : '{value}%'
+        formatter: props.barData.unit ? "{value}" : "{value}%",
+        textStyle: {
+          fontSize // 修改 y 轴字体大小
+        }
       },
       axisLine: {
         show: false

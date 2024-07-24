@@ -192,7 +192,7 @@ const barChartData = ref({
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
       
         <div
-          class="bg-[url('assets/imgs/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
+          class="bg-[url('assets/imgs/warning/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
         >
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">72个</span>
@@ -201,7 +201,7 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
+          class="bg-[url('assets/imgs/warning/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
         >
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#FFAE00;">0个</span>
@@ -212,7 +212,7 @@ const barChartData = ref({
       
 
         <div
-          class="bg-[url('assets/imgs/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
+          class="bg-[url('assets/imgs/warning/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
         >
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#0BFFC3;">7个</span>
@@ -221,7 +221,7 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
+          class="bg-[url('assets/imgs/warning/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
         >
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">100%</span>
@@ -245,7 +245,7 @@ const barChartData = ref({
   width: 105px;
   height: 80px;
   margin: 20px;
-  background-image: url("@/assets/imgs/average1.png");
+  background-image: url("@/assets/imgs/warning/average1.png");
   background-size: cover;
   background-position: center;
   display: flex;

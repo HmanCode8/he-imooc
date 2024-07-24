@@ -129,7 +129,7 @@ const Pie3DChartData = ref([
   <div class="pipe-analy">
     <FristLevelTitle title="巡检巡查"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-1/2 4k:w-full h-40">
         <SecondLevelTitle class="w-full" title="巡检次数"></SecondLevelTitle>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
@@ -150,7 +150,7 @@ const Pie3DChartData = ref([
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-60">
+      <div class="8k:w-1/2 4k:w-full h-40">
         <SecondLevelTitle title="巡检及时率"></SecondLevelTitle>
         <Bar3dChartOMFirst :barData="barChartData" />
       </div>
@@ -158,8 +158,8 @@ const Pie3DChartData = ref([
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="巡检完成率"></SecondLevelTitle>
         <div class="w-full flex">
-          <div class="chart-container w-full h-60 flex flex-wrap">
-            <div :class="`inspection_success_${(index+1)%2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`" 
+          <div class="chart-container w-full h-40 flex flex-wrap">
+            <div :class="`inspection_success_${(index+1)%2}  flex flex-col items-center bg-cover bg-center w-28 h-20`" 
               v-for="(item, index) in completionRate" :key="index">
               <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
@@ -170,7 +170,7 @@ const Pie3DChartData = ref([
     </div>
 
     <FristLevelTitle title="设施管养"></FristLevelTitle>
-    <div class="flex w-full flex-wrap justify-between">
+    <div class="flex w-full h-60 flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="管养次数"></SecondLevelTitle>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
@@ -192,7 +192,7 @@ const Pie3DChartData = ref([
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-60">
+      <div class="8k:w-1/2 4k:w-full h-40">
         <SecondLevelTitle title="管养及时率"></SecondLevelTitle>
         <Bar3dChartOMFirst :barData="barChartData" />
       </div>
@@ -200,7 +200,7 @@ const Pie3DChartData = ref([
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="管养完成率"></SecondLevelTitle>
         <div class="w-full flex">
-          <div class="chart-container w-full h-60 flex flex-wrap">
+          <div class="chart-container w-full h-40 flex flex-wrap">
             <div :class="`inspection_success_${(index+1)%2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`" 
               v-for="(item, index) in completionRate" :key="index">
               <div class="pipe-point">{{ item.rate }}</div>
@@ -216,7 +216,7 @@ const Pie3DChartData = ref([
 <style scoped lang="scss">
 @for $i from 1 through 7 {
     .inspection_#{$i} {
-        background-image: url('@/assets/imgs/inspection_#{$i}.png');
+        background-image: url('@/assets/imgs/operation/inspection_#{$i}.png');
     }
 }
 
@@ -236,7 +236,7 @@ const Pie3DChartData = ref([
 }
 @for $i from 0 through 7 {
 .inspection_success_#{$i} {
-    background-image: url('@/assets/imgs/inspection-success-#{$i%2+1}.png');
+    background-image: url('@/assets/imgs/operation/inspection-success-#{$i%2+1}.png');
 }
 }
 

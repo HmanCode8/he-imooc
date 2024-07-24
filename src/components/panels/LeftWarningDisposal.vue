@@ -101,9 +101,9 @@ const onTabChange = k => {
       </div>
       <!-- 中间 -->
       <div
-        class="bg-[url('assets/imgs/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center"
+        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center"
       >
-        <div class="bg-[url('assets/imgs/alarm.png')] bg-cover bg-center w-12 h-12"></div>
+        <div class="bg-[url('assets/imgs/warning/alarm.png')] bg-cover bg-center w-12 h-12"></div>
       </div>
       <!-- 右边 -->
       <div class="flex flex-wrap mt-10">
@@ -126,7 +126,7 @@ const onTabChange = k => {
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
         <div class="w-full flex items-center justify-center">
           <div
-            class="bg-[url('assets/imgs/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around"
+            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around"
           >
             <div class>
               <span class="warninglevel text-[28px] font-extrabold">157</span>
@@ -137,7 +137,7 @@ const onTabChange = k => {
 
           <div class="ml-10">
             <div
-              class="bg-[url('assets/imgs/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around"
+              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around"
             >
               一级预警
               <div>
@@ -148,7 +148,7 @@ const onTabChange = k => {
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around"
+              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around"
             >
               二级预警
               <div>
@@ -159,7 +159,7 @@ const onTabChange = k => {
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around"
+              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around"
             >
               三级预警
               <div>
@@ -184,15 +184,15 @@ const onTabChange = k => {
             <div
               class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center"
             >
-              <span class="warninglevel text-[24px] font-bold">总事件数</span>
+              <span class="warninglevel text-2xl font-bold">总事件数</span>
             </div>
             <div class="flex flex-col justify-center items-center">
               <div class>
-                <span class="warningtotal text-[20px] font-bold">23</span>
+                <span class="warningtotal text-xl font-bold">23</span>
                 <span class="warningtotal font-bold">件</span>
               </div>
               <div class>
-                <span class="warningtotal text-[20px] font-bold">4.5</span>
+                <span class="warningtotal text-xl font-bold">4.5</span>
                 <span class="warningtotal font-bold">%</span>同比
               </div>
             </div>
@@ -207,7 +207,7 @@ const onTabChange = k => {
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap justify-around">
           <div
-            class="flex bg-[url('assets/imgs/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
+            class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
             v-for="(item, index) in warningType"
             :key="index"
           >
@@ -238,25 +238,25 @@ const onTabChange = k => {
             <div
               class="item grid grid-cols-4 px-3 items-center justify-between text-center mb-2 w-full"
             >
-              <div class="bg-[url('assets/imgs/TOP1.png')] bg-cover h-4 w-12">1</div>
+              <div class="bg-[url('assets/imgs/warning/TOP1.png')] bg-cover h-4 w-12">1</div>
               <div class>盐城市盐都区</div>
               <div class>18</div>
               <div class>24%</div>
             </div>
             <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/TOP2.png')] bg-cover h-4 w-12">2</div>
+              <div class="bg-[url('assets/imgs/warning/TOP2.png')] bg-cover h-4 w-12">2</div>
               <div class>盐城市盐都区</div>
               <div class>18</div>
               <div class>24%</div>
             </div>
             <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/TOP3.png')] bg-cover h-4 w-12">3</div>
+              <div class="bg-[url('assets/imgs/warning/TOP3.png')] bg-cover h-4 w-12">3</div>
               <div class>盐城市盐都区</div>
               <div class>18</div>
               <div class>24%</div>
             </div>
             <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/TOP4.png')] bg-cover h-4 w-12">4</div>
+              <div class="bg-[url('assets/imgs/warning/TOP4.png')] bg-cover h-4 w-12">4</div>
               <div class>盐城市盐都区</div>
               <div class>18</div>
               <div class>24%</div>
@@ -308,12 +308,12 @@ const onTabChange = k => {
 
 @for $i from 0 through 5 {
   .warningtype_#{$i} {
-    background-image: url("@/assets/imgs/ic_#{$i}.png");
+    background-image: url("@/assets/imgs/warning/ic_#{$i}.png");
   }
 }
 
 .test{
-  background-image:  url('@/assets/imgs/yj-source-type-left.png'),url('@/assets/imgs/warning/warningsource1.png');
+  background-image:  url('@/assets/imgs/warning/yj-source-type-left.png'),url('@/assets/imgs/warning/warningsource1.png');
     // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
     background-position: 10% -10%;
     background-size: 40%, 80%;
@@ -321,7 +321,7 @@ const onTabChange = k => {
 }
 
 .test2{
-  background-image:  url('@/assets/imgs/yj-source-type-right.png'),url('@/assets/imgs/warning/warningsource2.png');
+  background-image:  url('@/assets/imgs/warning/yj-source-type-right.png'),url('@/assets/imgs/warning/warningsource2.png');
     // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
     background-position: 90% 10%;
     background-size: 40%, 80%;

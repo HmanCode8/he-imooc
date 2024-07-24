@@ -7,6 +7,7 @@ import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import { Label } from "cesium";
+import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
 
@@ -24,11 +25,12 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-
+  const fontSize = useRootFontSize()
+  renderChart(fontSize.value)
   mChart.resize();
 };
 
-const renderChart = () => {
+const renderChart = (fontSize) => {
   const option = {
     tooltip: {
       trigger: "axis",
@@ -82,7 +84,8 @@ const renderChart = () => {
         margin: 10, //刻度标签与轴线之间的距离。
         textStyle: {
           fontFamily: "Microsoft YaHei",
-          color: "#ffffff"
+          color: "#ffffff",
+          fontSize
         }
       }
     },
@@ -116,7 +119,12 @@ const renderChart = () => {
       // },
       axisLine: {
         show: false
-      }
+      },
+      axisLabel: {
+        textStyle: {
+                    fontSize, // 修改 y 轴字体大小
+                },
+      },
     },
     series: [
       {

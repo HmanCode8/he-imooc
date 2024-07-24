@@ -7,6 +7,7 @@ import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import { Label } from "cesium";
+import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
   barData: {
@@ -23,11 +24,12 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-
+  const fontSize = useRootFontSize();
+  renderChart(fontSize.value);
   mChart.resize();
 };
 
-const renderChart = () => {
+const renderChart = fontSize => {
   const option = {
     tooltip: {
       trigger: "axis"
@@ -37,13 +39,18 @@ const renderChart = () => {
       textStyle: {
         color: "#fff"
       },
-      itemHeight: 3,
+      itemHeight: 3
     },
     calculable: true,
     xAxis: [
       {
         type: "category",
-        data: props.barData.xData
+        data: props.barData.xData,
+        axisLabel: {
+          textStyle: {
+            fontSize
+          }
+        }
       }
     ],
     yAxis: [
@@ -56,6 +63,11 @@ const renderChart = () => {
             color: ["#B5B5B5"],
             type: "dashed",
             opacity: 0.5
+          }
+        },
+        axisLabel: {
+          textStyle: {
+            fontSize
           }
         }
       }

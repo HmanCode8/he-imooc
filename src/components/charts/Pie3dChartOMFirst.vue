@@ -353,7 +353,7 @@ const renderChart = (fontSize) => {
           };
         }),
         left: "40%", // 调整位置
-        top: "26%", // 调整位置
+        top: "10%", // 调整位置
         itemGap: 10, // 调整间距
         itemWidth: 12,
         itemHeight: 12,
@@ -405,7 +405,7 @@ const renderChart = (fontSize) => {
           autoRotate: true // Auto-rotate
         },
         left: "2%",
-        top: "2%",
+        top: "-10%",
         width: "40%",
         show: false,
         boxHeight: 60
@@ -415,7 +415,7 @@ const renderChart = (fontSize) => {
         {
           type: "text",
           left: "44%",
-          top: "15%",
+          top: "0%",
           style: {
             text: "总数",
             textAlign: "center",
@@ -426,7 +426,7 @@ const renderChart = (fontSize) => {
         {
           type: "text",
           right: "10%",
-          top: "15%",
+          top: "0%",
           style: {
             text: "324个",
             textAlign: "center",
@@ -437,7 +437,7 @@ const renderChart = (fontSize) => {
         {
           type: "image",
           left: "44%",
-          top: "20%",
+          top: "0%",
           style: {
             image: bgimage,
             width: 250,

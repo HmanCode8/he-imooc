@@ -124,30 +124,30 @@ const Pie3DChartData = ref([
     <FristLevelTitle title="维护维修  次数/频率"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80 flex">
-        <div class="longstrip flex flex-col items-center pt-2">
-          <div class="star">
+        <div class="longstrip h-40 flex flex-col items-center pt-2">
+          <div class="star w-1 h-2">
           </div>
-          <div class="text">
+          <div class="text h-40 text-xs mt-3">
             维修次数
           </div>
-          <div class="star">            
+          <div class="star w-1 h-2">            
           </div>
-          <div class="line">            
+          <div class="line h-40">            
           </div>
         </div>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
       
       <div class="8k:w-1/2 4k:w-full h-80 flex">
-        <div class="longstrip flex flex-col items-center pt-2">
-          <div class="star">
+        <div class="longstrip h-40 flex flex-col items-center pt-2">
+          <div class="star w-1 h-2">
           </div>
-          <div class="text">
-            维修次数
+          <div class="text h-40 text-xs mt-3">
+            维修频率
           </div>
-          <div class="star">            
+          <div class="star w-1 h-2">            
           </div>
-          <div class="line">            
+          <div class="line h-40">            
           </div>
         </div>
         <div class="flex flex-wrap">
@@ -163,27 +163,18 @@ const Pie3DChartData = ref([
 <style scoped lang="scss">
 .longstrip{
   margin:10px;
-  width: 35px;
-  height: 180px;
   background: linear-gradient(rgba(0,202,255,0.43) 0%, rgba(0,201,255,0) 100%);
   .star{
-    width: 6px;
-    height: 8px;
     background: #00D9FF;
     border: 1px solid #FFFFFF;
     transform: rotate(45deg);
   }
   .text{
-    height: 100px;
-    line-height: 100px; text-align: center;
     writing-mode: vertical-rl; /* 从右到左的垂直书写模式 */
     text-orientation: mixed; /* 文字方向 */
   }
   .line{
-    width: 1px;
-    height: 120px;
-    border: 2px solid;
-    margin-top:10px;
+    border: 1px solid;
     border-image: linear-gradient(180deg, rgba(0, 219, 255, 1), rgba(151, 151, 151, 0)) 2 2;
   }
 }
