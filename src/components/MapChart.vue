@@ -54,13 +54,11 @@
       <div class="layer-shaw p-3 w-2/3 h-full ml-[-10px] bottom-0">
         <div ref="leyerRef" class="">
           <div v-for="sub in currentItem" :key="sub.name" class="layer-item-name">
-            <div class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-1 h-6 bg-size font-bold">{{
-                sub.name
-              }}
+            <div class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-1 h-6 bg-size font-bold">
+              {{ sub.name }}
             </div>
             <div v-for="item in sub.children" :key="item.name" class="layer-item-name-text">
-              <div
-                  :class="`layer-item-name-text hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
+              <div :class="`layer-item-name-text hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
                   @click="updateLayer(item)">{{ item.name }}
               </div>
             </div>
@@ -120,7 +118,7 @@ import proj4 from "proj4";
 import {get as getProjection} from 'ol/proj';
 import {register} from "ol/proj/proj4";
 import Feature from "ol/Feature";
-import {WKT} from "ol/format";
+import {GeoJSON, WKT} from "ol/format";
 
 const layers = ref([])
 const gsap = inject('gsap')
