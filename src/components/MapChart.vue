@@ -51,10 +51,10 @@
 				</div>
 			</div>
 			<div class="layer-shaw h-full w-1/2  bottom-0">
-				<div v-for="c in currentItem" :key="c.value" class="layer-item-name">
-					<div v-for="i in c.detail" :key="i.value" class="layer-item-name-text">
-						<div class="layer-item-name-text font-bold">{{ i.name }}</div>
-						<div class="layer-item-name-text">{{ i.value }}</div>
+				<div v-for="c in currentItem" :key="c.value">
+					<div v-for="i in c.detail" :key="i.value">
+						<div class=" font-bold">{{ i.name }}</div>
+						<div>{{ i.value }}</div>
 					</div>
 				</div>
 			</div>

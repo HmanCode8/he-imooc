@@ -84,8 +84,8 @@ const currentComponentMap = {
 
 watch(() => store.componentId, (value) => {
     currentComponent.value = value
-    // gsap.fromTo(leftPanelRef.value, { opacity: 0, x: -200 }, { opacity: 1, x: 0, duration: 1, ease: 'linear' })
-    // gsap.fromTo(rightPanelRef.value, { opacity: 0, x: 200 }, { opacity: 1, x: 0, duration: 1, ease: 'linear' })
+    gsap.fromTo(leftPanelRef.value, { opacity: 0, }, { opacity: 1, x: 0, duration: 1, ease: 'linear' })
+    gsap.fromTo(rightPanelRef.value, { opacity: 0, }, { opacity: 1, x: 0, duration: 1, ease: 'linear' })
 
 }, {
     immediate: true
