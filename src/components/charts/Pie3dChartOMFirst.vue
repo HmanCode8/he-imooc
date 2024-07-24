@@ -25,6 +25,8 @@ const props = defineProps({
   }
 });
 
+
+
 const target = ref(null);
 let mChart = null;
 onMounted(() => {
@@ -389,7 +391,7 @@ const renderChart = (fontSize) => {
           for (let i = 0; i < datas.length; i++) {
             total += Number(datas[i].value);
           }
-          const arr = [`{iconName|}{name|${name}}{value|${obj.value}次}`];
+          const arr = [`{iconName|}{name|${name}}{value|${obj.value}${unit}}`];
           return arr.join("");
         }
       },
@@ -470,6 +472,7 @@ const renderChart = (fontSize) => {
     }
   ];
 
+  const unit = props.pieChartData[0].unit?"个":"次";
   const serData = props.pieChartData.map((dItem, index) => {
     return {
       ...dItem,

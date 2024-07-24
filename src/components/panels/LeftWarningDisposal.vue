@@ -45,13 +45,13 @@ const tabs = ref([
 const warningDataLeft = ref([
   { name: "燃气", value: 157 },
   { name: "供水", value: 1137 },
-  { name: "雨水", value: 10000 },
-  { name: "污水", value: 10000 }
+  { name: "雨水", value: 1000 },
+  { name: "污水", value: 1000 }
 ]);
 
 const warningDataRight = ref([
   { name: "道路", value: 1350 },
-  { name: "桥梁", value: 10000 },
+  { name: "桥梁", value: 1000 },
   { name: "路灯", value: 861 },
   { name: "三破", value: 3 }
 ]);
@@ -63,6 +63,21 @@ const warningType = ref([
   { name: "终端用户", value: 99, percent: "40" },
   { name: "阀门井", value: 60, percent: "40" }
 ]);
+
+const timeTabs = ref([
+  {
+    name: "近一周",
+    value: "week"
+  },
+  {
+    name: "近一月",
+    value: "month"
+  }
+]);
+
+const onTabChange = k => {
+  console.log(k);
+};
 </script>
 
 <template>
@@ -71,20 +86,17 @@ const warningType = ref([
     <SecondLevelTitle title="预警来源"></SecondLevelTitle>
     <div class="w-full h-60 flex justify-around">
       <!-- 左边 -->
-      <div class="flex flex-wrap justify-end">
-        <div
-          class="pipe-item 4k:w-[15%] 8k:w-[30%] m-2 items-center"
+      <div class="flex flex-wrap justify-end mt-10">
+        <div        
           v-for="(item, index) in warningDataLeft"
           :key="index"
         >
           <div
-            class="bg-[url('assets/imgs/yj-source-type-left.png')] bg-cover w-30 h-17 text-center flex items-center justify-center"
+           class="test w-40 h-12 flex flex-col"    
           >
-            <div>{{ item.name }}</div>
-          </div>
-          <div class="haha">
-            <div class="text-2xl">{{ item.value }}个</div>
-          </div>
+            <div class="ml-6">{{ item.name }}</div>
+            <div class="ml-4"><span class="warningsourcestyle text-2xl">{{ item.value }}</span>个</div>
+          </div>     
         </div>
       </div>
       <!-- 中间 -->
@@ -94,20 +106,17 @@ const warningType = ref([
         <div class="bg-[url('assets/imgs/alarm.png')] bg-cover bg-center w-12 h-12"></div>
       </div>
       <!-- 右边 -->
-      <div class="flex flex-wrap justify-start">
-        <div
-          class="pipe-item 4k:w-[15%] 8k:w-[30%] m-2 items-center"
+      <div class="flex flex-wrap mt-10">
+        <div          
           v-for="(item, index) in warningDataRight"
           :key="index"
         >
           <div
-            class="bg-[url('assets/imgs/yj-source-type-right.png')] bg-cover w-30 h-17 text-center flex items-center justify-center"
+           class="test2 w-40 h-12 flex flex-col"    
           >
-            <div>{{ item.name }}</div>
-          </div>
-          <div class>
-            <div class="text-2xl">{{ item.value }}个</div>
-          </div>
+            <div class="ml-24">{{ item.name }}</div>
+            <div class="ml-20"><span class="warningsourcestyle text-2xl">{{ item.value }}</span>个</div>
+          </div> 
         </div>
       </div>
     </div>
@@ -165,19 +174,11 @@ const warningType = ref([
       </div>
 
       <div class="8k:w-1/2 4k:w-full">
-        <div
-          class="first-level-title my-4 bg-[url('assets/imgs/main/title-h-two.png')] h-8 bg-cover flex items-center justify-between"
-        >
-          <h2 class="title text-white 4k:ml-8 8k:ml-16 mt-[-14px]">预警事件趋势</h2>
-          <div class="flex">
-            <div
-              class="bg-[url('assets/imgs/buttonactive.png')] bg-cover w-20 title text-white 4k:ml-8 8k:ml-16 mt-[-14px] flex items-center justify-center"
-            >7天</div>
-            <div
-              class="bg-[url('assets/imgs/buttoninactive.png')] bg-cover w-20 title text-white 4k:ml-8 8k:ml-16 mt-[-14px] flex items-center justify-center"
-            >30天</div>
-          </div>
-        </div>
+        <SecondLevelTitle class="w-full" title="预警事件趋势">
+          <template v-slot:title-slot>
+            <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
+          </template>
+        </SecondLevelTitle>
         <div class="w-full h-full flex">
           <div class="w-full h-full">
             <div
@@ -205,12 +206,20 @@ const warningType = ref([
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap justify-around">
-          <div class="flex bg-[url('assets/imgs/waringtype1.png')] bg-cover  mt-2 w-40 h-32 flex  justify-center" v-for="(item, index) in warningType" :key="index">
+          <div
+            class="flex bg-[url('assets/imgs/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
+            v-for="(item, index) in warningType"
+            :key="index"
+          >
             <div :class="`warningtype_${index+1} bg-cover mt-2 w-8 h-8`"></div>
             <div class="mt-3">
               <div class="name">{{ item.name }}</div>
-              <div class="pipe-point"><span class="text-[18px] font-bold">{{ item.value }}</span>个</div>
-              <div class="pipe-point"><span class="text-[18px] font-bold">{{ item.percent}}</span>%</div>
+              <div class="pipe-point">
+                <span class="text-[18px] font-bold">{{ item.value }}</span>个
+              </div>
+              <div class="pipe-point">
+                <span class="text-[18px] font-bold">{{ item.percent}}</span>%
+              </div>
             </div>
           </div>
         </div>
@@ -219,14 +228,16 @@ const warningType = ref([
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="预警事件空间特征"></SecondLevelTitle>
         <div class="w-full h-full">
-          <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center  mb-2 w-full">
+          <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center mb-2 w-full">
             <div class></div>
             <div class>区域</div>
             <div class>数量/个</div>
             <div class>占比/%</div>
           </div>
           <div class="table-body">
-            <div class="item grid grid-cols-4 px-3 items-center justify-between text-center mb-2 w-full">
+            <div
+              class="item grid grid-cols-4 px-3 items-center justify-between text-center mb-2 w-full"
+            >
               <div class="bg-[url('assets/imgs/TOP1.png')] bg-cover h-4 w-12">1</div>
               <div class>盐城市盐都区</div>
               <div class>18</div>
@@ -265,7 +276,7 @@ const warningType = ref([
 
 <style scoped lang="scss">
 .item:nth-child(odd) {
-  background-color: #053B66;
+  background-color: #053b66;
 }
 
 .item:nth-child(even) {
@@ -287,10 +298,34 @@ const warningType = ref([
   color: transparent;
 }
 
-@for $i from 0 through 5 {
-.warningtype_#{$i}{
-    background-image: url('@/assets/imgs/ic_#{$i}.png');
+.warningsourcestyle{
+  background: linear-gradient(0deg, #1890FF 0%, #1EE7E7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
 }
+
+@for $i from 0 through 5 {
+  .warningtype_#{$i} {
+    background-image: url("@/assets/imgs/ic_#{$i}.png");
+  }
+}
+
+.test{
+  background-image:  url('@/assets/imgs/yj-source-type-left.png'),url('@/assets/imgs/warning/warningsource1.png');
+    // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
+    background-position: 10% -10%;
+    background-size: 40%, 80%;
+    background-repeat: no-repeat, no-repeat;
+}
+
+.test2{
+  background-image:  url('@/assets/imgs/yj-source-type-right.png'),url('@/assets/imgs/warning/warningsource2.png');
+    // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
+    background-position: 90% 10%;
+    background-size: 40%, 80%;
+    background-repeat: no-repeat, no-repeat;
 }
 
 // .haha{

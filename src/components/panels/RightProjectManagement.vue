@@ -88,7 +88,7 @@ const onTabChange = (k) => {
                 <SecondLevelTitle class="w-full" title="施工类型1" />
 
                 <div class="chart-container w-full h-60">
-                    <Pipe3dChart :pieChartData="pieChartData" />/>
+                    <Pipe3dChart :pieChartData="pieChartData" />
                 </div>
             </div>
 
