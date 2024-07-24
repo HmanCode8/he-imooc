@@ -45,3 +45,22 @@ body,#app {
   /* 文本字符填充颜色透明 */
   -webkit-text-fill-color: transparent;
 }
+
+.bg-size{
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* 修改全局滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #081e4d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #1b3269;
+  border-radius: 4px;
+}

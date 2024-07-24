@@ -19,7 +19,7 @@ onMounted(() => {
 
 const handleResize = (size) => {
     const fontSize = useRootFontSize()
-    renderChart(fontSize)
+    renderChart(fontSize.value)
     mChart.resize()
 }
 const data = [

@@ -75,7 +75,6 @@ const completionRate = ref([
 const global = useGlobalStore();
 
 const changeStore = () => {
-  console.log(global.navActive);
   global.setNavActive("/dashboard");
 };
 const arr1 = [
@@ -111,7 +110,7 @@ const barChartData = ref({
   //     bottom: "20%",
   //     right: "6%"
   //   },
-  
+
 });
 
 const Pie3DChartData = ref([
@@ -137,11 +136,10 @@ const Pie3DChartData = ref([
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="上报问题数量"></SecondLevelTitle>
         <div class="w-full flex flex-wrap">
-          <div class="pipe-item 4k:w-[45%] 8k:w-[20%] m-2 flex" v-for="(item, index) in problems"
-            :key="index">
-            <div :class="`inspection_${index+1}  w-20 h-16 bg-cover bg-center`"></div>
+          <div class="pipe-item 4k:w-[45%] 8k:w-[20%] m-2 flex" v-for="(item, index) in problems" :key="index">
+            <div :class="`inspection_${index + 1}  w-20 h-16 bg-cover bg-center`"></div>
             <div class="ml-4">
-              <div class="problemType">{{ item.name}}(个)</div>
+              <div class="problemType">{{ item.name }}(个)</div>
               <div class="problemNumber">{{ item.number }}</div>
             </div>
           </div>
@@ -159,7 +157,8 @@ const Pie3DChartData = ref([
         <SecondLevelTitle class="w-full" title="巡检完成率"></SecondLevelTitle>
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex flex-wrap">
-            <div :class="`inspection_success_${(index+1)%2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`" 
+            <div
+              :class="`inspection_success_${(index + 1) % 2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`"
               v-for="(item, index) in completionRate" :key="index">
               <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
@@ -179,11 +178,10 @@ const Pie3DChartData = ref([
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="发现问题数量"></SecondLevelTitle>
         <div class="w-full flex flex-wrap">
-          <div class="pipe-item 4k:w-[45%] 8k:w-[20%] m-2 flex" v-for="(item, index) in problems"
-            :key="index">
-            <div :class="`inspection_${index+1}  w-20 h-16 bg-cover bg-center`"></div>
+          <div class="pipe-item 4k:w-[45%] 8k:w-[20%] m-2 flex" v-for="(item, index) in problems" :key="index">
+            <div :class="`inspection_${index + 1}  w-20 h-16 bg-cover bg-center`"></div>
             <div class="ml-4">
-              <div class="problemType">{{ item.name}}(个)</div>
+              <div class="problemType">{{ item.name }}(个)</div>
               <div class="problemNumber">{{ item.number }}</div>
             </div>
           </div>
@@ -201,7 +199,8 @@ const Pie3DChartData = ref([
         <SecondLevelTitle class="w-full" title="管养完成率"></SecondLevelTitle>
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex flex-wrap">
-            <div :class="`inspection_success_${(index+1)%2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`" 
+            <div
+              :class="`inspection_success_${(index + 1) % 2} m-2 flex flex-col items-center bg-cover bg-center w-28 h-20`"
               v-for="(item, index) in completionRate" :key="index">
               <div class="pipe-point">{{ item.rate }}</div>
               <div class="name">{{ item.name }}</div>
@@ -215,29 +214,32 @@ const Pie3DChartData = ref([
 
 <style scoped lang="scss">
 @for $i from 1 through 7 {
-    .inspection_#{$i} {
-        background-image: url('@/assets/imgs/inspection_#{$i}.png');
-    }
+  .inspection_#{$i} {
+    background-image: url('@/assets/imgs/inspection_#{$i}.png');
+  }
 }
 
-.problemNumber{
+.problemNumber {
   // font-size:14px;
   font-family: "PingFangSC, PingFang SC";
   font-weight: 800;
-  background-image: linear-gradient(to top, #42BBD9, #FFFFFF); /* 渐变色 */
-  -webkit-background-clip: text; /* 只剪裁文本 */
-  -webkit-text-fill-color: transparent; /* 填充颜色透明，以显示背景 */
+  background-image: linear-gradient(to top, #42BBD9, #FFFFFF);
+  /* 渐变色 */
+  -webkit-background-clip: text;
+  /* 只剪裁文本 */
+  -webkit-text-fill-color: transparent;
+  /* 填充颜色透明，以显示背景 */
 }
 
-.problemType{
+.problemType {
   // font-size:16px;
   font-family: "PingFangSC, PingFang SC";
   font-weight: 800;
 }
-@for $i from 0 through 7 {
-.inspection_success_#{$i} {
-    background-image: url('@/assets/imgs/inspection-success-#{$i%2+1}.png');
-}
-}
 
+@for $i from 0 through 7 {
+  .inspection_success_#{$i} {
+    background-image: url('@/assets/imgs/inspection-success-#{$i%2+1}.png');
+  }
+}
 </style>

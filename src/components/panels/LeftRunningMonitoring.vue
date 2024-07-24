@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, computed } from 'vue';
+import { ref, computed } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
@@ -27,6 +27,32 @@ const data = ref([
     },
     {
         name: '热力',
+        onLine: 100,
+        offLine: 200,
+        total: 300
+    },
+])
+const data1 = ref([
+    {
+        name: '燃气1',
+        onLine: 100,
+        offLine: 200,
+        total: 300
+    },
+    {
+        name: '电力1',
+        onLine: 100,
+        offLine: 200,
+        total: 300
+    },
+    {
+        name: '水电1',
+        onLine: 100,
+        offLine: 200,
+        total: 300
+    },
+    {
+        name: '热力1',
         onLine: 100,
         offLine: 200,
         total: 300
@@ -61,9 +87,12 @@ const sensorData = ref([
 
 const sum = computed(() => _.reduce(sensorData.value, (pre, cur) => (pre + cur.value), 0))
 
-console.log(sum.value)
 const runActive1 = ref(0)
 const runActive2 = ref(0)
+
+const onTabChange = (name) => {
+    runActive1.value = name
+}
 </script>
 
 <template>
@@ -78,21 +107,21 @@ const runActive2 = ref(0)
 
         <div class="flex items-center my-4 justify-between">
             <div class="flex w-1/3 items-center justify-between flex-wrap">
-                <div v-for="item, index in data" @click="runActive1.value = index"
-                    class="run-item bg-[url('assets/imgs/running/run-b.png')] flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center">
-                    <div>在线：{{ item.onLine }}</div>
-                    <div>离线：{{ item.offLine }}</div>
+                <div v-for="item, index in data" @click="onTabChange(item.name)"
+                    :class="`${runActive1 === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
+                    <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
+                    <div>离线：<span class="gradient-text text-2xl font-bold">{{ item.offLine }}</span></div>
                     <div>{{ item.name }}</div>
                 </div>
             </div>
             <div
-                class="flex w-1/3 run-center bg-[url('assets/imgs/running/run-center-bg.png')] items-center justify-center h-80 flex-wrap">
+                class="flex w-1/3 bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
             </div>
             <div class="flex w-1/3 items-center justify-between flex-wrap">
-                <div v-for="item in data"
-                    class="run-item bg-[url('assets/imgs/running/run-b.png')] flex w-[44%] mx-2 py-20 flex-col h-24 justify-center items-center">
-                    <div>在线：{{ item.onLine }}</div>
-                    <div>离线：{{ item.offLine }}</div>
+                <div v-for="item, index in data1" @click="onTabChange(item.name)"
+                    :class="`${runActive1 === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
+                    <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
+                    <div>离线：<span class="gradient-text text-2xl font-bold">{{ item.offLine }}</span></div>
                     <div>{{ item.name }}</div>
                 </div>
             </div>
@@ -103,7 +132,7 @@ const runActive2 = ref(0)
             <div class="8k:w-[40%] 4k:w-full flex justify-between">
                 <div class="flex w-1/3 flex-col items-center">
                     <div v-for="item in runningData"
-                        class="layout-item bg-[url('assets/imgs/running/run-b.png')] my-4 w-20 h-20 flex flex-col items-center">
+                        class="bg-size bg-[url('assets/imgs/running/run-b.png')] my-4 w-20 h-20 flex flex-col items-center">
                         <div>{{ item.value }}</div>
                         <div>{{ item.name }}</div>
                     </div>
@@ -131,7 +160,7 @@ const runActive2 = ref(0)
             </div>
             <div class="8k:w-[60%] 4k:w-full flex">
                 <div class="w-full h-full">
-                    <ThirdLevelTitle title="设备类型" />
+                    <ThirdLevelTitle title="区县设备覆盖" />
                     <div class="w-full h-64 my-8">
                         <ConeBarChart />
                     </div>
@@ -144,10 +173,17 @@ const runActive2 = ref(0)
 </template>
 
 <style scoped lang="scss">
-.run-item,
-.layout-item,
-.run-center {
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+.run-item {
+    background-image: url('@/assets/imgs/running/run-b.png');
+}
+
+.run-item-active {
+    background-image: url('@/assets/imgs/running/run-b-checked.png');
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>

@@ -34,7 +34,7 @@
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
 		<!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-		<div class="layer-tabs w-40 bg-[#0e2a63]  h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+		<div class="layer-tabs w-40   h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
 			<div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
 				<div class="img-list flex flex-col justify-around items-center h-[80%]">
 					<div :class="`layer-item-${index + 1} w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -51,16 +51,23 @@
 				</div>
 			</div>
 
-			<div class="layer-shaw h-full w-1/2  bottom-0">
-				<div v-for="sub in currentItem" :key="sub.name" class="layer-item-name">
-          <div class="layer-item-name-text font-bold">{{ sub.name }}</div>
-					<div v-for="item in sub.children" :key="item.name" class="layer-item-name-text">
-						<div :class="`layer-item-name-text hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
-                 @click="updateLayer(item)">{{ item.name }}</div>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div class="layer-shaw p-3 w-2/3 h-full ml-[-10px] bottom-0">
+        <div ref="leyerRef" class="">
+          <div v-for="sub in currentItem" :key="sub.name" class="layer-item-name">
+            <div class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-1 h-6 bg-size font-bold">{{
+                sub.name
+              }}
+            </div>
+            <div v-for="item in sub.children" :key="item.name" class="layer-item-name-text">
+              <div
+                  :class="`layer-item-name-text hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
+                  @click="updateLayer(item)">{{ item.name }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 		<!-- 右下角图例 -->
 
@@ -79,22 +86,20 @@
         <p>{{ key }}:{{ value }}</p>
       </div>
     </div>
+
+		<!-- 右下角图例 -->
+
+		<div ref="legendRef" v-if="global.componentId === 'operation-maintenance'"
+			class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
+			<MapLegend @update:checked="legendOnchage" />
+		</div>
 	</div>
 </template>
 
 <script setup>
-import { computed, onMounted, ref, toRef, watch } from 'vue'
+import { computed, onMounted, ref, toRef, watch, inject } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import { fromLonLat, toLonLat } from 'ol/proj'
-import GeoJSON from 'ol/format/GeoJSON'
-import { boundingExtent, getCenter } from 'ol/extent'
-import Style from 'ol/style/Style'
-import Fill from 'ol/style/Fill'
-import Stroke from 'ol/style/Stroke'
-import Text from 'ol/style/Text'
 import Overlay from 'ol/Overlay'
 import { toStringHDMS } from 'ol/coordinate'
 import { useGlobalStore } from "@/store";
@@ -102,6 +107,10 @@ import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import _ from 'lodash'
 
+
+import MapLegend from "@/components/MapLegend.vue"
+// 引入盐城的GeoJSON数据
+// import yanchengGeoJson from '@/assets/MapData/yancheng.json'
 import layerConfigUrl from '/config/layer.json?url'
 import ImageLayer from "ol/layer/Image";
 import TileLayer from "ol/layer/Tile";
@@ -114,6 +123,9 @@ import Feature from "ol/Feature";
 import {WKT} from "ol/format";
 
 const layers = ref([])
+const gsap = inject('gsap')
+const leyerRef = ref(null)
+const legendRef = ref(null)
 const geoJsonParser = new GeoJSON()
 const global = useGlobalStore()
 const target = ref(null)
@@ -207,6 +219,13 @@ const onLayerOnchange = (val) => {
 }
 
 const currentItem = computed(() => _.get(_.find(layers.value, (item) => item.name === currentLayerTab.value), 'children', []))
+const legendOnchage = (val) => {
+	console.log(val)
+}
+
+watch(() => currentLayerTab.value, () => {
+	gsap.fromTo(leyerRef.value, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.3, ease: 'linear' })
+})
 
 watch(() => global.componentId, (value) => {
 	currentTopTab.value = value
@@ -574,9 +593,13 @@ const toggleMap = () => {
 	}
 
 	.layer-shaw {
-		// 左上角开始渐变背景
-		// background: linear-gradient(180deg, #0e2a62 50%, #0e2a62 30%, #051335 20%);
-		background-color: rgba(0, 0, 0, .5);
+		// 左上角开始渐变背景，从上到下透明度从0到1，颜色#0a234a, #305fad
+		background: linear-gradient(to bottom, rgba(11, 29, 65, 0.6), rgb(7, 32, 50), rgba(57, 142, 203, 0.4));
+		// 右上角开始渐变背景，从上到下透明度从0到1
+		// background: linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+		// background: linear-gradient(to bottom, #0a234a, #305fad);
+		// 背景透明度，从上到下
+		// background-color: raba(0, 0, 0, .5);
 	}
 
 }

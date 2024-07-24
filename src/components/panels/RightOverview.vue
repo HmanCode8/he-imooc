@@ -9,7 +9,6 @@ import { color } from 'echarts'
 const global = useGlobalStore()
 
 const changeStore = () => {
-    console.log(global.navActive)
     global.setNavActive('/dashboard')
 }
 const riskLevel = [
@@ -76,7 +75,7 @@ const riskData = [
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
                         v-for="item in riskData" :key="item.name">
                         <div class="flex items-center">
                             <div :style="{ backgroundColor: item.color }" class="icon w-2 h-2 mx-1"></div>
@@ -103,7 +102,7 @@ const riskData = [
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
                         v-for="item in riskData" :key="item.name">
                         <div class="flex items-center">
                             <div :style="{ backgroundColor: item.color }" class="icon w-2 h-2 mx-1"></div>
@@ -122,24 +121,24 @@ const riskData = [
             <div class="waring-item flex flex-col flex-wrap 4k:w-1/3 8k:w-[20%]">
                 <div class="flex justify-between">
                     <div
-                        class="check-item w-20 h-24 my-2 bg-[url(assets/imgs/overview/check-item-1.png)] flex flex-col items-center justify-around">
+                        class="check-item w-24 h-28 my-2 bg-[url(assets/imgs/overview/check-item-1.png)] bg-size flex flex-col items-center justify-around">
                         <div class="flex">
-                            <h2>1960</h2>台
+                            <h2>1960</h2>
                         </div>
-                        <div>设备总数</div>
+                        <div>设备总数(台)</div>
                     </div>
-                    <div>
-                        <div>种类：<span class="font-bold">10</span></div>
-                        <div>在线：<span class="font-bold">10</span></div>
+                    <div class="mt-4">
+                        <div><span class="text-[#89C3DF]">种类：</span><span class="font-bold text-2xl">24</span></div>
+                        <div><span class="text-[#89C3DF]">在线：</span><span class="font-bold text-2xl">50</span></div>
                     </div>
                 </div>
                 <div class="flex justify-between">
                     <div
-                        class="check-item w-20 h-24 my-2 bg-[url(assets/imgs/overview/check-item-2.png)] flex flex-col items-center justify-around">
+                        class="check-item  w-24 h-28 my-2 bg-[url(assets/imgs/overview/check-item-2.png)] flex flex-col items-center justify-around">
                         <div class="flex">
-                            <h2>1960</h2>台
+                            <h2>1960</h2>
                         </div>
-                        <div>设备总数</div>
+                        <div>设备总数(台)</div>
                     </div>
                 </div>
             </div>
@@ -195,7 +194,7 @@ const riskData = [
 
 
         <div class="w-full">
-            <Tablechart />
+            <Tablechart class="h-60" />
         </div>
     </div>
 </template>

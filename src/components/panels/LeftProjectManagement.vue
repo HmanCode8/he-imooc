@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import PipeIconChart from '../charts/PipeIconChart.vue';
@@ -44,7 +44,8 @@ const list = ref([
             <div class="w-full  flex justify-between flex-wrap">
                 <div class="w-full flex flex-wrap justify-between items-center mb-4">
 
-                    <div class="tray-item-l flex 8k:w-1/2 4k:w-full h-40 items-center">
+                    <div
+                        class="bg-[url(assets/imgs/project/tray-item-l.png)] bg-size flex 8k:w-1/2 4k:w-full h-40 items-center">
                         <div class="w-1/3 text-center">
                             <div>建设中</div>
                             <div><span class="text-2xl font-bold">20</span>个</div>
@@ -63,7 +64,8 @@ const list = ref([
                     </div>
 
 
-                    <div class="tray-item-r flex 8k:w-1/2 4k:w-full h-40 items-center">
+                    <div
+                        class="bg-[url(assets/imgs/project/tray-item-r.png)] bg-size flex 8k:w-1/2 4k:w-full h-40 items-center">
                         <div class="w-1/3 text-center">
                             <div>建设中</div>
                             <div><span class="text-2xl font-bold">20</span>个</div>
@@ -113,18 +115,6 @@ const list = ref([
 </template>
 
 <style scoped lang="scss">
-.tray-item-l {
-    background-image: url('@/assets/imgs/project/tray-item-l.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-}
-
-.tray-item-r {
-    background-image: url('@/assets/imgs/project/tray-item-r.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-}
-
 @for $i from 1 through 10 {
     .type-icon-#{$i} {
         background-image: url('@/assets/imgs/project/type-item-#{$i}.png');
