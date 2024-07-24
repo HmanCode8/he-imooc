@@ -100,9 +100,12 @@ const barChartData = ref({
       </div>
     </div>
 
+
+    <SecondLevelTitle title="平均效率"></SecondLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
+      
       <div class="8k:w-1/2 4k:w-full h-80">
-        <SecondLevelTitle title="平均效率"></SecondLevelTitle>
+        
         <div class="w-full h-full">
           <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center w-full">
             <div class></div>
@@ -146,27 +149,25 @@ const barChartData = ref({
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
-      <!-- <div class="h-80 flex flex-wrap"> -->
-          <!-- <div class="w-40 h-35 bg-[url('assets/imgs/average1.png')] bg-cover bg-center  flex flex-col items-center ml-5 "> -->
-          <div class="signfor">
-            <div class="name">72个</div>
-            <div class="pipe-point">待签收</div>
+          <div class="bg-[url('assets/imgs/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-10">
+            <div class="mt-5 text-2xl font-bold"><span style="color:#1AFCFF;">72个</span></div>
+            <div class="">待签收</div>
           </div>
 
-          <!-- <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-40 flex flex-col items-center">
-            <div class="name">0个</div>
+          <div class="bg-[url('assets/imgs/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-10">
+            <div class="mt-5 text-2xl font-bold"><span style="color:#FFAE00;">0个</span></div>
             <div class="pipe-point">处置中</div>
           </div>
 
-          <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-40 flex flex-col items-center">
-            <div class="name">7个</div>
+          <div class="bg-[url('assets/imgs/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-10">
+            <div class="mt-5 text-2xl font-bold"><span style="color:#0BFFC3;">7个</span></div>
             <div class="pipe-point">已办结</div>
           </div>
 
-          <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-40 flex flex-col items-center">
-            <div class="name">100%</div>
+          <div class="bg-[url('assets/imgs/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-10">
+            <div class="mt-5 text-2xl font-bold"><span style="color:#1AFCFF;">100%</span></div>
             <div class="pipe-point">按时办结率</div>
-          </div> -->
+          </div>
       </div>
     </div>
   </div>
@@ -183,12 +184,13 @@ const barChartData = ref({
 .signfor{
   width:105px;
   height:80px;
+  margin:20px;
   background-image: url('@/assets/imgs/average1.png');
   background-size:cover;
   background-position: center;
   display:flex;
   flex-direction:column;
-  justify-center:center;
-  items-center:center;
+  align-items:  center;               
+  justify-content: center;
 }
 </style>
