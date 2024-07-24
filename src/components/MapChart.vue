@@ -50,6 +50,7 @@
 					<div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-expad.png')]"></div>
 				</div>
 			</div>
+
 			<div class="layer-shaw h-full w-1/2  bottom-0">
 				<div v-for="c in currentItem" :key="c.value">
 					<div v-for="i in c.detail" :key="i.value">
