@@ -15,12 +15,21 @@ const props = defineProps({
 
 <template>
     <!-- 有插槽传tabs -->
-    <div
-        class="first-level-title my-2 px-2 bg-[url('assets/imgs/main//title-h-third.png')] h-4 bg-cover flex items-center ">
-        <div class="title mt-[-14px] flex items-center">
-            {{ title }}
+    <div class="my-2 px-2 bg-[url('assets/imgs/main//title-h-third.png')] h-6 bg-container ">
+        <div class="flex items-center justify-between">
+            <div class="title flex items-center">
+                {{ title }}
+            </div>
+            <div class="slot-container">
+                <slot name="title-slot"></slot>
+            </div>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.bg-container {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+</style>

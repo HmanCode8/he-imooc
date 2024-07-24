@@ -1,8 +1,9 @@
-<script setup lang="ts">
+<script setup>
 import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
+import Tab from '../common/Tab.vue'
 import LineChart from '../charts/LineChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
@@ -29,6 +30,15 @@ const roadAnaly = ref([
     }
 ])
 
+const titletab1 = ref([
+    { name: '天然气场站', value: '1' },
+    { name: '液化气场站', value: '2' },
+])
+const titletabs2 = ref([
+    { name: '供水气场站', value: '1' },
+    { name: '排水气场站', value: '2' },
+])
+
 const pipeChartdata = ref([
     { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
     { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
@@ -47,11 +57,19 @@ const pipeChartdata = ref([
         <FristLevelTitle title="场站分析" />
         <div class="pipe-analy-content w-full flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full h-60">
-                <ThirdLevelTitle title="总数" />
+                <ThirdLevelTitle title="总数">
+                    <template v-slot:title-slot>
+                        <Tab :data="titletab1" @onTabOnchage="onTabChange" />
+                    </template>
+                </ThirdLevelTitle>
                 <LineChart />
             </div>
             <div class="8k:w-1/2 4k:w-full h-60">
-                <ThirdLevelTitle title="总数" />
+                <ThirdLevelTitle title="总数">
+                    <template v-slot:title-slot>
+                        <Tab :data="titletabs2" @onTabOnchage="onTabChange" />
+                    </template>
+                </ThirdLevelTitle>
                 <LineChart />
             </div>
             <div>

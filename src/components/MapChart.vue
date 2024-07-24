@@ -34,13 +34,29 @@
 		<!-- <button class=" absolute top-5" @click="toggleMap">切换地图</button> -->
 		<!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-		<div class="layer-tabs bg-[#0e2a62] w-24 h-[90%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
-			<div class="layer-bg bg-[url('assets/imgs/main/layer-tabs.png')] z-40 w-1/3 ">
-				<div class="img-list">
-					<div v-for="(i, index) in 9 " :key="index"></div>
+		<div class="layer-tabs w-40 bg-[#0e2a63]  h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+			<div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
+				<div class="img-list flex flex-col justify-around items-center h-[80%]">
+					<div :class="`layer-item-${index + 1} w-1/2 h-[9%] relative hover:cursor-pointer`"
+						@click="onLayerOnchange(i.value)" v-for="(i, index) in layers " :key="i.value">
+						<div v-if="currentLayerTab === i.value"
+							class="w-full h-full layer-active absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')]">
+						</div>
+					</div>
+				</div>
+				<div class="h-[20%] flex flex-col justify-around items-center">
+					<div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-layer.png')]"></div>
+					<div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-delete.png')]"></div>
+					<div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-expad.png')]"></div>
 				</div>
 			</div>
-			<div class="layer-shaw h-full w-2/3 bottom-0">
+			<div class="layer-shaw h-full w-1/2  bottom-0">
+				<div v-for="c in currentItem" :key="c.value" class="layer-item-name">
+					<div v-for="i in c.detail" :key="i.value" class="layer-item-name-text">
+						<div class="layer-item-name-text font-bold">{{ i.name }}</div>
+						<div class="layer-item-name-text">{{ i.value }}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -70,7 +86,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRef, watch } from 'vue'
+import { computed, onMounted, ref, toRef, watch } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
 import VectorLayer from 'ol/layer/Vector'
@@ -99,12 +115,41 @@ import proj4 from "proj4";
 import { get as getProjection } from 'ol/proj';
 import { register } from "ol/proj/proj4";
 
-
+const labels = [
+	{
+		name: "基础",
+		value: "foundation",
+		children: [
+			{ name: "示范区", value: "demonstration_area", detail: [{ name: "示范区", value: "100" }, { name: "示范区", value: "100" }] },
+			{ name: "建成区", value: "built_area" }
+		]
+	},
+	{ name: "燃气", value: "gas", children: [{}] },
+	{
+		name: "供水", value: "water_supply", children: [
+			{ name: "示范区", value: "demonstration_area", detail: [{ name: "示范区", value: "20" }, { name: "示范区", value: "90" }] },
+			{ name: "建成区", value: "built_area" }
+		]
+	},
+	{ name: "雨水", value: "rainwater", children: [{}] },
+	{ name: "污水", value: "sewage", children: [{}] },
+	{ name: "道路", value: "road", children: [{}] },
+	{
+		name: "桥梁", value: "bridge", children: [
+			{ name: "示范区", value: "demonstration_area", detail: [{ name: "示范区", value: "120" }, { name: "示范区", value: "390" }] },
+			{ name: "建成区", value: "built_area" }
+		]
+	},
+	{ name: "项目", value: "project", children: [{}] },
+	{ name: "综合", value: "comprehensive", children: [{}] },
+	{ name: "路灯", value: "street_lamp", children: [{}] }
+];
+const layers = ref(labels)
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = toRef(global.componentId)
 const currentBottomTab = ref('underground-pipeline')
-const currentLayerTab = ref('pipeline')
+const currentLayerTab = ref('foundation')
 const map = ref(null);
 const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
@@ -180,63 +225,12 @@ const bottomTabs = ref([
 		value: 'intelligent-traffic-light'
 	}
 ])
-const layerTabs = ref([
-	{
-		name: '管线',
-		value: 'pipeline',
-		detail: {
-			title: '管线1',
-			content: '管线1的详细信息'
-		}
-	},
-	{
-		name: '设施',
-		value: 'facility'
-	},
-	{
-		name: '设备',
-		value: 'devicek'
-	},
-	{
-		name: '预警',
-		value: 'warning'
-	},
-	{
-		name: '风险',
-		value: 'risk',
-		detail: {
-			title: '燃气风险',
-			content: [
-				{
-					name: '当前隐患',
-					value: 'now'
-				},
 
-				{
-					name: '历史隐患',
-					value: 'history'
-				},
-				{
-					name: '预计隐患',
-					value: 'forecast'
-				}
-			]
-		}
-	},
-	{
-		name: '巡养',
-		value: 'patrol'
-	},
-	{
-		name: '隐患',
-		value: 'hazard'
-	},
-	{
-		name: '辅助',
-		value: 'assistance'
-	}
-])
+const onLayerOnchange = (val) => {
+	currentLayerTab.value = val
+}
 
+const currentItem = computed(() => _.get(_.find(layers.value, (item) => item.value === currentLayerTab.value), 'children', []))
 
 watch(() => global.componentId, (value) => {
 	currentTopTab.value = value
@@ -343,6 +337,7 @@ const initCesiumMap = async () => {
 onMounted(() => {
 	// initOpenLayersMap()
 })
+
 const toggleMap = () => {
 	if (isCesiumMap.value) {
 		cesiumViewer.value.destroy();
@@ -418,10 +413,23 @@ const toggleMap = () => {
 	.layer-bg {
 		background-size: 100% 100%;
 
-		.i-img {
-			background-image: url('@/assets/imgs/main/base.png');
-			background-size: 100% 100%;
+		@for $i from 1 through 10 {
+			.layer-item-#{$i} {
+				background-image: url('@/assets/imgs/main/layer-#{$i}.png');
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+
+				.layer-active {
+					background-size: 100% 100%;
+					background-repeat: no-repeat;
+				}
+			}
 		}
+
+		// .i-img {
+		// 	background-image: url('@/assets/imgs/main/base.png');
+		// 	background-size: 100% 100%;
+		// }
 	}
 
 	.layer-shaw {
@@ -430,6 +438,11 @@ const toggleMap = () => {
 		background-color: raba(0, 0, 0, .5);
 	}
 
+}
+
+.tool-item {
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .select-active {

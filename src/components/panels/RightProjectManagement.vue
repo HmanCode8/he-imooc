@@ -1,8 +1,8 @@
-<script setup lang="ts">
+<script setup>
 import { ref, defineProps } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
-import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
+import Tab from '../common/Tab.vue'
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import BarRowChart from '../charts/BarRowChart.vue';
 import LineAreaChart from '../charts/LineAreaChart.vue';
@@ -13,6 +13,21 @@ const pieChartData = ref([
     { name: "处置中", value: 23, color: "#FFCE56" },
     { name: "已完成", value: 99, color: "#FFA07A" },
 ])
+
+const timeTabs = ref([
+    {
+        name: '近一周',
+        value: 'week'
+    },
+    {
+        name: '近一月',
+        value: 'month'
+    },
+])
+
+const onTabChange = (k) => {
+    console.log(k)
+}
 </script>
 
 <template>
@@ -56,6 +71,12 @@ const pieChartData = ref([
         </div>
 
         <div>
+            <SecondLevelTitle class="w-full" title="巡检巡查">
+                <template v-slot:title-slot>
+                    <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
+                </template>
+            </SecondLevelTitle>
+
             <div class="chart-container w-full h-80">
                 <LineAreaChart />
             </div>

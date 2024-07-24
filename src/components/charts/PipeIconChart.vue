@@ -5,7 +5,7 @@
 <script setup>
 import { h, onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
-import bgimage from "@/assets/imgs/title-h-third.png";
+import bgimage from "@/assets/imgs/main/title-h-third.png";
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({

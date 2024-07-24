@@ -14,10 +14,20 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="first-level-title my-2 bg-[url('assets/imgs/main/title-h.png')] h-8 bg-cover flex items-center ">
-        <!-- <div class="icon w-4 h-4 mr-2 bg-[#76c8fa]"></div> -->
-        <h2 class="title text-white 4k:ml-12 8k:ml-20 font-bold text-md font-[PangMenZhengDao]">{{ title }}</h2>
+    <div class="first-level-title my-2 bg-[url('assets/imgs/main/title-h.png')] h-8 bg-container">
+
+        <div class="flex items-center justify-between">
+            <h2 class="title text-white 4k:ml-8 8k:ml-14 font-bold text-xl font-[PangMenZhengDao]">{{ title }}</h2>
+            <div class="slot-container">
+                <slot name="title-slot"></slot>
+            </div>
+        </div>
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.bg-container {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+</style>

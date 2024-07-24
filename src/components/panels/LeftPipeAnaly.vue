@@ -70,12 +70,33 @@ const pipeChartdata = ref([
     { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
     { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
 ])
-
+const totleSize = ref([
+    {
+        name: '管线总长',
+        value: 351.1,
+        unit: 'km',
+    },
+    {
+        name: '管线总点数',
+        value: 150,
+        unit: '个',
+    },
+])
 </script>
 
 <template>
     <div class="pipe-analy">
-        <FristLevelTitle title="官网分析"></FristLevelTitle>
+        <FristLevelTitle title="官网分析">
+            <template v-slot:title-slot>
+                <div class="flex justify-between items-center">
+                    <div v-for="t in totleSize" :key="t.name" class="flex mx-2 items-center">
+                        <div class=" font-bold mr-2">{{ t.name }}</div>
+                        <div class=" font-bold mr-2 text-[#cbb543]">{{ t.value }}</div>
+                        <div class="">{{ t.unit }}</div>
+                    </div>
+                </div>
+            </template>
+        </FristLevelTitle>
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
         <!-- 第一部分 -->
         <div>
