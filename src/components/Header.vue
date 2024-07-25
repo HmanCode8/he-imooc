@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, toRef, onMounted, onUnmounted } from 'vue';
 
 const emits = defineEmits(['onChageSizeType']);
@@ -11,7 +11,7 @@ const props = defineProps({
 const sizeType = toRef(props.sizeType);
 
 const nowDate = ref(new Date().toLocaleTimeString());
-const timeId = ref<any>(null);
+const timeId = ref(null);
 
 // 计算星期
 const week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
@@ -53,7 +53,8 @@ onUnmounted(() => {
             <span class="mx-3">|</span>
             <span class="font-bold font-[Electronic]"> 盐城市</span>
         </div>
-        <h2 class="title absolute text-2xl left-1/2 translate-x-[-50%] font-[huipu] text-gradient" @click="onChage">
+        <h2 class="title absolute text-2xl left-1/2 translate-x-[-50%] font-[pengmenzhengdao] text-gradient"
+            @click="onChage">
             盐城市生命线综合监管平台
         </h2>
         <!-- 天气-->

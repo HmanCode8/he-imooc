@@ -4,7 +4,7 @@ import { defineProps, onMounted, ref } from 'vue'
 const tableBody = ref(null)
 
 onMounted(() => {
-    console.log(tableBody.value, 'tableBody')
+    // console.log(tableBody.value, 'tableBody')
 })
 defineProps({
     columns: {

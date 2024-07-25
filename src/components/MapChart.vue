@@ -105,33 +105,23 @@
 import { computed, onMounted, ref, toRef, watch, inject } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
-import Overlay from 'ol/Overlay'
-import { toStringHDMS } from 'ol/coordinate'
 import { useGlobalStore } from "@/store";
 import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import _ from 'lodash'
 
-
 import MapLegend from "@/components/MapLegend.vue"
-// 引入盐城的GeoJSON数据
-// import yanchengGeoJson from '@/assets/MapData/yancheng.json'
-// import layerConfigUrl from '/config/layer.json?url'
 import ImageLayer from "ol/layer/Image";
 import TileLayer from "ol/layer/Tile";
 import { ImageWMS, WMTS } from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
-import { get as getProjection } from 'ol/proj';
 import { register } from "ol/proj/proj4";
-import Feature from "ol/Feature";
-import { GeoJSON, WKT } from "ol/format";
 
 const layers = ref([])
 const gsap = inject('gsap')
 const leyerRef = ref(null)
 const legendRef = ref(null)
-const geoJsonParser = new GeoJSON()
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = toRef(global.componentId)
@@ -362,7 +352,7 @@ const getLayerSource = (sourceName) => {
 
 const setDefaultLayers = (moduleName) => {
 	let defaultLayerGroup = ["base", moduleName];
-	map.value.getLayers().forEach(v => {
+	map.value && map.value.getLayers().forEach(v => {
 		if (!defaultLayerGroup.includes(v.get("layerGroup"))) {
 			map.value.removeLayer(v);
 		}
@@ -451,40 +441,19 @@ const addLayer = (layerValue) => {
 		layerParam["layer"] = layerValue["layer"];
 	}
 	const layer = createLayer(layerParam)
-	map.value.addLayer(layer);
-	if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
+	map.value && map.value.addLayer(layer);
+	if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length && map.value) {
 		const legendUrl = layer.getSource().getLegendUrl(map.value.getView().getResolution(), { "LAYER": layerValue["legendLayer"] });
 		if (legendUrl) {
-			fetch(legendUrl);
+			// fetch(legendUrl);
 		}
 	}
 }
 
-const initCesiumMap = async () => {
-	Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmMwNmM1My03NzI4LTQ0NDUtOTBiYy1hM2I2ZmUxZDNmOWUiLCJpZCI6MjI4NzQzLCJpYXQiOjE3MjExMzU1OTZ9.bZrwv5u7g418lGuDhTuRqkrWJDHAFWGGd1TiTbsM9dU';
-
-	cesiumViewer.value = new Cesium.Viewer(target.value, {
-		terrainProvider: await Cesium.createWorldTerrainAsync(),
-	});
-
-	cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
-};
-
 
 onMounted(() => {
-	initOpenLayersMap()
+	// initOpenLayersMap()
 })
-
-const toggleMap = () => {
-	if (isCesiumMap.value) {
-		cesiumViewer.value.destroy();
-		initOpenLayersMap();
-	} else {
-		map.value.setTarget(null);
-		initCesiumMap();
-	}
-	isCesiumMap.value = !isCesiumMap.value;
-};
 </script>
 
 <style lang="scss" scoped>

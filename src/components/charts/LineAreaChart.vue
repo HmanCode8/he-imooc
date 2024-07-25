@@ -41,6 +41,15 @@ const handleResize = () => {
 
 const renderChart = (fontSize = 12) => {
     const option = {
+        title: {
+            right: '5%',
+            top: '10%',
+            text: '问题数：个',
+            textStyle: {
+                color: 'rgba(80,227,194,0.6)',
+                fontSize
+            }
+        },
         xAxis: [
             {
                 type: 'category',
@@ -93,13 +102,13 @@ const renderChart = (fontSize = 12) => {
                 },
             },
         ],
-        legend: {
-            show: false,
-        },
+        // legend: {
+        //     show: true,
+        // },
         grid: {
             left: '5%',
             right: '5%',
-            top: '10%',
+            top: '15%',
             bottom: '10%',
             containLabel: true,
         },
