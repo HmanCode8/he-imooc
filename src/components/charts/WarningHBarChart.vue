@@ -27,7 +27,6 @@ onMounted(() => {
 });
 
 const handleResize = size => {
-  console.log("resize", size);
   mChart.resize();
 };
 
@@ -73,8 +72,7 @@ const renderChart = () => {
             align: "right",
             padding: [0, 10, 0, 0]
           },
-          formatter: function(value) {
-            console.log(value);
+          formatter: function (value) {
             return `{warnValue|}{value|${value}}`;
           },
           rich: {
@@ -106,10 +104,10 @@ const renderChart = () => {
             color: "white",
             fontSize: 4,
             verticalAlign: "middle",
-            padding: [0, -60, 0,0],
+            padding: [0, -60, 0, 0],
             align: "right"
           },
-          formatter: function(value, index) {
+          formatter: function (value, index) {
             return `{value|${value}%}`;
           },
           rich: {

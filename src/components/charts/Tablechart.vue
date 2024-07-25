@@ -1,6 +1,11 @@
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, onMounted, ref } from 'vue'
 
+const tableBody = ref(null)
+
+onMounted(() => {
+    console.log(tableBody.value, 'tableBody')
+})
 defineProps({
     columns: {
         type: Array,
@@ -28,14 +33,14 @@ defineProps({
 </script>
 
 <template>
-    <div class="table-container w-full">
+    <div class="table-container w-full ">
         <table>
             <thead>
                 <tr>
-                    <th v-for="col in columns" :key="col.key">{{ col.title }}</th>
+                    <th style="background-color: aquamarine;" v-for="col in columns" :key="col.key">{{ col.title }}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody ref="tableBody">
                 <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
                     <td v-for="col in columns" :key="col.key">{{ row[col.key] }}</td>
                 </tr>

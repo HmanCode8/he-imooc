@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 const props = defineProps({
     title: {
         type: String,
@@ -15,7 +15,7 @@ const props = defineProps({
 
 <template>
     <!-- 有插槽传tabs -->
-    <div class="my-2 px-2 bg-[url('assets/imgs/main//title-h-third.png')] h-6 bg-container ">
+    <div class="my-2 px-2 bg-[url('assets/imgs/main//title-h-third.png')] h-6  bg-size">
         <div class="flex items-center justify-between">
             <div class="title flex items-center">
                 {{ title }}

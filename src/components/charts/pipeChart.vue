@@ -19,7 +19,6 @@ onMounted(() => {
 })
 
 const handleResize = (size) => {
-    console.log('resize', size)
     mChart.resize()
 }
 

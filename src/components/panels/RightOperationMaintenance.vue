@@ -16,7 +16,6 @@ import { useGlobalStore } from "@/store";
 const global = useGlobalStore();
 
 const changeStore = () => {
-  console.log(global.navActive);
   global.setNavActive("/dashboard");
 };
 const arr1 = [
@@ -137,7 +136,7 @@ const Pie3DChartData = ref([
         </div>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
       </div>
-      
+
       <div class="8k:w-1/2 4k:w-full h-80 flex">
         <div class="longstrip h-40 flex flex-col items-center pt-2">
           <div class="star w-1 h-2">

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import WarningAreaChart from "../charts/WarningAreaChart.vue";
@@ -296,7 +296,8 @@ const onTabChange = k => {
   background: linear-gradient(to top, #d5dcfe, #82a8ee, #f3f3ff, #f3f3ff);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* 将文字颜色设置为透明，使背景渐变显示出来 */
+  color: transparent;
+  /* 将文字颜色设置为透明，使背景渐变显示出来 */
 }
 
 .warningtotal {
@@ -363,5 +364,4 @@ const onTabChange = k => {
 //   background: linear-gradient(-18deg, #1890ff, #1ee7e7);
 //   border-radius: 2px;
 //   border: 1px solid #02b6ea;
-// }
-</style>
+// }</style>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import Tab from '../common/Tab.vue'

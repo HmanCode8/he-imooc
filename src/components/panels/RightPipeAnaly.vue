@@ -1,10 +1,10 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import Tab from '../common/Tab.vue'
-import LineChart from '../charts/LineChart.vue';
+import TrapezoidalBarChart from '../charts/TrapezoidalBarChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
@@ -62,30 +62,38 @@ const onTabChange = (value) => {
             <div class="8k:w-1/2 4k:w-full h-60">
                 <ThirdLevelTitle title="总数">
                     <template v-slot:title-slot>
-                        <Tab :data="titletab1" @onTabOnchage="onTabChange" />
+                        <div class="flex justify-between items-center">
+                            <div>12</div>
+                            <Tab :data="titletb1" @onTabOnchage="onTabChange" />
+
+                        </div>
                     </template>
                 </ThirdLevelTitle>
-                <LineChart />
+                <TrapezoidalBarChart />
             </div>
             <div class="8k:w-1/2 4k:w-full h-60">
                 <ThirdLevelTitle title="总数">
                     <template v-slot:title-slot>
-                        <Tab :data="titletabs2" @onTabOnchage="onTabChange" />
+                        <div class="flex justify-between items-center">
+                            <div>12</div>
+                            <Tab :data="titletb2" @onTabOnchage="onTabChange" />
+
+                        </div>
                     </template>
                 </ThirdLevelTitle>
-                <LineChart />
+                <TrapezoidalBarChart />
             </div>
             <div>
 
             </div>
         </div>
 
-        <div class="w-full flex flex-wrap justify-between">
+        <div class="w-full mt-6 flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full">
                 <FristLevelTitle title="道路分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in roadAnaly" :key="index"
-                        class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
+                        class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
                             <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
@@ -131,20 +139,10 @@ const onTabChange = (value) => {
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="养护分析" />
-                <div class="chart-container w-full h-96">
-                    <Tablechart />
-
-                </div>
+                <Tablechart class="h-96" />
             </div>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss">
-.analy-item {
-    background-image: url('@/assets/imgs/infrastructure/road-item-bg.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -39,6 +39,4 @@ function useRootFontSize() {
   return rootFontSize;
 }
 
-export default async function setup() {
-  return useRootFontSize;
-}
+export default useRootFontSize;

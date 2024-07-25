@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
@@ -140,7 +140,7 @@ const totleSize = ref([
 
             <!-- 类型分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="官网分析"></SecondLevelTitle>
+                <SecondLevelTitle title="管材分析"></SecondLevelTitle>
 
                 <div class="w-full flex">
                     <div class="chart-container w-full h-60">
@@ -151,7 +151,7 @@ const totleSize = ref([
 
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="官网分析"></SecondLevelTitle>
+                <SecondLevelTitle title="管径分析"></SecondLevelTitle>
                 <PipeIconChart class="w-full h-60" />
             </div>
         </div>

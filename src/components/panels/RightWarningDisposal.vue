@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
@@ -239,6 +239,7 @@ const barChartData = ref({
 .item:nth-child(odd) {
   background-color: #142d5d;
 }
+
 .item:nth-child(even) {
   background-color: #012451;
 }
