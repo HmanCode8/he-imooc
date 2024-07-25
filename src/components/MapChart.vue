@@ -621,18 +621,6 @@ const initCesiumMap = async () => {
           "http://127.0.0.1:8089/data/gx/"+element+"/"+item+"/tileset.json"
         );
         viewer.scene.primitives.add(tileset);
-        viewer.camera.setView({
-          destination: Cesium.Cartesian3.fromDegrees(
-            120.17147298986772,
-            33.301942305971394,
-            137.11303375009118
-          ),
-          orientation: {
-            heading: 0.345650960729154,
-            pitch: -0.28325898231466784,
-            roll: 6.283183439173194
-          }
-        });
       }
     }
   } catch (error) {
