@@ -7,6 +7,7 @@ import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
 import WarningHBarChart from "../charts/WarningHBarChart.vue";
 import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
 import WarningBarRowChart from "../charts/WarningBarRowChart.vue";
+import WarningTableChart from "../charts/WarningTableChart.vue";
 
 const list = ref([
   {
@@ -147,7 +148,8 @@ const barChartData = ref({
     <SecondLevelTitle title="平均效率"></SecondLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
-        <div class="w-full h-full">
+      <WarningTableChart/>
+        <!-- <div class="w-full h-full">
           <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center w-full">
             <div class></div>
             <div class>区域</div>
@@ -186,7 +188,7 @@ const barChartData = ref({
               <div class>24%</div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">

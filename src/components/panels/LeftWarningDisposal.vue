@@ -3,6 +3,7 @@ import { ref, defineProps } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import WarningAreaChart from "../charts/WarningAreaChart.vue";
+import WarningTableChart from "../charts/WarningTableChart.vue";
 
 const list = ref([
   {
@@ -227,8 +228,9 @@ const onTabChange = k => {
 
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="预警事件空间特征"></SecondLevelTitle>
-        <div class="w-full h-full">
-          <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center mb-2 w-full">
+        <WarningTableChart />
+        <!-- <div class="w-full h-full">
+          <div class="itemth grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center mb-2 w-full">
             <div class></div>
             <div class>区域</div>
             <div class>数量/个</div>
@@ -262,19 +264,25 @@ const onTabChange = k => {
               <div class>24%</div>
             </div>
             <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/TOP4.png')] bg-cover h-4 w-12">5</div>
+              <div class="bg-[url('assets/imgs/warning/TOP4.png')] bg-cover h-4 w-12">5</div>
               <div class>盐城市盐都区</div>
               <div class>18</div>
               <div class>24%</div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.itemth{
+  grid-template-columns: 1fr 3fr 3fr 3fr;
+}
+.item{
+  grid-template-columns: 1fr 3fr 3fr 3fr;
+}
 .item:nth-child(odd) {
   background-color: #053b66;
 }
