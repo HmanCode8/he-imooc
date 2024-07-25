@@ -241,10 +241,4 @@ const Pie3DChartData = ref([
     background-image: url('@/assets/imgs/operation/inspection-success-#{$i%2+1}.png');
 }
 }
-
-@for $i from 0 through 7 {
-  .inspection_success_#{$i} {
-    background-image: url('@/assets/imgs/inspection-success-#{$i%2+1}.png');
-  }
-}
 </style>
