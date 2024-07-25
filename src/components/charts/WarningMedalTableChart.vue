@@ -13,29 +13,29 @@ const props = defineProps({
   tableData: {
     type: Array,
     default: () => [
-      { id: 1, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 2, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 3, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 4, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 5, zone: "盐城市盐都区", num: 30, percent: "24%" }
+      { id: 1, name: "盐城市液化气...", react: 1.83, handle: 6 },
+      { id: 2, name: "盐城市液化气...", react: 1.83, handle: 6 },
+      { id: 3, name: "盐城市液化气...", react: 1.83, handle: 6 },
+      { id: 4, name: "盐城市液化气...", react: 1.83, handle: 6 },
+      { id: 5, name: "盐城市液化气...", react: 1.83, handle: 6 }
     ]
   }
 });
 
 const ths = ref([
   { title: "", key: 0, prop: "id" },
-  { title: "区域", key: 1, prop: "zone" },
-  { title: "数量/个", key: 2, prop: "num" },
-  { title: "占比/%", key: 3, prop: "percent" }
+  { title: "单位", key: 1, prop: "name" },
+  { title: "响应时长(h)", key: 2, prop: "react" },
+  { title: "处置时长(h)", key: 3, prop: "handle" }
 ]);
 </script>
 
 <template>
-  <div class="table-container w-full">
+  <div class="table-container w-full m-2">
     <table>
       <thead>
         <tr>
-          <th v-for="(col) in ths" :key="col.id">{{ col.title }}</th>
+          <th v-for="(col) in ths" :key="col.id" class="h-9">{{ col.title }}</th>
         </tr>
       </thead>
       <tbody>
@@ -43,8 +43,8 @@ const ths = ref([
           <td v-for="(col,colIndex) in ths" :key="col.key">
             <div
               v-if="colIndex===0"
-              :class="`warningtype_${rowIndex+1} bg-cover bg-center h-3 w-15`"
-            >{{ row[col.prop] }}</div>
+              :class="`warningtype_${rowIndex+1} bg-cover h-9 w-7 ml-10`"
+            ></div>
             <div v-else class="">{{ row[col.prop] }}</div>
           </td>
         </tr>
@@ -65,7 +65,8 @@ table {
 
 th,
 td {
-  padding: 8px 12px;
+  // padding: 8px 12px;
+  padding: 8;
   text-align: center;
 }
 
@@ -84,7 +85,7 @@ tbody tr:hover {
 
 @for $i from 0 through 5 {
   .warningtype_#{$i} {
-    background-image: url("@/assets/imgs/warning/TOP#{$i}.png");
+    background-image: url("@/assets/imgs/warning/medal#{$i}.png");
   }
 }
 </style>
