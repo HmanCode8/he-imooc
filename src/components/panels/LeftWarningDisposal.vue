@@ -88,36 +88,25 @@ const onTabChange = k => {
     <div class="w-full h-60 flex justify-around">
       <!-- 左边 -->
       <div class="flex flex-wrap justify-end mt-10">
-        <div        
-          v-for="(item, index) in warningDataLeft"
-          :key="index"
-        >
-          <div
-           class="test w-40 h-12 flex flex-col"    
-          >
+        <div v-for="(item, index) in warningDataLeft" :key="index">
+          <div class="test w-40 h-12 flex flex-col">
             <div class="ml-6">{{ item.name }}</div>
             <div class="ml-4"><span class="warningsourcestyle text-2xl">{{ item.value }}</span>个</div>
-          </div>     
+          </div>
         </div>
       </div>
       <!-- 中间 -->
       <div
-        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center"
-      >
+        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center">
         <div class="bg-[url('assets/imgs/warning/alarm.png')] bg-cover bg-center w-12 h-12"></div>
       </div>
       <!-- 右边 -->
       <div class="flex flex-wrap mt-10">
-        <div          
-          v-for="(item, index) in warningDataRight"
-          :key="index"
-        >
-          <div
-           class="test2 w-40 h-12 flex flex-col"    
-          >
+        <div v-for="(item, index) in warningDataRight" :key="index">
+          <div class="test2 w-40 h-12 flex flex-col">
             <div class="ml-24">{{ item.name }}</div>
             <div class="ml-20"><span class="warningsourcestyle text-2xl">{{ item.value }}</span>个</div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
@@ -127,8 +116,7 @@ const onTabChange = k => {
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
         <div class="w-full flex items-center justify-center">
           <div
-            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around"
-          >
+            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around">
             <div class>
               <span class="warninglevel text-[28px] font-extrabold">157</span>
               <span>个</span>
@@ -138,8 +126,7 @@ const onTabChange = k => {
 
           <div class="ml-10">
             <div
-              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around"
-            >
+              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around">
               一级预警
               <div>
                 <span class="text-[14px] font-bold ml-8">37</span>个
@@ -149,8 +136,7 @@ const onTabChange = k => {
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around"
-            >
+              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around">
               二级预警
               <div>
                 <span class="text-[14px] font-bold">120</span>个
@@ -160,8 +146,7 @@ const onTabChange = k => {
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around"
-            >
+              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around">
               三级预警
               <div>
                 <span class="text-[14px] font-bold">120</span>个
@@ -182,9 +167,7 @@ const onTabChange = k => {
         </SecondLevelTitle>
         <div class="w-full h-full flex">
           <div class="w-full h-full">
-            <div
-              class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center"
-            >
+            <div class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center">
               <span class="warninglevel text-2xl font-bold">总事件数</span>
             </div>
             <div class="flex flex-col justify-center items-center">
@@ -207,19 +190,16 @@ const onTabChange = k => {
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap justify-around">
-          <div
-            class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
-            v-for="(item, index) in warningType"
-            :key="index"
-          >
-            <div :class="`warningtype_${index+1} bg-cover mt-2 w-8 h-8`"></div>
+          <div class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
+            v-for="(item, index) in warningType" :key="index">
+            <div :class="`warningtype_${index + 1} bg-cover mt-2 w-8 h-8`"></div>
             <div class="mt-3">
               <div class="name">{{ item.name }}</div>
               <div class="pipe-point">
                 <span class="text-[18px] font-bold">{{ item.value }}</span>个
               </div>
               <div class="pipe-point">
-                <span class="text-[18px] font-bold">{{ item.percent}}</span>%
+                <span class="text-[18px] font-bold">{{ item.percent }}</span>%
               </div>
             </div>
           </div>
@@ -277,12 +257,14 @@ const onTabChange = k => {
 </template>
 
 <style scoped lang="scss">
-.itemth{
+.itemth {
   grid-template-columns: 1fr 3fr 3fr 3fr;
 }
-.item{
+
+.item {
   grid-template-columns: 1fr 3fr 3fr 3fr;
 }
+
 .item:nth-child(odd) {
   background-color: #053b66;
 }
@@ -307,7 +289,7 @@ const onTabChange = k => {
   color: transparent;
 }
 
-.warningsourcestyle{
+.warningsourcestyle {
   background: linear-gradient(0deg, #1890FF 0%, #1EE7E7 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -315,53 +297,25 @@ const onTabChange = k => {
   font-weight: 800;
 }
 
-@for $i from 0 through 5 {
+@for $i from 1 through 5 {
   .warningtype_#{$i} {
     background-image: url("@/assets/imgs/warning/ic_#{$i}.png");
   }
 }
 
-.test{
-  background-image:  url('@/assets/imgs/warning/yj-source-type-left.png'),url('@/assets/imgs/warning/warningsource1.png');
-    // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
-    background-position: 10% -10%;
-    background-size: 40%, 80%;
-    background-repeat: no-repeat, no-repeat;
+.test {
+  background-image: url('@/assets/imgs/warning/yj-source-type-left.png'), url('@/assets/imgs/warning/warningsource1.png');
+  // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
+  background-position: 10% -10%;
+  background-size: 40%, 80%;
+  background-repeat: no-repeat, no-repeat;
 }
 
-.test2{
-  background-image:  url('@/assets/imgs/warning/yj-source-type-right.png'),url('@/assets/imgs/warning/warningsource2.png');
-    // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
-    background-position: 90% 10%;
-    background-size: 40%, 80%;
-    background-repeat: no-repeat, no-repeat;
+.test2 {
+  background-image: url('@/assets/imgs/warning/yj-source-type-right.png'), url('@/assets/imgs/warning/warningsource2.png');
+  // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
+  background-position: 90% 10%;
+  background-size: 40%, 80%;
+  background-repeat: no-repeat, no-repeat;
 }
-
-// .haha{
-//   position: relative;
-//     width: 200px;
-//     height: 100px;
-//     // background-color: #fff;
-
-//     overflow: hidden;
-
-// }
-
-// .haha::before {
-//       content: '';
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     // background-color: #000;
-//     border: 10px solid #ff0000;
-//     transform: skewY(-120deg);
-//     transform-origin: left;
-//     }
-
-// .textBg {
-//   background: linear-gradient(-18deg, #1890ff, #1ee7e7);
-//   border-radius: 2px;
-//   border: 1px solid #02b6ea;
-// }</style>
+</style>

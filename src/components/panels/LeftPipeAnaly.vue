@@ -7,45 +7,12 @@ import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import BarRowChart from '../charts/BarRowChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
+import { basicFacilitiesData } from '@/assets/chartData/data'
 
-const pipeActive = ref('燃气管线')
-const pipes = ref([
-    {
-        name: '燃气管线',
-        pipeLine: 341.1,
-        pipePoint: 100,
-    },
-    {
-        name: '供水管线',
-        pipeLine: 123.4,
-        pipePoint: 50,
-    },
+const { facilities } = basicFacilitiesData
 
-    {
-        name: '排水管线',
-        pipeLine: 234.5,
-        pipePoint: 70,
-    },
-
-
-    {
-        name: '电力管线',
-        pipeLine: 123.4,
-        pipePoint: 50,
-    },
-
-    {
-        name: '通信管线',
-        pipeLine: 234.5,
-        pipePoint: 70,
-    },
-    {
-        name: '热力管线',
-        pipeLine: 123.4,
-        pipePoint: 50,
-    },
-
-])
+const pipeActive = ref(facilities[0].name)
+const facilitieData = ref(facilities)
 const Pie3DChartData = ref([
     { name: "燃气", value: 60, color: "#FF6384" },
     { name: "供水", value: 23, color: "#FFCE56" },
@@ -101,17 +68,19 @@ const totleSize = ref([
         <!-- 第一部分 -->
         <div>
             <div class="pipe-list flex justify-between px-1 flex-wrap">
-                <div class="pipe-item 4k:w-full 8k:w-[32%] hover:cursor-pointer  flex items-center bg-[url('assets/imgs/infrastructure/pipe-remak-item.png')] bg-cover"
-                    v-for="(item, index) in pipes" @click="changeActive(item.name)" :key="index">
-                    <div :class="`pipe-icon-${index + 1}  w-28 h-24 bg-cover`"></div>
+                <div :class="`${pipeActive === item.name ? 'filter-drop-shadow' : ''} 4k:w-full 8k:w-[32%] my-4 hover:cursor-pointer  flex items-center bg-[url('assets/imgs/infrastructure/pipe-remak-item.png')] bg-size`"
+                    v-for="(item, index) in facilitieData" @click="changeActive(item.name)" :key="index">
+                    <div :class="`pipe-icon-${index + 1}  w-24 h-24 bg-cover`"></div>
                     <div class="">
-                        <div :class="`${pipeActive === item.name ? 'text-[#FFCC00]' : ''} font-bold px-2`">
+                        <div
+                            :class="`${pipeActive === item.name ? 'text-[#FFCC00]' : 'gradient-text'} font-[pengmenzhengdao]  text-2xl px-2`">
                             {{ item.name }}</div>
-                        <!-- <div class="line">———————</div> -->
                         <div class="text-[#89C3DF] mt-6 flex">
-                            <div class="pipe-line px-2">管线(km)：<span class="text-white">{{ item.pipeLine
-                                    }}</span> 公里</div>
-                            <div class="pipe-point">管点(个)： <span class="text-white">{{ item.pipePoint }}</span>个</div>
+                            <div class="pipe-line px-2">{{ item.children[0].name }}(km)：<span class="text-white">{{
+                                item.children[0].value || '--'
+                                    }}</span></div>
+                            <div class="pipe-point">{{ item.children[1].name }}(个)： <span class="text-white">{{
+                                item.children[1].value || '--' }}</span></div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +92,7 @@ const totleSize = ref([
         <div class="flex w-full flex-wrap justify-between">
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <ThirdLevelTitle class="w-full" title="行政区划分析"></ThirdLevelTitle>
+                <ThirdLevelTitle class="w-full" title="地下管线数据汇聚率"></ThirdLevelTitle>
                 <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
 
             </div>
@@ -163,5 +132,15 @@ const totleSize = ref([
     .pipe-icon-#{$i} {
         background-image: url('@/assets/imgs/infrastructure/pipe-bg-#{$i}.png');
     }
+}
+
+.filter-drop-shadow {
+    filter: drop-shadow(2px 4px 6px #1add1a);
+}
+
+.gradient-text {
+    background: linear-gradient(to bottom, #c8f1fd, #68d1fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>
