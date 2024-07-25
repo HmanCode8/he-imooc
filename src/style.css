@@ -36,6 +36,12 @@ body,#app {
   font-family: 'zhener';
   src: url('./assets/fonts/zhener.ttf') format('truetype');
 }
+/* 阿里巴巴惠普字体 */
+@font-face {
+  font-family: 'huipu';
+  src: url('./assets/fonts/Alibaba_PuHuiTi_Bold.ttf') format('truetype');
+}
+
 
 .text-gradient {
   /* 背景渐变 */
@@ -53,7 +59,7 @@ body,#app {
 
 /* 修改全局滚动条样式 */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0;
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
