@@ -3,33 +3,29 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRef, watch } from 'vue';
 import * as echarts from 'echarts';
 import useRootFontSize from '@/hooks/useRootFontSize';
-
+import _ from 'lodash';
 
 const props = defineProps({
-    legend: {
+    data: {
         type: Array,
-        default: () => [
-            { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
-            { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
-            { name: '大丰区', percentage: 24, distance: '15km', color: '#36A2EB' },
-            { name: '建湖县', percentage: 24, distance: '25km', color: '#FFA07A' },
-            { name: '阜宁县', percentage: 24, distance: '25km', color: '#4BC0C0' },
-            { name: '滨海县', percentage: 24, distance: '25km', color: '#FF6384' },
-            { name: '响水县', percentage: 24, distance: '25km', color: '#FFCE56' },
-            { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
-            { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
-        ],
+        default: () => [],
     },
 });
 
 const target = ref(null);
+const chartData = toRef(props, 'data')
+const chartFontSize = toRef(useRootFontSize(), 'value')
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
+
+watch(chartData, () => {
+    renderChart();
+})
 
 const handleResize = () => {
     const rootFontSize = useRootFontSize();
@@ -39,13 +35,10 @@ const handleResize = () => {
     }
 };
 
-
-let xLabel = ["2018", "2019", "2020", "2021", "2022"];
-let dataValue = [20, 30, 20, 25, 35];
-
-const renderChart = (fontSize) => {
+const renderChart = (fontSize = chartFontSize) => {
+    const xLabel = _.map(props.data, item => item.name);
+    const dataValue = _.map(props.data, item => item.value);
     const option = {
-        // backgroundColor: '#f00',
         tooltip: {
             show: true,
             trigger: "axis", //axis , item
@@ -57,12 +50,20 @@ const renderChart = (fontSize) => {
                 color: "#BCE9FC",
                 fontSize,
                 align: "left"
+            },
+            formatter: function (params) {
+                let result = '';
+                params.forEach(param => {
+                    result += `${param.seriesName}: ${param.value}%<br/>`;
+                });
+                return result;
             }
         },
+
         grid: {
             left: "7%",
             right: "7%",
-            top: "25%",
+            top: "10%",
             bottom: "2%",
             containLabel: true
         },
@@ -99,7 +100,7 @@ const renderChart = (fontSize) => {
         ],
         yAxis: [
             {
-                name: "(万元)",
+                // name: "(万元)",
                 nameTextStyle: {
                     color: "white",
                     fontSize,
@@ -125,6 +126,9 @@ const renderChart = (fontSize) => {
                     textStyle: {
                         color: "#fff",
                         fontSize
+                    },
+                    formatter: function (value) {
+                        return value + '%';
                     }
                 },
                 axisTick: {
@@ -134,7 +138,7 @@ const renderChart = (fontSize) => {
         ],
         series: [
             {
-                name: '年资源数',
+                name: '区县设备覆盖率',
                 type: "pictorialBar",
                 barWidth: "25%",
                 label: {
@@ -142,7 +146,7 @@ const renderChart = (fontSize) => {
                         show: true,
                         position: "top",
                         textStyle: {
-                            color: "#d1ae36",
+                            color: "#fff",
                             fontSize
                         }
                     }
