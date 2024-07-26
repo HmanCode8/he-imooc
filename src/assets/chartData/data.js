@@ -1076,7 +1076,7 @@ const projectManageData = {
   ]
 }
 
-export { overviewData, basicFacilitiesData, projectManageData };
+
 //运行监测
 const runningMonitoringData = {
   name: "运行监测",
@@ -1292,4 +1292,4 @@ const runningMonitoringData = {
   ],
 };
 
-export { overviewData, basicFacilitiesData, runningMonitoringData };
+export { overviewData, basicFacilitiesData, runningMonitoringData,projectManageData };
