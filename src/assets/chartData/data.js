@@ -557,3 +557,45 @@ const projectManageData = {
 }
 
 export { overviewData, basicFacilitiesData, projectManageData };
+//运行监测
+const runningMonitoringData = {
+  name: "运行监测",
+  monitoring: [
+    {
+      name: "燃气",
+      children: [
+        {
+          name: "燃气泄漏监测",
+          value: null,
+        },
+        {
+          name: "燃气压力监测",
+          value: null,
+        },
+        {
+          name: "燃气流量监测",
+          value: null,
+        },
+      ],
+    },
+    {
+      name: "供水",
+      children: [
+        {
+          name: "供水泄漏监测",
+          value: null,
+        },
+        {
+          name: "供水压力监测",
+          value: null,
+        },
+        {
+          name: "供水流量监测",
+          value: null,
+        },
+      ],
+    },
+  ],
+};
+
+export { overviewData, basicFacilitiesData, runningMonitoringData };
