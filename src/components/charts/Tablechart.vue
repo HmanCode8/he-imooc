@@ -1,48 +1,40 @@
 <script setup>
-import { defineProps, onMounted, ref } from 'vue'
+import { toRef, ref, watchEffect } from 'vue'
 
 const tableBody = ref(null)
 
-onMounted(() => {
-    // console.log(tableBody.value, 'tableBody')
-})
-defineProps({
+const props = defineProps({
     columns: {
         type: Array,
-        default: () => [
-            { title: 'Name', key: 'name' },
-            { title: 'Age', key: 'age' },
-            { title: 'Address', key: 'address' }
-        ]
+        default: () => []
     },
     tableData: {
         type: Array,
-        default: () => [
-            { name: 'John Doe', age: 30, address: '123 Main St' },
-            { name: 'Jane Smith', age: 25, address: '456 Elm St' },
-            { name: 'Sam Green', age: 35, address: '789 Oak St' },
-            { name: 'John Doe', age: 30, address: '123 Main St' },
-            { name: 'Jane Smith', age: 25, address: '456 Elm St' },
-            { name: 'Sam Green', age: 35, address: '789 Oak St' },
-            { name: 'John Doe', age: 30, address: '123 Main St' },
-            { name: 'Jane Smith', age: 25, address: '456 Elm St' },
-            { name: 'Sam Green', age: 35, address: '789 Oak St' }
-        ]
+        default: () => []
     }
 })
+
+const columnData = toRef(props, 'columns')
+const tableDatas = toRef(props, 'tableData')
+
+watchEffect(() => {
+    columnData.value = props.columns
+    tableDatas.value = props.tableData
+})
+
 </script>
 
 <template>
-    <div class="table-container w-full ">
+    <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th style="background-color: aquamarine;" v-for="col in columns" :key="col.key">{{ col.title }}</th>
+                    <th v-for="col in columnData" :key="col.key">{{ col.title }}</th>
                 </tr>
             </thead>
             <tbody ref="tableBody">
-                <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
-                    <td v-for="col in columns" :key="col.key">{{ row[col.key] }}</td>
+                <tr v-for="(row, rowIndex) in tableDatas" :key="rowIndex">
+                    <td v-for="col in columnData" :key="col.key">{{ row[col.key] }}</td>
                 </tr>
             </tbody>
         </table>
@@ -51,7 +43,10 @@ defineProps({
 
 <style scoped>
 .table-container {
-    overflow-x: auto;
+    /* max-height: 400px; */
+    /* Set a max height for the table container */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
 }
 
 table {
@@ -61,13 +56,19 @@ table {
 
 th,
 td {
-    padding: 8px 12px;
-    text-align: left;
+    /* padding: 1px; */
+    text-align: center;
 }
 
 th {
     background-color: #1c3c6f;
-    color: #fff;
+    color: #A9D4E6;
+    position: sticky;
+    /* Make the header sticky */
+    top: -6px;
+    /* Stick to the top */
+    z-index: 1;
+    /* Ensure it is above other content */
 }
 
 tbody tr:nth-child(even) {

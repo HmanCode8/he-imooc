@@ -366,7 +366,7 @@ const getLayerSource = sourceName => {
 
 const setDefaultLayers = moduleName => {
   let defaultLayerGroup = ["base", moduleName];
-  map.value.getLayers().forEach(v => {
+  map.value && map.value.getLayers().forEach(v => {
     if (!defaultLayerGroup.includes(v.get("layerGroup"))) {
       map.value.removeLayer(v);
     }
@@ -520,7 +520,7 @@ const addLayer = layerValue => {
     layerParam["layer"] = layerValue["layer"];
   }
   const layer = createLayer(layerParam);
-  map.value.addLayer(layer);
+  map.value && map.value.addLayer(layer);
   if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
     const legendUrl = layer
       .getSource()
@@ -594,7 +594,7 @@ const initCesiumMap = async () => {
 };
 
 onMounted(() => {
-  initOpenLayersMap();
+  // initOpenLayersMap();
 });
 
 const toggleMap = () => {
