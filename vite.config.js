@@ -9,9 +9,11 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  assetsInclude: ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg"], // 根据需要添加其他静态资源类型
   plugins: [
     vue(),
     cesium(),
+
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
@@ -20,7 +22,24 @@ export default defineConfig({
     }),
   ],
   build: {
+    manualChunks(id) {
+      if (id.includes("node_modules")) {
+        return id.toString().split("node_modules/")[1].split("/")[0].toString();
+      }
+    },
     rollupOptions: {
+      output: {
+        entryFileNames: `js/[name].[hash].js`,
+        chunkFileNames: `js/[name].[hash].js`,
+        assetFileNames: ({ name }) => {
+          if (name.endsWith(".css")) {
+            return `css/[name].[hash].css`;
+          }
+          // 其他静态资源类型
+          return `assets/[name].[hash][extname]`;
+        },
+      },
+      treeshake: true,
       external: ["cesium"],
     },
   },

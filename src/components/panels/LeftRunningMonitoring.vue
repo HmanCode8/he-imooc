@@ -5,6 +5,8 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import _ from 'lodash'
 import ConeBarChart from '../charts/ConeBarChart.vue'
+import ProcessBar from '../charts/ProcessBar.vue'
+
 
 const data = ref([
     {
@@ -93,16 +95,30 @@ const runActive2 = ref(0)
 const onTabChange = (name) => {
     runActive1.value = name
 }
+const olds = ref([
+    {
+        name: '物联网设备',
+        value: 10
+    },
+    {
+        name: '在线设备',
+        value: 40
+    },
+    {
+
+        name: '在线率',
+        value: 30
+    }
+])
 </script>
 
 <template>
     <div class="pipe-analy">
         <FristLevelTitle title="设施概况"></FristLevelTitle>
         <SecondLevelTitle title="状态分析"></SecondLevelTitle>
-        <div class="flex justify-around">
-            <div class="flex items-center">物联网设备 <div class="icon w-8 h-2 bg-green-500"></div> <span>1854</span>台</div>
-            <div class="flex items-center">在线设备 <div class="icon w-8 h-2 bg-green-500"></div> <span>1234</span>台</div>
-            <div class="flex items-center">在线率 <div class="icon w-8 h-2 bg-green-500"></div> <span>621</span>%</div>
+        <div class="flex w-full justify-around">
+            <ProcessBar :data="olds" />
+
         </div>
 
         <div class="flex items-center my-4 justify-between">

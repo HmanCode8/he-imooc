@@ -2,37 +2,24 @@
   <div class="map relative">
     <div ref="target" class="w-full h-full"></div>
     <!-- 专题栏 -->
-    <div
-      class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10"
-    >
+    <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-cover flex justify-between px-10 mt-4"
-      >
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-cover flex justify-between px-10 mt-4">
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
-          v-for="tab in topTabs"
-          :key="tab.value"
-          @click="global.setMapCurrentTab(tab.value)"
-        >
+          v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
           <div class="font-[YouSheBiaoTiHei]">{{ tab.name }}</div>
-          <div
-            v-if="currentTopTab === tab.value"
-            class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4"
-          ></div>
+          <div v-if="currentTopTab === tab.value"
+            class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4"></div>
         </div>
       </div>
     </div>
     <!-- 导航栏 -->
     <!-- :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`" -->
-    <div
-      class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0 z-10"
-    >
+    <div class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0 z-10">
       <div
         :class="`flex flex-col font-bold items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
-        v-for="(tab, index) in bottomTabs"
-        :key="tab.value"
-        @click="currentBottomTab = tab.value"
-      >
+        v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
         <div :class="`blink-${index + 1} w-10 h-10 bg-cover`"></div>
         <div class="t-item-name">{{ tab.name }}</div>
       </div>
@@ -44,28 +31,17 @@
     <div class="layer-tabs w-40 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
-          <div
-            :class="`layer-item-${index + 1} w-1/2 h-[9%] relative hover:cursor-pointer`"
-            @click="onLayerOnchange(i.name)"
-            v-for="(i, index) in layers "
-            :key="i.name"
-          >
-            <div
-              v-if="currentLayerTab === i.name"
-              class="w-full h-full layer-active absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')]"
-            ></div>
+          <div :class="`layer-item-${index + 1} w-1/2 h-[9%] relative hover:cursor-pointer`"
+            @click="onLayerOnchange(i.name)" v-for="(i, index) in layers " :key="i.name">
+            <div v-if="currentLayerTab === i.name"
+              class="w-full h-full layer-active absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')]">
+            </div>
           </div>
         </div>
         <div class="h-[20%] flex flex-col justify-around items-center">
-          <div
-            class="tool-item hover:cursor-pointer"
-            v-for="(i, index) in iconList"
-            :key="i.name"
-            @click="iconctive = i.value"
-          >
-            <i
-              :class="`iconfont ${i.value} ${iconctive === i.value ? 'text-[#00BAFF]' : ''} font-bold text-xl`"
-            ></i>
+          <div class="tool-item hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name"
+            @click="iconctive = i.value">
+            <i :class="`iconfont ${i.value} ${iconctive === i.value ? 'text-[#00BAFF]' : ''} font-bold text-xl`"></i>
           </div>
 
           <!-- <div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-delete.png')]"></div> -->
@@ -77,13 +53,11 @@
         <div ref="leyerRef" class>
           <div v-for="sub in currentItem" :key="sub.name" class>
             <div
-              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 py-1 flex items-center h-6 bg-size font-bold"
-            >{{ sub.name }}</div>
+              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 py-1 flex items-center h-6 bg-size font-bold">
+              {{ sub.name }}</div>
             <div v-for="item in sub.children" :key="item.name" class="pl-2">
-              <div
-                :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
-                @click="updateLayer(item)"
-              >{{ item.name }}</div>
+              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
+                @click="updateLayer(item)">{{ item.name }}</div>
             </div>
           </div>
         </div>
@@ -111,31 +85,24 @@
 
     <!-- 右下角图例 -->
 
-    <div
-      ref="legendRef"
-      v-if="global.componentId === 'operation-maintenance'"
-      class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10"
-    >
+    <div ref="legendRef" v-if="global.componentId === 'operation-maintenance'"
+      class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
       <MapLegend @update:checked="legendOnchage" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, ref, toRef, watch, inject } from "vue";
-import "ol/ol.css";
-import { Map, View } from "ol";
-import Overlay from "ol/Overlay";
-import { toStringHDMS } from "ol/coordinate";
+import { computed, onMounted, ref, toRef, watch, inject } from 'vue'
+import 'ol/ol.css'
+import { Map, View } from 'ol'
 import { useGlobalStore } from "@/store";
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import _ from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
-// 引入盐城的GeoJSON数据
-// import yanchengGeoJson from '@/assets/MapData/yancheng.json'
-// import layerConfigUrl from '/config/layer.json?url'
+
 import ImageLayer from "ol/layer/Image";
 import TileLayer from "ol/layer/Tile";
 import { ImageWMS, WMTS } from "ol/source";
@@ -143,18 +110,15 @@ import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
 import { get as getProjection } from "ol/proj";
 import { register } from "ol/proj/proj4";
-import Feature from "ol/Feature";
-import { GeoJSON, WKT } from "ol/format";
 
-const layers = ref([]);
-const gsap = inject("gsap");
-const leyerRef = ref(null);
-const legendRef = ref(null);
-const geoJsonParser = new GeoJSON();
-const global = useGlobalStore();
-const target = ref(null);
-const currentTopTab = toRef(global.componentId);
-const currentBottomTab = ref("underground-pipeline");
+const layers = ref([])
+const gsap = inject('gsap')
+const leyerRef = ref(null)
+const legendRef = ref(null)
+const global = useGlobalStore()
+const target = ref(null)
+const currentTopTab = toRef(global.componentId)
+const currentBottomTab = ref('underground-pipeline')
 const currentLayerTab = ref(null);
 const loadedLayerGroup = ref([]);
 
@@ -474,7 +438,7 @@ const updateLayer = layerParam => {
         const newLayerStr = layer
           .getSource()
           .getParams()
-          ["LAYERS"].split(",")
+        ["LAYERS"].split(",")
           .filter(l => !layerArr.includes(l))
           .join(",");
         if (0 < newLayerStr.length) {
@@ -512,7 +476,7 @@ const updateLayer = layerParam => {
         const newLayerStr = layer
           .getSource()
           .getParams()
-          ["LAYERS"].split(",")
+        ["LAYERS"].split(",")
           .concat(layerArr)
           .join(",");
         if (layerParam.showDetail) {
@@ -576,7 +540,7 @@ const initCesiumMap = async () => {
     // terrainProvider: await Cesium.createWorldTerrainAsync()
   });
 
-//   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
+  //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
   const viewer = cesiumViewer.value;
   //todo
   //加载倾斜
@@ -618,7 +582,7 @@ const initCesiumMap = async () => {
         const item = comps[j];
 
         const tileset = await Cesium.Cesium3DTileset.fromUrl(
-          "http://127.0.0.1:8089/data/gx/"+element+"/"+item+"/tileset.json"
+          "http://127.0.0.1:8089/data/gx/" + element + "/" + item + "/tileset.json"
         );
         viewer.scene.primitives.add(tileset);
       }
@@ -638,7 +602,7 @@ const toggleMap = () => {
     initOpenLayersMap();
   } else {
     map.value.setTarget(null);
-	initCesiumMap();
+    initCesiumMap();
   }
   isCesiumMap.value = !isCesiumMap.value;
 };
@@ -673,6 +637,7 @@ const toggleMap = () => {
 }
 
 .top-tabs {
+
   // background-color: #b01f1f;
   .tabs-container {
     // 背景半透明
@@ -690,6 +655,7 @@ const toggleMap = () => {
 }
 
 .bottom-tabs {
+
   //循环
   @for $i from 1 through 10 {
     .blink-#{$i} {
@@ -725,12 +691,10 @@ const toggleMap = () => {
 
   .layer-shaw {
     // 左上角开始渐变背景，从上到下透明度从0到1，颜色#0a234a, #305fad
-    background: linear-gradient(
-      to bottom,
-      rgba(11, 29, 65, 0.6),
-      rgb(7, 32, 50),
-      rgba(57, 142, 203, 0.4)
-    );
+    background: linear-gradient(to bottom,
+        rgba(11, 29, 65, 0.6),
+        rgb(7, 32, 50),
+        rgba(57, 142, 203, 0.4));
     // 右上角开始渐变背景，从上到下透明度从0到1
     // background: linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
     // background: linear-gradient(to bottom, #0a234a, #305fad);

@@ -36,10 +36,15 @@ body,#app {
   font-family: 'zhener';
   src: url('./assets/fonts/zhener.ttf') format('truetype');
 }
-/* 阿里巴巴惠普字体 */
+/* pengmenzhengdao字体 */
 @font-face {
-  font-family: 'huipu';
-  src: url('./assets/fonts/Alibaba_PuHuiTi_Bold.ttf') format('truetype');
+  font-family: 'pengmenzhengdao';
+  src: url('./assets/fonts/pengmenzhengdao.ttf') format('truetype');
+}
+/* YouSheBiaoTiHei字体 */
+@font-face {
+  font-family: 'YouSheBiaoTiHei';
+  src: url('./assets/fonts/YouSheBiaoTiHei.ttf') format('truetype');
 }
 
 

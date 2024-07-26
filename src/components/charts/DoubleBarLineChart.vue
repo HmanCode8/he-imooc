@@ -9,7 +9,14 @@ import useRootFontSize from '@/hooks/useRootFontSize';
 
 
 const props = defineProps({
-
+    chartData: {
+        type: Array,
+        default: () => []
+    },
+    legendData: {
+        type: Array,
+        default: () => []
+    }
 })
 
 const target = ref(null)
@@ -18,6 +25,7 @@ onMounted(() => {
     mChart = echarts.init(target.value);
 });
 
+const { chartData, legendData } = props
 const handleResize = () => {
     const rootFontSize = useRootFontSize();
     renderChart(rootFontSize.value);
@@ -26,21 +34,12 @@ const handleResize = () => {
     }
 };
 
+
 const renderChart = (fontSize) => {
-    const chartData = [
-        { name: '燃气', completed: 220, planned: 600, rate: 72 },
-        { name: '供水', completed: 100, planned: 160, rate: 24 },
-        { name: '雨水', completed: 100, planned: 170, rate: 39 },
-        { name: '污水', completed: 100, planned: 60, rate: 24 },
-        { name: '道路', completed: 100, planned: 60, rate: 24 },
-        { name: '桥梁', completed: 140, planned: 60, rate: 24 },
-        { name: '路灯', completed: 120, planned: 160, rate: 39 },
-        { name: '第三方施工', completed: 200, planned: 60, rate: 24 },
-        { name: '综合管线', completed: 100, planned: 40, rate: 24 },
-    ];
+
     const option = {
         title: {
-            text: '巡检总览',
+            text: '巡检完成率',
             textStyle: {
                 color: '#fff',
                 fontSize // 设置标题字体大小
@@ -55,16 +54,27 @@ const renderChart = (fontSize) => {
             }
         },
         legend: {
-            data: ['巡检完成量', '计划巡检量', '巡检完成率'],
+            data: legendData,
             textStyle: {
                 color: '#fff',
                 fontSize // 设置图例字体大小
             },
             top: '3%',
-            left: '1%'
+            right: '30%',
+            itemWidth: 10,
+            bottom: '13%',
+            rich: {
+                a: {
+                    color: '#fff',
+                    fontSize: 16,
+                    lineHeight: 20,
+                    align: 'center'
+                }
+            }
         },
         grid: {
             left: '3%',
+            top: '25%',
             right: '4%',
             bottom: '3%',
             containLabel: true
@@ -84,7 +94,6 @@ const renderChart = (fontSize) => {
         yAxis: [
             {
                 type: 'value',
-                name: '数量',
                 min: 0,
                 max: 200,
                 interval: 50,
@@ -94,7 +103,9 @@ const renderChart = (fontSize) => {
                 },
                 axisLine: {
                     lineStyle: {
-                        color: '#fff'
+                        show: false,
+                        color: '#fff',
+                        type: 'dashed'
                     }
                 }
             }
@@ -104,26 +115,47 @@ const renderChart = (fontSize) => {
                 name: '巡检完成量',
                 type: 'bar',
                 data: chartData.map(item => item.completed),
+                label: {
+                    show: true, // 显示数值
+                    position: "top", // 在柱状图顶部显示
+                    fontSize,
+                    color: "#fff"
+                },
                 itemStyle: {
-                    color: {
-                        type: 'linear',
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [
-                            { offset: 0, color: '#4ECBB4' }, // top color
-                            { offset: 1, color: '#4ECBB4' }  // bottom color
-                        ]
-                    }
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: '#6ae5ea'
+                        },
+                        {
+                            offset: 1,
+                            color: 'rgba(22,75,247,0.1  )' // 调整透明度
+                        }
+                    ])
                 }
             },
             {
                 name: '计划巡检量',
                 type: 'bar',
                 data: chartData.map(item => item.planned),
+                label: {
+                    formatter: '{c}%',
+                    show: true, // 显示数值
+                    position: "top", // 在柱状图顶部显示
+                    fontSize,
+                    color: "#fff"
+                },
                 itemStyle: {
-                    color: '#35A6EE'
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: "#4aa4ef"
+                        },
+                        {
+                            offset: 1,
+                            color: "rgba(22,75,247,0.1)"
+                        }
+                    ])
                 }
             },
             {
@@ -133,11 +165,7 @@ const renderChart = (fontSize) => {
                 itemStyle: {
                     color: '#FFA500'
                 },
-                label: {
-                    show: true,
-                    position: 'top',
-                    formatter: '{c}%'
-                }
+
             }
         ]
     };

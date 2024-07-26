@@ -214,9 +214,9 @@ const Pie3DChartData = ref([
 
 <style scoped lang="scss">
 @for $i from 1 through 7 {
-    .inspection_#{$i} {
-        background-image: url('@/assets/imgs/operation/inspection_#{$i}.png');
-    }
+  .inspection_#{$i} {
+    background-image: url('@/assets/imgs/operation/inspection_#{$i}.png');
+  }
 }
 
 .problemNumber {
@@ -236,9 +236,10 @@ const Pie3DChartData = ref([
   font-family: "PingFangSC, PingFang SC";
   font-weight: 800;
 }
-@for $i from 0 through 7 {
-.inspection_success_#{$i} {
+
+@for $i from 1 through 7 {
+  .inspection_success_#{$i} {
     background-image: url('@/assets/imgs/operation/inspection-success-#{$i%2+1}.png');
-}
+  }
 }
 </style>
