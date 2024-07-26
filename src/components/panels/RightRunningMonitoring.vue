@@ -100,14 +100,16 @@ const checkList = ref([
         <FristLevelTitle title="运行监测"></FristLevelTitle>
         <SecondLevelTitle title="运行概况"></SecondLevelTitle>
         <div class="pipe-analy-content my-10 flex justify-between">
-            <div v-for="item in checkList" :key="item.name"
+            <div v-for="item, index in checkList" :key="item.name"
                 class="flex w-1/3 mx-4 h-36 bg-[url('assets/imgs/running/bg.png')] bg-size items-center justify-around">
                 <div class=" bg-[url('assets/imgs/running/run-b-1.png')] bg-size text-center w-1/3 h-2/3">
                     <div class="text-3xl gradient-text">{{ item.value }}</div>
                     <div>{{ item.name }}</div>
                 </div>
                 <div>
-                    <div class="text-2xl text-[#75f9c5]">{{ item.change }}%</div>
+                    <div :class="`text-2xl text-[${index === 1 ? '#d14150' : '#75f9c5'}]`">{{ item.change }}% <i
+                            :class="`iconfont icon-${index === 1 ? 'c041xiangxiajiantou' : 'jiantou-copy-copy'} text-xl`"></i>
+                    </div>
                     <div>较昨日</div>
                 </div>
             </div>

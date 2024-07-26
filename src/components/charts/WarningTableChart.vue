@@ -40,11 +40,10 @@ const ths = ref([
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
-          <td v-for="(col,colIndex) in ths" :key="col.key">
-            <div
-              v-if="colIndex===0"
-              :class="`warningtype_${rowIndex+1} bg-cover bg-center h-3 w-15`"
-            >{{ row[col.prop] }}</div>
+          <td v-for="(col, colIndex) in ths" :key="col.key">
+            <div v-if="colIndex === 0" :class="`warningtype_${rowIndex + 1} bg-cover bg-center h-3 w-15`">{{
+              row[col.prop]
+              }}</div>
             <div v-else class="">{{ row[col.prop] }}</div>
           </td>
         </tr>
@@ -82,7 +81,7 @@ tbody tr:hover {
   background-color: #4276b2;
 }
 
-@for $i from 0 through 5 {
+@for $i from 1 through 4 {
   .warningtype_#{$i} {
     background-image: url("@/assets/imgs/warning/TOP#{$i}.png");
   }

@@ -1,129 +1,128 @@
-<template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
-</template>
-
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import * as echarts from 'echarts'
+import { ref, defineProps, toRef } from 'vue';
 
 const props = defineProps({
-    data: {
-        type: Object,
-        required: true
-    }
-})
-
-const target = ref(null)
-let mChart = null
-onMounted(() => {
-    mChart = echarts.init(target.value)
-    renderChart()
-})
-
-const handleResize = () => {
-    mChart.resize()
-}
-
-const renderChart = () => {
-    const chartData = [
-        { name: '燃气', completed: 220, planned: 600, rate: 72 },
-        { name: '供水', completed: 100, planned: 160, rate: 24 },
-        { name: '雨水', completed: 100, planned: 170, rate: 39 },
-        { name: '污水', completed: 100, planned: 60, rate: 24 },
-        { name: '道路', completed: 100, planned: 60, rate: 24 },
-        { name: '桥梁', completed: 140, planned: 60, rate: 24 },
-        { name: '路灯', completed: 120, planned: 160, rate: 39 },
-        { name: '第三方施工', completed: 200, planned: 60, rate: 24 },
-        { name: '综合管线', completed: 100, planned: 40, rate: 24 },
-    ];
-    const option = {
-        title: {
-            text: '巡检总览',
-            textStyle: {
-                color: '#fff',
-                fontSize: 14
-            },
-            right: '1%',
-            top: '3%'
-        },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        legend: {
-            data: ['巡检完成量', '计划巡检量', '巡检完成率'],
-            textStyle: {
-                color: '#fff'
-            },
-            top: '3%',
-            left: '1%'
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'category',
-            data: chartData.map(item => item.name),
-            axisLine: {
-                lineStyle: {
-                    color: '#fff'
-                }
-            }
-        },
-        yAxis: [
+    visible: {
+        type: Boolean,
+        default: false
+    },
+    tabs: {
+        type: Array,
+        default: () => [
             {
-                type: 'value',
-                name: '数量',
-                min: 0,
-                max: 200,
-                interval: 50,
-                axisLabel: {
-                    formatter: '{value}'
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: '#fff'
-                    }
-                }
-            }
-        ],
-        series: [
-            {
-                name: '巡检完成量',
-                type: 'bar',
-                data: chartData.map(item => item.completed),
-                itemStyle: {
-                    color: '#4ECBB4'
-                }
+                label: '基本信息',
+                name: 'tab1'
             },
             {
-                name: '计划巡检量',
-                type: 'bar',
-                data: chartData.map(item => item.planned),
-                itemStyle: {
-                    color: '#35A6EE'
-                }
-            },
-            {
-                name: '巡检完成率',
-                type: 'line',
-                data: chartData.map(item => item.rate),
-                itemStyle: {
-                    color: '#FFA500'
-                },
-                label: {
-                    show: true,
-                    position: 'top',
-                    formatter: '{c}%'
-                }
+                label: '流程跟踪',
+                name: 'tab2'
             }
         ]
-    };
-    mChart.setOption(option)
+    }
+});
+
+const visible = toRef(props.visible);
+const tabs = toRef(props.tabs);
+const currentTab = ref(props.tabs[0].name);
+
+const data = ref([
+    {
+        name: '事件签收',
+        date: '2024-05-12',
+        time: '12:00:00',
+        unit: '盐城市XXXX有限公司'
+    },
+    {
+        name: '事件处置',
+        date: '2024-05-12',
+        time: '12:00:00',
+        unit: '盐城市XXXX有限公司'
+    },
+    {
+        name: '事件办结',
+        date: '2024-05-12',
+        time: '12:00:00',
+        unit: '盐城市XXXX有限公司'
+    },
+])
+
+const onchangeTab = (name) => {
+    console.log(name);
+    currentTab.value = name
 }
 </script>
+
+<template>
+    <div class="w-full h-full">
+        <div class="bg-[url('assets/imgs/main/modal-bg.png')] w-full h-full bg-size p-2">
+            <div class="flex justify-between items-center">
+                <div class="pl-3 w-full bg-size">事件处理详情</div>
+                <div @click="visible = false" class="close-btn"><i class="iconfont icon-close"></i></div>
+            </div>
+            <div :class="`w-full bg-tabs-${currentTab} bg-size mt-4 p-2 h-16 flex justify-around items-center`">
+                <div @click="onchangeTab(tab.name)" v-for="tab in tabs" :key="tab.name"
+                    :class="`w-1/2 flex justify-center items-center  h-full relative hover:cursor-pointer ${currentTab === tab.name ? 'font-bold text-md gradient-text' : ''}`">
+                    <div> {{ tab.label }}</div>
+                    <div v-show="currentTab === tab.name"
+                        class="w-1/3 absolute bottom-0 h-4 bg-[url('assets/imgs/main/modal-active.png')] bg-size">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-container">
+                <div ref="tab1Ref" v-show="currentTab === 'tab1'" class="tab1">
+                    <ul class="w-full h-full">
+                        <li class="flex justify-between items-center p-2">
+                            <div>预警编号： xxxxxxx</div>
+                        </li>
+                        <li class="flex justify-between items-center p-2">
+                            <div>预警编号： xxxxxxx</div>
+                        </li>
+                        <li class="flex justify-between items-center p-2">
+                            <div>预警编号： xxxxxxx</div>
+                        </li>
+                        <li class="flex justify-between items-center p-2">
+                            <div>预警编号： xxxxxxx</div>
+                        </li>
+                    </ul>
+                </div>
+                <div ref="tab2Ref" v-show="currentTab === 'tab2'" class="tab1">
+                    <ul class="w-full h-full">
+
+
+                        <li v-for="item in data" :key="item.name"
+                            class="flex py-4 w-full justify-between items-center px-2">
+                            <div class="relative w-1/2 text-right px-10">
+                                <div class="text-md w-full font-bold">{{ item.date }}</div>
+                                <div class="text-[#d9a13c] font-bold">{{ item.time }}</div>
+                                <div
+                                    class="w-6 h-20 bg-[url('assets/imgs/main/modal-time.png')] absolute top-0 right-0 bg-size">
+                                </div>
+                            </div>
+
+                            <div class="w-1/2 pl-2">
+                                <div>{{ item.name }}</div>
+                                <div>签收公司：{{ item.unit }}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style scoped lang="scss">
+.gradient-text {
+    background: linear-gradient(to bottom, #5dcbd6, #3478e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-tabs-tab1 {
+    background-image: url('@/assets/imgs/main/modal-tabs-l.png');
+}
+
+.bg-tabs-tab2 {
+    background-image: url('@/assets/imgs/main/modal-tabs-r.png');
+}
+</style>

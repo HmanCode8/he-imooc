@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import Tablechart from '../charts/Tablechart.vue'
@@ -61,10 +61,13 @@ const riskData = [
 
         <div class="overview-content flex flex-wrap justify-between w-full">
             <!-- 风险总数 -->
-            <div class="risk-count 4k:w-full 8k:w-[45%] mx-2">
+            <div class="risk-count 4k:w-full 8k:w-[48%] mx-2">
                 <div
-                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-cover my-4 px-6">
-                    <div class="risk-title font-bold">风险总数 <span class="text-[#9faf70]">{{ 145 }}</span>个</div>
+                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-cover my-4 px-2">
+                    <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao]">风险总数<span
+                            class="text-4xl gradient-text">{{ 145
+                            }}</span>个
+                    </div>
                     <div class="level flex">
                         <div class="level-item flex items-center mx-1" v-for="(item, index) in riskLevel"
                             :key="item.value">
@@ -75,41 +78,46 @@ const riskData = [
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] px-2 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
                         v-for="item in riskData" :key="item.name">
-                        <div class="flex items-center">
-                            <div :style="{ backgroundColor: item.color }" class="icon w-2 h-2 mx-1"></div>
+                        <div class="flex items-center mt-[-5%]">
+                            <div :style="{ backgroundColor: item.color, filter: `drop-shadow(2px 2px 5px ${item.color})` }"
+                                class="icon w-3 h-3 mx-1 rounded-full"></div>
 
-                            <div class="risk-item-name">{{ item.name }}</div>
+                            <div class="risk-item-name text-xl">{{ item.name }}</div>
                         </div>
-                        <div class="risk-item-value">{{ item.data }}件</div>
+                        <div class="risk-item-value mt-[-5%]"><span class="text-2    xl">{{ item.data }}</span>件</div>
                     </div>
                 </div>
             </div>
 
             <!-- 隐患总数 -->
-            <div class="risk-count 4k:w-full 8k:w-[45%] mx-2">
+            <div class="risk-count 4k:w-full 8k:w-[48%] mx-2">
                 <div
-                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-cover my-4 px-6">
-                    <div class="risk-title font-bold">隐患总数 <span class="text-[#9faf70]">{{ 145 }}</span>个</div>
+                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-cover my-4 px-2">
+                    <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao]">隐患总数<span
+                            class="text-4xl gradient-text">{{ 145
+                            }}</span>个
+                    </div>
                     <div class="level flex">
                         <div class="level-item flex items-center mx-1" v-for="(item, index) in riskLevel"
                             :key="item.value">
-                            <div :class="` flex items-center justify-center warning-icon-${index + 1} w-12 h-12`">1
+                            <div :class="`flex items-center justify-center warning-icon-${index + 1} w-12 h-12`">1
                             </div>
                             <div class="level-item-name">{{ item.name }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] px-2 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
                         v-for="item in riskData" :key="item.name">
-                        <div class="flex items-center">
-                            <div :style="{ backgroundColor: item.color }" class="icon w-2 h-2 mx-1"></div>
+                        <div class="flex items-center mt-[-5%]">
+                            <div :style="{ backgroundColor: item.color, filter: `drop-shadow(2px 2px 5px ${item.color})` }"
+                                class="icon w-3 h-3 mx-1 rounded-full"></div>
 
-                            <div class="risk-item-name">{{ item.name }}</div>
+                            <div class="risk-item-name text-xl">{{ item.name }}</div>
                         </div>
-                        <div class="risk-item-value">{{ item.data }}件</div>
+                        <div class="risk-item-value mt-[-5%]"><span class="text-2    xl">{{ item.data }}</span>件</div>
                     </div>
                 </div>
             </div>
@@ -223,5 +231,11 @@ const riskData = [
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
+}
+
+.gradient-text {
+    background: linear-gradient(to bottom, #ffffff, #f6c44a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>

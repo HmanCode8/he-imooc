@@ -5,7 +5,7 @@
         <!-- 主体组件 -->
         <div class="main-panel relative">
             <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
-            <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white flex overflow-hidden">
+            <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-[94.5vh] text-white flex overflow-hidden">
                 <div ref="leftPanelRef"
                     :class="`left-panel 8k:pr-10 4k:pr-6 overflow-auto  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                     <!-- 条件渲染的动态组件 -->
@@ -24,6 +24,13 @@
                     <component :is="currentComponentMap[currentComponent][1]" class="w-full h-full box-border pb-4" />
 
                 </div>
+                <div v-if="store.componentId === 'warning-disposal'"
+                    class="absolute w-[12%] h-[70%] right-[30%] bottom-[10%]">
+                    <Modal />
+                </div>
+                <!-- <div v-if="store.componentId === 'overview'" class="absolute right-[30%] bottom-[10%]">
+                    <MapType class="" />
+                </div> -->
             </div>
         </div>
     </div>
@@ -36,6 +43,9 @@ import Header from '@/components/Header.vue'
 // 地图组件
 import MapChart from '@/components/MapChart.vue'
 
+// common组件
+import Modal from '@/components/common/Modal.vue'
+import MapType from '@/components/common/MapType.vue'
 // 左侧栏组件
 import LeftPipeAnaly from '@/components/panels/LeftPipeAnaly.vue'
 import LeftOverview from '@/components/panels/LeftOverview.vue'
