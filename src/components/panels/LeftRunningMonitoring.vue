@@ -1,115 +1,33 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import _ from 'lodash'
 import ConeBarChart from '../charts/ConeBarChart.vue'
-import ProcessBar from '../charts/ProcessBar.vue'
+import { runningMonitoringData } from '@/assets/chartData/data'
 
 
-const data = ref([
-    {
-        name: '燃气',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-    {
-        name: '电力',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-    {
-        name: '水电',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-    {
-        name: '热力',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-])
-const data1 = ref([
-    {
-        name: '燃气1',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-    {
-        name: '电力1',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-    {
-        name: '水电1',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-    {
-        name: '热力1',
-        onLine: 100,
-        offLine: 200,
-        total: 300
-    },
-])
+const { internetDevices, analyDeatailData, monitorData } = runningMonitoringData
 
-const runningData = ref(
-    [
-        {
-            name: '覆盖率',
-            value: 122.45
-        },
+const runActive = ref('总数' || analyDeatailData[0].name)
+const currentRun = ref({})
 
-        {
-            name: '设备总数',
-            value: 1212
-        },
-        {
-            name: '在线率',
-            value: 62.1
-        }
-    ]
-)
+watch(runActive, (newVal, oldVal) => {
+    currentRun.value = monitorData.find(item => item.name === runActive.value)
+}, {
+    immediate: true
+})
 
-const sensorData = ref([
-    { name: "可燃气体探测", value: 12, unit: "台" },
-    { name: "压力探测器", value: 41, unit: "台" },
-    { name: "温度探测器", value: 31, unit: "台" },
-    { name: "液体探测器", value: 41, unit: "台" },
-    { name: "流量探测器", value: 42, unit: "台" }
-])
+const sum = computed(() => _.reduce(currentRun.sensorData, (pre, cur) => (pre + cur.value), 0))
 
-const sum = computed(() => _.reduce(sensorData.value, (pre, cur) => (pre + cur.value), 0))
-
-const runActive1 = ref(0)
-const runActive2 = ref(0)
-
-const onTabChange = (name) => {
-    runActive1.value = name
-}
-const olds = ref([
-    {
-        name: '物联网设备',
-        value: 10
-    },
-    {
-        name: '在线设备',
-        value: 40
-    },
-    {
-
-        name: '在线率',
-        value: 30
+const barWidth = (index) => {
+    if (index === 0) {
+        return
     }
-])
+    return index === 1 ? (internetDevices[1].value / internetDevices[0].value).toFixed(2) * 100 : internetDevices[2].value
+}
+
 </script>
 
 <template>
@@ -117,16 +35,27 @@ const olds = ref([
         <FristLevelTitle title="设施概况"></FristLevelTitle>
         <SecondLevelTitle title="状态分析"></SecondLevelTitle>
         <div class="flex w-full justify-around">
-            <ProcessBar :data="olds" />
-
+            <div class="flex w-full items-center justify-center px-2" v-for="item, index in internetDevices"
+                :key="item.name">
+                <div
+                    :class="`w-1/4 flex items-center text-center ${index === 0 ? 'h-10 bg-[url(assets/imgs/overview/o-bottom.png)] bg-size' : ''}`">
+                    {{
+                        item.name }}</div>
+                <div v-if="index !== 0" class="w-2/4 bg-[#30518d] h-6 rounded-2xl">
+                    <div :style="{ width: `${barWidth(index)}%` }" class="bar h-full bg-gradient rounded-2xl"></div>
+                </div>
+                <div class="w-1/4 text-center gradient-text-third font-bold text-xl">{{ item.value }}{{ item.unit }}
+                </div>
+            </div>
         </div>
 
         <div class="flex items-center my-4 justify-between">
             <div class="flex w-1/3 items-center justify-between flex-wrap">
-                <div v-for="item, index in data" @click="onTabChange(item.name)"
-                    :class="`${runActive1 === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
+                <div v-for="item, index in analyDeatailData.slice(0, analyDeatailData.length / 2)"
+                    @click="runActive = item.name"
+                    :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
                     <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
-                    <div>离线：<span class="gradient-text text-2xl font-bold">{{ item.offLine }}</span></div>
+                    <div>离线：<span class="gradient-text-two text-2xl font-bold">{{ item.offLine }}</span></div>
                     <div>{{ item.name }}</div>
                 </div>
             </div>
@@ -134,10 +63,11 @@ const olds = ref([
                 class="flex w-1/3 bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
             </div>
             <div class="flex w-1/3 items-center justify-between flex-wrap">
-                <div v-for="item, index in data1" @click="onTabChange(item.name)"
-                    :class="`${runActive1 === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
+                <div v-for="item, index in analyDeatailData.slice(analyDeatailData.length / 2)"
+                    @click="runActive = item.name"
+                    :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
                     <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
-                    <div>离线：<span class="gradient-text text-2xl font-bold">{{ item.offLine }}</span></div>
+                    <div>离线：<span class="gradient-text-two text-2xl font-bold">{{ item.offLine }}</span></div>
                     <div>{{ item.name }}</div>
                 </div>
             </div>
@@ -146,39 +76,41 @@ const olds = ref([
         <SecondLevelTitle title="布设分析"></SecondLevelTitle>
         <div class="flex flex-wrap justify-between">
             <div class="8k:w-[40%] 4k:w-full flex justify-between">
-                <div class="flex w-1/3 flex-col items-center">
-                    <div v-for="item in runningData"
-                        class="bg-size bg-[url('assets/imgs/running/run-b.png')] my-4 w-20 h-20 flex flex-col items-center">
-                        <div>{{ item.value }}</div>
-                        <div>{{ item.name }}</div>
+                <div v-if="currentRun.layRates.length > 0" class="flex w-[40%] flex-col items-center">
+                    <div v-for="r, rIndex in currentRun.layRates"
+                        class="bg-size bg-[url('assets/imgs/running/lay-rate.png')] my-2 w-32 h-1/3 flex flex-col items-center">
+                        <div :class="`gradient-text-${rIndex}`"><span class="text-xl font-bold ">{{ r.value
+                                }}</span>{{
+                                    r.unit }}</div>
+                        <div>{{ r.name }}</div>
                     </div>
                 </div>
-                <div class="w-2/3">
+                <div v-if="currentRun.sensorData.length > 0" class="w-[60%]">
                     <ThirdLevelTitle title="设备类型" />
-                    <div class="">
-                        <div class="sen-item flex flex-col justify-between my-4" v-for="item in sensorData"
-                            :key="item.name">
-                            <div class="flex items-center">{{ item.name }}</div>
-                            <div class="flex h-4 w-full justify-between">
-                                <div class="bar w-5/6 bg-[#123062] h-full">
-                                    <div :style="`width: ${(item.value / sum) * 100}%`"
-                                        class="percent h-full bg-[#3c88f7]">
-                                    </div>
-                                </div>
-                                <div class="value-unit flex items-center">
-                                    <div>{{ item.value }}</div>
-                                    <div>{{ item.unit }}</div>
+                    <div class="sen-item flex flex-col justify-between my-4" v-for="item in currentRun.sensorData"
+                        :key="item.name">
+                        <div class="flex items-center">{{ item.name }}</div>
+                        <div class="flex h-4 w-full justify-between">
+                            <div class="w-5/6 bg-[#107BB8] h-full">
+                                <div :style="`width: ${(item.value / sum) * 100}%`"
+                                    class="relative h-full bg-[#008AFF]">
+                                    <div class="h-full absolute right-0 bg-white w-[5px]"></div>
                                 </div>
                             </div>
+                            <div class="value-unit w-1/6 px-1 flex items-center">
+                                <div class="text-xl font-bold">{{ item.value }}</div>
+                                <div>{{ item.unit }}</div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-            <div class="8k:w-[60%] 4k:w-full flex">
+            <div class="8k:w-[55%] 4k:w-full flex">
                 <div class="w-full h-full">
                     <ThirdLevelTitle title="区县设备覆盖" />
                     <div class="w-full h-64 my-8">
-                        <ConeBarChart />
+                        <ConeBarChart :data="currentRun.coverageData" />
                     </div>
                 </div>
             </div>
@@ -198,8 +130,44 @@ const olds = ref([
 }
 
 .gradient-text {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    background: linear-gradient(to bottom, #f4fffa, #0BFFA0);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-two {
+    background: linear-gradient(to bottom, #f4fffa, #FF2F49);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-third {
+    background: linear-gradient(to bottom, #ffffff, #f6c44a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-0 {
+    background: linear-gradient(to bottom, #e2effe, #4491f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-1 {
+    background: linear-gradient(to bottom, #cff8fe, #5ecae3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-2 {
+    background: linear-gradient(to bottom, #dffefa, #79fbe3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient {
+    /* 背景渐变 */
+    background: linear-gradient(to right, #6291b2, #6ae3f0);
+    transition: all 0.3s ease-in-out;
 }
 </style>

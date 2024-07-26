@@ -14,30 +14,14 @@ import { Label } from "cesium";
 import bgimage from "@/assets/imgs/main/title-h-third.png";
 import useRootFontSize from '@/hooks/useRootFontSize';
 
-
 const props = defineProps({
     data: {
-        type: Object,
+        type: Array,
         required: true
     },
-    legend: {
-        type: Array
-    },
-    pieChartData: {
-        type: Object,
-        required: true,
-        default: [
-            { name: "燃气", value: 60, color: "#FF6384" },
-            { name: "供水", value: 23, color: "#FFCE56" },
-            { name: "雨水", value: 25, color: "#36A2EB" },
-            { name: "污水", value: 99, color: "#FFA07A" },
-            { name: "道路", value: 60, color: "#0F7C7C" },
-            { name: "桥梁", value: 23, color: "#0F7C7C" },
-            { name: "路灯", value: 25, color: "#3B40A2" },
-        ]
-    }
 });
 
+const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
 const target = ref(null);
 let mChart = null;
 onMounted(() => {
@@ -385,7 +369,7 @@ const renderChart = (fontSize) => {
                     for (let i = 0; i < datas.length; i++) {
                         total += Number(datas[i].value);
                     }
-                    const arr = [`{iconName|}{name|${name}}{percent|(${(target / total * 100).toFixed(2)}%)}{value|${obj.value}个}`];
+                    const arr = [`{iconName|}{name|${name}}{value|${obj.value}m}`];
                     return arr.join("");
                 }
             },
@@ -397,56 +381,56 @@ const renderChart = (fontSize) => {
                     autoRotate: true // Auto-rotate
                 },
                 left: "2%",
-                top: "2%",
+                top: "0%",
                 width: "40%",
                 show: false,
-                boxHeight: 60
+                boxHeight: 40
             },
-            series: series,
-            graphic: [
-                {
-                    type: "text",
-                    left: "44%",
-                    top: "15%",
-                    style: {
-                        text: "总数",
-                        textAlign: "center",
-                        fill: "#fff",
-                        fontSize
-                    }
-                },
-                {
-                    type: "text",
-                    right: "10%",
-                    top: "15%",
-                    style: {
-                        text: "324个",
-                        textAlign: "center",
-                        fontSize,
-                        fill: "#ffff00"
-                    }
-                },
-                {
-                    type: "image",
-                    left: "44%",
-                    top: "20%",
-                    style: {
-                        image: bgimage,
-                        width: 250,
-                        height: 10
-                    }
-                }
-            ]
+            series,
+            // graphic: [
+            //     {
+            //         type: "text",
+            //         left: "44%",
+            //         top: "15%",
+            //         style: {
+            //             text: "总数",
+            //             textAlign: "center",
+            //             fill: "#fff",
+            //             fontSize
+            //         }
+            //     },
+            //     {
+            //         type: "text",
+            //         right: "20%",
+            //         top: "15%",
+            //         style: {
+            //             text: "324个",
+            //             textAlign: "center",
+            //             fontSize,
+            //             fill: "#ffff00"
+            //         }
+            //     },
+            //     {
+            //         type: "image",
+            //         left: "44%",
+            //         top: "20%",
+            //         style: {
+            //             image: bgimage,
+            //             width: 250,
+            //             height: 10
+            //         }
+            //     }
+            // ]
         };
         return option;
     }
 
-    const serData = props.pieChartData.map((dItem, index) => {
+    const serData = props.data.map((dItem, index) => {
         return {
             ...dItem,
             value: Number(dItem.value),
             itemStyle: {
-                color: dItem.color
+                color: colors[index]
             }
         };
     });

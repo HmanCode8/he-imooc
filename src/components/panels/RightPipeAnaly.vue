@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
@@ -8,51 +8,31 @@ import TrapezoidalBarChart from '../charts/TrapezoidalBarChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
+import { basicFacilitiesData } from '@/assets/chartData/data'
 
-
-const roadAnaly = ref([
-    {
-        name: '道路',
-        total: '59条'
-    },
-    {
-        name: '公里数',
-        total: '453km'
-    },
-    {
-        name: '路灯',
-        total: '12个'
-    },
-    {
-
-        name: '总功率',
-        total: '1000kW'
-    }
-])
+const { naturalColumns, naturalTableData, liquefiedColumns, liquefiedTableData, roadData, typeAlysisData, bridgeData, bridgeColumns, bridgeTableData } = basicFacilitiesData
+const active = ref('supply')
+const dataActive = ref(roadData[0].name)
+const dataChnage = (name) => {
+    dataActive.value = name
+}
 
 const titletab1 = ref([
-    { name: '天然气场站', value: '1' },
-    { name: '液化气场站', value: '2' },
-])
-const titletabs2 = ref([
-    { name: '供水气场站', value: '1' },
-    { name: '排水气场站', value: '2' },
+    { name: '天然气场站', value: 'natural' },
+    { name: '液化气场站', value: 'liquefied' },
 ])
 
-const pipeChartdata = ref([
-    { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
-    { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
-    { name: '大丰区', percentage: 24, distance: '15km', color: '#36A2EB' },
-    { name: '建湖县', percentage: 24, distance: '25km', color: '#FFA07A' },
-    { name: '阜宁县', percentage: 24, distance: '25km', color: '#4BC0C0' },
-    { name: '滨海县', percentage: 24, distance: '25km', color: '#FF6384' },
-    { name: '响水县', percentage: 24, distance: '25km', color: '#FFCE56' },
-    { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
-    { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
+const titletabs2 = ref([
+    { name: '供水气场站', value: 'supply' },
+    { name: '排水气场站', value: 'drainage' },
 ])
-const onTabChange = (value) => {
-    console.log(value)
-}
+
+
+
+const columns = computed(() => active.value === 'natural' ? naturalColumns : liquefiedColumns)
+
+const tableData = computed(() => active.value === 'natural' ? naturalTableData : liquefiedTableData)
+
 </script>
 
 <template>
@@ -60,24 +40,20 @@ const onTabChange = (value) => {
         <FristLevelTitle title="场站分析" />
         <div class="pipe-analy-content w-full flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full h-60">
-                <ThirdLevelTitle title="总数">
+                <ThirdLevelTitle title="燃气">
                     <template v-slot:title-slot>
                         <div class="flex justify-between items-center">
-                            <div>12</div>
-                            <Tab :data="titletb1" @onTabOnchage="onTabChange" />
-
+                            <Tab v-model="active" :data="titletab1" />
                         </div>
                     </template>
                 </ThirdLevelTitle>
-                <Tablechart />
+                <Tablechart :columns="columns" :tableData="tableData" class="h-60" />
             </div>
             <div class="8k:w-1/2 4k:w-full h-60">
-                <ThirdLevelTitle title="总数">
+                <ThirdLevelTitle title="供排水">
                     <template v-slot:title-slot>
                         <div class="flex justify-between items-center">
-                            <div>12</div>
-                            <Tab :data="titletb2" @onTabOnchage="onTabChange" />
-
+                            <Tab v-model="active" :data="titletabs2" />
                         </div>
                     </template>
                 </ThirdLevelTitle>
@@ -88,58 +64,57 @@ const onTabChange = (value) => {
             </div>
         </div>
 
-        <div class="w-full mt-6 flex flex-wrap justify-between">
+        <div class="w-full mt-16 flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full">
                 <FristLevelTitle title="道路分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
-                    <div v-for="(item, index) in roadAnaly" :key="index"
+                    <div v-for="(item, index) in roadData" :key="index" @click="dataChnage(item.name)"
                         class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
+                            <div v-if="dataActive === item.name"
+                                class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
+                            <div v-else class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-2.png')] bg-cover">
+                            </div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
-                        <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
+                        <div class="analy-item-total text-[#fcf16f]">{{ item.value }}{{ item.unit }}</div>
                     </div>
                 </div>
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <FristLevelTitle title="桥梁分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
-                    <div v-for="(item, index) in roadAnaly" :key="index"
-                        class="analy-item w-[45%] flex justify-between h-14 px-2 m-2 items-center">
+                    <div v-for="(item, index) in bridgeData" :key="index" @click="dataChnage(item.name)"
+                        class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
+                            <div v-if="dataActive === item.name"
+                                class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
+                            <div v-else class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-2.png')] bg-cover">
+                            </div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
-                        <div class="analy-item-total text-[#fcf16f]">{{ item.total }}</div>
+                        <div class="analy-item-total text-[#fcf16f]">{{ item.value }}{{ item.unit }}</div>
                     </div>
                 </div>
             </div>
 
         </div>
-
+        <!-- 类型分析 -->
         <div class="w-full flex flex-wrap justify-between">
             <div class="8k:w-1/2 4k:w-full flex flex-col">
-                <div>
-                    <SecondLevelTitle title="类型分析" />
-                    <div class="w-full flex">
-                        <div class="chart-container w-full h-60">
-                            <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
-
-                        </div>
-                    </div>
+                <SecondLevelTitle title="类型分析" />
+                <div class="w-full mb-14">
+                    <Pipe3dChart class="w-full h-40" :data="typeAlysisData" />
                 </div>
                 <SecondLevelTitle title="密度分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
-                    <div class="chart-container w-full h-60">
-                        <Bar3dChart />
+                    <Bar3dChart :data="typeAlysisData" class="w-full h-40" />
 
-                    </div>
                 </div>
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="养护分析" />
-                <Tablechart class="h-96" />
+                <Tablechart :columns="columns" :tableData="tableData" class="h-80" />
             </div>
         </div>
     </div>

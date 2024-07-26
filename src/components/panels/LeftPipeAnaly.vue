@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, watch, ref, watchEffect } from 'vue';
+import _ from 'lodash'
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
@@ -9,19 +10,10 @@ import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
 
-const { facilities } = basicFacilitiesData
+const { facilities, diameterData, pipeTextureData, typeAlysisData } = basicFacilitiesData
 
 const pipeActive = ref(facilities[0].name)
 const facilitieData = ref(facilities)
-const Pie3DChartData = ref([
-    { name: "燃气", value: 60, color: "#FF6384" },
-    { name: "供水", value: 23, color: "#FFCE56" },
-    { name: "雨水", value: 25, color: "#36A2EB" },
-    { name: "污水", value: 99, color: "#FFA07A" },
-    { name: "道路", value: 60, color: "#0F7C7C" },
-    { name: "桥梁", value: 23, color: "#0F7C7C" },
-    { name: "路灯", value: 25, color: "#3B40A2" },
-]);
 
 const changeActive = (name) => {
     pipeActive.value = name
@@ -49,6 +41,13 @@ const totleSize = ref([
         unit: '个',
     },
 ])
+
+//管径
+const pieData = computed(() => (_.get(_.find(diameterData, d => d.name === pipeActive.value), 'data', [])))
+
+// 管材
+
+const material = computed(() => (_.get(_.find(pipeTextureData, d => d.name === pipeActive.value), 'data', [])))
 </script>
 
 <template>
@@ -93,8 +92,7 @@ const totleSize = ref([
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full" title="地下管线数据汇聚率"></ThirdLevelTitle>
-                <Pipe3dChart class="w-full h-full flex" :legend="pipeChartdata" />
-
+                <Pipe3dChart :data="typeAlysisData" />
             </div>
             <!-- 管龄分析 -->
             <div class="8k:w-1/2 4k:w-full">
@@ -109,19 +107,19 @@ const totleSize = ref([
 
             <!-- 类型分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="管材分析"></SecondLevelTitle>
+                <SecondLevelTitle title="管径分析"></SecondLevelTitle>
 
                 <div class="w-full flex">
                     <div class="chart-container w-full h-60">
-                        <Bar3dChart :pieChartData="Pie3DChartData" />
+                        <Bar3dChart :data="pieData" />
                     </div>
                 </div>
             </div>
 
-            <!-- 行政区划分析 -->
+            <!-- 管径分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="管径分析"></SecondLevelTitle>
-                <PipeIconChart class="w-full h-60" />
+                <SecondLevelTitle title="管材分析"></SecondLevelTitle>
+                <PipeIconChart :data="material" class="w-full h-60" />
             </div>
         </div>
     </div>
