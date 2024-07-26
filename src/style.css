@@ -37,10 +37,10 @@ body,#app {
   src: url('./assets/fonts/zhener.ttf') format('truetype');
 }
 /* pengmenzhengdao字体 */
-@font-face {
+/* @font-face {
   font-family: 'pengmenzhengdao';
-  src: url('./assets/fonts/pengmenzhengdao.ttf') format('truetype');
-}
+  src: local('Pangmenzhengdao') format('truetype');
+} */
 /* YouSheBiaoTiHei字体 */
 @font-face {
   font-family: 'YouSheBiaoTiHei';
