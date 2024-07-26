@@ -4,7 +4,13 @@ import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import PipeIconChart from '../charts/PipeIconChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
+import ScrollTablechart from '../charts/ScrollTablechart.vue';
 
+
+import { projectManageData } from '@/assets/chartData/data'
+
+
+const { overviewData,strategicIndustry } = projectManageData;
 
 const tabs1 = ref([
     { id: 1, name: 'Tab 1' },
@@ -47,19 +53,19 @@ const list = ref([
                     <div
                         class="bg-[url(assets/imgs/project/tray-item-l.png)] bg-size flex 8k:w-1/2 4k:w-full h-40 items-center">
                         <div class="w-1/3 text-center">
-                            <div>建设中</div>
-                            <div><span class="text-2xl font-bold">20</span>个</div>
-                            <div>占比：20%</div>
+                            <div>{{overviewData[0].children[0].name}}</div>
+                            <div><span class="itemStyle text-2xl font-extrabold">{{overviewData[0].children[0].value}}</span>{{overviewData[0].children[0].unit}}</div>
+                            <div>{{overviewData[0].children[1].name}}:&nbsp;{{overviewData[0].children[1].value}}{{overviewData[0].children[1].unit}}</div>
                         </div>
                         <div class="w-1/3 text-center">
-                            <div><span class="text-2xl font-bold">20</span>个</div>
-                            <div class="text-2xl font-bold">项目总数</div>
+                            <div><span class="totalStyle text-3xl font-extrabold">{{overviewData[0].projectNum.value}}</span></div>
+                            <div class="text-2xl font-bold">{{overviewData[0].projectNum.name}}</div>
                             <div>(个)</div>
                         </div>
                         <div class="w-1/3 text-center">
-                            <div>建设中</div>
-                            <div>20个</div>
-                            <div>占比：20%</div>
+                            <div>{{overviewData[0].children[2].name}}</div>
+                            <div><span class="text-2xl font-bold">&nbsp;</span>&nbsp;/&nbsp;个</div>
+                            <div>{{overviewData[0].children[3].name}}:<span>&nbsp;&nbsp;</span>&nbsp;/</div>
                         </div>
                     </div>
 
@@ -67,19 +73,19 @@ const list = ref([
                     <div
                         class="bg-[url(assets/imgs/project/tray-item-r.png)] bg-size flex 8k:w-1/2 4k:w-full h-40 items-center">
                         <div class="w-1/3 text-center">
-                            <div>建设中</div>
-                            <div><span class="text-2xl font-bold">20</span>个</div>
-                            <div>占比：20%</div>
+                            <div>{{overviewData[1].children[0].name}}</div>
+                            <div><span class="itemStyle text-2xl font-extrabold">{{overviewData[1].children[0].value}}</span>{{overviewData[1].children[0].unit}}</div>
+                            <div>{{overviewData[1].children[1].name}}:&nbsp;{{overviewData[1].children[1].value}}{{overviewData[1].children[1].unit}}</div>
                         </div>
                         <div class="w-1/3 text-center">
-                            <div><span class="text-2xl font-bold">20</span>个</div>
-                            <div class="text-2xl font-bold">项目总数</div>
-                            <div>(个)</div>
+                            <div><span class="totalStyle text-3xl font-extrabold">{{overviewData[1].projectNum.value}}</span></div>
+                            <div class="text-2xl font-bold">{{overviewData[1].projectNum.name}}</div>
+                            <div>{{overviewData[1].projectNum.unit}}</div>
                         </div>
                         <div class="w-1/3 text-center">
-                            <div>建设中</div>
-                            <div>20个</div>
-                            <div>占比：20%</div>
+                            <div>{{overviewData[1].children[2].name}}</div>
+                            <div><span class="itemStyle text-2xl font-extrabold">{{overviewData[1].children[2].value}}</span>{{overviewData[1].children[2].unit}}</div>
+                            <div>{{overviewData[1].children[3].name}}:&nbsp;{{overviewData[1].children[3].value}}{{overviewData[1].children[3].unit}}</div>
                         </div>
                     </div>
 
@@ -88,14 +94,17 @@ const list = ref([
             </div>
         </div>
         <!-- 第二部分 -->
-        <SecondLevelTitle title="项目类型"></SecondLevelTitle>
+        <SecondLevelTitle title="战略性新兴产业"></SecondLevelTitle>
 
         <div class="w-full 8k:h-1/3  flex justify-between items-center flex-wrap">
-            <div v-for="(item, index) in list" :key="index" class="8k:w-1/5 4k:w-1/3 flex items-center mb-4">
+            <div v-for="(item, index) in strategicIndustry" :key="index" class="8k:w-1/5 4k:w-1/3 flex items-center mb-4">
                 <div :class="` w-20 h-20 type-icon-${index + 1}`"></div>
-                <div class="flex h-20 flex-col items-center justify-center px-2 ">
-                    <div class="">{{ item.category }}(个)</div>
-                    <div class="text-xl font-bold">{{ item.count }}</div>
+                <div>
+                <div class="">{{ item.name }}</div>
+                <div class="flex h-20 flex-col  justify-center px-2">
+                    <div class="font-bold ">{{item.children[0].name}}:&nbsp;&nbsp;{{ item.children[0].value}}{{ item.children[0].unit}}</div>
+                    <div class=" font-bold">{{ item.children[1].name}}:&nbsp;&nbsp;{{item.children[1].value}}{{item.children[1].unit}}</div>
+                </div>
                 </div>
             </div>
         </div>
@@ -108,7 +117,9 @@ const list = ref([
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="项目分布"></SecondLevelTitle>
-                <Tablechart class="w-full h-60" />
+                <!-- <Tablechart class="w-full h-60" /> -->
+                <ScrollTablechart class="w-full" />
+                
             </div>
         </div>
     </div>
@@ -121,5 +132,18 @@ const list = ref([
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
+}
+.totalStyle{
+  font-family: "PingFangSC, PingFang SC";
+  background-image: linear-gradient(to top, #FFBD00, #FFF5A3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.itemStyle{
+  font-family: "PingFangSC, PingFang SC";
+  background-image: linear-gradient(to top, #42BBD9, #FFFFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>
