@@ -17,11 +17,13 @@
     <!-- 导航栏 -->
     <!-- :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`" -->
     <div class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0 z-10">
-      <div
-        :class="`flex flex-col font-bold items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
-        v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-        <div :class="`blink-${index + 1} w-10 h-10 bg-cover`"></div>
-        <div class="t-item-name">{{ tab.name }}</div>
+      <div class="flex h-full bg-[url('assets/imgs/main/b-tabs.png')] bg-size">
+        <div
+          :class="`flex flex-col font-bold items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
+          v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
+          <div :class="`blink-${index + 1} w-10 h-10 bg-cover`"></div>
+          <div class="t-item-name">{{ tab.name }}</div>
+        </div>
       </div>
     </div>
     <!-- 图层栏 -->
@@ -83,7 +85,7 @@
 			</div>
     </div>-->
 
-    <!-- 右下角图例 -->
+    <!-- 图例 -->
 
     <div ref="legendRef" v-if="global.componentId === 'operation-maintenance'"
       class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
@@ -330,7 +332,6 @@ const initOpenLayersMap = () => {
   register(proj4);
 
   const baseLayerConfig = layerConfig["baseLayer"]["raster"];
-  console.log(baseLayerConfig, "baseLayerConfig");
   const baseLayers = baseLayerConfig.map(v =>
     createLayer(getLayerSource(v), "base")
   );

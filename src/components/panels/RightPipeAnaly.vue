@@ -69,7 +69,7 @@ const onTabChange = (value) => {
                         </div>
                     </template>
                 </ThirdLevelTitle>
-                <TrapezoidalBarChart />
+                <Tablechart />
             </div>
             <div class="8k:w-1/2 4k:w-full h-60">
                 <ThirdLevelTitle title="总数">
