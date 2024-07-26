@@ -1,49 +1,67 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div class>
+        <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+    </div>
 </template>
 
 <script setup>
-import { h, onMounted, ref, watch } from 'vue'
+import { h, onMounted, ref, watch, toRef } from 'vue'
 import * as echarts from 'echarts'
 import 'echarts-gl'
 import useRootFontSize from '@/hooks/useRootFontSize';
+import _ from 'lodash'
 
 const props = defineProps({
+    data: {
+        type: Array,
+    }
 })
-
-
 const target = ref(null)
+const chartData = toRef(props, 'data')
+const chartFontSize = toRef(useRootFontSize(), 'value')
 let mChart = null
+
 onMounted(() => {
-    mChart = echarts.init(target.value)
+    mChart = echarts.init(target.value);
+});
 
+watch(chartData, (val) => {
+    renderChart();
 })
-
-const handleResize = (size) => {
+const handleResize = () => {
     const fontSize = useRootFontSize()
-    renderChart(fontSize.value)
-    mChart.resize()
-}
+    renderChart(fontSize.value);
+    if (mChart) {
+        mChart.resize();
+    }
+};
 
-var xData = ['<110', '110~250', '250~630', '大于630']
-var data1 = [190000, 270000, 200000, 150000];
-
-
-const renderChart = (fontSize) => {
+const renderChart = (fontSize = chartFontSize) => {
+    const xData = _.map(chartData.value, c => c.name)
+    const data = _.map(chartData.value, c => c.value)
     const option = {
+        title: {
+            text: '单位：mm',
+            right: '5%',
+            textStyle: {
+                fontSize,
+                color: '#fff'
+            }
+        },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
                 type: 'shadow',
             },
             formatter: function (params) {
-                var str = `类别：${params[0].axisValue}</br>${params[0].marker} 预警项目: ${params[0].value}`;
+                var str = `管径：${params[0].axisValue}</br>${params[0].marker} 长度: ${params[0].value}mm`;
                 return str;
             },
         },
         legend: {
             show: false,
-            data: ['预警项目'],
+            data: ['管径'],
             textStyle: { fontSize, color: '#fff' },
             itemWidth: 12,
             itemHeight: 12,
@@ -54,7 +72,6 @@ const renderChart = (fontSize) => {
         textStyle: {
             color: '#ffffff',
         },
-        color: ['#61d2e0', '#61d2e0', '#FDBF47', '#FDBF47'],
         grid: {
             containLabel: true,
             left: '6%',
@@ -83,11 +100,11 @@ const renderChart = (fontSize) => {
             },
         },
         yAxis: {
-            name: "个",
-            nameTextStyle: {
-                verticalAlign: 'middle',
-                align: "right"
-            },
+            // name: "个",
+            // nameTextStyle: {
+            //     verticalAlign: 'middle',
+            //     align: "right"
+            // },
             type: 'value',
             min: 0,
             boundaryGap: ['20%', '60%'],
@@ -112,8 +129,8 @@ const renderChart = (fontSize) => {
         },
         series: [
             {
-                name: "预警项目",
-                data: data1,
+                name: "管径",
+                data: data,
                 type: 'bar',
                 barMaxWidth: 'auto',
                 barWidth: 22,
@@ -139,7 +156,7 @@ const renderChart = (fontSize) => {
                 },
             },
             {
-                data: data1,
+                data: data,
                 type: 'pictorialBar',
                 barMaxWidth: '10',
                 symbolPosition: 'end',
@@ -150,7 +167,6 @@ const renderChart = (fontSize) => {
             },
         ],
     };
-
     mChart.setOption(option)
 }
 </script>
