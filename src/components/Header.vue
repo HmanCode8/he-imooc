@@ -53,7 +53,7 @@ onUnmounted(() => {
             <span class="mx-3">|</span>
             <span class="font-bold font-[Electronic]"> 盐城市</span>
         </div>
-        <h2 class="title absolute text-2xl left-1/2 translate-x-[-50%] font-[PangMenZhengDao] text-gradient"
+        <h2 class="title absolute text-2xl left-1/2 translate-x-[-50%] font-[pengmenzhengdao] text-gradient"
             @click="onChage">
             盐城市生命线综合监管平台
         </h2>

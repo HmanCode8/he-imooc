@@ -18,7 +18,7 @@ const props = defineProps({
 
 const target = ref(null)
 const chartData = toRef(props, 'data')
-const chartFontSize = toRef(useRootFontSize(), 'value')
+const rootFontSize = useRootFontSize();
 let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value);
@@ -35,9 +35,12 @@ const colors = [
 ];
 
 
-watch(chartData, () => {
-    renderChart();
-})
+watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
+    renderChart(newFontSize);
+    if (mChart) {
+        mChart.resize();
+    }
+});
 const handleResize = () => {
     const fontSize = useRootFontSize();
     renderChart(fontSize.value);

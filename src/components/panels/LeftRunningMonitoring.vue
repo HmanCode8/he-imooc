@@ -10,17 +10,32 @@ import { runningMonitoringData } from '@/assets/chartData/data'
 
 const { internetDevices, analyDeatailData, monitorData } = runningMonitoringData
 
-const runActive = ref('总数' || analyDeatailData[0].name)
+const runActive = ref('总数')
 const currentRun = ref({})
 
-watch(runActive, (newVal, oldVal) => {
-    currentRun.value = monitorData.find(item => item.name === runActive.value)
+watch(runActive, (val) => {
+    let data = _.find(monitorData, m => m.name === val)
+    const all = _.find(monitorData, m => m.name === '总数')
+    if (_.size(data.layRates) === 0) {
+        data.layRates = all.layRates
+    }
+    if (_.size(data.coverageData) === 0) {
+        data.coverageData = all.coverageData
+    }
+    currentRun.value = data
 }, {
     immediate: true
 })
 
-const sum = computed(() => _.reduce(currentRun.sensorData, (pre, cur) => (pre + cur.value), 0))
+const sum = computed(() => _.reduce(currentRun.value.sensorData, (pre, cur) => (pre + Number(cur.value)), 0))
 
+const onTabChange = (name) => {
+    if (name === runActive.value) {
+        runActive.value = '总数'
+        return
+    }
+    runActive.value = name
+}
 const barWidth = (index) => {
     if (index === 0) {
         return
@@ -52,7 +67,7 @@ const barWidth = (index) => {
         <div class="flex items-center my-4 justify-between">
             <div class="flex w-1/3 items-center justify-between flex-wrap">
                 <div v-for="item, index in analyDeatailData.slice(0, analyDeatailData.length / 2)"
-                    @click="runActive = item.name"
+                    @click="onTabChange(item.name)"
                     :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
                     <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
                     <div>离线：<span class="gradient-text-two text-2xl font-bold">{{ item.offLine }}</span></div>
@@ -64,7 +79,7 @@ const barWidth = (index) => {
             </div>
             <div class="flex w-1/3 items-center justify-between flex-wrap">
                 <div v-for="item, index in analyDeatailData.slice(analyDeatailData.length / 2)"
-                    @click="runActive = item.name"
+                    @click="onTabChange(item.name)"
                     :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
                     <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
                     <div>离线：<span class="gradient-text-two text-2xl font-bold">{{ item.offLine }}</span></div>
@@ -85,19 +100,19 @@ const barWidth = (index) => {
                         <div>{{ r.name }}</div>
                     </div>
                 </div>
-                <div v-if="currentRun.sensorData.length > 0" class="w-[60%]">
+                <div v-if="currentRun.sensorData.length > 0" class="max-h-80 w-[60%]">
                     <ThirdLevelTitle title="设备类型" />
-                    <div class="sen-item flex flex-col justify-between my-4" v-for="item in currentRun.sensorData"
+                    <div class="sen-item flex flex-col  justify-between my-4" v-for="item in currentRun.sensorData"
                         :key="item.name">
                         <div class="flex items-center">{{ item.name }}</div>
                         <div class="flex h-4 w-full justify-between">
-                            <div class="w-5/6 bg-[#107BB8] h-full">
+                            <div class="w-3/4 bg-[#107BB8] h-full">
                                 <div :style="`width: ${(item.value / sum) * 100}%`"
                                     class="relative h-full bg-[#008AFF]">
                                     <div class="h-full absolute right-0 bg-white w-[5px]"></div>
                                 </div>
                             </div>
-                            <div class="value-unit w-1/6 px-1 flex items-center">
+                            <div class="value-unit w-1/4 px-1 flex items-center">
                                 <div class="text-xl font-bold">{{ item.value }}</div>
                                 <div>{{ item.unit }}</div>
                             </div>

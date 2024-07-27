@@ -10,8 +10,7 @@
 import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
-import { Label } from "cesium";
-import bgimage from "@/assets/imgs/main/title-h-third.png";
+import _ from "lodash";
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
@@ -23,9 +22,18 @@ const props = defineProps({
 
 const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
 const target = ref(null);
+const rootFontSize = useRootFontSize();
+
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
+});
+
+watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
+    renderChart(newFontSize);
+    if (mChart) {
+        mChart.resize();
+    }
 });
 
 const handleResize = () => {
@@ -425,7 +433,7 @@ const renderChart = (fontSize) => {
         return option;
     }
 
-    const serData = props.data.map((dItem, index) => {
+    const serData = _.map(props.data, (dItem, index) => {
         return {
             ...dItem,
             value: Number(dItem.value),
