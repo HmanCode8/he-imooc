@@ -62,9 +62,6 @@ import RightOperationMaintenance from '@/components/panels/RightOperationMainten
 import RightRunningMonitoring from '@/components/panels/RightRunningMonitoring.vue'
 import RightWarningDisposal from '@/components/panels/RightWarningDisposal.vue'
 
-// 地图工具函数
-import { createPopupLayer } from '@/utils/map/popupLayer'
-
 import { getVisualization } from '@/api/visualization.js'
 import { useGlobalStore } from '@/store'  // 引入全局状态管理
 
