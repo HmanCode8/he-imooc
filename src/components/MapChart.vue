@@ -27,7 +27,7 @@
       </div>
     </div>
     <!-- 图层栏 -->
-    <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
+    <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button>
     <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
     <div class="layer-tabs w-40 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
@@ -322,6 +322,7 @@ const createLayer = (config, group = null) => {
 };
 
 const initOpenLayersMap = () => {
+
   if (layerConfig.hasOwnProperty("customProjections")) {
     let projectionArr = [];
     for (let key in layerConfig.customProjections) {
@@ -594,7 +595,7 @@ const initCesiumMap = async () => {
 };
 
 onMounted(() => {
-  // initOpenLayersMap();
+  initOpenLayersMap();
 });
 
 const toggleMap = () => {
