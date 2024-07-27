@@ -9,7 +9,7 @@
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
           <div class="font-[pengmenzhengdao]">{{ tab.name }}</div>
-          <div v-if="currentTopTab === tab.value"
+          <div v-if="global.componentId === tab.value"
             class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4"></div>
         </div>
       </div>
@@ -33,10 +33,10 @@
     <div class="layer-tabs w-40 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
-          <div :class="`layer-item-${i.remark} w-1/2 h-[9%] relative hover:cursor-pointer`"
-            @click="onLayerOnchange(i.name)" v-for="(i) in layers " :key="i.name">
-            <div v-if="currentLayerTab === i.name"
-              class="w-full h-full layer-active absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')]">
+          <div :class="`layer-item-${layer.iconName} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
+            @click="onLayerOnchange(layer.iconName)" v-for="(layer, index) in layers " :key="layer.name">
+            <div v-if="currentLayerTab === layer.iconName"
+              class="w-full h-full absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')] bg-size">
             </div>
           </div>
         </div>
@@ -94,8 +94,8 @@
     <!-- 图例 -->
 
     <div ref="legendRef" v-if="0 < legendGroup.length"
-         class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
-      <MapLegend @update:checked="legendOnchage" :legendGroup="legendGroup"/>
+      class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
+      <MapLegend @update:checked="legendOnchage" :legendGroup="legendGroup" />
     </div>
   </div>
 </template>
@@ -114,19 +114,20 @@ import MapLegend from "@/components/MapLegend.vue";
 
 import ImageLayer from "ol/layer/Image";
 import TileLayer from "ol/layer/Tile";
-import {ImageArcGISRest, ImageWMS, WMTS} from "ol/source";
+import { ImageArcGISRest, ImageWMS, WMTS } from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
 import { get as getProjection } from "ol/proj";
 import { register } from "ol/proj/proj4";
 import Feature from "ol/Feature";
-import {EsriJSON, GeoJSON, WKT} from "ol/format";
-import {getRequestExtent} from "ol/source/Image";
-import {round} from "ol/math";
-import {getHeight, getWidth} from "ol/extent";
-import {DECIMALS} from "ol/source/common";
-import {appendParams} from "ol/uri";
+import { EsriJSON, GeoJSON, WKT } from "ol/format";
+import { getRequestExtent } from "ol/source/Image";
+import { round } from "ol/math";
+import { getHeight, getWidth } from "ol/extent";
+import { DECIMALS } from "ol/source/common";
+import { appendParams } from "ol/uri";
 
+const { layerConfig = {} } = window;
 const layers = ref([])
 const gsap = inject('gsap')
 const leyerRef = ref(null)
@@ -135,9 +136,8 @@ const geoJsonParser = new GeoJSON()
 const esriJsonParser = new EsriJSON()
 const global = useGlobalStore()
 const target = ref(null)
-const currentTopTab = toRef(global.componentId)
 const currentBottomTab = ref('underground-pipeline')
-const currentLayerTab = ref(null);
+const currentLayerTab = ref('ranqi');
 const loadedLayerGroup = ref([]);
 
 const map = ref(null);
@@ -148,7 +148,6 @@ const legendGroup = ref([]);
 const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
 
-const { layerConfig = {} } = window;
 
 const topTabs = ref([
   {
@@ -244,7 +243,7 @@ const onLayerOnchange = val => {
 
 const currentItem = computed(() =>
   _.get(
-    _.find(layers.value, item => item.name === currentLayerTab.value),
+    _.find(layers.value, item => item.iconName === currentLayerTab.value),
     "children",
     []
   )
@@ -264,12 +263,19 @@ watch(
   }
 );
 
+const initLayerTree = (key) => {
+  layers.value = layerConfig["layerTrees"][key];
+  currentLayerTab.value = _.get(layers.value, "0.name", "");
+}
+
 watch(
   () => global.componentId,
   value => {
-    currentTopTab.value = value;
-    setDefaultLayers(value);
-  }
+    initLayerTree(value)
+    // setDefaultLayers(value);
+  }, {
+  immediate: true
+}
 );
 // const computerLayout = (size, index, initStyle = 10) => {
 // 	let styles = []
@@ -317,18 +323,18 @@ const createLayer = (config, group = null) => {
         }
       })
     });
-  } else if (config.type.endsWith("arcgis_WMS")){
+  } else if (config.type.endsWith("arcgis_WMS")) {
     layer = new ImageLayer({
       source: new ImageArcGISRest({
         url: config.url,
         projection: config.projection,
-        params: {LAYERS: "show:" + config.layer}
+        params: { LAYERS: "show:" + config.layer }
       })
     });
   }
   if (null != layer) {
     layer.set("layerName", config.name);
-    layer.set("layerGroup", group ? group : currentTopTab.value);
+    layer.set("layerGroup", group ? group : global.componentId);
     layer.set("layerType", config.type);
     layer.set("detailLayer", config.detailLayer ? config.detailLayer : "");
     layer.set("legendLayer", config.legendLayer ? config.legendLayer : "");
@@ -381,21 +387,15 @@ const initOpenLayersMap = () => {
    */
   map.value = p;
 
-	// 延迟加载次要图层
-	setTimeout(() => {
-		setDefaultLayers(currentTopTab.value);
-
-    // 绑定点击事件
-    map.value.on('singleclick', queryPopupDetail);
-	}, 1000); // 延迟1秒加载
-};
-
-const closePopup = () => {
-  map.value.getOverlayById("popup").setPosition(undefined);
+  // 延迟加载次要图层
+  setTimeout(() => {
+    setDefaultLayers(global.componentId);
+    map.value.addOverlay(infoOverlay.value);
+  }, 1000); // 延迟1秒加载
 };
 
 const getLayerSource = sourceName => {
-	return _.cloneDeep(layerConfig["layerList"].find(v => v["name"] === sourceName));
+  return _.cloneDeep(layerConfig["layerList"].find(v => v["name"] === sourceName));
 }
 
 const setDefaultLayers = moduleName => {
@@ -412,35 +412,35 @@ const setDefaultLayers = moduleName => {
     if (0 < defaultLoadLayerArr.length) {
       const firstDefaultLayer = defaultLoadLayerArr[0];
       const defaultLoadLayerList = traverseLayerDefine(layers.value).filter(
-          v => defaultLoadLayerArr.includes(v.remark)
+        v => defaultLoadLayerArr.includes(v.remark)
       );
       currentLayerTab.value = _.get(_.find(layers.value,
-          v => v.children && v.children.some(
-              sub => sub.children && sub.children.some(
-                  item => firstDefaultLayer === item.remark
-              )
+        v => v.children && v.children.some(
+          sub => sub.children && sub.children.some(
+            item => firstDefaultLayer === item.remark
           )
+        )
       ), "name", "");
       const groupedLayerMap = Object.groupBy(
-          defaultLoadLayerList,
-          ({ source }) => source
+        defaultLoadLayerList,
+        ({ source }) => source
       );
       for (let sourceName in groupedLayerMap) {
         loadedLayerGroup.value = loadedLayerGroup.value.concat(
-            groupedLayerMap[sourceName].map(v => v.remark)
+          groupedLayerMap[sourceName].map(v => v.remark)
         );
         const loadLayerStr = groupedLayerMap[sourceName]
-            .filter(v => v.layer)
-            .map(v => v.layer)
-            .join(",");
+          .filter(v => v.layer)
+          .map(v => v.layer)
+          .join(",");
         const showDetailLayerStr = groupedLayerMap[sourceName]
-            .filter(v => v.detailLayer)
-            .map(v => v.detailLayer)
-            .join(",");
+          .filter(v => v.detailLayer)
+          .map(v => v.detailLayer)
+          .join(",");
         const showLegendLayerStr = groupedLayerMap[sourceName]
-            .filter(v => v.legendLayer)
-            .map(v => v.legendLayer)
-            .join(",");
+          .filter(v => v.legendLayer)
+          .map(v => v.legendLayer)
+          .join(",");
         const layerParam = {
           source: sourceName,
           layer: loadLayerStr,
@@ -468,7 +468,7 @@ const traverseLayerDefine = layerList => {
   return layerDefines.flat(Infinity);
 };
 
-const changeBaseLayer = baseLayerName =>{
+const changeBaseLayer = baseLayerName => {
   const baseLayerConfig = layerConfig["baseLayer"][baseLayerName];
   if (0 < baseLayerConfig.length) {
     map.value.getAllLayers().forEach(v => {
@@ -477,7 +477,7 @@ const changeBaseLayer = baseLayerName =>{
       }
     });
     baseLayerConfig.reverse()
-        .forEach(v => map.value.getLayers().insertAt(0, createLayer(getLayerSource(v), "base"),));
+      .forEach(v => map.value.getLayers().insertAt(0, createLayer(getLayerSource(v), "base"),));
   }
 }
 
@@ -500,18 +500,18 @@ const updateLayer = layerParam => {
         legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !loadLayerArr.includes(v.layerId));
         const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
         const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
-            .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
+          .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
         if (0 < newLayerStr.length) {
           if (0 < detailLayerArr.length) {
             layer.set(
-                "detailLayer",
-                layer.get("detailLayer").split(",").filter(l => !detailLayerArr.includes(l)).join(",")
+              "detailLayer",
+              layer.get("detailLayer").split(",").filter(l => !detailLayerArr.includes(l)).join(",")
             );
           }
           if (0 < legendLayerArr.length) {
             layer.set(
-                "legendLayer",
-                layer.get("legendLayer").split(",").filter(l => !legendLayerArr.includes(l)).join(",")
+              "legendLayer",
+              layer.get("legendLayer").split(",").filter(l => !legendLayerArr.includes(l)).join(",")
             );
           }
           layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
@@ -524,22 +524,22 @@ const updateLayer = layerParam => {
   } else {
     loadedLayerGroup.value.push(layerParam.remark);
     const layer = map.value
-        .getAllLayers().find(v => layerParam.source === v.get("layerName"));
+      .getAllLayers().find(v => layerParam.source === v.get("layerName"));
     if (layer) {
       if (layerParam.layer) {
         const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
         const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
-            .split(",").concat(loadLayerArr).join(",");
+          .split(",").concat(loadLayerArr).join(",");
         if (0 < detailLayerArr.length) {
           layer.set(
-              "detailLayer",
-              layer.get("detailLayer").split(",").concat(detailLayerArr).join(",")
+            "detailLayer",
+            layer.get("detailLayer").split(",").concat(detailLayerArr).join(",")
           );
         }
         if (0 < legendLayerArr.length) {
           layer.set(
-              "legendLayer",
-              layer.get("legendLayer").split(",").concat(legendLayerArr).join(",")
+            "legendLayer",
+            layer.get("legendLayer").split(",").concat(legendLayerArr).join(",")
           );
         }
         layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
@@ -568,8 +568,8 @@ const addLayer = layerValue => {
 
 const addLegend = (layer, legendLayer) => {
   const legendUrl = "arcgis_WMS" === layer.get("layerType") ?
-      layer.getSource().getUrl() + "/queryLegends?f=json&transparent=true&size=20,20&LAYERS=show:" + legendLayer :
-      layer.getSource().getLegendUrl(map.value.getView().getResolution(), {"LAYER": legendLayer});
+    layer.getSource().getUrl() + "/queryLegends?f=json&transparent=true&size=20,20&LAYERS=show:" + legendLayer :
+    layer.getSource().getLegendUrl(map.value.getView().getResolution(), { "LAYER": legendLayer });
   if (legendUrl) {
     fetch(legendUrl).then(res => res.json()).then(res => {
       if (res.layers) {
@@ -593,25 +593,25 @@ const queryPopupDetail = async evt => {
   for (let index in layers) {
     if (layers[index].get("detailLayer") && 0 < layers[index].get("detailLayer").length) {
       const url = "arcgis_WMS" === layers[index].get("layerType") ?
-          getArcgisIdentifyUrl(layers[index], evt.map, {
-            "GEOMETRY": evt.coordinate[0] + "," + evt.coordinate[1],
-            "LAYERS": "visible:" + layers[index].get("detailLayer")
-          }) :
-          layers[index].getSource().getFeatureInfoUrl(evt.coordinate, viewResolution, projection, {
-            "INFO_FORMAT": "application/json",
-            "QUERY_LAYERS": layers[index].get("detailLayer"),
-            "FEATURE_COUNT": 1
-          });
+        getArcgisIdentifyUrl(layers[index], evt.map, {
+          "GEOMETRY": evt.coordinate[0] + "," + evt.coordinate[1],
+          "LAYERS": "visible:" + layers[index].get("detailLayer")
+        }) :
+        layers[index].getSource().getFeatureInfoUrl(evt.coordinate, viewResolution, projection, {
+          "INFO_FORMAT": "application/json",
+          "QUERY_LAYERS": layers[index].get("detailLayer"),
+          "FEATURE_COUNT": 1
+        });
       if (url) {
 
         const features = await fetch(url).then(response => response.text())
-            .then(text =>
-                "arcgis_WMS" === layers[index].get("layerType") ?
-                    _.get(JSON.parse(text), "results", []).map(v => esriJsonParser.readFeature(v)) :
-                    geoJsonParser.readFeatures(text)
-            );
+          .then(text =>
+            "arcgis_WMS" === layers[index].get("layerType") ?
+              _.get(JSON.parse(text), "results", []).map(v => esriJsonParser.readFeature(v)) :
+              geoJsonParser.readFeatures(text)
+          );
         if (0 < features.length) {
-          popupObject.value = _.omit(features[0].getProperties(),["geometry"]);
+          popupObject.value = _.omit(features[0].getProperties(), ["geometry"]);
           map.value.getOverlayById("popup").setPosition(evt.coordinate);
           return;
         }
@@ -621,11 +621,11 @@ const queryPopupDetail = async evt => {
 };
 
 const getArcgisIdentifyUrl = (layer, mapInstance, queryParam) => {
-  if(!layer.getSource() instanceof ImageArcGISRest){
+  if (!layer.getSource() instanceof ImageArcGISRest) {
     return undefined;
   }
   const projection = getProjection(layer.getSource().getProjection() ?
-      layer.getSource().getProjection() : mapInstance.getProjection());
+    layer.getSource().getProjection() : mapInstance.getProjection());
   const resolution = mapInstance.getView().getResolution();
   const pixelRatio = layer.getSource().hidpi_ ? mapInstance.pixelRatio_ : 1;
   const params = {
@@ -635,7 +635,7 @@ const getArcgisIdentifyUrl = (layer, mapInstance, queryParam) => {
   };
   Object.assign(params, queryParam);
   const extent = getRequestExtent(mapInstance.getView().calculateExtent(mapInstance.getSize()),
-      resolution, pixelRatio, layer.getSource().ratio_);
+    resolution, pixelRatio, layer.getSource().ratio_);
   const srid = projection.getCode().split(/:(?=\d+$)/).pop();
 
   const imageResolution = resolution / pixelRatio;
@@ -711,7 +711,7 @@ const initCesiumMap = async () => {
 };
 
 onMounted(() => {
-   initOpenLayersMap();
+  initOpenLayersMap();
 });
 
 const toggleMap = () => {
@@ -740,6 +740,19 @@ const toggleMap = () => {
 
   100% {
     transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+$layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi;
+
+// 定义一个数组
+// $colors: guanxian, green, blue;
+
+// 使用 @each 遍历数组
+@each $layer in $layers {
+  .layer-item-#{$layer} {
+    // 在这里定义你的 CSS 属性
+    background-image: url("@/assets/imgs/main/layer-#{$layer}.png");
   }
 }
 
@@ -793,11 +806,6 @@ const toggleMap = () => {
         background-image: url("@/assets/imgs/main/layer-#{$i}.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
-
-        .layer-active {
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-        }
       }
     }
 
