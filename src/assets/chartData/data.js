@@ -899,7 +899,7 @@ const projectManageData = {
       name: "绿色低碳产业",
       children: [
         {
-          name: "个数",
+          name: "数量",
           value: 106,
           unit: "个",
         },
@@ -914,7 +914,7 @@ const projectManageData = {
       name: "新一代信息技术产业",
       children: [
         {
-          name: "个数",
+          name: "数量",
           value: 42,
           unit: "个",
         },
@@ -929,7 +929,7 @@ const projectManageData = {
       name: "新材料产业",
       children: [
         {
-          name: "个数",
+          name: "数量",
           value: 37,
           unit: "个",
         },
@@ -944,7 +944,7 @@ const projectManageData = {
       name: "高端装备产业",
       children: [
         {
-          name: "个数",
+          name: "数量",
           value: 73,
           unit: "个",
         },
@@ -959,7 +959,7 @@ const projectManageData = {
       name: "大健康产业",
       children: [
         {
-          name: "个数",
+          name: "数量",
           value: 4,
           unit: "个",
         },
@@ -989,28 +989,74 @@ const projectManageData = {
       value: null,
     },
   ],
-  projectDistribution: [
-    {
-      name: "盐都区",
-      construction: 86,
-      completion: null,
-    },
-    {
-      name: "阜宁县",
-      construction: 45,
-      completion: null,
-    },
-    {
-      name: "滨海县",
-      construction: 132,
-      completion: null,
-    },
-    {
-      name: "东台市",
-      construction: 73,
-      completion: null,
-    },
-  ],
+  projectDistribution: {
+    titles: [
+      "县区",
+      "在建项目/个",
+      "已完成项目/个"
+    ],
+    tableData: [
+      {
+        name: "盐都区",
+        construction: 86,
+        completion: null,
+      },
+      {
+        name: "阜宁县",
+        construction: 45,
+        completion: null,
+      },
+      {
+        name: "滨海县",
+        construction: 132,
+        completion: null,
+      },
+      {
+        name: "东台市",
+        construction: 73,
+        completion: null,
+      },
+      {
+        name: "盐都区",
+        construction: 86,
+        completion: null,
+      },
+      {
+        name: "阜宁县",
+        construction: 45,
+        completion: null,
+      },
+      {
+        name: "滨海县",
+        construction: 132,
+        completion: null,
+      },
+      {
+        name: "东台市",
+        construction: 73,
+        completion: null,
+      },
+      {
+        name: "盐都区",
+        construction: 86,
+        completion: null,
+      },
+      {
+        name: "阜宁县",
+        construction: 45,
+        completion: null,
+      },
+      {
+        name: "滨海县",
+        construction: 132,
+        completion: null,
+      },
+      {
+        name: "东台市",
+        construction: 73,
+        completion: null,
+      }],
+  },
   projectSituation: [
     {
       name: "项目总数",
