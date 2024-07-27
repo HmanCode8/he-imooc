@@ -12,9 +12,17 @@ import useRootFontSize from '@/hooks/useRootFontSize';
 import _ from 'lodash';
 
 const props = defineProps({
+    title: {
+        title: String,
+        default: '--',
+    },
     data: {
         type: Array,
-    }
+    },
+    colors: {
+        type: Array,
+        default: () => ['#0FA0FF', '#24F3FF'],
+    },
 });
 const target = ref(null);
 const chartData = toRef(props, 'data');
@@ -42,10 +50,11 @@ const handleResize = () => {
 
 const renderChart = (fontSize) => {
     const xData = _.map(chartData.value, c => c.name);
-    const data = _.map(chartData.value, c => c.value);
+    const data = _.map(chartData.value, c => Number(c.value));
+    const unit = _.get(chartData.value, '0.unit', '--');
     const option = {
         title: {
-            text: '单位：mm',
+            text: `单位：${unit}`,
             right: '5%',
             textStyle: {
                 fontSize,
@@ -58,13 +67,13 @@ const renderChart = (fontSize) => {
                 type: 'shadow',
             },
             formatter: function (params) {
-                var str = `管径：${params[0].axisValue}</br>${params[0].marker} 长度: ${params[0].value}mm`;
+                var str = `${props.title}：${params[0].axisValue}</br>${params[0].marker}${params[0].value}${unit}`;
                 return str;
             },
         },
         legend: {
             show: false,
-            data: ['管径'],
+            data: [props.title],
             textStyle: { fontSize, color: '#fff' },
             itemWidth: 12,
             itemHeight: 12,
@@ -143,11 +152,11 @@ const renderChart = (fontSize) => {
                         colorStops: [
                             {
                                 offset: 0,
-                                color: '#0FA0FF',
+                                color: props.colors[0],
                             },
                             {
                                 offset: 1,
-                                color: '#24F3FF',
+                                color: props.colors[1],
                             },
                         ],
                     },

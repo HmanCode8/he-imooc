@@ -102,7 +102,7 @@ watch(pipeActive, (val) => {
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="管径分析"></SecondLevelTitle>
 
-                <Bar3dChart :data="currentData.diameterData" class="w-full h-60" />
+                <Bar3dChart :data="currentData.diameterData" title="管径分析" class="w-full h-60" />
             </div>
 
             <!-- 管材分析 -->
