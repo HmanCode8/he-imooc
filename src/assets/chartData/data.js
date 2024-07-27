@@ -1428,6 +1428,7 @@ const operationMaintenanceData = {
       unit: "次",
     },
   ],
+  // 检查次数数据
   inspectionCounts: [
     {
       name: "总数",
@@ -1470,6 +1471,7 @@ const operationMaintenanceData = {
       unit: "次",
     },
   ],
+  // 上报问题数量数据
   reportedIssues: [
     {
       name: "燃气",
@@ -1507,6 +1509,7 @@ const operationMaintenanceData = {
       unit: "个",
     },
   ],
+  // 整改完成数量数据
   completedRectifications: [
     {
       name: "燃气",
@@ -1544,6 +1547,7 @@ const operationMaintenanceData = {
       unit: "个",
     },
   ],
+  // 未整改数量数据
   pendingRectifications: [
     {
       name: "燃气",
@@ -1579,6 +1583,92 @@ const operationMaintenanceData = {
       name: "路灯",
       value: "2",
       unit: "个",
+    },
+  ],
+  // 维修次数数据
+  maintenanceCounts: [
+    {
+      name: "总数",
+      value: "170",
+      unit: "次",
+    },
+    {
+      name: "燃气",
+      value: "7",
+      unit: "次",
+    },
+    {
+      name: "供水",
+      value: "1",
+      unit: "次",
+    },
+    {
+      name: "雨水",
+      value: "29",
+      unit: "次",
+    },
+    {
+      name: "污水",
+      value: "31",
+      unit: "次",
+    },
+    {
+      name: "道路",
+      value: "34",
+      unit: "次",
+    },
+    {
+      name: "桥梁",
+      value: "1",
+      unit: "次",
+    },
+    {
+      name: "路灯",
+      value: "67",
+      unit: "次",
+    },
+  ],
+  // 维修频率数据
+  maintenanceFrequencies: [
+    {
+      name: "燃气",
+      value: "4.12",
+      unit: "%",
+    },
+    {
+      name: "供水",
+      value: "0.59",
+      unit: "%",
+    },
+    {
+      name: "雨水",
+      value: "17.06",
+      unit: "%",
+    },
+    {
+      name: "污水",
+      value: "18.24",
+      unit: "%",
+    },
+    {
+      name: "道路",
+      value: "20",
+      unit: "%",
+    },
+    {
+      name: "桥梁",
+      value: "0.59",
+      unit: "%",
+    },
+    {
+      name: "第三方施工",
+      value: "0.59",
+      unit: "%",
+    },
+    {
+      name: "路灯",
+      value: "39.41",
+      unit: "%",
     },
   ],
 };
