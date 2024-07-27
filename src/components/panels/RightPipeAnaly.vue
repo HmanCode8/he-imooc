@@ -123,7 +123,7 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
                 </div>
                 <SecondLevelTitle title="密度分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
-                    <Bar3dChart :data="densityData" class="w-full h-40" />
+                    <Bar3dChart :data="densityData" title="密度" class="w-full h-40" />
                 </div>
             </div>
             <div class="8k:w-1/2 4k:w-full">

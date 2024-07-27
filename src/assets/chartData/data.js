@@ -5,6 +5,7 @@
 // 5.	运行监测
 // 6.	预警处置
 
+// 总览
 const overviewData = {
   basicOverview: [
     {
@@ -960,11 +961,7 @@ const projectManageData = {
     },
   ],
   projectDistribution: {
-    titles: [
-      "县区",
-      "在建项目/个",
-      "已完成项目/个"
-    ],
+    titles: ["县区", "在建项目/个", "已完成项目/个"],
     tableData: [
       {
         name: "盐都区",
@@ -1025,32 +1022,30 @@ const projectManageData = {
         name: "东台市",
         construction: 73,
         completion: null,
-      }],
+      },
+    ],
   },
   projectSituation: [
     {
       name: "项目总数",
       value: 926,
       unit: "个",
-      children: [
-        {
-          name: "市在建",
-          value: 25,
-          unit: "个",
-        },
-        {
-          name: "区在建",
-          value: 465,
-          unit: "个",
-        },
-        {
-          name: "县在建",
-          value: 436,
-          unit: "个",
-        },
-      ]
     },
-
+    {
+      name: "市在建",
+      value: 25,
+      unit: "个",
+    },
+    {
+      name: "区在建",
+      value: 465,
+      unit: "个",
+    },
+    {
+      name: "县在建",
+      value: 436,
+      unit: "个",
+    },
   ],
   areaConstruction: [
     {
@@ -1100,6 +1095,490 @@ const projectManageData = {
     {
       name: "响水县",
       value: 41,
+    },
+  ],
+};
+
+// 运维管养
+const operationMaintenanceData = {
+  name: "运维管养",
+  inspectionNum: [
+    {
+      name: "总数",
+      value: "16393",
+      unit: "次",
+    },
+    {
+      name: "燃气",
+      value: "3240",
+      unit: "次",
+    },
+    {
+      name: "供水",
+      value: "1677",
+      unit: "次",
+    },
+    {
+      name: "雨水",
+      value: "1247",
+      unit: "次",
+    },
+    {
+      name: "污水",
+      value: "2104",
+      unit: "次",
+    },
+    {
+      name: "道路",
+      value: "2478",
+      unit: "次",
+    },
+    {
+      name: "桥梁",
+      value: "996",
+      unit: "次",
+    },
+    {
+      name: "第三方施工",
+      value: "2063",
+      unit: "次",
+    },
+    {
+      name: "路灯",
+      value: "2588",
+      unit: "次",
+    },
+  ],
+  problems: [
+    {
+      name: "燃气",
+      value: "15",
+      unit: "个",
+    },
+    {
+      name: "供水",
+      value: "9",
+      unit: "个",
+    },
+    {
+      name: "雨水",
+      value: "12",
+      unit: "个",
+    },
+    {
+      name: "污水",
+      value: "6",
+      unit: "个",
+    },
+    {
+      name: "道路",
+      value: "3",
+      unit: "个",
+    },
+    {
+      name: "桥梁",
+      value: "2",
+      unit: "个",
+    },
+    {
+      name: "第三方施工",
+      value: "10",
+      unit: "个",
+    },
+    {
+      name: "路灯",
+      value: "18",
+      unit: "个",
+    },
+  ],
+  findProblems: [
+    {
+      name: "燃气",
+      value: "0",
+      unit: "个",
+    },
+    {
+      name: "供水",
+      value: "3",
+      unit: "个",
+    },
+    {
+      name: "雨水",
+      value: "1",
+      unit: "个",
+    },
+    {
+      name: "污水",
+      value: "1",
+      unit: "个",
+    },
+    {
+      name: "道路",
+      value: "6",
+      unit: "个",
+    },
+    {
+      name: "桥梁",
+      value: "0",
+      unit: "个",
+    },
+    {
+      name: "路灯",
+      value: "8",
+      unit: "个",
+    },
+  ],
+  timelinesRate: [
+    {
+      name: "燃气",
+      value: "98",
+      unit: "%",
+    },
+    {
+      name: "供水",
+      value: "89",
+      unit: "%",
+    },
+    {
+      name: "雨水",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "污水",
+      value: "91",
+      unit: "%",
+    },
+    {
+      name: "道路",
+      value: "87",
+      unit: "%",
+    },
+    {
+      name: "桥梁",
+      value: "96",
+      unit: "%",
+    },
+    {
+      name: "第三方施工",
+      value: "94",
+      unit: "%",
+    },
+    {
+      name: "路灯",
+      value: "89",
+      unit: "%",
+    },
+  ],
+  completionRate: [
+    {
+      name: "燃气",
+      value: "100",
+      unit: "%",
+    },
+    {
+      name: "供水",
+      value: "92",
+      unit: "%",
+    },
+    {
+      name: "雨水",
+      value: "99",
+      unit: "%",
+    },
+    {
+      name: "污水",
+      value: "96",
+      unit: "%",
+    },
+    {
+      name: "道路",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "桥梁",
+      value: "100",
+      unit: "%",
+    },
+    {
+      name: "第三方施工",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "路灯",
+      value: "94",
+      unit: "%",
+    },
+  ],
+  custodyTimeRate: [
+    {
+      name: "燃气",
+      value: "100",
+      unit: "%",
+    },
+    {
+      name: "供水",
+      value: "92",
+      unit: "%",
+    },
+    {
+      name: "雨水",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "污水",
+      value: "92",
+      unit: "%",
+    },
+    {
+      name: "道路",
+      value: "97",
+      unit: "%",
+    },
+    {
+      name: "桥梁",
+      value: "99",
+      unit: "%",
+    },
+    {
+      name: "路灯",
+      value: "94",
+      unit: "%",
+    },
+  ],
+  custodycompletioRate: [
+    {
+      name: "燃气",
+      value: "100",
+      unit: "%",
+    },
+    {
+      name: "供水",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "雨水",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "污水",
+      value: "95",
+      unit: "%",
+    },
+    {
+      name: "道路",
+      value: "100",
+      unit: "%",
+    },
+    {
+      name: "桥梁",
+      value: "96",
+      unit: "%",
+    },
+    {
+      name: "路灯",
+      value: "96",
+      unit: "%",
+    },
+  ],
+  frequNums: [
+    {
+      name: "总数",
+      value: "431",
+      unit: "次",
+    },
+    {
+      name: "燃气",
+      value: "96",
+      unit: "次",
+    },
+    {
+      name: "供水",
+      value: "101",
+      unit: "次",
+    },
+    {
+      name: "雨水",
+      value: "57",
+      unit: "次",
+    },
+    {
+      name: "污水",
+      value: "51",
+      unit: "次",
+    },
+    {
+      name: "道路",
+      value: "66",
+      unit: "次",
+    },
+    {
+      name: "桥梁",
+      value: "13",
+      unit: "次",
+    },
+    {
+      name: "路灯",
+      value: "47",
+      unit: "次",
+    },
+  ],
+  inspectionCounts: [
+    {
+      name: "总数",
+      value: "8808",
+      unit: "次",
+    },
+    {
+      name: "燃气",
+      value: "4712",
+      unit: "次",
+    },
+    {
+      name: "供水",
+      value: "614",
+      unit: "次",
+    },
+    {
+      name: "雨水",
+      value: "936",
+      unit: "次",
+    },
+    {
+      name: "污水",
+      value: "711",
+      unit: "次",
+    },
+    {
+      name: "道路",
+      value: "566",
+      unit: "次",
+    },
+    {
+      name: "桥梁",
+      value: "247",
+      unit: "次",
+    },
+    {
+      name: "路灯",
+      value: "1022",
+      unit: "次",
+    },
+  ],
+  reportedIssues: [
+    {
+      name: "燃气",
+      value: "39",
+      unit: "个",
+    },
+    {
+      name: "供水",
+      value: "9",
+      unit: "个",
+    },
+    {
+      name: "雨水",
+      value: "17",
+      unit: "个",
+    },
+    {
+      name: "污水",
+      value: "6",
+      unit: "个",
+    },
+    {
+      name: "道路",
+      value: "18",
+      unit: "个",
+    },
+    {
+      name: "桥梁",
+      value: "2",
+      unit: "个",
+    },
+    {
+      name: "路灯",
+      value: "12",
+      unit: "个",
+    },
+  ],
+  completedRectifications: [
+    {
+      name: "燃气",
+      value: "39",
+      unit: "个",
+    },
+    {
+      name: "供水",
+      value: "8",
+      unit: "个",
+    },
+    {
+      name: "雨水",
+      value: "12",
+      unit: "个",
+    },
+    {
+      name: "污水",
+      value: "6",
+      unit: "个",
+    },
+    {
+      name: "道路",
+      value: "10",
+      unit: "个",
+    },
+    {
+      name: "桥梁",
+      value: "1",
+      unit: "个",
+    },
+    {
+      name: "路灯",
+      value: "10",
+      unit: "个",
+    },
+  ],
+  pendingRectifications: [
+    {
+      name: "燃气",
+      value: "0",
+      unit: "个",
+    },
+    {
+      name: "供水",
+      value: "1",
+      unit: "个",
+    },
+    {
+      name: "雨水",
+      value: "5",
+      unit: "个",
+    },
+    {
+      name: "污水",
+      value: "0",
+      unit: "个",
+    },
+    {
+      name: "道路",
+      value: "8",
+      unit: "个",
+    },
+    {
+      name: "桥梁",
+      value: "1",
+      unit: "个",
+    },
+    {
+      name: "路灯",
+      value: "2",
+      unit: "个",
     },
   ],
 };
@@ -1436,6 +1915,7 @@ const runningMonitoringData = {
 export {
   overviewData,
   basicFacilitiesData,
+  operationMaintenanceData,
   runningMonitoringData,
   projectManageData,
 };

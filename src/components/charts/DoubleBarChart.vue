@@ -1,5 +1,8 @@
 <template>
-  <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+  <div class="">
+    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+  </div>
 </template>
 
 <script setup>
@@ -10,23 +13,33 @@ import { Label } from "cesium";
 import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
-  barData: {
-    type: Object,
+  data: {
+    type: Array,
     required: true
-  }
+  },
 });
+
+const rootFontSize = useRootFontSize();
 
 const target = ref(null);
 let mChart = null;
 onMounted(() => {
   mChart = echarts.init(target.value);
-  renderChart();
 });
 
-const handleResize = size => {
-  const fontSize = useRootFontSize();
-  renderChart(fontSize.value);
-  mChart.resize();
+watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
+  renderChart(newFontSize);
+  if (mChart) {
+    mChart.resize();
+  }
+});
+
+const handleResize = () => {
+  const rootFontSize = useRootFontSize();
+  renderChart(rootFontSize.value);
+  if (mChart) {
+    mChart.resize();
+  }
 };
 
 const renderChart = fontSize => {
@@ -37,7 +50,8 @@ const renderChart = fontSize => {
     legend: {
       data: ["已完成数量", "未完成数量"],
       textStyle: {
-        color: "#fff"
+        color: "#fff",
+        fontSize
       },
       itemHeight: 3
     },
@@ -45,7 +59,7 @@ const renderChart = fontSize => {
     xAxis: [
       {
         type: "category",
-        data: props.barData.xData,
+        data: props.data,
         axisLabel: {
           textStyle: {
             fontSize

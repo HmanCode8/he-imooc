@@ -7,8 +7,10 @@
 </template>
 
 <script setup>
-import { h, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
+import bgimage from "@/assets/imgs/main/title-h-third.png";
+
 import "echarts-gl";
 import _ from "lodash";
 import useRootFontSize from '@/hooks/useRootFontSize';
@@ -18,6 +20,14 @@ const props = defineProps({
         type: Array,
         required: true
     },
+    haveTotal: {
+        type: Boolean,
+        default: false
+    },
+    total: {
+        type: Number,
+        default: 0
+    }
 });
 
 const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
@@ -44,6 +54,7 @@ const handleResize = () => {
     }
 };
 const renderChart = (fontSize) => {
+    // const total = props.data.reduce((acc, cur) => acc + Number(cur.value), 0);
     // 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
     function getParametricEquation(
         startRatio,
@@ -373,11 +384,10 @@ const renderChart = (fontSize) => {
                     let obj = pieData.find(item => item.name === name);
                     let datas = pieData;
                     let total = 0;
-                    let target = obj.value;
                     for (let i = 0; i < datas.length; i++) {
                         total += Number(datas[i].value);
                     }
-                    const arr = [`{iconName|}{name|${name}}{value|${obj.value}m}`];
+                    const arr = [`{iconName|}{name|${name}}{value|${obj.value}${obj.unit}}`];
                     return arr.join("");
                 }
             },
@@ -390,46 +400,50 @@ const renderChart = (fontSize) => {
                 },
                 left: "2%",
                 top: "0%",
-                width: "40%",
+                width: "50%",
                 show: false,
                 boxHeight: 40
             },
             series,
-            // graphic: [
-            //     {
-            //         type: "text",
-            //         left: "44%",
-            //         top: "15%",
-            //         style: {
-            //             text: "总数",
-            //             textAlign: "center",
-            //             fill: "#fff",
-            //             fontSize
-            //         }
-            //     },
-            //     {
-            //         type: "text",
-            //         right: "20%",
-            //         top: "15%",
-            //         style: {
-            //             text: "324个",
-            //             textAlign: "center",
-            //             fontSize,
-            //             fill: "#ffff00"
-            //         }
-            //     },
-            //     {
-            //         type: "image",
-            //         left: "44%",
-            //         top: "20%",
-            //         style: {
-            //             image: bgimage,
-            //             width: 250,
-            //             height: 10
-            //         }
-            //     }
-            // ]
+
         };
+        if (props.haveTotal) {
+
+            option.graphic = [
+                {
+                    type: "text",
+                    left: "44%",
+                    top: "15%",
+                    style: {
+                        text: "总数",
+                        textAlign: "center",
+                        fill: "#fff",
+                        fontSize
+                    }
+                },
+                {
+                    type: "text",
+                    right: "20%",
+                    top: "15%",
+                    style: {
+                        text: `${props.total}`,
+                        textAlign: "center",
+                        fontSize,
+                        fill: "#ffff00"
+                    }
+                },
+                {
+                    type: "image",
+                    left: "44%",
+                    top: "20%",
+                    style: {
+                        image: bgimage,
+                        width: 250,
+                        height: 10
+                    }
+                }
+            ]
+        }
         return option;
     }
 

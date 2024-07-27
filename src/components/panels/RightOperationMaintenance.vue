@@ -2,44 +2,27 @@
 import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
-import PipeChart from "../charts/pipeChart.vue";
-import Bar3dChartOMSecond from "../charts/Bar3dChartOMSecond.vue";
+import Bar3dChart from "../charts/Bar3dChart.vue";
 import DoubleBarChart from "../charts/DoubleBarChart.vue";
-import pipeChart from "../charts/pipeChart.vue";
 import LiquidChart from "../charts/LiquidChart.vue";
 import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
+import Pipe3dChart from "../charts/Pipe3dChart.vue";
+import _ from "lodash";
 
+import { operationMaintenanceData } from '@/assets/chartData/data'
+
+const { inspectionCounts, reportedIssues, completedRectifications, pendingRectifications } = operationMaintenanceData
+
+const totalNum = _.get(_.find(inspectionCounts, { name: "总数" }), 'value', 0)
+const inspectionChartData = _.filter(inspectionCounts, (item) => item.name !== "总数")
+
+// const freqTotalNum = _.get(_.find(frequNums, { name: "总数" }), 'value', 0)
+// const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
 import { useGlobalStore } from "@/store";
 
 const global = useGlobalStore();
 
-const changeStore = () => {
-  global.setNavActive("/dashboard");
-};
-const arr1 = [
-  {
-    name: "示范区",
-    value: 1000
-  },
-  {
-    name: "建成区",
-    value: 100
-  }
-];
-
-const pipeChartdata = ref([
-  { name: "燃气", percentage: 24, distance: "25km", color: "#FF6384" },
-  { name: "盐都区", percentage: 24, distance: "25km", color: "#FFCE56" },
-  { name: "大丰区", percentage: 24, distance: "15km", color: "#36A2EB" },
-  { name: "建湖县", percentage: 24, distance: "25km", color: "#FFA07A" },
-  { name: "阜宁县", percentage: 24, distance: "25km", color: "#4BC0C0" },
-  { name: "滨海县", percentage: 24, distance: "25km", color: "#FF6384" },
-  { name: "响水县", percentage: 24, distance: "25km", color: "#FFCE56" },
-  { name: "东台市", percentage: 24, distance: "45km", color: "#36A2EB" },
-  { name: "射阳县", percentage: 24, distance: "25km", color: "#FFA07A" }
-]);
 
 const barChartData = ref({
   xData: ["燃气", "供水", "雨水", "污水", "道路", "桥梁", "路灯"],
@@ -107,17 +90,18 @@ const Pie3DChartData = ref([
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle class="w-full" title="检查次数"></SecondLevelTitle>
-        <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
+        <Pipe3dChart class="h-full" :data="inspectionChartData" :total="totalNum" :haveTotal="true" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="上报问题数量"></SecondLevelTitle>
-        <Bar3dChartOMSecond :barData="barChartData" />
+        <Bar3dChart class="h-60" :data="reportedIssues" :colors="['#FF9C11', '#873D0A']" />
       </div>
     </div>
-    <div class="flex w-full h-1/3 flex-wrap justify-between">
+
+    <div class="">
       <SecondLevelTitle class="w-full" title="整改已完成/未完成数量"></SecondLevelTitle>
-      <DoubleBarChart :barData="doubleBarData" />
+      <DoubleBarChart class="h-60" :barData="doubleBarData" />
     </div>
 
     <FristLevelTitle title="维护维修  次数/频率"></FristLevelTitle>
@@ -129,9 +113,9 @@ const Pie3DChartData = ref([
           <div class="text h-40 text-xs mt-3">
             维修次数
           </div>
-          <div class="star w-1 h-2">            
+          <div class="star w-1 h-2">
           </div>
-          <div class="line h-40">            
+          <div class="line h-40">
           </div>
         </div>
         <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
@@ -144,9 +128,9 @@ const Pie3DChartData = ref([
           <div class="text h-40 text-xs mt-3">
             维修频率
           </div>
-          <div class="star w-1 h-2">            
+          <div class="star w-1 h-2">
           </div>
-          <div class="line h-40">            
+          <div class="line h-40">
           </div>
         </div>
         <div class="flex flex-wrap">
@@ -160,19 +144,24 @@ const Pie3DChartData = ref([
 </template>
 
 <style scoped lang="scss">
-.longstrip{
-  margin:10px;
-  background: linear-gradient(rgba(0,202,255,0.43) 0%, rgba(0,201,255,0) 100%);
-  .star{
+.longstrip {
+  margin: 10px;
+  background: linear-gradient(rgba(0, 202, 255, 0.43) 0%, rgba(0, 201, 255, 0) 100%);
+
+  .star {
     background: #00D9FF;
     border: 1px solid #FFFFFF;
     transform: rotate(45deg);
   }
-  .text{
-    writing-mode: vertical-rl; /* 从右到左的垂直书写模式 */
-    text-orientation: mixed; /* 文字方向 */
+
+  .text {
+    writing-mode: vertical-rl;
+    /* 从右到左的垂直书写模式 */
+    text-orientation: mixed;
+    /* 文字方向 */
   }
-  .line{
+
+  .line {
     border: 1px solid;
     border-image: linear-gradient(180deg, rgba(0, 219, 255, 1), rgba(151, 151, 151, 0)) 2 2;
   }
