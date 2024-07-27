@@ -299,151 +299,124 @@ const basicFacilitiesData = {
       ],
     },
   ],
-  //管径分析
-  // >1000mm\1000mm-600mm\600mm-300mm\300mm-75mm\<75mm）
-  // 169km\691km\1139km\4627km\1834km
-  diameterData: [
+  stationData: [
+    {
+      name: "供水气场站",
+      key: "supply",
+      data: [
+        { name: "水厂", value: 18, unit: "座" },
+        { name: "增压泵站", value: 13, unit: "座" },
+        { name: "二次供水设施", value: 1055, unit: "个" },
+        { name: "市政消火栓", value: 9566, unit: "个" },
+      ],
+    },
+    {
+      name: "排水场站",
+      key: "drainage",
+      data: [
+        { name: "排涝泵站", value: 19, unit: "座" },
+        { name: "排水检查井", value: 31015, unit: "个" },
+        { name: "排水应急排口", value: 5, unit: "个" },
+        { name: "污水检查井", value: 19076, unit: "个" },
+        { name: "污水泵站", value: 23, unit: "座" },
+        { name: "闸站", value: 37, unit: "座" },
+        { name: "污水厂", value: 3, unit: "个" },
+        { name: "河道标记排口", value: 140, unit: "个" },
+      ],
+    },
+  ],
+  baseData: [
     {
       name: "燃气",
-      data: [],
+      diameterData: [
+        { name: ">1000mm", value: "52", unit: "km" },
+        { name: "1000mm-600mm", value: "390", unit: "km" },
+        { name: "600mm-300mm", value: "772", unit: "km" },
+        { name: "300mm-75mm", value: "2960", unit: "km" },
+        { name: "<75mm", value: "1085", unit: "km" },
+      ],
+      pipeAgeData: [
+        { name: "5年以下", value: "286", unit: "km" },
+        { name: "5-10年", value: "4200", unit: "km" },
+        { name: "10-15年", value: "506", unit: "km" },
+        { name: "15-20年", value: "60", unit: "km" },
+        { name: "20年以上", value: "168", unit: "km" },
+      ],
+      pipeTextureData: [
+        { name: "G", value: "286", unit: "km" },
+        { name: "PE", value: "4200", unit: "km" },
+        { name: "钢", value: "506", unit: "km" },
+        { name: "镀锌", value: "60", unit: "km" },
+        { name: "其它", value: "168", unit: "km" },
+      ],
     },
     {
       name: "供水",
-      data: [
-        {
-          name: ">1000mm",
-          value: "169",
-          unit: "km",
-        },
-        {
-          name: "1000mm-600mm",
-          value: "691",
-          unit: "km",
-        },
-        {
-          name: "600mm-300mm",
-          value: "1139",
-          unit: "km",
-        },
-        {
-          name: "300mm-75mm",
-          value: "4627",
-          unit: "km",
-        },
-        {
-          name: "<75mm",
-          value: "1834",
-          unit: "km",
-        },
+      diameterData: [
+        { name: ">1000mm", value: "169", unit: "km" },
+        { name: "1000mm-600mm", value: "691", unit: "km" },
+        { name: "600mm-300mm", value: "1139", unit: "km" },
+        { name: "300mm-75mm", value: "4627", unit: "km" },
+        { name: "<75mm", value: "1834", unit: "km" },
+      ],
+      pipeAgeData: [
+        { name: "5年以下", value: "1294", unit: "km" },
+        { name: "5-10年", value: "2650", unit: "km" },
+        { name: "10-15年", value: "2890", unit: "km" },
+        { name: "15-20年", value: "1416", unit: "km" },
+        { name: "20年以上", value: "1120", unit: "km" },
+      ],
+      pipeTextureData: [
+        { name: "球墨铸铁", value: "1294", unit: "km" },
+        { name: "灰口铸铁", value: "2650", unit: "km" },
+        { name: "塑料", value: "2890", unit: "km" },
+        { name: "钢筋混凝土", value: "1416", unit: "km" },
+        { name: "钢", value: "1120", unit: "km" },
+        { name: "镀锌", value: "0", unit: "km" },
+        { name: "其它", value: "0", unit: "km" },
       ],
     },
     {
       name: "排水",
-      data: [],
-    },
-    {
-      name: "电力",
-      data: [],
-    },
-    {
-      name: "通讯",
-      data: [],
-    },
-    {
-      name: "热力",
-      data: [],
-    },
-  ],
-  // 管龄分析
-  pipeAgeData: [
-    {
-      name: "燃气",
-      data: [],
-    },
-    {
-      name: "供水",
-      data: [],
-    },
-    {
-      name: "排水",
-      data: [],
-    },
-    {
-      name: "电力",
-      data: [],
-    },
-    {
-      name: "通讯",
-      data: [],
-    },
-    {
-      name: "热力",
-      data: [],
-    },
-  ],
-  //管材分析
-  // 供水（球墨铸铁、灰口铸铁、塑料、钢筋混凝土、钢、镀锌、其它)
-  // 169km\691km\1139km\4627km\1834km
-  pipeTextureData: [
-    {
-      name: "燃气",
-      data: [],
-    },
-    {
-      name: "供水",
-      data: [
-        {
-          name: "球墨铸铁",
-          value: "169",
-          unit: "km",
-        },
-        {
-          name: "灰口铸铁",
-          value: "691",
-          unit: "km",
-        },
-        {
-          name: "塑料",
-          value: "1139",
-          unit: "km",
-        },
-        {
-          name: "钢筋混凝土",
-          value: "4627",
-          unit: "km",
-        },
-        {
-          name: "钢",
-          value: "1834",
-          unit: "km",
-        },
-        {
-          name: "镀锌",
-          value: "0",
-          unit: "km",
-        },
-        {
-          name: "其它",
-          value: "0",
-          unit: "km",
-        },
+      diameterData: [
+        { name: ">1000mm", value: "69", unit: "km" },
+        { name: "1000mm-600mm", value: "402", unit: "km" },
+        { name: "600mm-300mm", value: "865", unit: "km" },
+        { name: "300mm-75mm", value: "3877", unit: "km" },
+        { name: "<75mm", value: "1371", unit: "km" },
+      ],
+      pipeAgeData: [
+        { name: "1年以下", value: "1254", unit: "km" },
+        { name: "5-10年", value: "2021", unit: "km" },
+        { name: "10-15年", value: "1895", unit: "km" },
+        { name: "15-20年", value: "783", unit: "km" },
+        { name: "20年以上", value: "901", unit: "km" },
+      ],
+      pipeTextureData: [
+        { name: "PE", value: "1254", unit: "km" },
+        { name: "PVC", value: "2021", unit: "km" },
+        { name: "铸铁", value: "1895", unit: "km" },
+        { name: "砖", value: "783", unit: "km" },
+        { name: "其它", value: "901", unit: "km" },
       ],
     },
     {
-      name: "排水",
-      data: [],
-    },
-    {
       name: "电力",
-      data: [],
+      diameterData: [],
+      pipeAgeData: [],
+      pipeTextureData: [],
     },
     {
       name: "通讯",
-      data: [],
+      diameterData: [],
+      pipeAgeData: [],
+      pipeTextureData: [],
     },
     {
       name: "热力",
-      data: [],
+      diameterData: [],
+      pipeAgeData: [],
+      pipeTextureData: [],
     },
   ],
   naturalColumns: [
@@ -464,7 +437,6 @@ const basicFacilitiesData = {
     { title: "用气人口(万人)", key: "user" },
     { title: "汽车加气站(座)", key: "natural" },
   ],
-
   naturalTableData: [
     {
       area: "盐城市",
@@ -635,8 +607,6 @@ const basicFacilitiesData = {
       unit: "瓦",
     },
   ],
-  // 主干路、次干路、支路、快速路、街坊路、境内公路
-  // 1450km\765km\504km\263km\197km\24km
   typeAlysisData: [
     {
       name: "主干路",
@@ -1251,7 +1221,6 @@ const runningMonitoringData = {
       ],
       coverageData: [],
     },
-
     {
       name: "雨水",
       layRates: [

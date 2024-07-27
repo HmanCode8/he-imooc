@@ -6,8 +6,11 @@ import Tab from '../common/Tab.vue'
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import BarRowChart from '../charts/BarRowChart.vue';
 import LineAreaChart from '../charts/LineAreaChart.vue';
+import { basicFacilitiesData } from '@/assets/chartData/data'
+import _ from 'lodash'
 
-
+const { baseData } = basicFacilitiesData
+const currentData = _.find(baseData, m => m.name === '燃气')
 const pieChartData = ref([
     { name: "待处理", value: 60, color: "#FF6384" },
     { name: "处置中", value: 23, color: "#FFCE56" },
@@ -63,12 +66,7 @@ const onTabChange = (k) => {
 
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle class="w-full" title="施工类型" />
-
-                <div class="w-full flex">
-                    <div class="chart-container w-full h-60">
-                        <BarRowChart />
-                    </div>
-                </div>
+                <BarRowChart class=" w-full h-60" :data="currentData.pipeAgeData" />
             </div>
 
         </div>

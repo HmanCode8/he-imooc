@@ -42,19 +42,10 @@ const props = defineProps({
     <table class="tboby">
       <thead>
         <tr class="z-999">
-          <th
-            style="background-color: aquamarine;"
-            v-for="col in columns"
-            :key="col.key"
-          >{{ col.title }}</th>
+          <th v-for="col in columns" :key="col.key">{{ col.title }}</th>
         </tr>
       </thead>
-      <vue3-seamless-scroll
-        class="seamless"
-        :list="tableData"
-        :step="0.4"
-        
-      >
+      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.4">
         <tbody ref="tableBody">
           <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
             <td v-for="col in columns" :key="col.key">{{ row[col.key] }}</td>
