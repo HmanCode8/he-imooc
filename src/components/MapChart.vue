@@ -8,7 +8,7 @@
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
-          <div class="font-[YouSheBiaoTiHei]">{{ tab.name }}</div>
+          <div class="font-[pengmenzhengdao]">{{ tab.name }}</div>
           <div v-if="currentTopTab === tab.value"
             class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4"></div>
         </div>
@@ -524,7 +524,7 @@ const addLayer = layerValue => {
   if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
     const legendUrl = layer
       .getSource()
-      .getLegendUrl(map.value.getView().getResolution(), {
+      .getLegendUrl(map.value && map.value.getView().getResolution(), {
         LAYER: layerValue["legendLayer"]
       });
     if (legendUrl) {

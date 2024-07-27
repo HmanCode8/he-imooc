@@ -12,23 +12,14 @@ import { basicFacilitiesData } from '@/assets/chartData/data'
 
 const { facilities, diameterData, pipeTextureData, typeAlysisData } = basicFacilitiesData
 
+
 const pipeActive = ref(facilities[0].name)
 const facilitieData = ref(facilities)
 
 const changeActive = (name) => {
     pipeActive.value = name
 }
-const pipeChartdata = ref([
-    { name: '亭湖区', percentage: 24, distance: '25km', color: '#FF6384' },
-    { name: '盐都区', percentage: 24, distance: '25km', color: '#FFCE56' },
-    { name: '大丰区', percentage: 24, distance: '15km', color: '#36A2EB' },
-    { name: '建湖县', percentage: 24, distance: '25km', color: '#FFA07A' },
-    { name: '阜宁县', percentage: 24, distance: '25km', color: '#4BC0C0' },
-    { name: '滨海县', percentage: 24, distance: '25km', color: '#FF6384' },
-    { name: '响水县', percentage: 24, distance: '25km', color: '#FFCE56' },
-    { name: '东台市', percentage: 24, distance: '45km', color: '#36A2EB' },
-    { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
-])
+
 const totleSize = ref([
     {
         name: '管线总长',
@@ -43,7 +34,7 @@ const totleSize = ref([
 ])
 
 //管径
-const pieData = computed(() => (_.get(_.find(diameterData, d => d.name === pipeActive.value), 'data', [])))
+const pipeData = computed(() => (_.get(_.find(diameterData, d => d.name === pipeActive.value), 'data', [])))
 
 // 管材
 
@@ -109,11 +100,7 @@ const material = computed(() => (_.get(_.find(pipeTextureData, d => d.name === p
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="管径分析"></SecondLevelTitle>
 
-                <div class="w-full flex">
-                    <div class="chart-container w-full h-60">
-                        <Bar3dChart :data="pieData" />
-                    </div>
-                </div>
+                <Bar3dChart :data="pipeData" class="w-full h-60" />
             </div>
 
             <!-- 管径分析 -->
