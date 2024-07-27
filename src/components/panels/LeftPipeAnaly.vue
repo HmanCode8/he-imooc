@@ -37,6 +37,8 @@ const totleSize = ref([
 watch(pipeActive, (val) => {
     // _.find(baseData, m => m.name === val)
     currentData.value = _.find(baseData, m => m.name === val)
+
+    console.log("pppppppppppppppp",currentData);
 }, {
     immediate: true
 })

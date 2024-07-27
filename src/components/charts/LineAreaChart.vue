@@ -22,6 +22,9 @@ const props = defineProps({
             { name: '射阳县', percentage: 24, distance: '25km', color: '#FFA07A' },
         ],
     },
+    lineAreaChartData:{
+        type: Array,
+    }
 });
 
 
@@ -43,7 +46,7 @@ const renderChart = (fontSize = 12) => {
     const option = {
         title: {
             right: '5%',
-            top: '10%',
+            top: '7%',
             text: '问题数：个',
             textStyle: {
                 color: 'rgba(80,227,194,0.6)',
@@ -70,16 +73,16 @@ const renderChart = (fontSize = 12) => {
                     show: false,
                 },
                 boundaryGap: false,
-                data: ['A', 'B', 'C', 'D', 'E', 'F'],
+                data: props.lineAreaChartData[0],
             },
         ],
         yAxis: [
             {
                 type: 'value',
-                name: '人',
-                nameTextStyle: {
-                    color: 'rgba(80,227,194,0.6)',
-                },
+                // name: '人',
+                // nameTextStyle: {
+                //     color: 'rgba(80,227,194,0.6)',
+                // },
                 splitLine: {
                     show: true,
                     lineStyle: {
@@ -154,7 +157,7 @@ const renderChart = (fontSize = 12) => {
                         shadowBlur: 20,
                     },
                 },
-                data: [502.84, 205.97, 332.79, 281.55, 398.35, 214.02],
+                data: props.lineAreaChartData[1],
             },
         ],
     };
