@@ -25,16 +25,18 @@ const props = defineProps({
       <div class="flex-1 text-center" v-for="(col,index) in tableTitles" :key="index">{{col}}</div>
     </div>
     <div class="table-container w-full h-60" ref="scrollRef" >
-      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.8">
+      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.8" :hover="true">
         <ul class="w-full ">
           <li
             v-for="(item, index) in tableData"
             :key="index"
             class="liStyle w-full  flex h-8"
           >
-            <div class="flex-1  flex items-center justify-center"><span>{{item.name}}</span></div>
+
+          <div class="flex-1  flex items-center justify-center" v-for="(col,index) in item" :key="index"><span>{{col}}</span></div>
+            <!-- <div class="flex-1  flex items-center justify-center"><span>{{item.name}}</span></div>
             <div class="flex-1  flex items-center justify-center"><span>{{item.construction}}</span></div>
-            <div class="flex-1  flex items-center justify-center"><span>{{item.completion}}</span></div>
+            <div class="flex-1  flex items-center justify-center"><span>{{item.completion}}</span></div> -->
           </li>
         </ul>
       </vue3-seamless-scroll>

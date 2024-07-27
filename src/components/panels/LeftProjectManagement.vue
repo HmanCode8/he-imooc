@@ -11,10 +11,13 @@ import { projectManageData } from "@/assets/chartData/data";
 const {
   overviewData,
   strategicIndustry,
-  projectDistribution
+  projectDistribution,
+  projectSize
 } = projectManageData;
 
 const tableTitles = ref([]);
+
+const currentComp = ref('项目规模');
 
 onMounted(() => {});
 
@@ -83,11 +86,11 @@ const list = ref([
             <div class="w-1/3 text-center">
               <div>{{overviewData[0].children[2].name}}</div>
               <div>
-                <span class="text-2xl font-bold">&nbsp;</span>&nbsp;/&nbsp;个
+                <span class="text-2xl font-bold">&nbsp;</span>&nbsp;--&nbsp;个
               </div>
               <div>
                 {{overviewData[0].children[3].name}}:
-                <span>&nbsp;&nbsp;</span>&nbsp;/
+                <span>&nbsp;&nbsp;--</span>&nbsp;
               </div>
             </div>
           </div>
@@ -170,7 +173,8 @@ const list = ref([
     <div class="w-full 8k:h-1/3 flex justify-between flex-wrap">
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="项目规模"></SecondLevelTitle>
-        <PipeIconChart class="w-full h-60" />
+        <!-- <PipeIconChart class="w-full h-60" /> -->
+        <PipeIconChart :data="projectSize" :comname="currentComp" class="w-full h-60" />
       </div>
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="项目分布"></SecondLevelTitle>
