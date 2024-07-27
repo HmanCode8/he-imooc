@@ -10,8 +10,26 @@ window.layerConfig = {
   layerTrees: {
     overview: [
       {
-        name: "管线",
-        remark: "1",
+        name: "基础",
+        iconName: "jichu",
+        type: "mainClass",
+        children: [
+          {
+            name: "示范区",
+            type: "subClass",
+            children: [],
+          },
+          {
+            name: "建成区",
+            type: "subClass",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "燃气",
+        iconName: "ranqi",
+        type: "mainClass",
         children: [
           {
             name: "给水",
@@ -23,7 +41,7 @@ window.layerConfig = {
                 layer: "2,3",
                 remark: "js",
                 detailLayer: "3",
-                legendLayer: "3"
+                legendLayer: "3",
               },
             ],
           },
@@ -38,7 +56,7 @@ window.layerConfig = {
                 layer: "6,7",
                 remark: "ws",
                 detailLayer: "11",
-                legendLayer: ""
+                legendLayer: "",
               },
               {
                 name: "雨水",
@@ -47,7 +65,7 @@ window.layerConfig = {
                 layer: "9,10",
                 remark: "ys",
                 detailLayer: "10",
-                legendLayer: ""
+                legendLayer: "",
               },
               {
                 name: "雨污合流",
@@ -56,7 +74,7 @@ window.layerConfig = {
                 layer: "12,13",
                 remark: "hs",
                 detailLayer: "13",
-                legendLayer: ""
+                legendLayer: "",
               },
             ],
           },
@@ -64,7 +82,8 @@ window.layerConfig = {
       },
       {
         name: "供水",
-        remark: "2",
+        iconName: "gongshui",
+        type: "mainClass",
         children: [
           {
             name: "管网",
@@ -76,7 +95,7 @@ window.layerConfig = {
                 layer: "0",
                 remark: "gs_js",
                 detailLayer: "0",
-                legendLayer: "0"
+                legendLayer: "0",
               },
               {
                 name: "统计结果",
@@ -85,12 +104,12 @@ window.layerConfig = {
                 defaultLoad: false,
                 showDetail: false,
                 showLegend: false,
-                properties:{
-                  "":""
+                properties: {
+                  "": "",
                 },
-                legend:{
-                  "":""
-                }
+                legend: {
+                  "": "",
+                },
               },
             ],
           },
@@ -103,9 +122,8 @@ window.layerConfig = {
     "project-management": [],
     "warning-disposal": [],
   },
-  defaultLayers:{
-    overview:["gs_js"],
-
+  defaultLayers: {
+    overview: ["gs_js"],
   },
   layerList: [
     {
@@ -189,7 +207,7 @@ window.layerConfig = {
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32",
-      opacity: 1
+      opacity: 1,
     },
     {
       name: "js",
@@ -197,7 +215,7 @@ window.layerConfig = {
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32",
-      opacity: 1
-    }
+      opacity: 1,
+    },
   ],
 };
