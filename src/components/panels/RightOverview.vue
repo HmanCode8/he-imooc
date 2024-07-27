@@ -200,7 +200,6 @@ const riskData = [
             </div>
         </div>
 
-
         <div class="w-full">
             <Tablechart class="h-60" />
         </div>

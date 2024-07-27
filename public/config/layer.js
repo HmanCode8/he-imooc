@@ -10,21 +10,38 @@ window.layerConfig = {
   layerTrees: {
     overview: [
       {
-        name: "管线",
+        name: "基础",
+        iconName: "jichu",
+        type: "mainClass",
+        children: [
+          {
+            name: "示范区",
+            type: "subClass",
+            children: [],
+          },
+          {
+            name: "建成区",
+            type: "subClass",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "燃气",
+        iconName: "ranqi",
         type: "mainClass",
         children: [
           {
             name: "给水",
-            type: "subClass",
             children: [
               {
                 name: "给水",
                 type: "layer",
                 source: "pipe",
-                layer: "42,43",
-                defaultLoad: true,
-                showDetail: true,
-                showLegend: true,
+                layer: "2,3",
+                remark: "js",
+                detailLayer: "3",
+                legendLayer: "3",
               },
             ],
           },
@@ -36,28 +53,28 @@ window.layerConfig = {
                 name: "污水",
                 type: "layer",
                 source: "pipe",
-                layer: "38,39",
-                defaultLoad: false,
-                showDetail: true,
-                showLegend: true,
+                layer: "6,7",
+                remark: "ws",
+                detailLayer: "11",
+                legendLayer: "",
               },
               {
                 name: "雨水",
                 type: "layer",
                 source: "pipe",
-                layer: "35,36",
-                defaultLoad: false,
-                showDetail: true,
-                showLegend: true,
+                layer: "9,10",
+                remark: "ys",
+                detailLayer: "10",
+                legendLayer: "",
               },
               {
                 name: "雨污合流",
                 type: "layer",
                 source: "pipe",
-                layer: "32,33",
-                defaultLoad: false,
-                showDetail: true,
-                showLegend: true,
+                layer: "12,13",
+                remark: "hs",
+                detailLayer: "13",
+                legendLayer: "",
               },
             ],
           },
@@ -65,20 +82,34 @@ window.layerConfig = {
       },
       {
         name: "供水",
+        iconName: "gongshui",
         type: "mainClass",
         children: [
           {
             name: "管网",
-            type: "subClass",
             children: [
               {
                 name: "给水",
                 type: "layer",
                 source: "js",
                 layer: "0",
+                remark: "gs_js",
+                detailLayer: "0",
+                legendLayer: "0",
+              },
+              {
+                name: "统计结果",
+                type: "layer",
+                source: "boundary",
                 defaultLoad: false,
-                showDetail: true,
-                showLegend: true,
+                showDetail: false,
+                showLegend: false,
+                properties: {
+                  "": "",
+                },
+                legend: {
+                  "": "",
+                },
               },
             ],
           },
@@ -90,6 +121,9 @@ window.layerConfig = {
     "operation-maintenance": [],
     "project-management": [],
     "warning-disposal": [],
+  },
+  defaultLayers: {
+    overview: ["gs_js"],
   },
   layerList: [
     {
@@ -169,17 +203,19 @@ window.layerConfig = {
     },
     {
       name: "pipe",
-      url: "https://gx128.portal.com/server/services/pipe_cgcs2000/MapServer/WMSServer",
+      url: "https://gx128.portal.com/server/rest/services/pipe_cgcs2000/MapServer",
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32",
+      opacity: 1,
     },
     {
       name: "js",
-      url: "https://gx128.portal.com/server/services/gs/MapServer/WMSServer",
+      url: "https://gx128.portal.com/server/rest/services/gs/MapServer",
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32",
+      opacity: 1,
     },
   ],
 };

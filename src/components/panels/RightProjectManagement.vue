@@ -38,18 +38,20 @@ const onTabChange = (k) => {
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle class="w-full" title="施工类型" />
 
-                <div class="w-full flex justify-around">
+                <div class="w-full h-full flex justify-around">
                     <div
-                        class="p-item w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-2.png')]">
+                        class=" w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-2.png')]">
                         <div>223</div>
                         <div class="flex flex-col justify-around items-center">
                             <div>项目总数</div>
                             <div>(个)</div>
                         </div>
                     </div>
-                    <div class="p-item  flex items-center justify-center">中间</div>
                     <div
-                        class="p-item w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')]">
+                        class="bg-[url('assets/imgs/project/project-center.png')] bg-size w-10 h-2/3 flex items-center justify-center">
+                    </div>
+                    <div
+                        class=" w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')]">
                         <div>223</div>
                         <div class="flex flex-col justify-around items-center">
                             <div>项目总数</div>
@@ -112,9 +114,4 @@ const onTabChange = (k) => {
     </div>
 </template>
 
-<style scoped lang="scss">
-.p-item {
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
-</style>
+<style scoped lang="scss"></style>
