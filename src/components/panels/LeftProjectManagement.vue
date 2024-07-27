@@ -64,7 +64,12 @@ const list = ref([
                 >{{overviewData[0].children[0].value}}</span>
                 {{overviewData[0].children[0].unit}}
               </div>
-              <div>{{overviewData[0].children[1].name}}:&nbsp;{{overviewData[0].children[1].value}}{{overviewData[0].children[1].unit}}</div>
+              <div class="flex justify-center items-center">
+                <div>{{overviewData[0].children[1].name}}:&nbsp;{{overviewData[0].children[1].value}}{{overviewData[0].children[1].unit}}</div>
+                <div
+                  class="bg-[url(assets/imgs/project/up-to.png)] bg-cover bg-center w-2 h-4 ml-1"
+                ></div>
+              </div>
             </div>
             <div class="w-1/3 text-center">
               <div>
@@ -98,7 +103,12 @@ const list = ref([
                 >{{overviewData[1].children[0].value}}</span>
                 {{overviewData[1].children[0].unit}}
               </div>
-              <div>{{overviewData[1].children[1].name}}:&nbsp;{{overviewData[1].children[1].value}}{{overviewData[1].children[1].unit}}</div>
+              <div class="flex justify-center items-center">
+                <div>{{overviewData[1].children[1].name}}:&nbsp;{{overviewData[1].children[1].value}}{{overviewData[1].children[1].unit}}</div>
+                <div
+                  class="bg-[url(assets/imgs/project/up-to.png)] bg-cover bg-center w-2 h-4 ml-1"
+                ></div>
+              </div>
             </div>
             <div class="w-1/3 text-center">
               <div>
@@ -135,13 +145,23 @@ const list = ref([
         <div
           class="bg-[url('assets/imgs/project/zlcy1.png')] bg-cover w-40 h-6 flex items-center justify-center"
         >{{ item.name }}</div>
-        <div class="bg-[url('assets/imgs/project/zlcy2.png')] bg-cover bg-center w-40 h-40 flex flex-col items-center ">
-          <div
-            class="font-bold mt-10 itemStyle"
-          >{{item.children[0].name}}:&nbsp;&nbsp;{{ item.children[0].value}}{{ item.children[0].unit}}</div>
-          <div
-            class="font-bold totalStyle"
-          >{{ item.children[1].name}}:&nbsp;&nbsp;{{item.children[1].value}}{{item.children[1].unit}}</div>
+        <div
+          class="bg-[url('assets/imgs/project/zlcy2.png')] bg-cover bg-center w-40 h-40 flex flex-col items-center"
+        >
+          <div class="text-xl mt-6">
+            {{item.children[0].name}}:&nbsp;&nbsp;
+            <span
+              class="itemStyle font-bold"
+            >{{ item.children[0].value}}</span>
+            {{ item.children[0].unit}}
+          </div>
+          <div class="text-xl">
+            {{ item.children[1].name}}:&nbsp;&nbsp;
+            <span
+              class="totalStyle font-bold"
+            >{{item.children[1].value}}</span>
+            {{item.children[1].unit}}
+          </div>
         </div>
       </div>
     </div>

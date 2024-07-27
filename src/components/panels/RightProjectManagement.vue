@@ -10,8 +10,7 @@ import { projectManageData } from "@/assets/chartData/data";
 import { ElCarousel, ElCarouselItem } from "element-plus";
 import ScrollBarRowChart from "../charts/ScrollBarRowChart.vue";
 
-
-const { projectSituation,areaConstruction} = projectManageData;
+const { projectSituation, areaConstruction } = projectManageData;
 
 const pieChartData = ref([
   { name: "待处理", value: 60, color: "#FF6384" },
@@ -43,19 +42,39 @@ const onTabChange = k => {
         <SecondLevelTitle class="w-full" title="施工类型" />
 
         <div class="w-full h-full flex justify-around">
-
           <div
-            class="w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-2.png')]"
+            class="w-1/4 flex flex-col justify-around h-40 bg-[url('assets/imgs/project/project-item-2.png')]"
           >
-            <div>{{projectSituation[0].value}}</div>
-            <div class="flex flex-col justify-around items-center">
-              <div>{{projectSituation[0].name}}</div>
+            <div class="flex justify-center items-center mt-4 text-2xl font-extrabold cityStyle">{{projectSituation[0].value}}</div>
+            <div class="flex flex-col items-center">
+              <div class="text-2xl font-extrabold italic">{{projectSituation[0].name}}</div>
               <div>({{projectSituation[0].unit}})</div>
             </div>
           </div>
-          <div
+          <!-- <div
             class="bg-[url('assets/imgs/project/project-center.png')] bg-size w-10 h-2/3 flex items-center justify-center"
-          ></div>
+          ></div> -->
+
+          <div
+            class="w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')]" 
+            v-for="(item) in projectSituation[0].children"
+            :key="item.name"
+          >
+              <div class="text-center mt-4 text-2xl font-extrabold countryStyle">{{item.value}}</div>
+              <div class="flex flex-col  items-center">
+                <div class="text-2xl font-extrabold italic">{{item.name}}</div>
+                <div>({{item.unit}})</div>
+              </div>
+           
+          </div>
+
+          <!-- <div class="w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')]">
+            <div>{{projectSituation[1].value}}</div>
+            <div class="flex flex-col justify-around items-center">
+              <div>{{projectSituation[1].name}}</div>
+              <div>({{projectSituation[1].unit}})</div>
+            </div>
+          </div>
 
           <div class="w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')]">
             <div>{{projectSituation[1].value}}</div>
@@ -63,7 +82,7 @@ const onTabChange = k => {
               <div>{{projectSituation[1].name}}</div>
               <div>({{projectSituation[1].unit}})</div>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -73,7 +92,7 @@ const onTabChange = k => {
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
             <!-- <BarRowChart /> -->
-            <ScrollBarRowChart :areaData="areaConstruction"/>
+            <ScrollBarRowChart :areaData="areaConstruction" />
           </div>
         </div>
       </div>
@@ -136,5 +155,19 @@ const onTabChange = k => {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.cityStyle {
+  font-family: "PingFangSC, PingFang SC";
+  background-image: linear-gradient(to top, #42bbd9, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.countryStyle {
+  font-family: "PingFangSC, PingFang SC";
+  background-image: linear-gradient(to top, #00A2FF, #E4FEFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>
