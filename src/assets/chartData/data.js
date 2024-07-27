@@ -1032,22 +1032,25 @@ const projectManageData = {
       name: "项目总数",
       value: 926,
       unit: "个",
+      children: [
+        {
+          name: "市在建",
+          value: 25,
+          unit: "个",
+        },
+        {
+          name: "区在建",
+          value: 465,
+          unit: "个",
+        },
+        {
+          name: "县在建",
+          value: 436,
+          unit: "个",
+        },
+      ]
     },
-    {
-      name: "市在建",
-      value: 25,
-      unit: "个",
-    },
-    {
-      name: "区在建",
-      value: 465,
-      unit: "个",
-    },
-    {
-      name: "县在建",
-      value: 436,
-      unit: "个",
-    },
+
   ],
   areaConstruction: [
     {
