@@ -946,18 +946,22 @@ const projectManageData = {
     {
       name: "0-100万",
       value: null,
+      unit:"万"
     },
     {
       name: "100-500万",
       value: null,
+      unit:"万"
     },
     {
       name: "500-1000万",
       value: null,
+      unit:"万"
     },
     {
       name: "1000万以上",
       value: null,
+      unit:"万"
     },
   ],
   projectDistribution: {
@@ -1030,22 +1034,24 @@ const projectManageData = {
       name: "项目总数",
       value: 926,
       unit: "个",
-    },
-    {
-      name: "市在建",
-      value: 25,
-      unit: "个",
-    },
-    {
-      name: "区在建",
-      value: 465,
-      unit: "个",
-    },
-    {
-      name: "县在建",
-      value: 436,
-      unit: "个",
-    },
+      children: [
+        {
+          name: "市在建",
+          value: 25,
+          unit: "个",
+        },
+        {
+          name: "区在建",
+          value: 465,
+          unit: "个",
+        },
+        {
+          name: "县在建",
+          value: 436,
+          unit: "个",
+        },
+      ]
+    }
   ],
   areaConstruction: [
     {
@@ -1097,6 +1103,136 @@ const projectManageData = {
       value: 41,
     },
   ],
+  inspectionData: [
+    {
+      name: "异常问题总数",
+      value: 10,
+      unit: "个"
+    },
+    {
+      name: "同比",
+      value: -1.19,
+      unit: "%"
+    },
+    [
+      {
+        flag: 0,
+        value: 0
+      },
+      {
+        flag: 1,
+        value: 1
+      },
+      {
+        flag: 2,
+        value: 0
+      },
+      {
+        flag: 3,
+        value: 0
+      },
+      {
+        flag: 4,
+        value: 2
+      },
+      {
+        flag: 5,
+        value: 4
+      },
+      {
+        flag: 6,
+        value: 3
+      },
+    ]
+  ]
+  ,
+  pipeDestroy: [
+    {
+      statisticDestroy: [
+        {
+          name: "待签收",
+          value: 2,
+          percent: "20%",
+          color: "#3796FF"
+        },
+        {
+          name: "处置中",
+          value: 1,
+          percent: "10%",
+          color: "#FFF500"
+        },
+        {
+          name: "已办结",
+          value: 7,
+          percent: "70%",
+          unit: "个",
+          color: "#23FF5F"
+        }
+      ]
+    },
+    {
+      title: ["序号", "名称", "区域", "状态"],
+      tableData: [{
+        id: "1",
+        name: "排水管线挖断事件",
+        district: "盐都区",
+        status: "待签收"
+      },
+      {
+        id: "2",
+        name: "给水管线挖断事件",
+        district: "大丰区",
+        status: "待签收"
+      },
+      {
+        id: "3",
+        name: "违法占压事件",
+        district: "大丰区",
+        status: "已办结"
+      },
+      {
+        id: "4",
+        name: "电力管线挖断事件",
+        district: "射阳县",
+        status: "已办结"
+      },
+      {
+        id: "5",
+        name: "给水管线挖断事件",
+        district: "亭湖区",
+        status: "已办结"
+      }, {
+        id: "1",
+        name: "排水管线挖断事件",
+        district: "盐都区",
+        status: "待签收"
+      },
+      {
+        id: "2",
+        name: "给水管线挖断事件",
+        district: "大丰区",
+        status: "待签收"
+      },
+      {
+        id: "3",
+        name: "违法占压事件",
+        district: "大丰区",
+        status: "已办结"
+      },
+      {
+        id: "4",
+        name: "电力管线挖断事件",
+        district: "射阳县",
+        status: "已办结"
+      },
+      {
+        id: "5",
+        name: "给水管线挖断事件",
+        district: "亭湖区",
+        status: "已办结"
+      }]
+    },
+  ]
 };
 
 // 运维管养
