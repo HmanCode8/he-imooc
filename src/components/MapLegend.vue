@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import _ from 'lodash'
 
 const emits = defineEmits(['update:checked'])
+const props = defineProps({"legendGroup": {type: Array, default: []}})
 const checked = ref([])
 const legendData = ref([
     {
@@ -34,15 +35,17 @@ const onChange = (k) => {
 
 <template>
     <div class="legend-content">
-        <div class="legend-title px-2 ">图例</div>
-        <div class="px-1">
-            <div v-for="item in legendData" :key="item.name" class="flex items-center p-2">
-                <div @click="onChange(item.name)"
+        <div class="px-2 flex flex-row justify-center">图例</div>
+        <div class="px-1 overflow-auto flex flex-col legend-item p" style="padding: 0 0 10px 0">
+            <div v-for="item in legendGroup" :key="item.source + item.label" class="flex flex-row justify-center items-center p-2">
+<!--                <div @click="onChange(item.name)"
                     class="legend-item-color w-4 h-4 border border-[#6189ca] hover:cursor-pointer flex justify-center items-center">
                     <div v-show="checked.includes(item.name)" class="h-1/2 w-1/2 bg-[#6eedfc]"></div>
                 </div>
                 <div :style="{ backgroundColor: item.color }" class="legend-item-name mx-4 w-16 h-1"></div>
-                <div class="legend-item-desc">80~83%</div>
+                <div class="legend-item-desc">80~83%</div>-->
+              <img :src="item.img" :alt="item.source + item.label" />
+              <div class="legend-item-label">{{ item.label }}</div>
             </div>
 
         </div>
@@ -52,5 +55,19 @@ const onChange = (k) => {
 <style scoped lang="scss">
 .legend-content {
     background: linear-gradient(to bottom, #0a234a, #305fad);
+
+    .legend-item {
+      max-height: 560px;
+      width: 300px;
+
+      .legend-item-label{
+        margin: 0 0 0 10px;
+        font-family: "Microsoft YaHei";
+        font-weight: 400;
+        font-size: 36px;
+        color: #FFFFFF;
+        line-height: 24px;
+      }
+    }
 }
 </style>

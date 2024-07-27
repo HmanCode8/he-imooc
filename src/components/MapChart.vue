@@ -33,8 +33,8 @@
     <div class="layer-tabs w-40 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
-          <div :class="`layer-item-${index + 1} w-1/2 h-[9%] relative hover:cursor-pointer`"
-            @click="onLayerOnchange(i.name)" v-for="(i, index) in layers " :key="i.name">
+          <div :class="`layer-item-${i.remark} w-1/2 h-[9%] relative hover:cursor-pointer`"
+            @click="onLayerOnchange(i.name)" v-for="(i) in layers " :key="i.name">
             <div v-if="currentLayerTab === i.name"
               class="w-full h-full layer-active absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')]">
             </div>
@@ -57,8 +57,8 @@
             <div
               class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 py-1 flex items-center h-6 bg-size font-bold">
               {{ sub.name }}</div>
-            <div v-for="item in sub.children" :key="item.name" class="pl-2">
-              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.name) ? 'select-item' : ''}`"
+            <div v-for="item in sub.children" :key="item.remark" class="pl-2">
+              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'select-item' : ''}`"
                 @click="updateLayer(item)">{{ item.name }}</div>
             </div>
           </div>
@@ -72,24 +72,30 @@
 			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
 			<div class="legend-content px-1">
 				<div class="legend-item flex items-center ">
-					<img class="legend-item-color w-4 h-4 bg-lime-400" alt="管线1" />
-					<div class="legend-item-desc">管线1</div>
+					<img :src="legend.img" :alt="legend.source + legend.label" />
+					<div class="legend-item-desc">{{ legend.label }}</div>
 				</div>
 			</div>
 		</div>
-		<div ref="popupCom" class="popup">
-			<span class="icon-close" @click="closePopup">✖</span>
-			<div style="background-color: #fff; padding: 5px; border: 1px solid black; color: #7fcc58;"
-				v-for="(value, key) in popupObject">
-				<p>{{ key }}:{{ value }}</p>
-			</div>
-    </div>-->
+		-->
+
+    <!-- 地图弹出框 -->
+
+    <div ref="popupCom" class="popup overflow-auto">
+      <div class="banner">
+        <div class="title">测试</div>
+        <div class="close-icon" @click="closePopup">✖</div>
+      </div>
+      <div class="info-wrapper overflow-auto">
+        <div class="info-text" v-for="(value, key) in popupObject">{{ key }} : {{ value }}</div>
+      </div>
+    </div>
 
     <!-- 图例 -->
 
-    <div ref="legendRef" v-if="global.componentId === 'operation-maintenance'"
-      class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
-      <MapLegend @update:checked="legendOnchage" />
+    <div ref="legendRef" v-if="0 < legendGroup.length"
+         class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
+      <MapLegend @update:checked="legendOnchage" :legendGroup="legendGroup"/>
     </div>
   </div>
 </template>
@@ -98,6 +104,7 @@
 import { computed, onMounted, ref, toRef, watch, inject } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
+import Overlay from "ol/Overlay";
 import { useGlobalStore } from "@/store";
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
@@ -107,16 +114,25 @@ import MapLegend from "@/components/MapLegend.vue";
 
 import ImageLayer from "ol/layer/Image";
 import TileLayer from "ol/layer/Tile";
-import { ImageWMS, WMTS } from "ol/source";
+import {ImageArcGISRest, ImageWMS, WMTS} from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import proj4 from "proj4";
 import { get as getProjection } from "ol/proj";
 import { register } from "ol/proj/proj4";
+import Feature from "ol/Feature";
+import {EsriJSON, GeoJSON, WKT} from "ol/format";
+import {getRequestExtent} from "ol/source/Image";
+import {round} from "ol/math";
+import {getHeight, getWidth} from "ol/extent";
+import {DECIMALS} from "ol/source/common";
+import {appendParams} from "ol/uri";
 
 const layers = ref([])
 const gsap = inject('gsap')
 const leyerRef = ref(null)
 const legendRef = ref(null)
+const geoJsonParser = new GeoJSON()
+const esriJsonParser = new EsriJSON()
 const global = useGlobalStore()
 const target = ref(null)
 const currentTopTab = toRef(global.componentId)
@@ -267,15 +283,6 @@ watch(
 // 	return size === 10 ? nextstyles[index] : arr[index]
 // }
 
-// 深拷贝对象
-const deepCopy = source => {
-  const target = {};
-  for (let index in source) {
-    target[index] = source[index];
-  }
-  return target;
-};
-
 const createLayer = (config, group = null) => {
   let layer = null;
   if ("WMTS" === config.type) {
@@ -299,7 +306,7 @@ const createLayer = (config, group = null) => {
         })
       })
     });
-  } else if (config.type.endsWith("WMS")) {
+  } else if (config.type.endsWith("geoserver_WMS")) {
     layer = new ImageLayer({
       source: new ImageWMS({
         url: config.url,
@@ -310,6 +317,14 @@ const createLayer = (config, group = null) => {
         }
       })
     });
+  } else if (config.type.endsWith("arcgis_WMS")){
+    layer = new ImageLayer({
+      source: new ImageArcGISRest({
+        url: config.url,
+        projection: config.projection,
+        params: {LAYERS: "show:" + config.layer}
+      })
+    });
   }
   if (null != layer) {
     layer.set("layerName", config.name);
@@ -317,6 +332,7 @@ const createLayer = (config, group = null) => {
     layer.set("layerType", config.type);
     layer.set("detailLayer", config.detailLayer ? config.detailLayer : "");
     layer.set("legendLayer", config.legendLayer ? config.legendLayer : "");
+    layer.setOpacity(_.clamp(_.get(config, "opacity"), 1.0), 0.0, 1.0);
   }
   return layer;
 };
@@ -336,10 +352,22 @@ const initOpenLayersMap = () => {
     createLayer(getLayerSource(v), "base")
   );
 
+  const infoOverlay = new Overlay({
+    id: "popup",
+    element: popupCom.value,
+    positioning: 'bottom-center',
+    offset: [0, -30],
+    autoPan: true,
+    autoPanAnimation: {
+      duration: 250,
+    },
+  });
+
   const p = new Map({
     target: target.value,
     layers: baseLayers,
     controls: [],
+    overlays: [infoOverlay],
     view: new View({
       center: [120.2327, 33.4905],
       zoom: 10,
@@ -353,16 +381,22 @@ const initOpenLayersMap = () => {
    */
   map.value = p;
 
-  // 延迟加载次要图层
-  setTimeout(() => {
-    setDefaultLayers(currentTopTab.value);
-    map.value.addOverlay(infoOverlay.value);
-  }, 1000); // 延迟1秒加载
+	// 延迟加载次要图层
+	setTimeout(() => {
+		setDefaultLayers(currentTopTab.value);
+
+    // 绑定点击事件
+    map.value.on('singleclick', queryPopupDetail);
+	}, 1000); // 延迟1秒加载
+};
+
+const closePopup = () => {
+  map.value.getOverlayById("popup").setPosition(undefined);
 };
 
 const getLayerSource = sourceName => {
-  return deepCopy(layerConfig["layerList"].find(v => v["name"] === sourceName));
-};
+	return _.cloneDeep(layerConfig["layerList"].find(v => v["name"] === sourceName));
+}
 
 const setDefaultLayers = moduleName => {
   let defaultLayerGroup = ["base", moduleName];
@@ -374,37 +408,49 @@ const setDefaultLayers = moduleName => {
   loadedLayerGroup.value.length = 0;
   if (layerConfig["layerTrees"].hasOwnProperty(moduleName)) {
     layers.value = layerConfig["layerTrees"][moduleName];
-    currentLayerTab.value = _.get(layers.value, "0.name", "");
-    const defaultLoadLayerList = traverseLayerDefine(layers.value).filter(
-      v => v.defaultLoad
-    );
-    const groupedLayerMap = Object.groupBy(
-      defaultLoadLayerList,
-      ({ source }) => source
-    );
-    for (let sourceName in groupedLayerMap) {
-      loadedLayerGroup.value = loadedLayerGroup.value.concat(
-        groupedLayerMap[sourceName].map(v => v.name)
+    const defaultLoadLayerArr = _.get(layerConfig.defaultLayers, moduleName, []);
+    if (0 < defaultLoadLayerArr.length) {
+      const firstDefaultLayer = defaultLoadLayerArr[0];
+      const defaultLoadLayerList = traverseLayerDefine(layers.value).filter(
+          v => defaultLoadLayerArr.includes(v.remark)
       );
-      const loadLayerStr = groupedLayerMap[sourceName]
-        .filter(v => v.layer)
-        .map(v => v.layer)
-        .join(",");
-      const showDetailLayerStr = groupedLayerMap[sourceName]
-        .filter(v => v.showDetail)
-        .map(v => v.layer)
-        .join(",");
-      const showLegendLayerStr = groupedLayerMap[sourceName]
-        .filter(v => v.showLegend)
-        .map(v => v.layer)
-        .join(",");
-      const layerParam = {
-        source: sourceName,
-        layer: loadLayerStr,
-        detailLayer: showDetailLayerStr,
-        legendLayer: showLegendLayerStr
-      };
-      addLayer(layerParam);
+      currentLayerTab.value = _.get(_.find(layers.value,
+          v => v.children && v.children.some(
+              sub => sub.children && sub.children.some(
+                  item => firstDefaultLayer === item.remark
+              )
+          )
+      ), "name", "");
+      const groupedLayerMap = Object.groupBy(
+          defaultLoadLayerList,
+          ({ source }) => source
+      );
+      for (let sourceName in groupedLayerMap) {
+        loadedLayerGroup.value = loadedLayerGroup.value.concat(
+            groupedLayerMap[sourceName].map(v => v.remark)
+        );
+        const loadLayerStr = groupedLayerMap[sourceName]
+            .filter(v => v.layer)
+            .map(v => v.layer)
+            .join(",");
+        const showDetailLayerStr = groupedLayerMap[sourceName]
+            .filter(v => v.detailLayer)
+            .map(v => v.detailLayer)
+            .join(",");
+        const showLegendLayerStr = groupedLayerMap[sourceName]
+            .filter(v => v.legendLayer)
+            .map(v => v.legendLayer)
+            .join(",");
+        const layerParam = {
+          source: sourceName,
+          layer: loadLayerStr,
+          detailLayer: showDetailLayerStr,
+          legendLayer: showLegendLayerStr
+        };
+        addLayer(layerParam);
+      }
+    } else {
+      currentLayerTab.value = _.get(layers.value, "0.name", "");
     }
   }
 };
@@ -422,44 +468,53 @@ const traverseLayerDefine = layerList => {
   return layerDefines.flat(Infinity);
 };
 
+const changeBaseLayer = baseLayerName =>{
+  const baseLayerConfig = layerConfig["baseLayer"][baseLayerName];
+  if (0 < baseLayerConfig.length) {
+    map.value.getAllLayers().forEach(v => {
+      if ("base" === v.get("layerType")) {
+        map.value.removeLayer(v);
+      }
+    });
+    baseLayerConfig.reverse()
+        .forEach(v => map.value.getLayers().insertAt(0, createLayer(getLayerSource(v), "base"),));
+  }
+}
+
 const updateLayer = layerParam => {
   if ("layer" !== layerParam.type) {
     return;
   }
-  if (loadedLayerGroup.value.includes(layerParam.name)) {
+  const loadLayerArr = _.get(layerParam, "layer", "").split(",");
+  const detailLayerArr = _.get(layerParam, "detailLayer", "").split(",");
+  const legendLayerArr = _.get(layerParam, "legendLayer", "").split(",");
+  if (loadedLayerGroup.value.includes(layerParam.remark)) {
     loadedLayerGroup.value = loadedLayerGroup.value.filter(
-      layer => layer !== layerParam.name
+      layer => layer !== layerParam.remark
     );
     const layer = map.value
       .getAllLayers()
       .find(v => layerParam.source === v.get("layerName"));
     if (layer) {
       if (layerParam.layer) {
-        const layerArr = layerParam.layer.split(",");
-        const newLayerStr = layer
-          .getSource()
-          .getParams()
-        ["LAYERS"].split(",")
-          .filter(l => !layerArr.includes(l))
-          .join(",");
+        legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !loadLayerArr.includes(v.layerId));
+        const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
+        const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
+            .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
         if (0 < newLayerStr.length) {
-          layer.set(
-            "detailLayer",
-            layer
-              .get("detailLayer")
-              .split(",")
-              .filter(l => !layerArr.includes(l))
-              .join(",")
-          );
-          layer.set(
-            "legendLayer",
-            layer
-              .get("legendLayer")
-              .split(",")
-              .filter(l => !layerArr.includes(l))
-              .join(",")
-          );
-          layer.getSource().getParams()["LAYERS"] = newLayerStr;
+          if (0 < detailLayerArr.length) {
+            layer.set(
+                "detailLayer",
+                layer.get("detailLayer").split(",").filter(l => !detailLayerArr.includes(l)).join(",")
+            );
+          }
+          if (0 < legendLayerArr.length) {
+            layer.set(
+                "legendLayer",
+                layer.get("legendLayer").split(",").filter(l => !legendLayerArr.includes(l)).join(",")
+            );
+          }
+          layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
           layer.getSource().changed();
           return;
         }
@@ -467,47 +522,32 @@ const updateLayer = layerParam => {
       map.value.removeLayer(layer);
     }
   } else {
-    loadedLayerGroup.value.push(layerParam.name);
+    loadedLayerGroup.value.push(layerParam.remark);
     const layer = map.value
-      .getAllLayers()
-      .find(v => layerParam.source === v.get("layerName"));
+        .getAllLayers().find(v => layerParam.source === v.get("layerName"));
     if (layer) {
       if (layerParam.layer) {
-        const layerArr = layerParam.layer.split(",");
-        const newLayerStr = layer
-          .getSource()
-          .getParams()
-        ["LAYERS"].split(",")
-          .concat(layerArr)
-          .join(",");
-        if (layerParam.showDetail) {
+        const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
+        const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
+            .split(",").concat(loadLayerArr).join(",");
+        if (0 < detailLayerArr.length) {
           layer.set(
-            "detailLayer",
-            layer
-              .get("detailLayer")
-              .split(",")
-              .concat(layerArr)
-              .join(",")
+              "detailLayer",
+              layer.get("detailLayer").split(",").concat(detailLayerArr).join(",")
           );
         }
-        if (layerParam.showLegend) {
+        if (0 < legendLayerArr.length) {
           layer.set(
-            "legendLayer",
-            layer
-              .get("legendLayer")
-              .split(",")
-              .concat(layerArr)
-              .join(",")
+              "legendLayer",
+              layer.get("legendLayer").split(",").concat(legendLayerArr).join(",")
           );
         }
-        layer.getSource().getParams()["LAYERS"] = newLayerStr;
+        layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
         layer.getSource().changed();
+        addLegend(layer, layerParam.layer);
       }
     } else {
-      const initParam = deepCopy(layerParam);
-      initParam["detailLayer"] = layerParam.showDetail ? layerParam.layer : "";
-      initParam["legendLayer"] = layerParam.showLegend ? layerParam.layer : "";
-      addLayer(initParam);
+      addLayer(layerParam);
     }
   }
 };
@@ -522,15 +562,92 @@ const addLayer = layerValue => {
   const layer = createLayer(layerParam);
   map.value && map.value.addLayer(layer);
   if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
-    const legendUrl = layer
-      .getSource()
-      .getLegendUrl(map.value && map.value.getView().getResolution(), {
-        LAYER: layerValue["legendLayer"]
-      });
-    if (legendUrl) {
-      fetch(legendUrl);
+    addLegend(layer, layerValue["legendLayer"]);
+  }
+}
+
+const addLegend = (layer, legendLayer) => {
+  const legendUrl = "arcgis_WMS" === layer.get("layerType") ?
+      layer.getSource().getUrl() + "/queryLegends?f=json&transparent=true&size=20,20&LAYERS=show:" + legendLayer :
+      layer.getSource().getLegendUrl(map.value.getView().getResolution(), {"LAYER": legendLayer});
+  if (legendUrl) {
+    fetch(legendUrl).then(res => res.json()).then(res => {
+      if (res.layers) {
+        legendGroup.value = legendGroup.value.concat(res.layers.map(v => v.legend.map(it => {
+          return {
+            "source": layer.get("layerName"),
+            "layerId": "" + v.layerId,
+            "img": "data:" + it.contentType + ";base64," + it.imageData,
+            "label": it.label
+          }
+        })).flat(Infinity));
+      }
+    });
+  }
+};
+
+const queryPopupDetail = async evt => {
+  const viewResolution = evt.map.getView().getResolution();
+  const projection = evt.map.getView().getProjection();
+  let layers = evt.map.getAllLayers();
+  for (let index in layers) {
+    if (layers[index].get("detailLayer") && 0 < layers[index].get("detailLayer").length) {
+      const url = "arcgis_WMS" === layers[index].get("layerType") ?
+          getArcgisIdentifyUrl(layers[index], evt.map, {
+            "GEOMETRY": evt.coordinate[0] + "," + evt.coordinate[1],
+            "LAYERS": "visible:" + layers[index].get("detailLayer")
+          }) :
+          layers[index].getSource().getFeatureInfoUrl(evt.coordinate, viewResolution, projection, {
+            "INFO_FORMAT": "application/json",
+            "QUERY_LAYERS": layers[index].get("detailLayer"),
+            "FEATURE_COUNT": 1
+          });
+      if (url) {
+
+        const features = await fetch(url).then(response => response.text())
+            .then(text =>
+                "arcgis_WMS" === layers[index].get("layerType") ?
+                    _.get(JSON.parse(text), "results", []).map(v => esriJsonParser.readFeature(v)) :
+                    geoJsonParser.readFeatures(text)
+            );
+        if (0 < features.length) {
+          popupObject.value = _.omit(features[0].getProperties(),["geometry"]);
+          map.value.getOverlayById("popup").setPosition(evt.coordinate);
+          return;
+        }
+      }
     }
   }
+};
+
+const getArcgisIdentifyUrl = (layer, mapInstance, queryParam) => {
+  if(!layer.getSource() instanceof ImageArcGISRest){
+    return undefined;
+  }
+  const projection = getProjection(layer.getSource().getProjection() ?
+      layer.getSource().getProjection() : mapInstance.getProjection());
+  const resolution = mapInstance.getView().getResolution();
+  const pixelRatio = layer.getSource().hidpi_ ? mapInstance.pixelRatio_ : 1;
+  const params = {
+    'F': 'JSON',
+    'GEOMETRYTYPE': 'esriGeometryPoint',
+    'TOLERANCE': 2
+  };
+  Object.assign(params, queryParam);
+  const extent = getRequestExtent(mapInstance.getView().calculateExtent(mapInstance.getSize()),
+      resolution, pixelRatio, layer.getSource().ratio_);
+  const srid = projection.getCode().split(/:(?=\d+$)/).pop();
+
+  const imageResolution = resolution / pixelRatio;
+
+  const width = round(getWidth(extent) / imageResolution, DECIMALS);
+  const height = round(getHeight(extent) / imageResolution, DECIMALS);
+  const dpi = Math.round(_.get(layer.getSource().getParams(), "DPI", 90) * pixelRatio);
+
+  params['IMAGEDISPLAY'] = width + ',' + height + ',' + dpi;
+  params['MAPEXTENT'] = extent.join(',');
+  params['SR'] = srid;
+  return appendParams(layer.getSource().getUrl() + "/identify", params);
 };
 
 const initCesiumMap = async () => {
@@ -594,7 +711,7 @@ const initCesiumMap = async () => {
 };
 
 onMounted(() => {
-  // initOpenLayersMap();
+   initOpenLayersMap();
 });
 
 const toggleMap = () => {
@@ -738,36 +855,59 @@ const toggleMap = () => {
 }
 
 .popup {
-  width: 300px;
-  height: 100px;
-  background: #fff;
-  position: absolute;
-  top: -115px;
-  left: -150px;
-  box-sizing: border-box;
-  padding: 10px;
+  width: 845px;
+  height: 587px;
+  background: url("@/assets/imgs/main/map-popup-bg.png") -1px -1px no-repeat;
+  background-size: 847px 589px;
+  margin-left: 73px;
 
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
+  .banner {
+    height: 62px;
+    color: rgba(255, 255, 255, 1);
+    font-size: 48px;
+    font-family: "YouSheBiaoTiHei";
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 62px;
+    margin: 48px 0 0 74px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .title {
+      overflow-wrap: break-word;
+    }
+
+    .close-icon {
+      color: rgba(205, 228, 248, 1);
+      font-size: 32px;
+      cursor: pointer;
+      margin: 10px 70px 0 0;
+    }
   }
 
-  .icon-close {
-    position: absolute;
-    top: 0px;
-    right: 8px;
-    cursor: pointer;
-  }
+  .info-wrapper {
+    max-height: 370px;
+    width: 610px;
+    overflow-wrap: break-word;
+    font-size: 0;
+    font-family: "PingFangSC-Regular";
+    font-weight: normal;
+    text-align: left;
+    margin: 40px 0 0 85px;
 
-  .content {
-    margin-top: 14px;
+    .info-text {
+      width: 609px;
+      overflow-wrap: break-word;
+      color: rgba(205, 228, 248, 1);
+      font-size: 32px;
+      font-family: "PingFangSC-Regular";
+      font-weight: normal;
+      text-align: left;
+      white-space: normal;
+      line-height: 45px;
+    }
   }
 }
 </style>
