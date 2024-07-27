@@ -11,24 +11,22 @@ window.layerConfig = {
     overview: [
       {
         name: "基础",
-        iconName: "jichu",
+        remark: "jichu",
         type: "mainClass",
         children: [
           {
             name: "示范区",
-            type: "subClass",
             children: [],
           },
           {
             name: "建成区",
-            type: "subClass",
             children: [],
           },
         ],
       },
       {
         name: "燃气",
-        iconName: "ranqi",
+        remark: "ranqi",
         type: "mainClass",
         children: [
           {
@@ -47,7 +45,6 @@ window.layerConfig = {
           },
           {
             name: "排水",
-            type: "subClass",
             children: [
               {
                 name: "污水",
@@ -82,8 +79,7 @@ window.layerConfig = {
       },
       {
         name: "供水",
-        iconName: "gongshui",
-        type: "mainClass",
+        remark: "gongshui",
         children: [
           {
             name: "管网",
@@ -125,6 +121,7 @@ window.layerConfig = {
   defaultLayers: {
     overview: ["gs_js"],
   },
+  detailFields:[],
   layerList: [
     {
       name: "vectorBase",
