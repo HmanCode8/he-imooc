@@ -4,14 +4,15 @@ import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import Tab from '../common/Tab.vue'
-import TrapezoidalBarChart from '../charts/TrapezoidalBarChart.vue';
+import _ from 'lodash'
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
 
-const { naturalColumns, naturalTableData, liquefiedColumns, liquefiedTableData, roadData, typeAlysisData, densityData, bridgeData, bridgeColumns, bridgeTableData } = basicFacilitiesData
-const active = ref('supply')
+const { naturalColumns, naturalTableData, liquefiedColumns, liquefiedTableData, roadData, typeAlysisData, densityData, bridgeData, bridgeColumns, bridgeTableData, stationData } = basicFacilitiesData
+const active = ref('natural')
+const activeStation = ref('supply')
 const dataActive = ref(roadData[0].name)
 const dataChnage = (name) => {
     dataActive.value = name
@@ -27,8 +28,7 @@ const titletabs2 = ref([
     { name: '排水气场站', value: 'drainage' },
 ])
 
-
-
+const stationItem = computed(() => _.get(_.find(stationData, (item) => item.key === activeStation.value), 'data', []))
 const columns = computed(() => active.value === 'natural' ? naturalColumns : liquefiedColumns)
 
 const tableData = computed(() => active.value === 'natural' ? naturalTableData : liquefiedTableData)
@@ -53,11 +53,26 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
                 <ThirdLevelTitle title="供排水">
                     <template v-slot:title-slot>
                         <div class="flex justify-between items-center">
-                            <Tab v-model="active" :data="titletabs2" />
+                            <Tab v-model="activeStation" :data="titletabs2" />
                         </div>
                     </template>
                 </ThirdLevelTitle>
-                <TrapezoidalBarChart />
+                <!-- <TrapezoidalBarChart /> -->
+                <div class="flex h-full justify-between flex-wrap items-center mx-2">
+                    <div class="w-[23%] flex items-center flex-col justify-center h-1/2"
+                        v-for="(item, index) in stationItem" :key="index">
+                        <div
+                            class="my-4 flex justify-center h-full w-full bg-[url('assets/imgs/infrastructure/top-icon-1.png')] bg-size mb-2">
+                            <div class="flex items-center">
+                                {{ item.name }}
+                            </div>
+
+                        </div>
+                        <div>
+                            {{ item.value }}{{ item.unit }}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
 

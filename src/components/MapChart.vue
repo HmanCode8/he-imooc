@@ -711,7 +711,7 @@ const initCesiumMap = async () => {
 };
 
 onMounted(() => {
-  initOpenLayersMap();
+  // initOpenLayersMap();
 });
 
 const toggleMap = () => {

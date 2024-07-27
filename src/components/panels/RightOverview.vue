@@ -2,9 +2,10 @@
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import Tablechart from '../charts/Tablechart.vue'
-
 import { useGlobalStore } from "@/store";
-import { color } from 'echarts'
+import { basicFacilitiesData } from '@/assets/chartData/data'
+const { naturalColumns, naturalTableData } = basicFacilitiesData
+
 
 const global = useGlobalStore()
 
@@ -199,10 +200,7 @@ const riskData = [
                 </ul>
             </div>
         </div>
-
-        <div class="w-full">
-            <Tablechart class="h-60" />
-        </div>
+        <Tablechart :columns="naturalColumns" :tableData="naturalTableData" class="h-60 mt-10" />
     </div>
 </template>
 
