@@ -37,10 +37,10 @@ body,#app {
   src: url('./assets/fonts/zhener.ttf') format('truetype');
 }
 /* pengmenzhengdao字体 */
-/* @font-face {
+@font-face {
   font-family: 'pengmenzhengdao';
-  src: local('Pangmenzhengdao') format('truetype');
-} */
+  src: url('./assets/fonts/pengmenzhengdao.ttf') format('truetype');
+}
 /* YouSheBiaoTiHei字体 */
 @font-face {
   font-family: 'YouSheBiaoTiHei';
@@ -56,6 +56,12 @@ body,#app {
   /* 文本字符填充颜色透明 */
   -webkit-text-fill-color: transparent;
 }
+.text-ellipsis {
+  white-space: nowrap; /* 防止文本换行 */
+  overflow: hidden;    /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 显示省略号 */
+}
+
 
 .bg-size{
   background-size: 100% 100%;

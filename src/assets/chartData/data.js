@@ -669,6 +669,17 @@ const basicFacilitiesData = {
       unit: "km",
     },
   ],
+  densityData: [
+    { name: "亭湖区", value: "255", unit: "%" },
+    { name: "盐都区", value: "233", unit: "%" },
+    { name: "大丰区", value: "230", unit: "%" },
+    { name: "建湖县", value: "169", unit: "%" },
+    { name: "射阳县", value: "157", unit: "%" },
+    { name: "阜宁县", value: "185", unit: "%" },
+    { name: "滨海县", value: "128", unit: "%" },
+    { name: "响水县", value: "144", unit: "%" },
+    { name: "东台市", value: "222", unit: "%" },
+  ],
   bridgeData: [
     {
       name: "桥梁",
@@ -828,62 +839,60 @@ const projectManageData = {
       projectNum: {
         name: "项目总数",
         value: 534,
-        unit: '个'
+        unit: "个",
       },
       children: [
         {
           name: "较去年",
           value: "140",
-          unit: '个'
+          unit: "个",
         },
         {
           name: "同比",
           value: "35",
-          unit: '%'
+          unit: "%",
         },
         {
           name: "工业数量",
           value: null,
-          unit: null
+          unit: null,
         },
         {
           name: "占比",
           value: null,
-          unit: null
-        }
-      ]
+          unit: null,
+        },
+      ],
     },
     {
       projectNum: {
         name: "项目总投资",
         value: 2280.65,
-        unit: '亿元'
-
+        unit: "亿元",
       },
       children: [
         {
           name: "较去年",
           value: 31,
-          unit: '亿元'
+          unit: "亿元",
         },
         {
           name: "同比",
           value: "1.38",
-          unit: '%'
+          unit: "%",
         },
         {
           name: "工业项目投资额度",
           value: "1.38",
-          unit: '%'
+          unit: "%",
         },
         {
           name: "占比",
           value: 47.84,
-          unit: '%'
-        }
-      ]
-    }
-
+          unit: "%",
+        },
+      ],
+    },
   ],
   strategicIndustry: [
     {
@@ -892,14 +901,14 @@ const projectManageData = {
         {
           name: "个数",
           value: 106,
-          unit: "个"
+          unit: "个",
         },
         {
           name: "投资",
           value: 604.2,
-          unit: "亿元"
-        }
-      ]
+          unit: "亿元",
+        },
+      ],
     },
     {
       name: "新一代信息技术产业",
@@ -907,14 +916,14 @@ const projectManageData = {
         {
           name: "个数",
           value: 42,
-          unit: "个"
+          unit: "个",
         },
         {
           name: "投资",
           value: 106.8,
-          unit: "亿元"
-        }
-      ]
+          unit: "亿元",
+        },
+      ],
     },
     {
       name: "新材料产业",
@@ -922,14 +931,14 @@ const projectManageData = {
         {
           name: "个数",
           value: 37,
-          unit: "个"
+          unit: "个",
         },
         {
           name: "投资",
           value: 116.6,
-          unit: "亿元"
-        }
-      ]
+          unit: "亿元",
+        },
+      ],
     },
     {
       name: "高端装备产业",
@@ -937,14 +946,14 @@ const projectManageData = {
         {
           name: "个数",
           value: 73,
-          unit: "个"
+          unit: "个",
         },
         {
           name: "投资",
           value: 146.9,
-          unit: "亿元"
-        }
-      ]
+          unit: "亿元",
+        },
+      ],
     },
     {
       name: "大健康产业",
@@ -952,14 +961,14 @@ const projectManageData = {
         {
           name: "个数",
           value: 4,
-          unit: "个"
+          unit: "个",
         },
         {
           name: "投资",
           value: 11.2,
-          unit: "亿元"
-        }
-      ]
+          unit: "亿元",
+        },
+      ],
     },
   ],
   projectSize: [
@@ -978,51 +987,51 @@ const projectManageData = {
     {
       name: "1000万以上",
       value: null,
-    }
+    },
   ],
   projectDistribution: [
     {
       name: "盐都区",
       construction: 86,
-      completion: null
+      completion: null,
     },
     {
       name: "阜宁县",
       construction: 45,
-      completion: null
+      completion: null,
     },
     {
       name: "滨海县",
       construction: 132,
-      completion: null
+      completion: null,
     },
     {
       name: "东台市",
       construction: 73,
-      completion: null
-    }
+      completion: null,
+    },
   ],
   projectSituation: [
     {
       name: "项目总数",
       value: 926,
-      unit: "个"
+      unit: "个",
     },
     {
       name: "市在建",
       value: 25,
-      unit: "个"
+      unit: "个",
     },
     {
       name: "区在建",
       value: 465,
-      unit: "个"
+      unit: "个",
     },
     {
       name: "县在建",
       value: 436,
-      unit: "个"
-    }
+      unit: "个",
+    },
   ],
   areaConstruction: [
     {
@@ -1072,10 +1081,9 @@ const projectManageData = {
     {
       name: "响水县",
       value: 41,
-    }
-  ]
-}
-
+    },
+  ],
+};
 
 //运行监测
 const runningMonitoringData = {
@@ -1176,9 +1184,9 @@ const runningMonitoringData = {
     {
       name: "燃气",
       layRates: [
-        { name: "覆盖率", value: "99.47", unit: "%" },
-        { name: "设备总数", value: 1002, unit: "台" },
-        { name: "在线率", value: "99.71", unit: "%" },
+        { name: "覆盖率", value: 96.44, unit: "%" },
+        { name: "设备总数", value: 654, unit: "台" },
+        { name: "在线率", value: 95.01, unit: "%" },
       ],
       sensorData: [
         { name: "可燃气体探测器", value: 1002, unit: "台" },
@@ -1186,17 +1194,64 @@ const runningMonitoringData = {
         { name: "燃气压力设备", value: null, unit: null },
         { name: "流量计", value: null, unit: null },
       ],
-      coverageData: [
-        { name: "亭湖区", value: "100.00", unit: "%" },
-        { name: "盐都区", value: "99.50", unit: "%" },
-        { name: "大丰区", value: "98.56", unit: "%" },
-        { name: "建湖县", value: "100.00", unit: "%" },
-        { name: "阜宁县", value: "100.00", unit: "%" },
-        { name: "滨海县", value: "100.00", unit: "%" },
-        { name: "响水县", value: "100.00", unit: "%" },
-        { name: "东台市", value: "99.10", unit: "%" },
-      ],
+      coverageData: [],
     },
+    {
+      name: "污水",
+      layRates: [
+        { name: "覆盖率", value: 96.44, unit: "%" },
+        { name: "设备总数", value: 654, unit: "台" },
+        { name: "在线率", value: 95.01, unit: "%" },
+      ],
+      sensorData: [
+        { name: "COD传感器", value: 396, unit: "台" },
+        { name: "浊度仪", value: 195, unit: "台" },
+        { name: "电子水尺", value: 34, unit: "台" },
+        { name: "水质温度传感器", value: 49, unit: "台" },
+        { name: "水位计", value: 10, unit: "台" },
+      ],
+      coverageData: [],
+    },
+    {
+      name: "供水",
+      layRates: [
+        { name: "覆盖率", value: 95.41, unit: "%" },
+        { name: "设备总数", value: 295, unit: "台" },
+        { name: "在线率", value: 98.24, unit: "%" },
+      ],
+      sensorData: [
+        { name: "压力计", value: "83 80+3", unit: "台" },
+        { name: "流量计", value: 46, unit: "台" },
+        { name: "噪声监测仪", value: "103 90+13", unit: "台" },
+        { name: "水质温度仪", value: "23 22+1", unit: "台" },
+        { name: "智能消火栓", value: "20 0+20", unit: "台" },
+        { name: "智能井盖", value: "11 无现状", unit: "台" },
+      ],
+      coverageData: [],
+    },
+    {
+      name: "桥梁",
+      layRates: [
+        { name: "覆盖率", value: 94.17, unit: "%" },
+        { name: "设备总数", value: 669, unit: "台" },
+        { name: "在线率", value: 96.22, unit: "%" },
+      ],
+      sensorData: [
+        { name: "温湿度计", value: 11, unit: "台" },
+        { name: "超声波风速风向仪", value: 3, unit: "台" },
+        { name: "动态称重系统", value: 24, unit: "台" },
+        { name: "振弦式应变传感器", value: 248, unit: "台" },
+        { name: "电阻应变计", value: 13, unit: "台" },
+        { name: "三向加速度计", value: 3, unit: "台" },
+        { name: "变形监测传感器", value: 33, unit: "台" },
+        { name: "位移计", value: 48, unit: "台" },
+        { name: "加速度传感器", value: 124, unit: "台" },
+        { name: "裂缝计", value: 130, unit: "台" },
+        { name: "高温球机", value: 28, unit: "台" },
+      ],
+      coverageData: [],
+    },
+
     {
       name: "雨水",
       layRates: [
@@ -1222,54 +1277,27 @@ const runningMonitoringData = {
       ],
     },
     {
-      name: "污水",
-      layRates: [],
-      sensorData: [{ name: "COD传感器", value: 396, unit: "台" }],
-      coverageData: [],
-    },
-    {
-      name: "供水",
-      layRates: [],
-      sensorData: [
-        { name: "电子水尺", value: 34, unit: "台" },
-        { name: "压力计", value: 44, unit: "台" },
-        { name: "液位计", value: 41, unit: "台" },
-        { name: "流量计", value: 138, unit: "台" },
-      ],
-      coverageData: [],
-    },
-    {
-      name: "桥梁",
-      layRates: [],
-      sensorData: [
-        { name: "温湿度计", value: 11, unit: "台" },
-        { name: "超声波风速风向仪", value: 3, unit: "台" },
-        { name: "动态称重系统", value: 24, unit: "台" },
-        { name: "振弦式应变传感器", value: 248, unit: "台" },
-        { name: "电阻应变计", value: 13, unit: "台" },
-        { name: "三向加速度计", value: 3, unit: "台" },
-        { name: "变形监测传感器", value: 33, unit: "台" },
-        { name: "位移计", value: 48, unit: "台" },
-        { name: "加速度传感器", value: 124, unit: "台" },
-        { name: "裂缝计", value: 130, unit: "台" },
-        { name: "高温球机", value: 28, unit: "台" },
-      ],
-      coverageData: [],
-    },
-    {
       name: "道路",
-      layRates: [],
+      layRates: [
+        { name: "覆盖率", value: 94.47, unit: "%" },
+        { name: "设备总数", value: 2, unit: "台" },
+        { name: "在线率", value: 100, unit: "%" },
+      ],
       sensorData: [
-        { name: "探地雷达", value: 1, unit: "台" },
-        { name: "路政AI巡检", value: 1, unit: "台" },
+        { name: "探地雷达", value: "1", unit: "台" },
+        { name: "路政AI巡检", value: "1", unit: "台" },
       ],
       coverageData: [],
     },
     {
       name: "第三方施工破坏",
-      layRates: [],
+      layRates: [
+        { name: "覆盖率", value: 97.32, unit: "%" },
+        { name: "设备总数", value: 49, unit: "台" },
+        { name: "在线率", value: 96.14, unit: "%" },
+      ],
       sensorData: [
-        { name: "光纤传感设备", value: 1, unit: "台" },
+        { name: "光纤传感设备", value: "1", unit: "台" },
         { name: "光纤感知终端分析系统", value: null, unit: null },
         { name: "摄像头", value: 28, unit: "台" },
         { name: "精密水准仪", value: 18, unit: "台" },
@@ -1279,17 +1307,117 @@ const runningMonitoringData = {
     },
     {
       name: "路灯",
-      layRates: [],
+      layRates: [
+        { name: "覆盖率", value: 99.12, unit: "%" },
+        { name: "设备总数", value: 4668, unit: "台" },
+        { name: "在线率", value: 98.43, unit: "%" },
+      ],
       sensorData: [
         { name: "“三遥”监控终端", value: 838, unit: "台" },
         { name: "单灯控制器", value: 3200, unit: "台" },
-        { name: "漏电设备", value: 210, unit: "台" },
-        { name: "门禁系统设备", value: 210, unit: "台" },
-        { name: "除湿设备", value: 210, unit: "台" },
+        { name: "漏电设备", value: "210", unit: "台" },
+        { name: "门禁系统设备", value: "210", unit: "台" },
+        { name: "除湿设备", value: "210", unit: "台" },
       ],
       coverageData: [],
     },
   ],
+  profileData: [
+    {
+      name: "数据总量",
+      total: 34517,
+      description: "较昨日",
+      key: "down",
+      change: "-4.5",
+      unit: "%",
+    },
+    {
+      name: "报警总数",
+      total: 8,
+      description: "较昨日",
+      key: "down",
+      change: "-6.56",
+      unit: "%",
+    },
+    {
+      name: "报警准确率",
+      total: "97.66",
+      description: "较昨日",
+      key: "up",
+      change: "1.10",
+      unit: "%",
+    },
+  ],
+  alarmData: [
+    {
+      name: "燃气报警",
+      children: [
+        { name: "终端用户", value: 2, unit: "次" },
+        { name: "燃气场站", value: 1, unit: "次" },
+        { name: "窨井", value: 0, unit: "次" },
+      ],
+    },
+    {
+      name: "供水报警",
+      children: [
+        { name: "二次泵房", value: 1, unit: "次" },
+        { name: "供水场站", value: 0, unit: "次" },
+        { name: "供水泵站", value: 0, unit: "次" },
+      ],
+    },
+    {
+      name: "排水报警",
+      children: [
+        { name: "污水管网", value: 10, unit: "次" },
+        { name: "雨水管网", value: 4, unit: "次" },
+        { name: "污水泵站", value: 9, unit: "次" },
+      ],
+    },
+    {
+      name: "综合报警",
+      children: [
+        { name: "管线间距不足", value: 16, unit: "次" },
+        { name: "建筑物占压", value: 8, unit: "次" },
+        { name: "交叉穿越", value: 12, unit: "次" },
+      ],
+    },
+    {
+      name: "道路报警",
+      children: [
+        { name: "沉降报警", value: 0, unit: "次" },
+        { name: "裂缝报警", value: 0, unit: "次" },
+        { name: "地下空洞", value: 0, unit: "次" },
+      ],
+    },
+    {
+      name: "第三方施工报警",
+      children: [
+        { name: "三破光纤震动", value: 4, unit: "次" },
+        { name: "视频监控", value: 0, unit: "次" },
+        { name: "三破光纤震动-小型机械施", value: 2, unit: "次" },
+      ],
+    },
+    {
+      name: "桥梁报警",
+      children: [
+        { name: "位移报警", value: 0, unit: "次" },
+        { name: "挠度报警", value: 0, unit: "次" },
+        { name: "裂缝报警", value: 0, unit: "次" },
+      ],
+    },
+    {
+      name: "路灯报警",
+      children: [
+        { name: "漏电监测", value: 0, unit: "次" },
+        { name: "故障监测", value: 0, unit: "次" },
+      ],
+    },
+  ],
 };
 
-export { overviewData, basicFacilitiesData, runningMonitoringData,projectManageData };
+export {
+  overviewData,
+  basicFacilitiesData,
+  runningMonitoringData,
+  projectManageData,
+};

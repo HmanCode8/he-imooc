@@ -21,7 +21,7 @@ const props = defineProps({
     }
 })
 const active = ref(props.data[0].value)
-const emits = defineEmits(['onTabOnchage'])
+const emits = defineEmits(['onTabOnchage', 'update:modelValue'])
 
 const onChage = (value) => {
     // emits('onTabOnchage', value)

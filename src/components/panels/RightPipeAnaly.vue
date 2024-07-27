@@ -10,7 +10,7 @@ import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
 
-const { naturalColumns, naturalTableData, liquefiedColumns, liquefiedTableData, roadData, typeAlysisData, bridgeData, bridgeColumns, bridgeTableData } = basicFacilitiesData
+const { naturalColumns, naturalTableData, liquefiedColumns, liquefiedTableData, roadData, typeAlysisData, densityData, bridgeData, bridgeColumns, bridgeTableData } = basicFacilitiesData
 const active = ref('supply')
 const dataActive = ref(roadData[0].name)
 const dataChnage = (name) => {
@@ -104,17 +104,16 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
             <div class="8k:w-1/2 4k:w-full flex flex-col">
                 <SecondLevelTitle title="类型分析" />
                 <div class="w-full mb-14">
-                    <Pipe3dChart class="w-full h-40" :data="typeAlysisData" />
+                    <Pipe3dChart class="w-full h-60" :data="typeAlysisData" />
                 </div>
                 <SecondLevelTitle title="密度分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
-                    <Bar3dChart :data="typeAlysisData" class="w-full h-40" />
-
+                    <Bar3dChart :data="densityData" class="w-full h-40" />
                 </div>
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="养护分析" />
-                <Tablechart :columns="columns" :tableData="tableData" class="h-80" />
+                <Tablechart :columns="columns" :tableData="tableData" class="h-806" />
             </div>
         </div>
     </div>
