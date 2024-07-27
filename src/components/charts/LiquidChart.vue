@@ -7,25 +7,41 @@ import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import "echarts-liquidfill";
-import { Label } from "cesium";
+import useRootFontSize from "@/hooks/useRootFontSize";
+
 
 const props = defineProps({
   liquidData: {
     type: Object,
     required: true
+  },
+  index: {
+    type: Number
   }
 });
 
+const rootFontSize = useRootFontSize();
 const target = ref(null);
+
 let mChart = null;
 onMounted(() => {
   mChart = echarts.init(target.value);
-  renderChart();
 });
 
-const handleResize = size => {
+watch([props.liquidData, rootFontSize], ([newChartData, newFontSize]) => {
+  renderChart(newFontSize);
+  if (mChart) {
+    mChart.resize();
+  }
+});
 
-  mChart.resize();
+
+const handleResize = () => {
+  const rootFontSize = useRootFontSize();
+  renderChart(rootFontSize.value);
+  if (mChart) {
+    mChart.resize();
+  }
 };
 
 const renderChart = () => {
@@ -48,8 +64,8 @@ const renderChart = () => {
       {
         type: "liquidFill",
         radius: "100%",
-        data: [props.liquidData.number],
-        color: [props.liquidData.color],
+        data: [Number(props.liquidData.value)],
+        color: props.liquidData.color,
         label: {
           normal: {
             textStyle: {

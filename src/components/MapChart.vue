@@ -101,19 +101,19 @@
 </template>
 
 <script setup>
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import { computed, inject, onMounted, ref, watch } from 'vue'
 import 'ol/ol.css'
-import {Map, View} from 'ol'
-import {useGlobalStore} from "@/store";
+import { Map, View } from 'ol'
+import { useGlobalStore } from "@/store";
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import _ from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
 import proj4 from "proj4";
-import {register} from "ol/proj/proj4";
-import {createLayer, getLegend, traverseLayerDefine} from "@/utils/map/layer";
-import {closePop, createDefaultPopup, getPopInfo, popElement} from "@/utils/map/popup";
+import { register } from "ol/proj/proj4";
+import { createLayer, getLegend, traverseLayerDefine } from "@/utils/map/layer";
+import { closePop, createDefaultPopup, getPopInfo, popElement } from "@/utils/map/popup";
 
 const { layerConfig = {} } = window;
 const layers = ref([])
@@ -348,35 +348,35 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
     const defaultLoadLayerList = currentLayerGroup.value.filter(
-        v => defaultLoadLayerArr.includes(v.remark)
+      v => defaultLoadLayerArr.includes(v.remark)
     );
     currentLayerTab.value = _.get(_.find(layers.value,
-        v => v.children && v.children.some(
-            sub => sub.children && sub.children.some(
-                item => firstDefaultLayer === item.remark
-            )
+      v => v.children && v.children.some(
+        sub => sub.children && sub.children.some(
+          item => firstDefaultLayer === item.remark
         )
+      )
     ), "remark", "");
     loadedLayerGroup.value = loadedLayerGroup.value.concat(
-        defaultLoadLayerList.map(v => v.remark)
+      defaultLoadLayerList.map(v => v.remark)
     );
     const groupedLayerMap = Object.groupBy(
-        defaultLoadLayerList,
-        ({source}) => source
+      defaultLoadLayerList,
+      ({ source }) => source
     );
     for (let sourceName in groupedLayerMap) {
       const loadLayerStr = groupedLayerMap[sourceName]
-          .filter(v => v.layer)
-          .map(v => v.layer)
-          .join(",");
+        .filter(v => v.layer)
+        .map(v => v.layer)
+        .join(",");
       const showDetailLayerStr = groupedLayerMap[sourceName]
-          .filter(v => v.detailLayer)
-          .map(v => v.detailLayer)
-          .join(",");
+        .filter(v => v.detailLayer)
+        .map(v => v.detailLayer)
+        .join(",");
       const showLegendLayerStr = groupedLayerMap[sourceName]
-          .filter(v => v.legendLayer)
-          .map(v => v.legendLayer)
-          .join(",");
+        .filter(v => v.legendLayer)
+        .map(v => v.legendLayer)
+        .join(",");
       const layerParam = {
         source: sourceName,
         layer: loadLayerStr,
@@ -556,7 +556,7 @@ const initCesiumMap = async () => {
 };
 
 onMounted(() => {
-   initOpenLayersMap();
+  //  initOpenLayersMap();
 });
 
 const toggleMap = () => {
