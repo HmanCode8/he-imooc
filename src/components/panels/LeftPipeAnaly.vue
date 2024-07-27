@@ -10,10 +10,11 @@ import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
 
-const { facilities, diameterData, pipeTextureData, typeAlysisData } = basicFacilitiesData
+const { facilities, baseData, typeAlysisData } = basicFacilitiesData
 
 
 const pipeActive = ref(facilities[0].name)
+const currentData = ref([])
 const facilitieData = ref(facilities)
 
 const changeActive = (name) => {
@@ -33,12 +34,13 @@ const totleSize = ref([
     },
 ])
 
-//管径
-const pipeData = computed(() => (_.get(_.find(diameterData, d => d.name === pipeActive.value), 'data', [])))
+watch(pipeActive, (val) => {
+    // _.find(baseData, m => m.name === val)
+    currentData.value = _.find(baseData, m => m.name === val)
+}, {
+    immediate: true
+})
 
-// 管材
-
-const material = computed(() => (_.get(_.find(pipeTextureData, d => d.name === pipeActive.value), 'data', [])))
 </script>
 
 <template>
@@ -91,22 +93,22 @@ const material = computed(() => (_.get(_.find(pipeTextureData, d => d.name === p
 
                 <div class="w-full flex">
                     <div class="chart-container w-full h-60">
-                        <BarRowChart />
+                        <BarRowChart :data="currentData.pipeAgeData" />
                     </div>
                 </div>
             </div>
 
-            <!-- 类型分析 -->
+            <!-- 管径分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="管径分析"></SecondLevelTitle>
 
-                <Bar3dChart :data="pipeData" class="w-full h-60" />
+                <Bar3dChart :data="currentData.diameterData" class="w-full h-60" />
             </div>
 
-            <!-- 管径分析 -->
+            <!-- 管材分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="管材分析"></SecondLevelTitle>
-                <PipeIconChart :data="material" class="w-full h-60" />
+                <PipeIconChart :data="currentData.pipeTextureData" class="w-full h-60" />
             </div>
         </div>
     </div>
