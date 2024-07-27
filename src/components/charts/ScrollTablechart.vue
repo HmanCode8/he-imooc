@@ -38,40 +38,45 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="table-container w-full">
-    <table class="tboby">
-      <thead>
-        <tr class="z-999">
-          <th
-            style="background-color: aquamarine;"
-            v-for="col in columns"
-            :key="col.key"
-          >{{ col.title }}</th>
-        </tr>
-      </thead>
-      <vue3-seamless-scroll
-        class="seamless"
-        :list="tableData"
-        :step="0.4"
-        
-      >
-        <tbody ref="tableBody">
-          <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
-            <td v-for="col in columns" :key="col.key">{{ row[col.key] }}</td>
+  <div class="w-full h-60">
+    <!-- <div class="w-full">
+      <table class="w-full">
+        <thead> 
+          <tr class>
+            <th
+              style="background-color: aquamarine;"
+              v-for="col in columns"
+              :key="col.key"
+            >{{ col.title }}</th>
           </tr>
-        </tbody>
+        </thead>
+      </table>
+    </div> -->
+    <div class="w-full flex">
+        <div class="flex-1 text-center" v-for="col in columns" :key="col.key">{{col.title}}</div>
+      </div>
+    <div class="table-container w-full h-60">
+      
+      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.4">
+        <ul class="w-full">
+          <li
+            v-for="(item, index) in tableData"
+            :key="index"
+            class="liStyle w-full text-center flex "
+          >
+            <div class="flex-1 text-center">{{item.name}}</div>
+            <div class="flex-1 text-center">{{item.age}}</div>
+            <div class="flex-1 text-center">{{item.address}}</div>
+          </li>
+        </ul>
       </vue3-seamless-scroll>
-    </table>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .table-container {
-  overflow-x: auto;
-}
-
-.tboby {
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 table {
@@ -79,15 +84,33 @@ table {
   border-collapse: collapse;
 }
 
+.tableBodyStyle {
+  width: 100%;
+}
+
+ul li:nth-child(even) {
+  background-color: #132d5c;
+}
+
+ul li:hover {
+  background-color: #4276b2;
+}
+
 th,
 td {
-  padding: 8px 12px;
-  text-align: left;
+  /* padding: 1px; */
+  text-align: center;
 }
 
 th {
   background-color: #1c3c6f;
-  color: #fff;
+  color: #a9d4e6;
+  position: sticky;
+  /* Make the header sticky */
+  top: -6px;
+  /* Stick to the top */
+  z-index: 1;
+  /* Ensure it is above other content */
 }
 
 tbody tr:nth-child(even) {
