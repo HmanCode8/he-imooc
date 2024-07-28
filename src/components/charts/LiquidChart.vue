@@ -1,5 +1,8 @@
 <template>
-  <div ref="target" v-resize-ob="handleResize" class="w-36 h-20"></div>
+  <div>
+    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+  </div>
 </template>
 
 <script setup>
@@ -7,37 +10,52 @@ import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import "echarts-liquidfill";
-import { Label } from "cesium";
+import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
   liquidData: {
     type: Object,
     required: true
+  },
+  index: {
+    type: Number
   }
 });
 
+const rootFontSize = useRootFontSize();
 const target = ref(null);
+
 let mChart = null;
 onMounted(() => {
   mChart = echarts.init(target.value);
-  renderChart();
 });
 
-const handleResize = size => {
+watch([props.liquidData, rootFontSize], ([newChartData, newFontSize]) => {
+  renderChart(newFontSize);
+  if (mChart) {
+    mChart.resize();
+  }
+});
 
-  mChart.resize();
+
+const handleResize = () => {
+  const rootFontSize = useRootFontSize();
+  renderChart(rootFontSize.value);
+  if (mChart) {
+    mChart.resize();
+  }
 };
 
-const renderChart = () => {
+const renderChart = (fontSize) => {
   const option = {
     title: {
       text: props.liquidData.name,
       textStyle: {
-        fontSize: 14,
+        fontSize,
         color: "rgba(255, 255, 255, 0.7)",
         rich: {
           a: {
-            fontSize: 30,
+            fontSize,
           },
         },
       },
@@ -48,12 +66,12 @@ const renderChart = () => {
       {
         type: "liquidFill",
         radius: "100%",
-        data: [props.liquidData.number],
-        color: [props.liquidData.color],
+        data: [Number(props.liquidData.value)],
+        color: props.liquidData.color,
         label: {
           normal: {
             textStyle: {
-              fontSize: 28,       // 字体大小
+              fontSize,       // 字体大小
               color: '#fff',   // 字体颜色
               fontFamily: 'Arial',// 字体系列
               fontWeight: 'bold', // 字体粗细
@@ -61,7 +79,7 @@ const renderChart = () => {
               textShadowBlur: 10  // 文字阴影模糊半径
             },
             formatter: function (param) {
-              return (param.value * 100).toFixed(2);  // 格式化数值
+              return (param.value * 100).toFixed(2) + '%';  // 格式化数值
             }
           }
         },

@@ -6,42 +6,12 @@ import DoubleBarLineChart from '../charts/DoubleBarLineChart.vue'
 import ProcessBar from '../charts/ProcessBar.vue'
 import { overviewData } from '@/assets/chartData/data'
 
-import { useGlobalStore } from "@/store";
+const { basicOverview, basicData, combinedData, inspectionDetails, oldRenovation } = overviewData
 
-const global = useGlobalStore()
-
-const { basicOverview, basicData, inspectionData, inspectionDetails, operatingData } = overviewData
-
-const chartData = [
-    { name: '燃气', completed: 22, planned: 60, rate: 2 },
-    { name: '供水', completed: 100, planned: 16, rate: 24 },
-    { name: '雨水', completed: 100, planned: 17, rate: 39 },
-    { name: '污水', completed: 100, planned: 60, rate: 24 },
-    { name: '道路', completed: 100, planned: 60, rate: 24 },
-    { name: '桥梁', completed: 140, planned: 60, rate: 24 },
-    { name: '路灯', completed: 120, planned: 16, rate: 39 },
-    { name: '第三方施工', completed: 200, planned: 60, rate: 24 },
-    { name: '综合管线', completed: 100, planned: 40, rate: 24 },
-];
 const legendData = ['巡检完成量', '计划巡检量', '巡检完成率']
 
 const basicOverviewData = ref(basicOverview)
 
-const olds = ref([
-    {
-        name: '燃气',
-        value: 50
-    },
-    {
-        name: '供水',
-        value: 70
-    },
-    {
-
-        name: '排水',
-        value: 60
-    }
-])
 
 </script>
 
@@ -67,9 +37,12 @@ const olds = ref([
 
                     <div class="flex h-1/4 items-center justify-center  w-full">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-2.png)] bg-cover"></div>
-                            <div>{{ basicData[0].name }} <span class="font-bold text-xl">{{ basicData[0].value
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[0].source}.png)] bg-size`">
+                            </div>
+                            <div class="pl-1">{{ basicData[0].name }} <span class="font-bold text-xl">{{
+                                basicData[0].value
                                     }}</span>{{ basicData[0].unit }}
                             </div>
                         </div>
@@ -77,56 +50,71 @@ const olds = ref([
 
                     <div class="flex h-1/4 items-center w-[90%] justify-around mt-[-4%] my-2">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
 
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-3.png)] bg-cover"></div>
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[1].source}.png)] bg-size`">
+                            </div>
 
-                            <div>{{ basicData[1].name }} <span class="font-bold text-xl">{{ basicData[1].value }}</span>
+                            <div class="pl-1">{{ basicData[1].name }} <span class="font-bold text-xl">{{
+                                basicData[1].value }}</span>
                                 {{ basicData[1].unit }}</div>
                         </div>
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
-
-                            <div>{{ basicData[2].name }} <span class="font-bold text-xl">{{ basicData[2].value }}</span>
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[2].source}.png)] bg-size`">
+                            </div>
+                            <div class="pl-1">{{ basicData[2].name }} <span class="font-bold text-xl">{{
+                                basicData[2].value }}</span>
                                 {{ basicData[2].unit }}</div>
                         </div>
                     </div>
 
                     <div class="flex h-1/4 items-center justify-around w-full my-2">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
 
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-5.png)] bg-cover"></div>
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[3].source}.png)] bg-size`">
+                            </div>
 
-                            <div>{{ basicData[3].name }} <span class="font-bold text-xl">{{ basicData[3].value }}</span>
+                            <div class="pl-1">{{ basicData[3].name }} <span class="font-bold text-xl">{{
+                                basicData[3].value }}</span>
                                 {{ basicData[3].unit }}</div>
                         </div>
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-6.png)] bg-cover"></div>
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[4].source}.png)] bg-size`">
+                            </div>
 
-                            <div>{{ basicData[4].name }} <span class="font-bold text-xl">{{ basicData[4].value }}</span>
+                            <div class="pl-1">{{ basicData[4].name }} <span class="font-bold text-xl">{{
+                                basicData[4].value }}</span>
                                 {{ basicData[4].unit }}</div>
                         </div>
                     </div>
 
-                    <div class="flex h-1/4 items-center w-full justify-between my-2">
+                    <div class="flex h-1/4 items-center w-full justify-center my-2">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-7.png)] bg-cover"></div>
-
-                            <div>{{ basicData[5].name }} <span class="font-bold text-xl">{{ basicData[5].value }}</span>
+                            class="flex mx-2 w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[5].source}.png)] bg-size`">
+                            </div>
+                            <div class="pl-1">{{ basicData[5].name }} <span class="font-bold text-xl">{{
+                                basicData[5].value }}</span>
                                 {{ basicData[5].unit }}</div>
                         </div>
-                        <!-- <div
-                            class="flex w-1/5 h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-8.png)] bg-cover"></div>
+                        <div
+                            class="flex mx-2 w-[24%] h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[6].source}.png)] bg-size`">
+                            </div>
 
                             <div>{{ basicData[6].name }} <span class="font-bold text-xl">{{ basicData[6].value
                                     }}</span>{{ basicData[6].unit }}
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
 
@@ -140,7 +128,7 @@ const olds = ref([
         <SecondLevelTitle title="巡检巡查"></SecondLevelTitle>
 
         <div class="h-1/3 w-full">
-            <DoubleBarLineChart :chartData="chartData" :legendData="legendData" />
+            <DoubleBarLineChart title="巡检完成率" :data="combinedData" :legendData="legendData" />
         </div>
 
         <div class="old flex w-full justify-end">
@@ -148,13 +136,13 @@ const olds = ref([
                 <li v-for="(item, index) in inspectionDetails" :key="item.name"
                     class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
                     <div class="flex flex-col">
-                        <div :class="`check-icon-${index + 1 > 8 ? 8 : index + 1} w-16 h-16`"></div>
+                        <div :class="`check-icon-${item.iconIndex} w-16 h-16`"></div>
                         <div class="text-center">{{ item.name }}</div>
                     </div>
                     <div class="flex m-2 flex-col">
                         <div v-for=" i in item.children" :key="i.name">
-                            <p class="text-[#89C3DF]">{{ i.name }}</p>
-                            <p class="text-xl font-bold">{{ i.value || 10 }}%</p>
+                            <p class="text-[#89C3DF]">{{ i.name }}({{ i.unit }})</p>
+                            <p class="text-md">{{ i.value || 10 }}</p>
 
                         </div>
                     </div>
@@ -169,7 +157,7 @@ const olds = ref([
                 老旧改造完成率
             </div>
             <div class="flex w-[85%] justify-between">
-                <ProcessBar :data="olds" />
+                <ProcessBar :data="oldRenovation" />
             </div>
         </div>
     </div>
@@ -202,7 +190,7 @@ const olds = ref([
     background-image: url('@/assets/imgs/overview/o-center.png');
 }
 
-@for $i from 1 through 8 {
+@for $i from 1 through 9 {
     .check-icon-#{$i} {
         background-image: url('@/assets/imgs/overview/check-icon-#{$i}.png');
         background-size: 100% 100%;

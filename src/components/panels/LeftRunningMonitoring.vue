@@ -91,7 +91,7 @@ const barWidth = (index) => {
         <SecondLevelTitle title="布设分析"></SecondLevelTitle>
         <div class="flex flex-wrap justify-between">
             <div class="8k:w-[40%] 4k:w-full flex justify-between">
-                <div v-if="currentRun.layRates.length > 0" class="flex w-[40%] flex-col items-center">
+                <div v-if="currentRun.layRates.length > 0" class="flex w-[30%]  flex-col items-center">
                     <div v-for="r, rIndex in currentRun.layRates"
                         class="bg-size bg-[url('assets/imgs/running/lay-rate.png')] my-2 w-32 h-1/3 flex flex-col items-center">
                         <div :class="`gradient-text-${rIndex}`"><span class="text-xl font-bold ">{{ r.value
@@ -100,24 +100,28 @@ const barWidth = (index) => {
                         <div>{{ r.name }}</div>
                     </div>
                 </div>
-                <div v-if="currentRun.sensorData.length > 0" class="max-h-80 w-[60%]">
-                    <ThirdLevelTitle title="设备类型" />
-                    <div class="sen-item flex flex-col  justify-between my-4" v-for="item in currentRun.sensorData"
-                        :key="item.name">
-                        <div class="flex items-center">{{ item.name }}</div>
-                        <div class="flex h-4 w-full justify-between">
-                            <div class="w-3/4 bg-[#107BB8] h-full">
-                                <div :style="`width: ${(item.value / sum) * 100}%`"
-                                    class="relative h-full bg-[#008AFF]">
-                                    <div class="h-full absolute right-0 bg-white w-[5px]"></div>
+                <div v-if="currentRun.sensorData.length > 0" class="w-[65%]">
+                    <div>
+                        <ThirdLevelTitle title="设备类型" />
+
+                    </div>
+                    <div class="flex-col justify-between  h-[80%] overflow-auto">
+                        <div class="sen-item flex flex-col my-4" v-for="item in currentRun.sensorData" :key="item.name">
+                            <div class="flex items-center">{{ item.name }}</div>
+                            <div class="flex h-4 w-full justify-between">
+                                <div class="w-3/4 bg-[#107BB8] h-full">
+                                    <div :style="`width: ${(item.value / sum) * 100}%`"
+                                        class="relative h-full bg-[#008AFF]">
+                                        <div class="h-full absolute right-0 bg-white w-[5px]"></div>
+                                    </div>
+                                </div>
+                                <div class="value-unit w-1/4 px-1 flex items-center">
+                                    <div class="text-xl font-bold">{{ item.value }}</div>
+                                    <div>{{ item.unit }}</div>
                                 </div>
                             </div>
-                            <div class="value-unit w-1/4 px-1 flex items-center">
-                                <div class="text-xl font-bold">{{ item.value }}</div>
-                                <div>{{ item.unit }}</div>
-                            </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
