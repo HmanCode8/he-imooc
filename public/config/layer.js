@@ -30,24 +30,18 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "给水",
-            children: [
-              {
-                name: "给水",
-                type: "layer",
-                source: "pipe",
-                layer: "2,3",
-                remark: "js",
-                detailLayer: "3",
-                legendLayer: "3",
-              },
-            ],
+            name: "监测对象",
+            children: [],
           },
           {
-            name: "排水",
+            name: "设备分布",
+            children: [],
+          },
+          {
+            name: "风险分布",
             children: [
               {
-                name: "污水",
+                name: "风险分布",
                 type: "layer",
                 source: "pipe",
                 layer: "6,7",
@@ -56,7 +50,7 @@ window.layerConfig = {
                 legendLayer: "",
               },
               {
-                name: "雨水",
+                name: "风险事件详情",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
@@ -64,13 +58,27 @@ window.layerConfig = {
                 detailLayer: "10",
                 legendLayer: "",
               },
+            ],
+          },
+          {
+            name: "隐患分布",
+            children: [
               {
-                name: "雨污合流",
+                name: "隐患分布",
                 type: "layer",
                 source: "pipe",
-                layer: "12,13",
-                remark: "hs",
-                detailLayer: "13",
+                layer: "6,7",
+                remark: "ws",
+                detailLayer: "11",
+                legendLayer: "",
+              },
+              {
+                name: "隐患事件详情",
+                type: "layer",
+                source: "pipe",
+                layer: "9,10",
+                remark: "ys",
+                detailLayer: "10",
                 legendLayer: "",
               },
             ],
@@ -80,39 +88,254 @@ window.layerConfig = {
       {
         name: "供水",
         remark: "gongshui",
+        type: "mainClass",
         children: [
           {
-            name: "管网",
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "污水",
+        remark: "wushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "雨水",
+        remark: "yushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "道路",
+        remark: "daolu",
+        type: "mainClass",
+        children: [
+          {
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "桥梁",
+        remark: "qiaoliang",
+        type: "mainClass",
+        children: [
+          {
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "项目",
+        remark: "xiangmu",
+        type: "mainClass",
+        children: [
+          {
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "综合",
+        remark: "zonghe",
+        type: "mainClass",
+        children: [
+          {
+            name: "默认",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "路灯",
+        remark: "ludeng",
+        type: "mainClass",
+        children: [
+          {
+            name: "--",
+            children: [],
+          },
+        ],
+      },
+    ],
+    infrastructure: [
+      {
+        name: "燃气",
+        remark: "ranqi",
+        type: "mainClass",
+        children: [
+          {
+            name: "燃气管点管线",
             children: [
               {
-                name: "给水",
+                name: "燃气管点管线详细",
                 type: "layer",
-                source: "js",
-                layer: "0",
-                remark: "gs_js",
-                detailLayer: "0",
-                legendLayer: "0",
+                source: "pipe",
+                layer: "弹窗",
+                remark: "弹窗",
+                detailLayer: "11",
+                legendLayer: "",
               },
               {
-                name: "统计结果",
+                name: "燃气管点管线详细含管龄",
                 type: "layer",
-                source: "boundary",
-                defaultLoad: false,
-                showDetail: false,
-                showLegend: false,
-                properties: {
-                  "": "",
-                },
-                legend: {
-                  "": "",
-                },
+                source: "pipe",
+                layer: "弹窗，下同理",
+                remark: "弹窗",
+                detailLayer: "10",
+                legendLayer: "",
+              },
+            ],
+          },
+          {
+            name: "管径分布",
+            children: [],
+          },
+          {
+            name: "压力分布",
+            children: [],
+          },
+          {
+            name: "燃气场站",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "污水",
+        remark: "wushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "污水管点管线",
+            children: [
+              {
+                name: "污水管点管线详细",
+                type: "layer",
+                source: "pipe",
+                layer: "9,10",
+                remark: "ys",
+                detailLayer: "10",
+                legendLayer: "",
               },
             ],
           },
         ],
       },
+      {
+        name: "雨水",
+        remark: "yushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "雨水管点管线",
+            children: [],
+          },
+          {
+            name: "管径分布",
+            children: [],
+          },
+          {
+            name: "压力分布",
+            children: [],
+          },
+          {
+            name: "雨水场站",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "桥梁",
+        remark: "qiaoliang",
+        type: "mainClass",
+        children: [
+          {
+            name: "桥梁",
+            children: [],
+          },
+          {
+            name: "视频监控",
+            children: [],
+          },
+          {
+            name: "特大桥",
+            children: [],
+          },
+          {
+            name: "特殊结构桥梁",
+            children: [],
+          },
+          {
+            name: "养护分析",
+            // 区城、底数、养护类别（I类、II类、III类、IV类、V类）
+            children: [
+              {
+                name: "区城",
+                type: "layer",
+                source: "pipe",
+                layer: "11",
+                remark: "区城",
+                detailLayer: "11",
+                legendLayer: "",
+              },
+              {
+                name: "底数",
+                type: "layer",
+                source: "pipe",
+                layer: "12",
+                remark: "底数",
+                detailLayer: "12",
+                legendLayer: "",
+              },
+              {
+                name: "养护类别",
+                type: "layer",
+                source: "pipe",
+                layer: "13",
+                remark: "养护类别",
+                detailLayer: "13",
+                legendLayer: "",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "项目",
+        remark: "xiangmu",
+        type: "mainClass",
+        children: [],
+      },
+      {
+        name: "综合管线",
+        remark: "zonghe",
+        type: "mainClass",
+        children: [],
+      },
+      {
+        name: "路灯",
+        remark: "ludeng",
+        type: "mainClass",
+        children: [],
+      },
     ],
-    infrastructure: [],
     "running-monitoring": [],
     "operation-maintenance": [],
     "project-management": [],
@@ -121,7 +344,7 @@ window.layerConfig = {
   defaultLayers: {
     overview: ["gs_js"],
   },
-  detailFields:[],
+  detailFields: [],
   layerList: [
     {
       name: "vectorBase",

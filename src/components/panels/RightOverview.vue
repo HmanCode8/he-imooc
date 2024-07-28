@@ -52,7 +52,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] px-2 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] px-2 py-1 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
                         v-for="item, i in riskTotalData.data" :key="item.name">
                         <div class="flex items-center mt-[-5%]">
                             <div :style="{ backgroundColor: colors[i], filter: `drop-shadow(2px 2px 5px ${colors[i]})` }"
@@ -84,7 +84,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] px-2 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] px-2  py-1 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
                         v-for="item, i in hideTotalData.data" :key="item.name">
                         <div class="flex items-center mt-[-5%]">
                             <div :style="{ backgroundColor: colors[i], filter: `drop-shadow(2px 2px 5px ${colors[i]})` }"
