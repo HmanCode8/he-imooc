@@ -946,22 +946,22 @@ const projectManageData = {
     {
       name: "0-100万",
       value: null,
-      unit:"万"
+      unit: "万"
     },
     {
       name: "100-500万",
       value: null,
-      unit:"万"
+      unit: "万"
     },
     {
       name: "500-1000万",
       value: null,
-      unit:"万"
+      unit: "万"
     },
     {
       name: "1000万以上",
       value: null,
-      unit:"万"
+      unit: "万"
     },
   ],
   projectDistribution: {
@@ -2048,10 +2048,123 @@ const runningMonitoringData = {
   ],
 };
 
+//预警处置
+const warningDisposalData = {
+  name: "预警处置",
+  warningSourceData: [
+    {
+      name: "燃气",
+      value: 18,
+      unit: "个"
+    },
+    {
+      name: "雨水",
+      value: 22,
+      unit: "个"
+    },
+    {
+      name: "污水",
+      value: 26,
+      unit: "个"
+    },
+    {
+      name: "供水",
+      value: 14,
+      unit: "个"
+    },
+    {
+      name: "道路",
+      value: 17,
+      unit: "个"
+    },
+    {
+      name: "桥梁",
+      value: 9,
+      unit: "个"
+    },
+    {
+      name: "第三方施工",
+      value: 10,
+      unit: "个"
+    },
+    {
+      name: "路灯",
+      value: 29,
+      unit: "个"
+    }
+  ],
+  warningLevelData: [
+    {
+      name: "总数",
+      value:145,
+      children: [
+        {
+          name: "一级",
+          value: 5,
+          percent: 3.45
+        },
+        {
+          name: "二级",
+          value: 49,
+          percent: 33.79
+        },
+        {
+          name: "三级",
+          value: 91,
+          percent: 62.76
+        }
+      ]
+    },
+    {
+      name: "燃气",
+      value:18,
+      children: [
+        {
+          name: "一级",
+          value: 0,
+          percent: 0
+        },
+        {
+          name: "二级",
+          value: 5,
+          percent: 27.78
+        },
+        {
+          name: "三级",
+          value: 13,
+          percent: 72.22
+        }
+      ]
+    },
+    {
+      name: "雨水",
+      value:22,
+      children: [
+        {
+          name: "一级",
+          value: 2,
+          percent: 9.09
+        },
+        {
+          name: "二级",
+          value: 8,
+          percent: 36.36
+        },
+        {
+          name: "三级",
+          value: 12,
+          percent: 54.54
+        }
+      ]
+    }
+  ]
+}
+
 export {
   overviewData,
   basicFacilitiesData,
   operationMaintenanceData,
   runningMonitoringData,
   projectManageData,
+  warningDisposalData
 };
