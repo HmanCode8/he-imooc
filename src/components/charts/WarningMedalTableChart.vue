@@ -13,11 +13,11 @@ const props = defineProps({
   tableData: {
     type: Array,
     default: () => [
-      { id: 1, name: "盐城市液化气...", react: 1.83, handle: 6 },
-      { id: 2, name: "盐城市液化气...", react: 1.83, handle: 6 },
-      { id: 3, name: "盐城市液化气...", react: 1.83, handle: 6 },
-      { id: 4, name: "盐城市液化气...", react: 1.83, handle: 6 },
-      { id: 5, name: "盐城市液化气...", react: 1.83, handle: 6 }
+      { id: 1, name: "盐城市液化气...", value1: 1.83, value2: 6 },
+      { id: 2, name: "盐城市液化气...", value1: 1.83, value2: 6 },
+      { id: 3, name: "盐城市液化气...", value1: 1.83, value2: 6 },
+      { id: 4, name: "盐城市液化气...", value1: 1.83, value2: 6 },
+      { id: 5, name: "盐城市液化气...", value1: 1.83, value2: 6 }
     ]
   }
 });
@@ -25,8 +25,8 @@ const props = defineProps({
 const ths = ref([
   { title: "", key: 0, prop: "id" },
   { title: "单位", key: 1, prop: "name" },
-  { title: "响应时长(h)", key: 2, prop: "react" },
-  { title: "处置时长(h)", key: 3, prop: "handle" }
+  { title: "响应时长(h)", key: 2, prop: "value1" },
+  { title: "处置时长(h)", key: 3, prop: "value2" }
 ]);
 </script>
 

@@ -13,6 +13,10 @@ const props = defineProps({
   barData: {
     type: Object,
     required: true
+  },
+  trendChartData: {
+    type: Object,
+    required: true
   }
 });
 
@@ -23,6 +27,15 @@ onMounted(() => {
   renderChart();
 });
 
+watch(
+  () => props.trendChartData,
+  newVal => {
+    mChart = echarts.init(target.value);
+    renderChart();
+  },
+  { deep: true }
+);
+
 const handleResize = size => {
   const fontSize = useRootFontSize();
   renderChart(fontSize.value);
@@ -31,12 +44,28 @@ const handleResize = size => {
 
 const renderChart = fontSize => {
   const option = {
+    tooltip: {
+      trigger: "axis",
+      // axisPointer: {
+      //   type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      // },
+      formatter: function(parms) {
+        var str =
+          "日期:" +
+          parms[0].axisValue +
+          "</br>" +
+          parms[0].marker +
+          "事件数:" +
+          parms[0].value;
+        return str;
+      }
+    },
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: ["07-06", "07-08", "07-10", "07-12", "07-14"],
+      data: props.trendChartData.xData,
       axisLabel: {
-        interval: 0, // 强制显示每个标签
+        // interval: 0, // 强制显示每个标签
         textStyle: {
           fontSize
         }
@@ -44,13 +73,7 @@ const renderChart = fontSize => {
     },
     yAxis: {
       type: "value",
-      max: 2,
-      // name: "事件数/件",
-      // nameLocation: "end",
-      // nameTextStyle: {
-      //   align: "left",
-      //   padding: [0, 0, 0, 100]
-      // },
+      // max: 8,
       axisLabel: {
         textStyle: {
           fontSize
@@ -59,7 +82,7 @@ const renderChart = fontSize => {
     },
     series: [
       {
-        data: [0.5, 0.6, 1.1, 0.9, 1.7],
+        data: props.trendChartData.yData,
         type: "line",
         areaStyle: {
           // 使用线性渐变色
@@ -87,18 +110,18 @@ const renderChart = fontSize => {
       }
     ],
     graphic: [
-        {
-          type: "text",
-          right: "5%",
-          top: "5%",
-          style: {
-            text: "事件数/件",
-            textAlign: "center",
-            fill: "#A8B1AF",
-            fontSize
-          }
+      {
+        type: "text",
+        right: "5%",
+        top: "5%",
+        style: {
+          text: "事件数/件",
+          textAlign: "center",
+          fill: "#A8B1AF",
+          fontSize
         }
-      ],
+      }
+    ],
     grid: {
       top: "20%", // 上边距
       right: "10%", // 右边距

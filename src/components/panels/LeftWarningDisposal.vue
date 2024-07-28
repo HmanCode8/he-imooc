@@ -1,12 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, isRef } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import WarningAreaChart from "../charts/WarningAreaChart.vue";
 import WarningTableChart from "../charts/WarningTableChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
 
-const { warningSourceData, warningLevelData } = warningDisposalData;
+const {
+  warningSourceData,
+  warningLevelData,
+  warningTrendData,
+  warningTypeData,
+  warningSpaceFeaturesData
+} = warningDisposalData;
 
 const list = ref([
   {
@@ -82,37 +88,116 @@ const onTabChange = k => {
 };
 
 //设置预警等级
-let pannelData = ref(warningLevelData[0]);
+let levelData = ref(warningLevelData[0]);
 const setWarningLevelData = name => {
   if (name === "总数") {
     warningLevelData.forEach(element => {
       if (element.name === "总数") {
-        pannelData = element;
+        levelData = element;
       }
     });
   } else {
     warningLevelData.forEach(element => {
       if (element.name === name) {
-        pannelData = element;
+        levelData = element;
       }
     });
   }
-  /* switch (name) {
-    case "燃气":
-      warningLevelData.forEach(element => {
-        if (element.name === name) {
-          pannelData = element;
-        }
-      });
-      break;
-    default:
-      warningLevelData.forEach(element => {
-        if (element.name === "总数") {
-          pannelData = element;
-        }
-      });
-      break;
-  } */
+};
+//-----------预警事件趋势
+//获取具体时间
+const getPastDate = daysAgo => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date
+    .getDate()
+    .toString()
+    .padStart(2, "0");
+  return `${month}-${day}`;
+};
+
+let areaChartData = ref({});
+const setAreaChartData = data => {
+  //设置面积图echart数据
+  let xArray = [];
+  let yArray = [];
+  let children = isRef(data)
+    ? data.value.children[2].children
+    : data.children[2].children;
+  for (let i = children.length - 1; i >= 0; i--) {
+    const item = children[i];
+    yArray.push(item.value);
+    let date = getPastDate(item.flag);
+    xArray.push(date);
+  }
+  areaChartData.value.xData = xArray;
+  areaChartData.value.yData = yArray;
+};
+
+let trendData = ref(warningTrendData[0]);
+const setWarningTrendData = name => {
+  if (name === "总数") {
+    warningTrendData.forEach(element => {
+      if (element.name === "总数") {
+        trendData = element;
+        setAreaChartData(trendData);
+      }
+    });
+  } else {
+    warningTrendData.forEach(element => {
+      if (element.name === name) {
+        trendData = element;
+        setAreaChartData(trendData);
+      }
+    });
+  }
+};
+setAreaChartData(trendData);
+
+//-----------预警类型
+let typeData = ref(warningTypeData[0].children);
+const setWarningTypeData = name => {
+  if (name === "总数") {
+    warningTypeData.forEach(element => {
+      if (element.name === "总数") {
+        typeData.value = element.children;
+      }
+    });
+  } else {
+    warningTypeData.forEach(element => {
+      if (element.name === name) {
+        typeData.value = element.children;
+      }
+    });
+  }
+};
+
+//-----------预警事件空间特征
+let tableData = ref(warningSpaceFeaturesData[0].children);
+for (let i = 0; i < tableData.value.length; i++) {
+  const element = tableData.value[i];
+  element.id = i + 1;
+}
+const setwarningSpaceFeaturesData = name => {
+  if (name === "总数") {
+    warningSpaceFeaturesData.forEach(element => {
+      if (element.name === "总数") {
+        tableData.value = element.children;
+      }
+    });
+  } else {
+    warningSpaceFeaturesData.forEach(element => {
+      if (element.name === name) {
+        tableData.value = element.children;
+      }
+    });
+  }
+  for (let i = 0; i < tableData.value.length; i++) {
+    const element = tableData.value[i];
+    element.id = i + 1;
+  }
 };
 
 // const pipeActive = ref(warningSourceData[0].name)
@@ -121,6 +206,12 @@ const changeActive = name => {
   pipeActive.value = name;
   //设置预警等级
   setWarningLevelData(name);
+  //设置预警趋势
+  setWarningTrendData(name);
+  //设置预警类型
+  setWarningTypeData(name);
+  //设置预警事件空间特征
+  setwarningSpaceFeaturesData(name);
 };
 </script>
 
@@ -179,7 +270,7 @@ const changeActive = name => {
             class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around"
           >
             <div class>
-              <span class="warninglevel text-2xl font-extrabold">{{ pannelData.value }}</span>
+              <span class="warninglevel text-2xl font-extrabold">{{ levelData.value }}</span>
               <span>个</span>
             </div>
             <div class="mb-5">持续任务时长</div>
@@ -191,10 +282,10 @@ const changeActive = name => {
             >
               一级预警
               <div>
-                <span class="text-xl font-bold ml-8">{{ pannelData.children[0].value }}</span>个
+                <span class="text-xl font-bold ml-8">{{ levelData.children[0].value }}</span>个
               </div>
               <div>
-                <span class="text-xl font-bold ml-8">{{ pannelData.children[0].percent }}</span>%
+                <span class="text-xl font-bold ml-8">{{ levelData.children[0].percent }}</span>%
               </div>
             </div>
             <div
@@ -202,10 +293,10 @@ const changeActive = name => {
             >
               二级预警
               <div>
-                <span class="text-xl font-bold">120</span>个
+                <span class="text-xl font-bold">{{ levelData.children[1].value }}</span>个
               </div>
               <div>
-                <span class="text-xl font-bold">76</span>%
+                <span class="text-xl font-bold">{{ levelData.children[1].percent }}</span>%
               </div>
             </div>
             <div
@@ -213,10 +304,10 @@ const changeActive = name => {
             >
               三级预警
               <div>
-                <span class="text-xl font-bold">120</span>个
+                <span class="text-xl font-bold">{{ levelData.children[2].value }}</span>个
               </div>
               <div>
-                <span class="text-xl font-bold">75</span>%
+                <span class="text-xl font-bold">{{ levelData.children[2].percent }}</span>%
               </div>
             </div>
           </div>
@@ -230,24 +321,25 @@ const changeActive = name => {
           </template>
         </SecondLevelTitle>
         <div class="w-full h-full flex">
-          <div class="w-full h-full">
+          <div class="w-full h-full flex-2">
             <div
               class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center"
             >
-              <span class="warninglevel text-2xl font-bold">总事件数</span>
+              <span class="warninglevel text-2xl font-bold">{{ trendData.children[0].name }}</span>
             </div>
             <div class="flex flex-col justify-center items-center">
               <div class>
-                <span class="warningtotal text-xl font-bold">23</span>
+                <span class="warningtotal text-xl font-bold">{{ trendData.children[0].value }}</span>
                 <span class="warningtotal font-bold">件</span>
               </div>
               <div class>
-                <span class="warningtotal text-xl font-bold">4.5</span>
-                <span class="warningtotal font-bold">%</span>同比
+                <span class="warningtotal text-xl font-bold">{{ trendData.children[1].value }}</span>
+                <span class="warningtotal font-bold">%</span>
+                {{ trendData.children[1].name }}
               </div>
             </div>
           </div>
-          <WarningAreaChart />
+          <WarningAreaChart class="flex-2" :trendChartData="areaChartData" />
         </div>
       </div>
     </div>
@@ -258,17 +350,17 @@ const changeActive = name => {
         <div class="flex flex-wrap justify-around">
           <div
             class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
-            v-for="(item, index) in warningType"
+            v-for="(item, index) in typeData"
             :key="index"
           >
             <div :class="`warningtype_${index + 1} bg-cover mt-2 w-8 h-8`"></div>
             <div class="mt-3">
               <div class="name">{{ item.name }}</div>
               <div class="pipe-point">
-                <span class="text-[18px] font-bold">{{ item.value }}</span>个
+                <span class="text-2xl font-bold">{{ item.value }}</span>个
               </div>
               <div class="pipe-point">
-                <span class="text-[18px] font-bold">{{ item.percent }}</span>%
+                <span class="text-2xl font-bold">{{ item.percent }}</span>%
               </div>
             </div>
           </div>
@@ -277,49 +369,7 @@ const changeActive = name => {
 
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="预警事件空间特征"></SecondLevelTitle>
-        <WarningTableChart />
-        <!-- <div class="w-full h-full">
-          <div class="itemth grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center mb-2 w-full">
-            <div class></div>
-            <div class>区域</div>
-            <div class>数量/个</div>
-            <div class>占比/%</div>
-          </div>
-          <div class="table-body">
-            <div
-              class="item grid grid-cols-4 px-3 items-center justify-between text-center mb-2 w-full"
-            >
-              <div class="bg-[url('assets/imgs/warning/TOP1.png')] bg-cover h-4 w-12">1</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP2.png')] bg-cover h-4 w-12">2</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP3.png')] bg-cover h-4 w-12">3</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP4.png')] bg-cover h-4 w-12">4</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP4.png')] bg-cover h-4 w-12">5</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-          </div>
-        </div>-->
+        <WarningTableChart :tableData="tableData" />
       </div>
     </div>
   </div>
