@@ -4,7 +4,7 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import Tablechart from '../charts/Tablechart.vue'
 import { overviewData } from '@/assets/chartData/data'
 
-const { riskTotalData, hideTotalData, warningColumns, warningTableData } = overviewData
+const { riskTotalData, hideTotalData, warningColumns, warningTableData, deviceData } = overviewData
 
 const riskLevel = [
     {
@@ -152,25 +152,17 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
             </div>
             <div class="waring-item  p-2 4k:w-full 8k:w-[30%]">
                 <ul class="flex flex-wrap justify-between items-center  h-full w-full">
-                    <li class="flex">
-                        <div class="h-16 w-6 bg-[url('assets/imgs/overview/check-bar-1.png')] bar-item"></div>
-                        <div class="px-4">
-                            <div class="py-1">已核查<span>192</span>个</div>
-                            <div class="py-1">33%同比增长</div>
+                    <li v-for="(item, index) in deviceData" :key="item.value" class="flex items-center">
+                        <div :class="`h-16 w-6 bg-[url('assets/imgs/overview/check-bar-${index + 1}.png')] bg-size`">
                         </div>
-                    </li>
-                    <li class="flex">
-                        <div class="h-14 w-6 bg-[url('assets/imgs/overview/check-bar-2.png')] bar-item"></div>
                         <div class="px-4">
-                            <div class="py-1">已核查<span>192</span>个</div>
-                            <div class="py-1">33%同比增长</div>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="h-14 w-6 bg-[url('assets/imgs/overview/check-bar-3.png')] bar-item"></div>
-                        <div class="px-4">
-                            <div class="py-1">已核查<span>192</span>个</div>
-                            <div class="py-1">33%同比增长</div>
+                            <div class="py-1">{{ item.name }}(件)<span class="px-2 text-2xl font-bold">{{ item.value
+                                    }}</span></div>
+                            <div :class="`py-1 text-2xl ${item.change === 'up' ? 'text-[#00FF7E]' : 'text-[#FFAE00]'}`">
+                                {{
+                                    item.percent }}
+                                <span class="text-[#89C3DF]">{{ item.change === 'up' ? '↑同比增长' : '↓同比下降' }}</span>
+                            </div>
                         </div>
                     </li>
                 </ul>
