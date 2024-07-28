@@ -31,7 +31,7 @@
     <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
     <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-    <div class="layer-tabs w-40 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -50,14 +50,17 @@
 
       <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0">
         <div ref="leyerRef" class>
-          <div v-for="sub in currentItem" :key="sub.name" class>
+          <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
             <div
-              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 py-1 flex items-center h-6 bg-size font-bold">
+              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
               {{ sub.name }}</div>
-            <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
-                @click="updateLayer(item)">{{ item.name }}</div>
+            <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
+              <div v-for="item in sub.children" :key="item.remark" class="pl-2">
+                <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
+                  @click="updateLayer(item)">{{ item.name }}</div>
+              </div>
             </div>
+            <div v-else>---</div>
           </div>
         </div>
       </div>

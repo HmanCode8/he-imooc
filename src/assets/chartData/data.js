@@ -22,37 +22,43 @@ const overviewData = {
       name: "管线",
       value: "30763",
       unit: "km",
-      source: "2",
+      source: 3,
     },
     {
       name: "道路",
       value: "3204",
       unit: "km",
-      source: "3",
+      source: 2,
     },
     {
       name: "场站",
+      value: "350",
+      unit: "个",
+      source: 8,
+    },
+    {
+      name: "桥梁",
       value: "850",
       unit: "座",
-      source: "4",
+      source: 5,
     },
     {
       name: "设备",
-      value: "534",
+      value: "7575",
       unit: "个",
-      source: "5",
+      source: 6,
     },
     {
       name: "项目",
-      value: "1",
+      value: "534",
       unit: "个",
-      source: "6",
+      source: 7,
     },
     {
       name: "路灯",
       value: "53905",
       unit: "个",
-      source: "7",
+      source: 4,
     },
   ],
   combinedData: [
@@ -116,6 +122,7 @@ const overviewData = {
   inspectionDetails: [
     {
       name: "燃气",
+      iconIndex: 8,
       children: [
         {
           name: "燃气管网巡检完成率",
@@ -131,6 +138,7 @@ const overviewData = {
     },
     {
       name: "供水",
+      iconIndex: 1,
       children: [
         {
           name: "供水取水口巡检完成率",
@@ -146,6 +154,7 @@ const overviewData = {
     },
     {
       name: "雨水",
+      iconIndex: 2,
       children: [
         {
           name: "雨水易涝点梳理",
@@ -161,6 +170,7 @@ const overviewData = {
     },
     {
       name: "污水",
+      iconIndex: 9,
       children: [
         {
           name: "污水水质达标率",
@@ -176,6 +186,7 @@ const overviewData = {
     },
     {
       name: "道路",
+      iconIndex: 3,
       children: [
         {
           name: "道路巡检计划完成率",
@@ -191,6 +202,7 @@ const overviewData = {
     },
     {
       name: "桥梁",
+      iconIndex: 4,
       children: [
         {
           name: "桥梁定期检查完成率",
@@ -206,6 +218,7 @@ const overviewData = {
     },
     {
       name: "三破",
+      iconIndex: 5,
       children: [
         {
           name: "三破巡检计划完成率",
@@ -221,6 +234,7 @@ const overviewData = {
     },
     {
       name: "综合管线",
+      iconIndex: 6,
       children: [
         {
           name: "地下管线交互风险数",
@@ -236,6 +250,7 @@ const overviewData = {
     },
     {
       name: "路灯",
+      iconIndex: 7,
       children: [
         {
           name: "路灯计划巡检率",
@@ -388,9 +403,22 @@ const overviewData = {
 //基础设施
 const basicFacilitiesData = {
   name: "基础设施",
+  totleSize: [
+    {
+      name: "管线总长",
+      value: 30563,
+      unit: "km",
+    },
+    {
+      name: "管线总点数",
+      value: 1098433,
+      unit: "个",
+    },
+  ],
   facilities: [
     {
       name: "燃气",
+      iconIndex: 1,
       children: [
         {
           name: "管线",
@@ -406,6 +434,7 @@ const basicFacilitiesData = {
     },
     {
       name: "供水",
+      iconIndex: 3,
       children: [
         {
           name: "管线",
@@ -421,6 +450,7 @@ const basicFacilitiesData = {
     },
     {
       name: "排水",
+      iconIndex: 5,
       children: [
         {
           name: "管线",
@@ -436,6 +466,7 @@ const basicFacilitiesData = {
     },
     {
       name: "电力",
+      iconIndex: 2,
       children: [
         {
           name: "管线",
@@ -451,6 +482,7 @@ const basicFacilitiesData = {
     },
     {
       name: "通讯",
+      iconIndex: 4,
       children: [
         {
           name: "管线",
@@ -466,6 +498,7 @@ const basicFacilitiesData = {
     },
     {
       name: "热力",
+      iconIndex: 2,
       children: [
         {
           name: "管线",

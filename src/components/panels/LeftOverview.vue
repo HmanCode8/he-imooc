@@ -37,9 +37,12 @@ const basicOverviewData = ref(basicOverview)
 
                     <div class="flex h-1/4 items-center justify-center  w-full">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-2.png)] bg-cover"></div>
-                            <div>{{ basicData[0].name }} <span class="font-bold text-xl">{{ basicData[0].value
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[0].source}.png)] bg-size`">
+                            </div>
+                            <div class="pl-1">{{ basicData[0].name }} <span class="font-bold text-xl">{{
+                                basicData[0].value
                                     }}</span>{{ basicData[0].unit }}
                             </div>
                         </div>
@@ -47,56 +50,71 @@ const basicOverviewData = ref(basicOverview)
 
                     <div class="flex h-1/4 items-center w-[90%] justify-around mt-[-4%] my-2">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
 
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-3.png)] bg-cover"></div>
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[1].source}.png)] bg-size`">
+                            </div>
 
-                            <div>{{ basicData[1].name }} <span class="font-bold text-xl">{{ basicData[1].value }}</span>
+                            <div class="pl-1">{{ basicData[1].name }} <span class="font-bold text-xl">{{
+                                basicData[1].value }}</span>
                                 {{ basicData[1].unit }}</div>
                         </div>
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-4.png)] bg-cover"></div>
-
-                            <div>{{ basicData[2].name }} <span class="font-bold text-xl">{{ basicData[2].value }}</span>
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[2].source}.png)] bg-size`">
+                            </div>
+                            <div class="pl-1">{{ basicData[2].name }} <span class="font-bold text-xl">{{
+                                basicData[2].value }}</span>
                                 {{ basicData[2].unit }}</div>
                         </div>
                     </div>
 
                     <div class="flex h-1/4 items-center justify-around w-full my-2">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
 
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-5.png)] bg-cover"></div>
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[3].source}.png)] bg-size`">
+                            </div>
 
-                            <div>{{ basicData[3].name }} <span class="font-bold text-xl">{{ basicData[3].value }}</span>
+                            <div class="pl-1">{{ basicData[3].name }} <span class="font-bold text-xl">{{
+                                basicData[3].value }}</span>
                                 {{ basicData[3].unit }}</div>
                         </div>
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-6.png)] bg-cover"></div>
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[4].source}.png)] bg-size`">
+                            </div>
 
-                            <div>{{ basicData[4].name }} <span class="font-bold text-xl">{{ basicData[4].value }}</span>
+                            <div class="pl-1">{{ basicData[4].name }} <span class="font-bold text-xl">{{
+                                basicData[4].value }}</span>
                                 {{ basicData[4].unit }}</div>
                         </div>
                     </div>
 
                     <div class="flex h-1/4 items-center w-full justify-center my-2">
                         <div
-                            class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-7.png)] bg-cover"></div>
-
-                            <div>{{ basicData[5].name }} <span class="font-bold text-xl">{{ basicData[5].value }}</span>
+                            class="flex mx-2 w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[5].source}.png)] bg-size`">
+                            </div>
+                            <div class="pl-1">{{ basicData[5].name }} <span class="font-bold text-xl">{{
+                                basicData[5].value }}</span>
                                 {{ basicData[5].unit }}</div>
                         </div>
-                        <!-- <div
-                            class="flex w-1/5 h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
-                            <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-8.png)] bg-cover"></div>
+                        <div
+                            class="flex mx-2 w-[24%] h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            <div
+                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[6].source}.png)] bg-size`">
+                            </div>
 
                             <div>{{ basicData[6].name }} <span class="font-bold text-xl">{{ basicData[6].value
                                     }}</span>{{ basicData[6].unit }}
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
 
@@ -118,13 +136,13 @@ const basicOverviewData = ref(basicOverview)
                 <li v-for="(item, index) in inspectionDetails" :key="item.name"
                     class="4k:w-1/2 8k:w-1/4 my-2 flex items-center">
                     <div class="flex flex-col">
-                        <div :class="`check-icon-${index + 1 > 8 ? 8 : index + 1} w-16 h-16`"></div>
+                        <div :class="`check-icon-${item.iconIndex} w-16 h-16`"></div>
                         <div class="text-center">{{ item.name }}</div>
                     </div>
                     <div class="flex m-2 flex-col">
                         <div v-for=" i in item.children" :key="i.name">
-                            <p class="text-[#89C3DF]">{{ i.name }}</p>
-                            <p class="text-xl font-bold">{{ i.value || 10 }}{{ i.unit }}</p>
+                            <p class="text-[#89C3DF]">{{ i.name }}({{ i.unit }})</p>
+                            <p class="text-md">{{ i.value || 10 }}</p>
 
                         </div>
                     </div>
@@ -172,7 +190,7 @@ const basicOverviewData = ref(basicOverview)
     background-image: url('@/assets/imgs/overview/o-center.png');
 }
 
-@for $i from 1 through 8 {
+@for $i from 1 through 9 {
     .check-icon-#{$i} {
         background-image: url('@/assets/imgs/overview/check-icon-#{$i}.png');
         background-size: 100% 100%;
