@@ -16,7 +16,7 @@ const props = defineProps({
   },
   comname: {
     type: String,
-    require:true    
+    require: true
   }
 });
 
@@ -115,19 +115,18 @@ const renderChart = (fontSize = chartFontSize) => {
       // itemGap设置各个item之间的间隔，单位px，默认为10，横向布局时为水平间隔，纵向布局时为纵向间隔
       itemGap: 18,
 
-      formatter: function(name) {
+      formatter: function (name) {
         let str = "";
         echartData.map((item, index) => {
           if (item.name === name) {
-            console.log("ppppppppppppppppcomname",props.comname);
-            if(props.comname=="项目规模"){
-                str = `{name|${name}}\r\r{${"percent" +
+            if (props.comname == "项目规模") {
+              str = `{name|${name}}\r\r{${"percent" +
                 index}|${item.percent}}`;
-            }else{
-                str = `{name|${name}}\r{value|${item.value}kWh}\r\r{${"percent" +
+            } else {
+              str = `{name|${name}}\r{value|${item.value}kWh}\r\r{${"percent" +
                 index}|${item.percent}}`;
             }
-            
+
           }
         });
         return str;
@@ -135,7 +134,7 @@ const renderChart = (fontSize = chartFontSize) => {
     },
     tooltip: {
       show: true,
-      formatter: function(value) {
+      formatter: function (value) {
         let data = value.data;
         return `${data.name} ${data.value} (${data.percent})`;
       }

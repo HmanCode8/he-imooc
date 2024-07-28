@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
 import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
 import WarningHBarChart from "../charts/WarningHBarChart.vue";
 import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
@@ -83,8 +82,7 @@ const barChartData = ref({
         <SecondLevelTitle class="w-full" title="响应处置分析">
           <template v-slot:title-slot>
             <div
-              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center"
-            >
+              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
                 <span class="warninglevel text-xl font-extrabold">及时响应处置率</span>
               </div>
@@ -108,8 +106,7 @@ const barChartData = ref({
         <SecondLevelTitle title="响应时长">
           <template v-slot:title-slot>
             <div
-              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center"
-            >
+              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
                 <span class="warninglevel text-xl font-extrabold">平均响应时长</span>
               </div>
@@ -120,15 +117,14 @@ const barChartData = ref({
             </div>
           </template>
         </SecondLevelTitle>
-        <Bar3dChartOMFirst :barData="barChartData" />
+        <!-- <Bar3dChartOMFirst :barData="barChartData" /> -->
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="处置时长">
           <template v-slot:title-slot>
             <div
-              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center"
-            >
+              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
                 <span class="warninglevel text-xl font-extrabold">平均处置时长</span>
               </div>
@@ -148,7 +144,7 @@ const barChartData = ref({
     <SecondLevelTitle title="平均效率"></SecondLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
-      <WarningMedalTableChart/>
+        <WarningMedalTableChart />
         <!-- <div class="w-full h-full">
           <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center w-full">
             <div class></div>
@@ -192,10 +188,9 @@ const barChartData = ref({
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
-      
+
         <div
-          class="bg-[url('assets/imgs/warning/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
-        >
+          class="bg-[url('assets/imgs/warning/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">72个</span>
           </div>
@@ -203,19 +198,17 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/warning/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
-        >
+          class="bg-[url('assets/imgs/warning/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#FFAE00;">0个</span>
           </div>
           <div class="pipe-point">处置中</div>
         </div>
 
-      
+
 
         <div
-          class="bg-[url('assets/imgs/warning/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
-        >
+          class="bg-[url('assets/imgs/warning/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#0BFFC3;">7个</span>
           </div>
@@ -223,8 +216,7 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/warning/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
-        >
+          class="bg-[url('assets/imgs/warning/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">100%</span>
           </div>
@@ -262,7 +254,8 @@ const barChartData = ref({
   background: linear-gradient(to top, #d5dcfe, #82a8ee, #f3f3ff, #f3f3ff);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* 将文字颜色设置为透明，使背景渐变显示出来 */
+  color: transparent;
+  /* 将文字颜色设置为透明，使背景渐变显示出来 */
 }
 
 .warningtotal {

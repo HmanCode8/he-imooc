@@ -3,43 +3,50 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, toRef, watch } from 'vue'
 import * as echarts from 'echarts'
-import useRootFontSize from '@/hooks/useRootFontSize';
-
+import useRootFontSize from "@/hooks/useRootFontSize";
+import _ from 'lodash';
 
 const props = defineProps({
-    chartData: {
+    title: {
+        title: String,
+        default: '--',
+    },
+    data: {
         type: Array,
-        default: () => []
     },
     legendData: {
         type: Array,
         default: () => []
-    }
-})
+    },
+    colors: {
+        type: Array,
+        default: () => ['#0FA0FF', '#24F3FF'],
+    },
+});
+const target = ref(null);
+const chartData = toRef(props, 'data');
+const rootFontSize = useRootFontSize();
+let mChart = null;
 
-const target = ref(null)
-let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value);
+    renderChart(rootFontSize.value);
 });
 
-const { chartData, legendData } = props
-const handleResize = () => {
-    const rootFontSize = useRootFontSize();
-    renderChart(rootFontSize.value);
+watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
+    renderChart(newFontSize);
     if (mChart) {
         mChart.resize();
     }
-};
-
+});
 
 const renderChart = (fontSize) => {
 
     const option = {
         title: {
-            text: '巡检完成率',
+            text: props.title,
             textStyle: {
                 color: '#fff',
                 fontSize // 设置标题字体大小
@@ -49,12 +56,22 @@ const renderChart = (fontSize) => {
         },
         tooltip: {
             trigger: 'axis',
+            formatter: function (params) {
+                return params.map(function (item) {
+                    let unit = '次';  // 默认单位是“次”
+                    if (item.seriesName === '巡检完成率') {
+                        unit = '%';  // 如果是 "巡检完成率"，则单位改为“%”
+                    }
+                    return item.seriesName + ':' + item.value + unit;
+                }).join('<br/>');
+            },
             axisPointer: {
                 type: 'shadow'
             }
         },
+
         legend: {
-            data: legendData,
+            data: props.legendData,
             textStyle: {
                 color: '#fff',
                 fontSize // 设置图例字体大小
@@ -81,7 +98,7 @@ const renderChart = (fontSize) => {
         },
         xAxis: {
             type: 'category',
-            data: chartData.map(item => item.name),
+            data: chartData.value.map(item => item.name),
             axisLine: {
                 lineStyle: {
                     color: '#fff',
@@ -114,7 +131,7 @@ const renderChart = (fontSize) => {
             {
                 name: '巡检完成量',
                 type: 'bar',
-                data: chartData.map(item => item.completed),
+                data: chartData.value.map(item => item.completed),
                 label: {
                     show: true, // 显示数值
                     position: "top", // 在柱状图顶部显示
@@ -137,9 +154,9 @@ const renderChart = (fontSize) => {
             {
                 name: '计划巡检量',
                 type: 'bar',
-                data: chartData.map(item => item.planned),
+                data: chartData.value.map(item => item.planned),
                 label: {
-                    formatter: '{c}%',
+                    formatter: '{c}',
                     show: true, // 显示数值
                     position: "top", // 在柱状图顶部显示
                     fontSize,
@@ -161,7 +178,7 @@ const renderChart = (fontSize) => {
             {
                 name: '巡检完成率',
                 type: 'line',
-                data: chartData.map(item => item.rate),
+                data: chartData.value.map(item => Number(item.rate)),
                 itemStyle: {
                     color: '#FFA500'
                 },
