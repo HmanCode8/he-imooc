@@ -43,6 +43,9 @@ const handleResize = () => {
 };
 
 const renderChart = fontSize => {
+  const { xData, y1Data, y2Data } = props.data
+  const data2 = []
+
   const option = {
     tooltip: {
       trigger: "axis"
@@ -59,7 +62,7 @@ const renderChart = fontSize => {
     xAxis: [
       {
         type: "category",
-        data: props.data,
+        data: xData,
         axisLabel: {
           textStyle: {
             fontSize
@@ -88,13 +91,13 @@ const renderChart = fontSize => {
     ],
     series: [
       {
-        name: "已完成数量",
+        name: "整改完成",
         type: "bar",
-        data: props.barData.y1Data,
+        data: y1Data,
         label: {
           show: true, // 显示数值
           position: "top", // 在柱状图顶部显示
-          fontSize: 12,
+          fontSize,
           color: "#fff"
         },
         itemStyle: {
@@ -111,13 +114,13 @@ const renderChart = fontSize => {
         }
       },
       {
-        name: "未完成数量",
+        name: "未整改",
         type: "bar",
-        data: props.barData.y2Data,
+        data: y2Data,
         label: {
           show: true, // 显示数值
           position: "top", // 在柱状图顶部显示
-          fontSize: 12,
+          fontSize,
           color: "#fff"
         },
         itemStyle: {

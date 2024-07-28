@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import ThirdLevelTitle from "../common/ThirdLevelTitle.vue";
 import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
 import WarningHBarChart from "../charts/WarningHBarChart.vue";
 import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
@@ -73,8 +72,7 @@ const barChartData = ref({
         <SecondLevelTitle class="w-full" title="响应处置分析">
           <template v-slot:title-slot>
             <div
-              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center"
-            >
+              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
                 <span class="warninglevel text-xl font-extrabold">{{ disposalReactData.name }}</span>
               </div>
@@ -98,8 +96,7 @@ const barChartData = ref({
         <SecondLevelTitle title="响应时长">
           <template v-slot:title-slot>
             <div
-              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center"
-            >
+              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
                 <span class="warninglevel text-xl font-extrabold">{{ reactTimeData.name }}</span>
               </div>
@@ -117,8 +114,7 @@ const barChartData = ref({
         <SecondLevelTitle title="处置时长">
           <template v-slot:title-slot>
             <div
-              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center"
-            >
+              class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
                 <span class="warninglevel text-xl font-extrabold">{{ disposalTimeData.name }}</span>
               </div>
@@ -142,10 +138,9 @@ const barChartData = ref({
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
-      
+
         <div
-          class="bg-[url('assets/imgs/warning/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
-        >
+          class="bg-[url('assets/imgs/warning/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">{{averageEfficiencyData[1][0].value}}个</span>
           </div>
@@ -153,19 +148,17 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/warning/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 "
-        >
+          class="bg-[url('assets/imgs/warning/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#FFAE00;">{{averageEfficiencyData[1][1].value}}个</span>
           </div>
           <div class="pipe-point">处置中</div>
         </div>
 
-      
+
 
         <div
-          class="bg-[url('assets/imgs/warning/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
-        >
+          class="bg-[url('assets/imgs/warning/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#0BFFC3;">{{averageEfficiencyData[1][2].value}}个</span>
           </div>
@@ -173,8 +166,7 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/warning/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20"
-        >
+          class="bg-[url('assets/imgs/warning/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">{{averageEfficiencyData[1][3].percent}}</span>
           </div>
@@ -212,7 +204,8 @@ const barChartData = ref({
   background: linear-gradient(to top, #d5dcfe, #82a8ee, #f3f3ff, #f3f3ff);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* 将文字颜色设置为透明，使背景渐变显示出来 */
+  color: transparent;
+  /* 将文字颜色设置为透明，使背景渐变显示出来 */
 }
 
 .warningtotal {

@@ -10,7 +10,8 @@
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
           <div class="font-[pengmenzhengdao]">{{ tab.name }}</div>
           <div v-if="global.componentId === tab.value"
-            class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4"></div>
+            class="bg-[url('assets/imgs/main/t-tabs-active.png')] bg-size absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4">
+          </div>
         </div>
       </div>
     </div>
@@ -30,7 +31,7 @@
     <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
     <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-    <div class="layer-tabs w-40 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -41,26 +42,25 @@
           </div>
         </div>
         <div class="h-[20%] flex flex-col justify-around items-center">
-          <div class="tool-item hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name"
-            @click="iconctive = i.value">
+          <div class=" hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name" @click="iconctive = i.value">
             <i :class="`iconfont ${i.value} ${iconctive === i.value ? 'text-[#00BAFF]' : ''} font-bold text-xl`"></i>
           </div>
-
-          <!-- <div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-delete.png')]"></div> -->
-          <!-- <div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-expad.png')]"></div> -->
         </div>
       </div>
 
       <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0">
         <div ref="leyerRef" class>
-          <div v-for="sub in currentItem" :key="sub.name" class>
+          <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
             <div
-              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 py-1 flex items-center h-6 bg-size font-bold">
+              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
               {{ sub.name }}</div>
-            <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'select-item' : ''}`"
-                @click="updateLayer(item)">{{ item.name }}</div>
+            <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
+              <div v-for="item in sub.children" :key="item.remark" class="pl-2">
+                <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
+                  @click="updateLayer(item)">{{ item.name }}</div>
+              </div>
             </div>
+            <div v-else>---</div>
           </div>
         </div>
       </div>
@@ -101,19 +101,22 @@
 </template>
 
 <script setup>
-import {computed, inject, onMounted, ref, watch} from 'vue'
+import { computed, inject, onMounted, ref, watch } from 'vue'
 import 'ol/ol.css'
-import {Map, View} from 'ol'
-import {useGlobalStore} from "@/store";
+import { Map, View } from 'ol'
+import { useGlobalStore } from "@/store";
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import _ from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
 import proj4 from "proj4";
-import {register} from "ol/proj/proj4";
-import {createLayer, getLegend, traverseLayerDefine} from "@/utils/map/layer";
-import {closePop, createDefaultPopup, getPopInfo, popElement} from "@/utils/map/popup";
+import { register } from "ol/proj/proj4";
+
+import { topTabs, bottomTabs, iconList } from '@/assets/chartData/const'
+
+import { createLayer, getLegend, traverseLayerDefine } from "@/utils/map/layer";
+import { closePop, createDefaultPopup, getPopInfo, popElement } from "@/utils/map/popup";
 
 const { layerConfig = {} } = window;
 const layers = ref([])
@@ -135,94 +138,7 @@ const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
 
 
-const topTabs = ref([
-  {
-    name: "总览",
-    value: "overview"
-  },
-  {
-    name: "基础设施",
-    value: "infrastructure"
-  },
-  {
-    name: "项目管理",
-    value: "project-management"
-  },
-  {
-    name: "运维管养",
-    value: "operation-maintenance"
-  },
-  {
-    name: "运行监测",
-    value: "running-monitoring"
-  },
-  {
-    name: "预警处置",
-    value: "warning-disposal"
-  }
-]);
-
-const bottomTabs = ref([
-  {
-    name: "燃气监管",
-
-    value: "gas-monitoring"
-  },
-  {
-    name: "供水监管",
-    value: "water-supply-monitoring"
-  },
-  {
-    name: "雨水监管",
-    value: "rain-monitoring"
-  },
-  {
-    name: "污水监管",
-    value: "water-pollution-monitoring"
-  },
-  {
-    name: "综合监管",
-    value: "comprehensive-monitoring"
-  },
-  {
-    name: "地下管线",
-    value: "underground-pipeline"
-  },
-  {
-    name: "道路塌陷",
-    value: "road-collapse"
-  },
-  {
-    name: "桥梁监管",
-    value: "bridge-monitoring"
-  },
-  {
-    name: "施工破坏",
-    value: "construction-damage"
-  },
-  {
-    name: "智慧路灯",
-    value: "intelligent-traffic-light"
-  }
-]);
-
-// icon列表
-const iconList = ref([
-  {
-    name: "图层",
-    value: "icon-tuceng"
-  },
-  {
-    name: "删除",
-    value: "icon-delete"
-  },
-  {
-    name: "展开",
-    value: "icon-zhankai"
-  }
-]);
-
-const iconctive = ref(iconList.value[0].value);
+const iconctive = ref(iconList[0].value);
 const onLayerOnchange = val => {
   currentLayerTab.value = val;
 };
@@ -238,31 +154,7 @@ const legendOnchage = val => {
   console.log(val);
 };
 
-watch(
-  () => currentLayerTab.value,
-  () => {
-    gsap.fromTo(
-      leyerRef.value,
-      { opacity: 0, x: -50 },
-      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
-    );
-  }
-);
 
-const initLayerTree = (key) => {
-  layers.value = layerConfig["layerTrees"][key];
-  currentLayerTab.value = _.get(layers.value, "0.name", "");
-}
-
-watch(
-  () => global.componentId,
-  value => {
-    initLayerTree(value)
-    // setDefaultLayers(value);
-  }, {
-  immediate: true
-}
-);
 // const computerLayout = (size, index, initStyle = 10) => {
 // 	let styles = []
 // 	for (let key = 0; key <= size; key++) {
@@ -313,7 +205,7 @@ const initOpenLayersMap = () => {
 
   // 延迟加载次要图层
   setTimeout(() => {
-    setDefaultLayers(global.componentId);
+    // setDefaultLayers(global.componentId);
   }, 1000); // 延迟1秒加载
 };
 
@@ -348,35 +240,35 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
     const defaultLoadLayerList = currentLayerGroup.value.filter(
-        v => defaultLoadLayerArr.includes(v.remark)
+      v => defaultLoadLayerArr.includes(v.remark)
     );
     currentLayerTab.value = _.get(_.find(layers.value,
-        v => v.children && v.children.some(
-            sub => sub.children && sub.children.some(
-                item => firstDefaultLayer === item.remark
-            )
+      v => v.children && v.children.some(
+        sub => sub.children && sub.children.some(
+          item => firstDefaultLayer === item.remark
         )
+      )
     ), "remark", "");
     loadedLayerGroup.value = loadedLayerGroup.value.concat(
-        defaultLoadLayerList.map(v => v.remark)
+      defaultLoadLayerList.map(v => v.remark)
     );
     const groupedLayerMap = Object.groupBy(
-        defaultLoadLayerList,
-        ({source}) => source
+      defaultLoadLayerList,
+      ({ source }) => source
     );
     for (let sourceName in groupedLayerMap) {
       const loadLayerStr = groupedLayerMap[sourceName]
-          .filter(v => v.layer)
-          .map(v => v.layer)
-          .join(",");
+        .filter(v => v.layer)
+        .map(v => v.layer)
+        .join(",");
       const showDetailLayerStr = groupedLayerMap[sourceName]
-          .filter(v => v.detailLayer)
-          .map(v => v.detailLayer)
-          .join(",");
+        .filter(v => v.detailLayer)
+        .map(v => v.detailLayer)
+        .join(",");
       const showLegendLayerStr = groupedLayerMap[sourceName]
-          .filter(v => v.legendLayer)
-          .map(v => v.legendLayer)
-          .join(",");
+        .filter(v => v.legendLayer)
+        .map(v => v.legendLayer)
+        .join(",");
       const layerParam = {
         source: sourceName,
         layer: loadLayerStr,
@@ -390,18 +282,6 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
   }
 };
 
-const changeBaseLayer = baseLayerName => {
-  const baseLayerConfig = layerConfig["baseLayer"][baseLayerName];
-  if (0 < baseLayerConfig.length) {
-    map.value.getAllLayers().forEach(v => {
-      if ("base" === v.get("layerType")) {
-        map.value.removeLayer(v);
-      }
-    });
-    baseLayerConfig.reverse()
-      .forEach(v => map.value.getLayers().insertAt(0, createLayer(getLayerSource(v), "base"),));
-  }
-}
 
 const updateLayer = async layerParam => {
   if ("layer" !== layerParam.type) {
@@ -555,8 +435,33 @@ const initCesiumMap = async () => {
   }
 };
 
+watch(
+  () => currentLayerTab.value,
+  () => {
+    gsap.fromTo(
+      leyerRef.value,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
+    );
+  }
+);
+
+const initLayerTree = (key) => {
+  layers.value = layerConfig["layerTrees"][key];
+  currentLayerTab.value = _.get(layers.value, "0.name", "");
+}
+
+watch(
+  () => global.componentId,
+  value => {
+    initLayerTree(value)
+    setDefaultLayers(value);
+  }, {
+  immediate: true
+}
+);
 onMounted(() => {
-   initOpenLayersMap();
+  initOpenLayersMap();
 });
 
 const toggleMap = () => {
@@ -588,7 +493,7 @@ const toggleMap = () => {
   }
 }
 
-$layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi;
+$layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi;
 
 // 定义一个数组
 // $colors: guanxian, green, blue;
@@ -643,22 +548,6 @@ $layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, y
 }
 
 .layer-tabs {
-  .layer-bg {
-    background-size: 100% 100%;
-
-    @for $i from 1 through 10 {
-      .layer-item-#{$i} {
-        background-image: url("@/assets/imgs/main/layer-#{$i}.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-      }
-    }
-
-    // .i-img {
-    // 	background-image: url('@/assets/imgs/main/base.png');
-    // 	background-size: 100% 100%;
-    // }
-  }
 
   .layer-shaw {
     // 左上角开始渐变背景，从上到下透明度从0到1，颜色#0a234a, #305fad
@@ -666,17 +555,7 @@ $layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, y
         rgba(11, 29, 65, 0.6),
         rgb(7, 32, 50),
         rgba(57, 142, 203, 0.4));
-    // 右上角开始渐变背景，从上到下透明度从0到1
-    // background: linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    // background: linear-gradient(to bottom, #0a234a, #305fad);
-    // 背景透明度，从上到下
-    // background-color: raba(0, 0, 0, .5);
   }
-}
-
-.tool-item {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 
 .select-active {
@@ -685,19 +564,7 @@ $layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, y
   background-image: url("@/assets/imgs/main/icon-b-active.png");
   background-size: 100% 100%;
   transform: translateY(-20px);
-  // background-position: center center;
   transition: all 0.3s ease-in-out;
-  // background-repeat: no-repeat;
-}
-
-.select-item {
-  color: #00faff;
-}
-
-.t-item-line {
-  background-image: url("@/assets/imgs/main/t-tabs-active.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 
 .popup {

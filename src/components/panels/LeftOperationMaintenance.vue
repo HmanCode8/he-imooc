@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
 import Bar3dChart from "../charts/Bar3dChart.vue";
 import Pipe3dChart from "../charts/Pipe3dChart.vue";
 import _ from "lodash";
@@ -33,7 +32,7 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
         <SecondLevelTitle class="w-full" title="上报问题数量"></SecondLevelTitle>
         <div class="w-full flex flex-wrap justify-between">
           <div class="pipe-item m-2 flex" v-for="(item, index) in problems" :key="index">
-            <div :class="`inspection_${(index + 1) === 6 ? 6 : index + 1}  w-20 h-16 bg-size`"></div>
+            <div :class="`inspection_${(index + 1) > 6 ? 6 : index + 1}  w-20 h-16 bg-size`"></div>
             <div class="ml-4 flex flex-col justify-center items-center">
               <div class="problemType">{{ item.name }}({{ item.unit }})</div>
               <div class="problemNumber">{{ item.value }}</div>

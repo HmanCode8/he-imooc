@@ -1,20 +1,15 @@
 <script setup>
-import { defineProps, onMounted, ref, computed } from "vue";
+import { defineProps, ref } from "vue";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 
-const tableBody = ref(null);
 const scrollRef = ref(null);
-onMounted(() => {
-});
 
-const handleScroll=()=>{
-};
 const props = defineProps({
   tableTitles: {
     type: Array,
   },
   tableData: {
-    type: Array,    
+    type: Array,
   }
 });
 </script>
@@ -22,21 +17,16 @@ const props = defineProps({
 <template>
   <div class="w-full">
     <div class="w-full flex">
-      <div class="flex-1 text-center" v-for="(col,index) in tableTitles" :key="index">{{col}}</div>
+      <div class="flex-1 text-center" v-for="(col, index) in tableTitles" :key="index">{{ col }}</div>
     </div>
-    <div class="table-container w-full h-60" ref="scrollRef" >
-      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.8" :hover="true">
+    <div class="table-container w-full h-60" ref="scrollRef">
+      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.5" :hover="true">
         <ul class="w-full ">
-          <li
-            v-for="(item, index) in tableData"
-            :key="index"
-            class="liStyle w-full  flex h-8"
-          >
+          <li v-for="(item, index) in tableData" :key="index" class="liStyle w-full  flex h-8">
 
-          <div class="flex-1  flex items-center justify-center" v-for="(col,index) in item" :key="index"><span>{{col}}</span></div>
-            <!-- <div class="flex-1  flex items-center justify-center"><span>{{item.name}}</span></div>
-            <div class="flex-1  flex items-center justify-center"><span>{{item.construction}}</span></div>
-            <div class="flex-1  flex items-center justify-center"><span>{{item.completion}}</span></div> -->
+            <div class="flex-1  flex items-center justify-center" v-for="(col, index) in item" :key="index">
+              <span>{{ col }}</span>
+            </div>
           </li>
         </ul>
       </vue3-seamless-scroll>
