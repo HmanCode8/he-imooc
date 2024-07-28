@@ -6,42 +6,12 @@ import DoubleBarLineChart from '../charts/DoubleBarLineChart.vue'
 import ProcessBar from '../charts/ProcessBar.vue'
 import { overviewData } from '@/assets/chartData/data'
 
-import { useGlobalStore } from "@/store";
+const { basicOverview, basicData, combinedData, inspectionDetails, oldRenovation } = overviewData
 
-const global = useGlobalStore()
-
-const { basicOverview, basicData, inspectionData, inspectionDetails, operatingData } = overviewData
-
-const chartData = [
-    { name: '燃气', completed: 22, planned: 60, rate: 2 },
-    { name: '供水', completed: 100, planned: 16, rate: 24 },
-    { name: '雨水', completed: 100, planned: 17, rate: 39 },
-    { name: '污水', completed: 100, planned: 60, rate: 24 },
-    { name: '道路', completed: 100, planned: 60, rate: 24 },
-    { name: '桥梁', completed: 140, planned: 60, rate: 24 },
-    { name: '路灯', completed: 120, planned: 16, rate: 39 },
-    { name: '第三方施工', completed: 200, planned: 60, rate: 24 },
-    { name: '综合管线', completed: 100, planned: 40, rate: 24 },
-];
 const legendData = ['巡检完成量', '计划巡检量', '巡检完成率']
 
 const basicOverviewData = ref(basicOverview)
 
-const olds = ref([
-    {
-        name: '燃气',
-        value: 50
-    },
-    {
-        name: '供水',
-        value: 70
-    },
-    {
-
-        name: '排水',
-        value: 60
-    }
-])
 
 </script>
 
@@ -111,7 +81,7 @@ const olds = ref([
                         </div>
                     </div>
 
-                    <div class="flex h-1/4 items-center w-full justify-between my-2">
+                    <div class="flex h-1/4 items-center w-full justify-center my-2">
                         <div
                             class="flex w-1/5 h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
                             <div class="icon w-4 h-4 bg-[url(assets/imgs/overview/ic-item-7.png)] bg-cover"></div>
@@ -140,7 +110,7 @@ const olds = ref([
         <SecondLevelTitle title="巡检巡查"></SecondLevelTitle>
 
         <div class="h-1/3 w-full">
-            <DoubleBarLineChart :chartData="chartData" :legendData="legendData" />
+            <DoubleBarLineChart title="巡检完成率" :data="combinedData" :legendData="legendData" />
         </div>
 
         <div class="old flex w-full justify-end">
@@ -154,7 +124,7 @@ const olds = ref([
                     <div class="flex m-2 flex-col">
                         <div v-for=" i in item.children" :key="i.name">
                             <p class="text-[#89C3DF]">{{ i.name }}</p>
-                            <p class="text-xl font-bold">{{ i.value || 10 }}%</p>
+                            <p class="text-xl font-bold">{{ i.value || 10 }}{{ i.unit }}</p>
 
                         </div>
                     </div>
@@ -169,7 +139,7 @@ const olds = ref([
                 老旧改造完成率
             </div>
             <div class="flex w-[85%] justify-between">
-                <ProcessBar :data="olds" />
+                <ProcessBar :data="oldRenovation" />
             </div>
         </div>
     </div>

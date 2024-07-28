@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
 import Bar3dChart from "../charts/Bar3dChart.vue";
 import Pipe3dChart from "../charts/Pipe3dChart.vue";
 import _ from "lodash";

@@ -55,16 +55,63 @@ const overviewData = {
       source: "7",
     },
   ],
-  inspectionData: [
-    "燃气",
-    "供水",
-    "污水",
-    "雨水",
-    "道路",
-    "桥梁",
-    "第三方施工",
-    "综合管线",
-    "路灯",
+  combinedData: [
+    {
+      name: "燃气",
+      completed: 270,
+      planned: 270,
+      rate: 100,
+      unit: "%",
+    },
+    {
+      name: "供水",
+      completed: 152,
+      planned: 140,
+      rate: 92,
+      unit: "%",
+    },
+    {
+      name: "雨水",
+      completed: 105,
+      planned: 104,
+      rate: 99,
+      unit: "%",
+    },
+    {
+      name: "污水",
+      completed: 182,
+      planned: 175,
+      rate: 96,
+      unit: "%",
+    },
+    {
+      name: "道路",
+      completed: 216,
+      planned: 206,
+      rate: 95,
+      unit: "%",
+    },
+    {
+      name: "桥梁",
+      completed: 83,
+      planned: 83,
+      rate: 100,
+      unit: "%",
+    },
+    {
+      name: "第三方施工",
+      completed: 180,
+      planned: 172,
+      rate: 95,
+      unit: "%",
+    },
+    {
+      name: "路灯",
+      completed: 230,
+      planned: 216,
+      rate: 94,
+      unit: "%",
+    },
   ],
   inspectionDetails: [
     {
@@ -72,11 +119,13 @@ const overviewData = {
       children: [
         {
           name: "燃气管网巡检完成率",
-          value: 1,
+          value: 100,
+          unit: "%",
         },
         {
           name: "燃气场站巡检完成率",
-          value: 1,
+          value: 100,
+          unit: "%",
         },
       ],
     },
@@ -85,11 +134,13 @@ const overviewData = {
       children: [
         {
           name: "供水取水口巡检完成率",
-          value: null,
+          value: 95,
+          unit: "%",
         },
         {
-          name: "供水水厂巡检完成率",
-          value: null,
+          name: "供水厂巡检完成率",
+          value: 96,
+          unit: "%",
         },
       ],
     },
@@ -98,11 +149,13 @@ const overviewData = {
       children: [
         {
           name: "雨水易涝点梳理",
-          value: null,
+          value: 32,
+          unit: "个",
         },
         {
           name: "雨水管网巡检完成率",
-          value: null,
+          value: 99,
+          unit: "%",
         },
       ],
     },
@@ -111,11 +164,13 @@ const overviewData = {
       children: [
         {
           name: "污水水质达标率",
-          value: null,
+          value: 94,
+          unit: "%",
         },
         {
           name: "污水管网巡检完成率",
-          value: null,
+          value: 96,
+          unit: "%",
         },
       ],
     },
@@ -124,11 +179,13 @@ const overviewData = {
       children: [
         {
           name: "道路巡检计划完成率",
-          value: null,
+          value: 95,
+          unit: "%",
         },
         {
           name: "道路养护计划完成率",
-          value: null,
+          value: 100,
+          unit: "%",
         },
       ],
     },
@@ -137,11 +194,13 @@ const overviewData = {
       children: [
         {
           name: "桥梁定期检查完成率",
-          value: null,
+          value: 100,
+          unit: "%",
         },
         {
           name: "桥梁养护维修完成率",
-          value: null,
+          value: 100,
+          unit: "%",
         },
       ],
     },
@@ -149,12 +208,14 @@ const overviewData = {
       name: "三破",
       children: [
         {
-          name: "三破巡检巡查完成率",
-          value: null,
+          name: "三破巡检计划完成率",
+          value: 94,
+          unit: "%",
         },
         {
-          name: "三破四方交底完成率",
-          value: null,
+          name: "三破四方交汇处完成率",
+          value: 96,
+          unit: "%",
         },
       ],
     },
@@ -163,11 +224,13 @@ const overviewData = {
       children: [
         {
           name: "地下管线交互风险数",
-          value: null,
+          value: 36,
+          unit: "个",
         },
         {
           name: "交互风险整改完成率",
-          value: null,
+          value: 95,
+          unit: "%",
         },
       ],
     },
@@ -176,31 +239,148 @@ const overviewData = {
       children: [
         {
           name: "路灯计划巡检率",
-          value: null,
+          value: 100,
+          unit: "%",
         },
         {
           name: "路灯巡检完成率",
-          value: null,
+          value: 94,
+          unit: "%",
         },
       ],
     },
   ],
-  operatingData: [
+  oldRenovation: [
     {
       name: "燃气",
-      value: null, // 这里需要填入实际数据
+      value: 100,
+      unit: "%",
     },
     {
       name: "污水",
-      value: null, // 这里需要填入实际数据
+      value: 100,
+      unit: "%",
     },
     {
       name: "雨水",
-      value: null, // 这里需要填入实际数据
+      value: 100,
+      unit: "%",
     },
     {
       name: "供水",
-      value: null, // 这里需要填入实际数据
+      value: 100,
+      unit: "%",
+    },
+  ],
+  riskTotalData: {
+    name: "风险总数",
+    total: 58,
+    unit: "件",
+    high: 4,
+    medium: 15,
+    low: 39,
+    data: [
+      {
+        name: "待处置",
+        value: 6,
+        unit: "件",
+      },
+      {
+        name: "处理中",
+        value: 4,
+        unit: "件",
+      },
+      {
+        name: "已完成",
+        value: 43,
+        unit: "件",
+      },
+      {
+        name: "已逾期",
+        value: 5,
+        unit: "件",
+      },
+    ],
+  },
+  hideTotalData: {
+    name: "隐患总数",
+    total: 42,
+    unit: "件",
+    high: 4,
+    medium: 10,
+    low: 28,
+    data: [
+      {
+        name: "待处置",
+        value: 3,
+        unit: "件",
+      },
+      {
+        name: "处理中",
+        value: 2,
+        unit: "件",
+      },
+      {
+        name: "已完成",
+        value: 23,
+        unit: "件",
+      },
+      {
+        name: "已逾期",
+        value: 0,
+        unit: "件",
+      },
+    ],
+  },
+  warningColumns: [
+    { title: "类型", key: "type" },
+    { title: "报警数(次)", key: "warningNum" },
+    { title: "已核查(件)", key: "checkedNum" },
+    { title: "已签收(件)", key: "signedNum" },
+    { title: "已办结(件)", key: "completedNum" },
+  ],
+  warningTableData: [
+    {
+      type: "燃气报警",
+      warningNum: 39,
+      checkedNum: 2,
+      signedNum: 2,
+      completedNum: 29,
+    },
+    {
+      type: "供水报警",
+      warningNum: 64,
+      checkedNum: 3,
+      signedNum: 2,
+      completedNum: 20,
+    },
+    {
+      type: "雨水报警",
+      warningNum: 74,
+      checkedNum: 3,
+      signedNum: 1,
+      completedNum: 23,
+    },
+    {
+      type: "污水报警",
+      warningNum: 55,
+      checkedNum: 4,
+      signedNum: 2,
+      completedNum: 10,
+    },
+    {
+      type: "道路报警",
+      warningNum: 39,
+      checkedNum: 1,
+      signedNum: 3,
+      completedNum: 9,
+    },
+    {
+      type: "桥梁报警",
+      warningNum: 29,
+      checkedNum: 0,
+      signedNum: 3,
+      completedNum: 10,
     },
   ],
 };
@@ -219,8 +399,8 @@ const basicFacilitiesData = {
         },
         {
           name: "管点",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -234,8 +414,8 @@ const basicFacilitiesData = {
         },
         {
           name: "管点",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -249,8 +429,8 @@ const basicFacilitiesData = {
         },
         {
           name: "管点",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -259,13 +439,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
         {
           name: "管点",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -274,13 +454,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
         {
           name: "管点",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -289,13 +469,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
         {
           name: "管点",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -825,13 +1005,13 @@ const projectManageData = {
         },
         {
           name: "工业数量",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
         {
           name: "占比",
-          value: null,
-          unit: null,
+          value: 0,
+          unit: 0,
         },
       ],
     },
@@ -945,23 +1125,23 @@ const projectManageData = {
   projectSize: [
     {
       name: "0-100万",
-      value: null,
-      unit:"万"
+      value: 0,
+      unit: "万",
     },
     {
       name: "100-500万",
-      value: null,
-      unit:"万"
+      value: 0,
+      unit: "万",
     },
     {
       name: "500-1000万",
-      value: null,
-      unit:"万"
+      value: 0,
+      unit: "万",
     },
     {
       name: "1000万以上",
-      value: null,
-      unit:"万"
+      value: 0,
+      unit: "万",
     },
   ],
   projectDistribution: {
@@ -970,62 +1150,62 @@ const projectManageData = {
       {
         name: "盐都区",
         construction: 86,
-        completion: null,
+        completion: 0,
       },
       {
         name: "阜宁县",
         construction: 45,
-        completion: null,
+        completion: 0,
       },
       {
         name: "滨海县",
         construction: 132,
-        completion: null,
+        completion: 0,
       },
       {
         name: "东台市",
         construction: 73,
-        completion: null,
+        completion: 0,
       },
       {
         name: "盐都区",
         construction: 86,
-        completion: null,
+        completion: 0,
       },
       {
         name: "阜宁县",
         construction: 45,
-        completion: null,
+        completion: 0,
       },
       {
         name: "滨海县",
         construction: 132,
-        completion: null,
+        completion: 0,
       },
       {
         name: "东台市",
         construction: 73,
-        completion: null,
+        completion: 0,
       },
       {
         name: "盐都区",
         construction: 86,
-        completion: null,
+        completion: 0,
       },
       {
         name: "阜宁县",
         construction: 45,
-        completion: null,
+        completion: 0,
       },
       {
         name: "滨海县",
         construction: 132,
-        completion: null,
+        completion: 0,
       },
       {
         name: "东台市",
         construction: 73,
-        completion: null,
+        completion: 0,
       },
     ],
   },
@@ -1050,8 +1230,8 @@ const projectManageData = {
           value: 436,
           unit: "个",
         },
-      ]
-    }
+      ],
+    },
   ],
   areaConstruction: [
     {
@@ -1107,45 +1287,44 @@ const projectManageData = {
     {
       name: "异常问题总数",
       value: 10,
-      unit: "个"
+      unit: "个",
     },
     {
       name: "同比",
       value: -1.19,
-      unit: "%"
+      unit: "%",
     },
     [
       {
         flag: 0,
-        value: 0
+        value: 0,
       },
       {
         flag: 1,
-        value: 1
+        value: 1,
       },
       {
         flag: 2,
-        value: 0
+        value: 0,
       },
       {
         flag: 3,
-        value: 0
+        value: 0,
       },
       {
         flag: 4,
-        value: 2
+        value: 2,
       },
       {
         flag: 5,
-        value: 4
+        value: 4,
       },
       {
         flag: 6,
-        value: 3
+        value: 3,
       },
-    ]
-  ]
-  ,
+    ],
+  ],
   pipeDestroy: [
     {
       statisticDestroy: [
@@ -1153,86 +1332,89 @@ const projectManageData = {
           name: "待签收",
           value: 2,
           percent: "20%",
-          color: "#3796FF"
+          color: "#3796FF",
         },
         {
           name: "处置中",
           value: 1,
           percent: "10%",
-          color: "#FFF500"
+          color: "#FFF500",
         },
         {
           name: "已办结",
           value: 7,
           percent: "70%",
           unit: "个",
-          color: "#23FF5F"
-        }
-      ]
+          color: "#23FF5F",
+        },
+      ],
     },
     {
       title: ["序号", "名称", "区域", "状态"],
-      tableData: [{
-        id: "1",
-        name: "排水管线挖断事件",
-        district: "盐都区",
-        status: "待签收"
-      },
-      {
-        id: "2",
-        name: "给水管线挖断事件",
-        district: "大丰区",
-        status: "待签收"
-      },
-      {
-        id: "3",
-        name: "违法占压事件",
-        district: "大丰区",
-        status: "已办结"
-      },
-      {
-        id: "4",
-        name: "电力管线挖断事件",
-        district: "射阳县",
-        status: "已办结"
-      },
-      {
-        id: "5",
-        name: "给水管线挖断事件",
-        district: "亭湖区",
-        status: "已办结"
-      }, {
-        id: "1",
-        name: "排水管线挖断事件",
-        district: "盐都区",
-        status: "待签收"
-      },
-      {
-        id: "2",
-        name: "给水管线挖断事件",
-        district: "大丰区",
-        status: "待签收"
-      },
-      {
-        id: "3",
-        name: "违法占压事件",
-        district: "大丰区",
-        status: "已办结"
-      },
-      {
-        id: "4",
-        name: "电力管线挖断事件",
-        district: "射阳县",
-        status: "已办结"
-      },
-      {
-        id: "5",
-        name: "给水管线挖断事件",
-        district: "亭湖区",
-        status: "已办结"
-      }]
+      tableData: [
+        {
+          id: "1",
+          name: "排水管线挖断事件",
+          district: "盐都区",
+          status: "待签收",
+        },
+        {
+          id: "2",
+          name: "给水管线挖断事件",
+          district: "大丰区",
+          status: "待签收",
+        },
+        {
+          id: "3",
+          name: "违法占压事件",
+          district: "大丰区",
+          status: "已办结",
+        },
+        {
+          id: "4",
+          name: "电力管线挖断事件",
+          district: "射阳县",
+          status: "已办结",
+        },
+        {
+          id: "5",
+          name: "给水管线挖断事件",
+          district: "亭湖区",
+          status: "已办结",
+        },
+        {
+          id: "1",
+          name: "排水管线挖断事件",
+          district: "盐都区",
+          status: "待签收",
+        },
+        {
+          id: "2",
+          name: "给水管线挖断事件",
+          district: "大丰区",
+          status: "待签收",
+        },
+        {
+          id: "3",
+          name: "违法占压事件",
+          district: "大丰区",
+          status: "已办结",
+        },
+        {
+          id: "4",
+          name: "电力管线挖断事件",
+          district: "射阳县",
+          status: "已办结",
+        },
+        {
+          id: "5",
+          name: "给水管线挖断事件",
+          district: "亭湖区",
+          status: "已办结",
+        },
+      ],
     },
-  ]
+  ],
 };
 
 // 运维管养
@@ -1914,9 +2096,9 @@ const runningMonitoringData = {
       ],
       sensorData: [
         { name: "可燃气体探测器", value: 1002, unit: "台" },
-        { name: "视频监控", value: null, unit: null },
-        { name: "燃气压力设备", value: null, unit: null },
-        { name: "流量计", value: null, unit: null },
+        { name: "视频监控", value: 0, unit: 0 },
+        { name: "燃气压力设备", value: 0, unit: 0 },
+        { name: "流量计", value: 0, unit: 0 },
       ],
       coverageData: [],
     },
@@ -2021,7 +2203,7 @@ const runningMonitoringData = {
       ],
       sensorData: [
         { name: "光纤传感设备", value: "1", unit: "台" },
-        { name: "光纤感知终端分析系统", value: null, unit: null },
+        { name: "光纤感知终端分析系统", value: 0, unit: 0 },
         { name: "摄像头", value: 28, unit: "台" },
         { name: "精密水准仪", value: 18, unit: "台" },
         { name: "全站仪", value: 1, unit: "台" },

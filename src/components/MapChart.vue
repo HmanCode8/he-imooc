@@ -10,7 +10,8 @@
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
           <div class="font-[pengmenzhengdao]">{{ tab.name }}</div>
           <div v-if="global.componentId === tab.value"
-            class="t-item-line absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4"></div>
+            class="bg-[url('assets/imgs/main/t-tabs-active.png')] bg-size absolute left-1/2 translate-x-[-50%] top-12 w-12 h-4">
+          </div>
         </div>
       </div>
     </div>
@@ -41,13 +42,9 @@
           </div>
         </div>
         <div class="h-[20%] flex flex-col justify-around items-center">
-          <div class="tool-item hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name"
-            @click="iconctive = i.value">
+          <div class=" hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name" @click="iconctive = i.value">
             <i :class="`iconfont ${i.value} ${iconctive === i.value ? 'text-[#00BAFF]' : ''} font-bold text-xl`"></i>
           </div>
-
-          <!-- <div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-delete.png')]"></div> -->
-          <!-- <div class="tool-item w-5 h-5 bg-[url('assets/imgs/main/icon-expad.png')]"></div> -->
         </div>
       </div>
 
@@ -58,7 +55,7 @@
               class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 py-1 flex items-center h-6 bg-size font-bold">
               {{ sub.name }}</div>
             <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'select-item' : ''}`"
+              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
                 @click="updateLayer(item)">{{ item.name }}</div>
             </div>
           </div>
@@ -112,6 +109,9 @@ import _ from "lodash";
 import MapLegend from "@/components/MapLegend.vue";
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
+
+import { topTabs, bottomTabs, iconList } from '@/assets/chartData/const'
+
 import { createLayer, getLegend, traverseLayerDefine } from "@/utils/map/layer";
 import { closePop, createDefaultPopup, getPopInfo, popElement } from "@/utils/map/popup";
 
@@ -135,94 +135,7 @@ const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
 
 
-const topTabs = ref([
-  {
-    name: "总览",
-    value: "overview"
-  },
-  {
-    name: "基础设施",
-    value: "infrastructure"
-  },
-  {
-    name: "项目管理",
-    value: "project-management"
-  },
-  {
-    name: "运维管养",
-    value: "operation-maintenance"
-  },
-  {
-    name: "运行监测",
-    value: "running-monitoring"
-  },
-  {
-    name: "预警处置",
-    value: "warning-disposal"
-  }
-]);
-
-const bottomTabs = ref([
-  {
-    name: "燃气监管",
-
-    value: "gas-monitoring"
-  },
-  {
-    name: "供水监管",
-    value: "water-supply-monitoring"
-  },
-  {
-    name: "雨水监管",
-    value: "rain-monitoring"
-  },
-  {
-    name: "污水监管",
-    value: "water-pollution-monitoring"
-  },
-  {
-    name: "综合监管",
-    value: "comprehensive-monitoring"
-  },
-  {
-    name: "地下管线",
-    value: "underground-pipeline"
-  },
-  {
-    name: "道路塌陷",
-    value: "road-collapse"
-  },
-  {
-    name: "桥梁监管",
-    value: "bridge-monitoring"
-  },
-  {
-    name: "施工破坏",
-    value: "construction-damage"
-  },
-  {
-    name: "智慧路灯",
-    value: "intelligent-traffic-light"
-  }
-]);
-
-// icon列表
-const iconList = ref([
-  {
-    name: "图层",
-    value: "icon-tuceng"
-  },
-  {
-    name: "删除",
-    value: "icon-delete"
-  },
-  {
-    name: "展开",
-    value: "icon-zhankai"
-  }
-]);
-
-const iconctive = ref(iconList.value[0].value);
+const iconctive = ref(iconList[0].value);
 const onLayerOnchange = val => {
   currentLayerTab.value = val;
 };
@@ -238,31 +151,7 @@ const legendOnchage = val => {
   console.log(val);
 };
 
-watch(
-  () => currentLayerTab.value,
-  () => {
-    gsap.fromTo(
-      leyerRef.value,
-      { opacity: 0, x: -50 },
-      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
-    );
-  }
-);
 
-const initLayerTree = (key) => {
-  layers.value = layerConfig["layerTrees"][key];
-  currentLayerTab.value = _.get(layers.value, "0.name", "");
-}
-
-watch(
-  () => global.componentId,
-  value => {
-    initLayerTree(value)
-    // setDefaultLayers(value);
-  }, {
-  immediate: true
-}
-);
 // const computerLayout = (size, index, initStyle = 10) => {
 // 	let styles = []
 // 	for (let key = 0; key <= size; key++) {
@@ -313,7 +202,7 @@ const initOpenLayersMap = () => {
 
   // 延迟加载次要图层
   setTimeout(() => {
-    setDefaultLayers(global.componentId);
+    // setDefaultLayers(global.componentId);
   }, 1000); // 延迟1秒加载
 };
 
@@ -390,18 +279,6 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
   }
 };
 
-const changeBaseLayer = baseLayerName => {
-  const baseLayerConfig = layerConfig["baseLayer"][baseLayerName];
-  if (0 < baseLayerConfig.length) {
-    map.value.getAllLayers().forEach(v => {
-      if ("base" === v.get("layerType")) {
-        map.value.removeLayer(v);
-      }
-    });
-    baseLayerConfig.reverse()
-      .forEach(v => map.value.getLayers().insertAt(0, createLayer(getLayerSource(v), "base"),));
-  }
-}
 
 const updateLayer = async layerParam => {
   if ("layer" !== layerParam.type) {
@@ -555,6 +432,31 @@ const initCesiumMap = async () => {
   }
 };
 
+watch(
+  () => currentLayerTab.value,
+  () => {
+    gsap.fromTo(
+      leyerRef.value,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
+    );
+  }
+);
+
+const initLayerTree = (key) => {
+  layers.value = layerConfig["layerTrees"][key];
+  currentLayerTab.value = _.get(layers.value, "0.name", "");
+}
+
+watch(
+  () => global.componentId,
+  value => {
+    initLayerTree(value)
+    setDefaultLayers(value);
+  }, {
+  immediate: true
+}
+);
 onMounted(() => {
   //  initOpenLayersMap();
 });
@@ -674,30 +576,13 @@ $layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, y
   }
 }
 
-.tool-item {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
   color: #00faff;
   background-image: url("@/assets/imgs/main/icon-b-active.png");
   background-size: 100% 100%;
   transform: translateY(-20px);
-  // background-position: center center;
   transition: all 0.3s ease-in-out;
-  // background-repeat: no-repeat;
-}
-
-.select-item {
-  color: #00faff;
-}
-
-.t-item-line {
-  background-image: url("@/assets/imgs/main/t-tabs-active.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 
 .popup {

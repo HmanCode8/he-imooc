@@ -34,7 +34,7 @@ watchEffect(() => {
             </thead>
             <tbody ref="tableBody">
                 <tr v-for="(row, rowIndex) in tableDatas" :key="rowIndex">
-                    <td v-for="col in columnData" :key="col.key">{{ row[col.key] }}</td>
+                    <td class="py-2" v-for="col in columnData" :key="col.key">{{ row[col.key] }}</td>
                 </tr>
             </tbody>
         </table>

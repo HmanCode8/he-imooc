@@ -80,17 +80,16 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
 
       </div>
 
-      <div class="8k:w-1/2 4k:w-full h-80 flex">
+      <div class="8k:w-1/2 4k:w-full flex">
         <div class="longstrip h-40 flex flex-col items-center pt-2">
-          <div class="star w-1 h-2">
-          </div>
-          <div class="text h-40 text-xs mt-3">
+
+          <div class="text h-full text-xs mt-3">
             维修频率
           </div>
         </div>
-        <div class="flex flex-wrap">
-          <div v-for="(m, index) in maintenanceChartData" :key="index">
-            <LiquidChart :liquidData="m" />
+        <div class="flex w-full h-full flex-wrap">
+          <div class="w-1/3" v-for="(m, index) in maintenanceChartData" :key="index">
+            <LiquidChart class="w-full h-20" :liquidData="m" />
           </div>
         </div>
       </div>

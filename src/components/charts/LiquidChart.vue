@@ -1,5 +1,8 @@
 <template>
-  <div ref="target" v-resize-ob="handleResize" class="w-36 h-20"></div>
+  <div>
+    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+
+  </div>
 </template>
 
 <script setup>
@@ -8,7 +11,6 @@ import * as echarts from "echarts";
 import "echarts-gl";
 import "echarts-liquidfill";
 import useRootFontSize from "@/hooks/useRootFontSize";
-
 
 const props = defineProps({
   liquidData: {
@@ -44,16 +46,16 @@ const handleResize = () => {
   }
 };
 
-const renderChart = () => {
+const renderChart = (fontSize) => {
   const option = {
     title: {
       text: props.liquidData.name,
       textStyle: {
-        fontSize: 14,
+        fontSize,
         color: "rgba(255, 255, 255, 0.7)",
         rich: {
           a: {
-            fontSize: 30,
+            fontSize,
           },
         },
       },
@@ -69,7 +71,7 @@ const renderChart = () => {
         label: {
           normal: {
             textStyle: {
-              fontSize: 28,       // 字体大小
+              fontSize,       // 字体大小
               color: '#fff',   // 字体颜色
               fontFamily: 'Arial',// 字体系列
               fontWeight: 'bold', // 字体粗细
@@ -77,7 +79,7 @@ const renderChart = () => {
               textShadowBlur: 10  // 文字阴影模糊半径
             },
             formatter: function (param) {
-              return (param.value * 100).toFixed(2);  // 格式化数值
+              return (param.value * 100).toFixed(2) + '%';  // 格式化数值
             }
           }
         },
