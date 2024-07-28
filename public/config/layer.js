@@ -342,7 +342,7 @@ window.layerConfig = {
     "warning-disposal": [],
   },
   defaultLayers: {
-    overview: ["gs_js"],
+    //overview: ["gs_js"],
   },
   detailFields: [],
   layerList: [
@@ -373,14 +373,15 @@ window.layerConfig = {
     },
     {
       name: "rasterBase",
-      url: "https://jiangsu.tianditu.gov.cn/mapjs2/rest/services/MapJS/js_yxdt_latest/MapServer/WMTS",
-      type: "WMTS",
+      url: "https://jiangsu.tianditu.gov.cn/mapjs2/rest/services/MapJS/js_yxdt_latest/MapServer",
+      type: "arcgis_WMTS",
       projection: "ESPG:4490",
       layer: "MapJS_js_yxdt_latest",
       matrixSet: "default",
       style: "default",
-      format: "image/jpgpng",
+      format: "image/png32",
       origin: [-180, 90],
+      size: [1024,1024],
       extent: [
         116.10358013377254, 30.710719079012677, 122.09030402444137,
         35.21265930204362,
@@ -398,14 +399,15 @@ window.layerConfig = {
     },
     {
       name: "rasterLabelBase",
-      url: "https://jiangsu.tianditu.gov.cn/mapjs2/rest/services/MapJS/js_yxzj_latest/MapServer/WMTS",
-      type: "WMTS",
+      url: "https://jiangsu.tianditu.gov.cn/mapjs2/rest/services/MapJS/js_yxzj_latest/MapServer",
+      type: "arcgis_WMTS",
       projection: "ESPG:4490",
       layer: "MapJS_js_yxzj_latest",
       matrixSet: "default",
       style: "default",
-      format: "image/png",
+      format: "image/png32",
       origin: [-180, 90],
+      size: [1024,1024],
       extent: [
         116.10358013377254, 30.710719079012677, 122.09030402444137,
         35.21265930204362,
