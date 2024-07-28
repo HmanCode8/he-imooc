@@ -42,7 +42,7 @@ const renderChart = fontSize => {
           parms[0].axisValue +
           "</br>" +
           parms[0].marker +
-          "巡检及时率:" +
+          "响应时长:" +
           parms[0].value;
         return str;
       }
@@ -87,7 +87,8 @@ const renderChart = fontSize => {
           fontFamily: "Microsoft YaHei",
           color: "#ffffff",
           fontSize
-        }
+        },
+        interval:0
       }
     },
     yAxis: {
@@ -127,7 +128,7 @@ const renderChart = fontSize => {
     },
     series: [
       {
-        name: "巡检及时率",
+        name: "响应时长",
         data: props.barData.yData,
         stack: "zs",
         type: "bar",

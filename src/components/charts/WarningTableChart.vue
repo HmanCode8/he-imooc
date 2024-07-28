@@ -13,19 +13,19 @@ const props = defineProps({
   tableData: {
     type: Array,
     default: () => [
-      { id: 1, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 2, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 3, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 4, zone: "盐城市盐都区", num: 30, percent: "24%" },
-      { id: 5, zone: "盐城市盐都区", num: 30, percent: "24%" }
+      { id: 1, name: "盐城市盐都区", value: 30, percent: "24%" },
+      { id: 2, name: "盐城市盐都区", value: 30, percent: "24%" },
+      { id: 3, name: "盐城市盐都区", value: 30, percent: "24%" },
+      { id: 4, name: "盐城市盐都区", value: 30, percent: "24%" },
+      { id: 5, name: "盐城市盐都区", value: 30, percent: "24%" }
     ]
   }
 });
 
 const ths = ref([
   { title: "", key: 0, prop: "id" },
-  { title: "区域", key: 1, prop: "zone" },
-  { title: "数量/个", key: 2, prop: "num" },
+  { title: "区域", key: 1, prop: "name" },
+  { title: "数量/个", key: 2, prop: "value" },
   { title: "占比/%", key: 3, prop: "percent" }
 ]);
 </script>
