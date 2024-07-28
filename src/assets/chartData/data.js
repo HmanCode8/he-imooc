@@ -398,6 +398,29 @@ const overviewData = {
       completedNum: 10,
     },
   ],
+  deviceData: [
+    {
+      name: "已核查",
+      value: 13,
+      unit: "件",
+      change: "up",
+      percent: "2.15%",
+    },
+    {
+      name: "已签收",
+      value: 13,
+      unit: "件",
+      change: "up",
+      percent: "0.00%",
+    },
+    {
+      name: "已核查",
+      value: 101,
+      unit: "件",
+      change: "up",
+      percent: "5.28%",
+    },
+  ],
 };
 
 //基础设施
@@ -2129,9 +2152,9 @@ const runningMonitoringData = {
       ],
       sensorData: [
         { name: "可燃气体探测器", value: 1002, unit: "台" },
-        { name: "视频监控", value: 0, unit: 0 },
-        { name: "燃气压力设备", value: 0, unit: 0 },
-        { name: "流量计", value: 0, unit: 0 },
+        { name: "视频监控", value: 0, unit: "台" },
+        { name: "燃气压力设备", value: 0, unit: "台" },
+        { name: "流量计", value: 0, unit: "台" },
       ],
       coverageData: [],
     },
@@ -2159,12 +2182,12 @@ const runningMonitoringData = {
         { name: "在线率", value: 98.24, unit: "%" },
       ],
       sensorData: [
-        { name: "压力计", value: "83 80+3", unit: "台" },
+        { name: "压力计", value: "83", unit: "台" },
         { name: "流量计", value: 46, unit: "台" },
-        { name: "噪声监测仪", value: "103 90+13", unit: "台" },
-        { name: "水质温度仪", value: "23 22+1", unit: "台" },
-        { name: "智能消火栓", value: "20 0+20", unit: "台" },
-        { name: "智能井盖", value: "11 无现状", unit: "台" },
+        { name: "噪声监测仪", value: "103", unit: "台" },
+        { name: "水质温度仪", value: "23", unit: "台" },
+        { name: "智能消火栓", value: "20", unit: "台" },
+        { name: "智能井盖", value: "11", unit: "台" },
       ],
       coverageData: [],
     },

@@ -138,14 +138,6 @@ const currentComp = ref('项目规模');
 </template>
 
 <style scoped lang="scss">
-@for $i from 1 through 10 {
-  .type-icon-#{$i} {
-    background-image: url("@/assets/imgs/project/type-item-#{$i}.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-  }
-}
-
 .totalStyle {
   font-family: "PingFangSC, PingFang SC";
   background-image: linear-gradient(to top, #ffbd00, #fff5a3);

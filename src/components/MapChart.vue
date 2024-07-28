@@ -461,7 +461,7 @@ watch(
 }
 );
 onMounted(() => {
-  //  initOpenLayersMap();
+  initOpenLayersMap();
 });
 
 const toggleMap = () => {
@@ -493,7 +493,7 @@ const toggleMap = () => {
   }
 }
 
-$layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi;
+$layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi;
 
 // 定义一个数组
 // $colors: guanxian, green, blue;
@@ -548,22 +548,6 @@ $layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, y
 }
 
 .layer-tabs {
-  .layer-bg {
-    background-size: 100% 100%;
-
-    @for $i from 1 through 10 {
-      .layer-item-#{$i} {
-        background-image: url("@/assets/imgs/main/layer-#{$i}.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-      }
-    }
-
-    // .i-img {
-    // 	background-image: url('@/assets/imgs/main/base.png');
-    // 	background-size: 100% 100%;
-    // }
-  }
 
   .layer-shaw {
     // 左上角开始渐变背景，从上到下透明度从0到1，颜色#0a234a, #305fad
@@ -571,11 +555,6 @@ $layers: guanxian, jichu, gongshui, paishui, daolu, ludeng, qiaoliang, wushui, y
         rgba(11, 29, 65, 0.6),
         rgb(7, 32, 50),
         rgba(57, 142, 203, 0.4));
-    // 右上角开始渐变背景，从上到下透明度从0到1
-    // background: linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    // background: linear-gradient(to bottom, #0a234a, #305fad);
-    // 背景透明度，从上到下
-    // background-color: raba(0, 0, 0, .5);
   }
 }
 

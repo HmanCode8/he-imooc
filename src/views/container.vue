@@ -7,7 +7,7 @@
             <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
             <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-[94.5vh] text-white flex overflow-hidden">
                 <div ref="leftPanelRef"
-                    :class="`left-panel 8k:pr-10 4k:pr-6 overflow-auto  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
+                    :class="`bg-[url('assets/imgs/main/panel-left.png')] bg-size backdrop-blur-sm 8k:pr-10 4k:pr-6 overflow-auto  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                     <!-- 条件渲染的动态组件 -->
                     <component :is="currentComponentMap[currentComponent][0]" class="w-full h-full box-border pb-4" />
 
@@ -18,7 +18,7 @@
                 </div>
                 <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
                 <div ref="rightPanelRef"
-                    class="right-panel 8k:pl-10 overflow-auto  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
+                    class="bg-[url('assets/imgs/main/panel-right.png')] backdrop-blur-sm bg-size 8k:pl-10 overflow-auto  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
                     <!-- 条件渲染的动态组件 -->
                     <!-- <div class="inner-bg absolute left-0 top-0 w-full h-full "></div> -->
                     <component :is="currentComponentMap[currentComponent][1]" class="w-full h-full box-border pb-4" />
@@ -62,7 +62,6 @@ import RightOperationMaintenance from '@/components/panels/RightOperationMainten
 import RightRunningMonitoring from '@/components/panels/RightRunningMonitoring.vue'
 import RightWarningDisposal from '@/components/panels/RightWarningDisposal.vue'
 
-import { getVisualization } from '@/api/visualization.js'
 import { useGlobalStore } from '@/store'  // 引入全局状态管理
 
 const gsap = inject('gsap')
@@ -97,36 +96,6 @@ watch(() => store.componentId, (value) => {
 }, {
     immediate: true
 })
-
-// 加载数据函数
-const loadData = async () => {
-    data.value = await getVisualization()
-}
-
-// 初始加载数据
-loadData()
-
-// 设置定时器每3秒刷新数据
-// setInterval(() => {
-//     loadData()
-// }, 3000)
-
-
 </script>
 
-<style scoped lang="scss">
-.main-panel {
-    .left-panel {
-        background-image: url('@/assets/imgs/main/panel-left.png');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-    }
-
-    .right-panel {
-        background-image: url('@/assets/imgs/main/panel-right.png');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-    }
-
-}
-</style>
+<style scoped lang="scss"></style>
