@@ -47,7 +47,7 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
                         </div>
                     </template>
                 </ThirdLevelTitle>
-                <Tablechart :columns="columns" :tableData="tableData" class="h-60" />
+                <Tablechart :columns="columns" :tableData="tableData" class="h-40" />
             </div>
             <div class="8k:w-1/2 4k:w-full h-60">
                 <ThirdLevelTitle title="供排水">
@@ -128,7 +128,7 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
             </div>
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="养护分析" />
-                <Tablechart :columns="columns" :tableData="tableData" class="h-806" />
+                <Tablechart :columns="columns" :tableData="tableData" class="h-80" />
             </div>
         </div>
     </div>
