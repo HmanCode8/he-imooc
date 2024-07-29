@@ -4,7 +4,7 @@
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-cover flex justify-between px-10 mt-4">
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-size flex justify-between px-10 mt-4">
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
@@ -22,7 +22,7 @@
         <div
           :class="`flex flex-col font-bold items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
           v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-          <div :class="`blink-${index + 1} w-10 h-10 bg-cover`"></div>
+          <div :class="`blink-${index + 1} w-10 h-10 bg-size`"></div>
           <div class="t-item-name">{{ tab.name }}</div>
         </div>
       </div>

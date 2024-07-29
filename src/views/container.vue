@@ -4,8 +4,8 @@
         <Header @onChageSizeType="(k) => sizeType = k" />
         <!-- 主体组件 -->
         <div class="main-panel relative">
-            <!-- bg-[url('assets/imgs/right-panel.png')] bg-cover -->
-            <div class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-[94.5vh] text-white flex overflow-hidden">
+            <!-- bg-[url('assets/imgs/right-panel.png')] bg-size -->
+            <div class="bg-[url('assets/imgs/bg.jpg')] bg-size bg-center h-[94.5vh] text-white flex overflow-hidden">
                 <div ref="leftPanelRef"
                     :class="`bg-[url('assets/imgs/main/panel-left.png')] bg-size backdrop-blur-md 8k:pr-10 4k:pr-6 overflow-auto  absolute w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                     <!-- 条件渲染的动态组件 -->
@@ -16,7 +16,7 @@
                     <!-- 数据展示图 -->
                     <MapChart class="bg-opacity-50  flex-1" />
                 </div>
-                <!-- bg-[url('assets/imgs/left-panel.png')] bg-cover -->
+                <!-- bg-[url('assets/imgs/left-panel.png')] bg-size -->
                 <div ref="rightPanelRef"
                     class="bg-[url('assets/imgs/main/panel-right.png')]  bg-size 8k:pl-10 overflow-auto  absolute w-[28.57%] z-10 top-0 right-0 h-full flex-1 bg-opacity-90  p-1 flex flex-col">
                     <!-- 条件渲染的动态组件 -->
