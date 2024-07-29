@@ -12,6 +12,15 @@ const props = defineProps({
     type: Array,
   }
 });
+console.log(props.tableTitles);
+const data = props.tableData.map((item) => {
+  return {
+    name: item[0],
+    age: item[1],
+    address: item[2],
+    phone: item[3],
+  };
+});
 </script>
 
 <template>
@@ -20,7 +29,7 @@ const props = defineProps({
       <div class="flex-1 text-center" v-for="(col, index) in tableTitles" :key="index">{{ col }}</div>
     </div>
     <div class="table-container w-full h-60" ref="scrollRef">
-      <vue3-seamless-scroll class="seamless" :list="tableData" :step="0.5" :hover="true">
+      <vue3-seamless-scroll class="seamless" :list="data" :step="0.5" :hover="true">
         <ul class="w-full ">
           <li v-for="(item, index) in tableData" :key="index" class="liStyle w-full  flex h-8">
 

@@ -168,7 +168,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                 </ul>
             </div>
         </div>
-        <Tablechart :columns="warningColumns" :tableData="warningTableData" class="h-60 mt-10" />
+        <Tablechart :columns="warningColumns" :tableData="warningTableData" :scrollable="false" class="h-80 mt-10" />
     </div>
 </template>
 

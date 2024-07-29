@@ -739,7 +739,7 @@ const basicFacilitiesData = {
       natural: 3,
     },
     {
-      area: "市+县城合计",
+      area: "合计",
       length: 5259,
       gas: 174,
       total: 49658,
@@ -813,7 +813,7 @@ const basicFacilitiesData = {
       natural: 0,
     },
     {
-      area: "市+县城合计",
+      area: "合计",
       length: 82,
       gas: 4862,
       total: 58547,

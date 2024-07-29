@@ -1,7 +1,8 @@
 <script setup>
 import { toRef, ref, watchEffect } from 'vue'
+import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 
-const tableBody = ref(null)
+const scrollRef = ref(null);
 
 const props = defineProps({
     columns: {
@@ -11,8 +12,20 @@ const props = defineProps({
     tableData: {
         type: Array,
         default: () => []
+    },
+    scrollable: {
+        type: Boolean,
+        default: true
+    },
+    showIndex: {
+        type: Boolean,
+        default: false
+    },
+    border: {
+        type: Boolean,
+        default: true
     }
-})
+});
 
 const columnData = toRef(props, 'columns')
 const tableDatas = toRef(props, 'tableData')
@@ -21,32 +34,46 @@ watchEffect(() => {
     columnData.value = props.columns
     tableDatas.value = props.tableData
 })
-
 </script>
 
 <template>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th v-for="col in columnData" :key="col.key">{{ col.title }}</th>
-                </tr>
-            </thead>
-            <tbody ref="tableBody">
-                <tr v-for="(row, rowIndex) in tableDatas" :key="rowIndex">
-                    <td class="py-2" v-for="col in columnData" :key="col.key">{{ row[col.key] }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="w-full">
+        <div class="w-full flex">
+            <div v-if="showIndex">序号</div>
+            <div class="flex-1 text-center" v-for="col in columnData" :key="col.key">{{ col.title }}</div>
+        </div>
+        <div class="table-container w-full h-full" ref="scrollRef">
+            <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableData" :step="0.5" :hover="true">
+                <ul class="w-full ">
+                    <li v-for="(row, rowIndex) in tableData" :key="rowIndex" class="liStyle w-full  flex text-center">
+                        <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}
+                        </div>
+                        <div :class="`flex-1 py-2 flex items-center justify-center ${border ? 'border-[#071b43]' : ''}`"
+                            v-for="col in columnData" :key="col.key">
+                            <span>{{ row[col.key] }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </vue3-seamless-scroll>
+            <div v-else class="h-full">
+                <ul class="w-full h-full">
+                    <li v-for="(row, rowIndex) in tableData" :key="rowIndex" class="liStyle w-full  flex text-center">
+                        <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}
+                        </div>
+                        <div :class="`flex-1 py-2 flex items-center justify-center ${border ? 'border-[#071b43]' : ''}`"
+                            v-for="col in columnData" :key="col.key">
+                            <span>{{ row[col.key] }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped>
 .table-container {
-    /* max-height: 400px; */
-    /* Set a max height for the table container */
-    overflow-y: auto;
-    /* Enable vertical scrolling */
+    overflow-y: hidden;
 }
 
 table {
@@ -54,28 +81,15 @@ table {
     border-collapse: collapse;
 }
 
-th,
-td {
-    /* padding: 1px; */
-    text-align: center;
+.tableBodyStyle {
+    width: 100%;
 }
 
-th {
-    background-color: #1c3c6f;
-    color: #A9D4E6;
-    position: sticky;
-    /* Make the header sticky */
-    top: -6px;
-    /* Stick to the top */
-    z-index: 1;
-    /* Ensure it is above other content */
-}
-
-tbody tr:nth-child(even) {
+ul li:nth-child(even) {
     background-color: #132d5c;
 }
 
-tbody tr:hover {
+ul li:hover {
     background-color: #4276b2;
 }
 </style>
