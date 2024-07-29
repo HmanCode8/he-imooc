@@ -35,7 +35,7 @@
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
-            @click="onLayerOnchange(layer.remark)" v-for="(layer, index) in layers " :key="layer.name">
+            @click="currentLayerTab = layer.remark" v-for="(layer, index) in layers " :key="layer.name">
             <div v-if="currentLayerTab === layer.remark"
               class="w-full h-full absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')] bg-size">
             </div>
@@ -94,8 +94,13 @@
     <!-- 图例 -->
 
     <div ref="legendRef" v-if="0 < legendGroup.length"
-      class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
-      <MapLegend @update:checked="legendOnchage" :legendGroup="legendGroup" />
+      class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
+      <MapLegend :legendGroup="legendGroup" />
+    </div>
+
+    <!-- 地图切换 -->
+    <div class="absolute bg-slate-400/50 right-[29%] bottom-5 z-10">
+      <MapToggle @update:baseMap="toggleMap"/>
     </div>
   </div>
 </template>
@@ -110,6 +115,7 @@ import "cesium/Build/Cesium/Widgets/widgets.css";
 import _ from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
+import MapToggle from "@/components/MapToggle.vue";
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
 
@@ -125,6 +131,7 @@ const leyerRef = ref(null)
 const legendRef = ref(null)
 const global = useGlobalStore()
 const target = ref(null)
+const current2dBaseMap = ref("vector");
 const currentBottomTab = ref('underground-pipeline')
 const currentLayerTab = ref('ranqi');
 const currentLayerGroup = ref([]);
@@ -134,14 +141,8 @@ const map = ref(null);
 const popupCom = ref(null);
 const popupObject = ref({});
 const legendGroup = ref([]);
-const isCesiumMap = ref(false);
 const cesiumViewer = ref(null);
-
-
 const iconctive = ref(iconList[0].value);
-const onLayerOnchange = val => {
-  currentLayerTab.value = val;
-};
 
 const currentItem = computed(() =>
   _.get(
@@ -150,10 +151,6 @@ const currentItem = computed(() =>
     []
   )
 );
-const legendOnchage = val => {
-  console.log(val);
-};
-
 
 // const computerLayout = (size, index, initStyle = 10) => {
 // 	let styles = []
@@ -177,7 +174,7 @@ const initOpenLayersMap = () => {
   }
   register(proj4);
 
-  const baseLayerConfig = layerConfig["baseLayer"]["raster"];
+  const baseLayerConfig = layerConfig["baseLayer"][current2dBaseMap.value];
   const baseLayers = baseLayerConfig.map(v =>
     createLayer(getLayerSource(v), "base")
   );
@@ -197,16 +194,13 @@ const initOpenLayersMap = () => {
       projection: layerConfig.systemProjection
     })
   });
+
   p.on("singleclick", queryPopupDetail);
   /**
    * 保存地图示例，后续叠加图层需要
    */
   map.value = p;
-
-  // 延迟加载次要图层
-  setTimeout(() => {
-    // setDefaultLayers(global.componentId);
-  }, 1000); // 延迟1秒加载
+  setDefaultLayers(global.componentId);
 };
 
 const getLayerSource = sourceName => {
@@ -281,7 +275,6 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
     currentLayerTab.value = _.get(layers.value, "0.name", "");
   }
 };
-
 
 const updateLayer = async layerParam => {
   const isHaveChecked = _.includes(loadedLayerGroup.value, layerParam.remark)
@@ -435,45 +428,63 @@ const initCesiumMap = async () => {
   }
 };
 
-watch(
-  () => currentLayerTab.value,
-  () => {
-    gsap.fromTo(
-      leyerRef.value,
-      { opacity: 0, x: -50 },
-      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
-    );
-  }
-);
-
 const initLayerTree = (key) => {
   layers.value = layerConfig["layerTrees"][key];
   currentLayerTab.value = _.get(layers.value, "0.name", "");
 }
 
+const change2dBaseMap = mapType => {
+  const baseLayerArr = _.get(layerConfig, "baseLayer." + mapType, []);
+  if (!_.some(map.value.getAllLayers(), v => "base" === v.get("layerGroup") && baseLayerArr.includes(v.get("layerName")))) {
+    const baseLayers = baseLayerArr.map(v => createLayer(getLayerSource(v), "base"));
+    map.value.getAllLayers().filter(v => "base" === v.get("layerGroup")).forEach(v => map.value.removeLayer(v));
+    const layerCollection = map.value.getLayers();
+    for (let i = 0; i < baseLayers.length; i++) {
+      layerCollection.insertAt(i, baseLayers[i]);
+    }
+  }
+}
+
+const toggleMap = mapType => {
+  if ("scene" !== mapType) {
+    cesiumViewer.value && cesiumViewer.value.destroy();
+    cesiumViewer.value = null;
+    current2dBaseMap.value = mapType;
+    if (map.value) {
+      map.value.setTarget(target.value);
+      change2dBaseMap(current2dBaseMap.value);
+    } else {
+      initOpenLayersMap();
+    }
+  } else {
+    map.value.setTarget(null);
+    initCesiumMap();
+  }
+};
+
+watch(
+    () => currentLayerTab.value,
+    () => {
+      gsap.fromTo(
+          leyerRef.value,
+          { opacity: 0, x: -50 },
+          { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
+      );
+    }
+);
+
 watch(
   () => global.componentId,
   value => {
     initLayerTree(value)
-    setDefaultLayers(value);
+    map.value && setDefaultLayers(value);
   }, {
   immediate: true
 }
 );
 onMounted(() => {
-  // initOpenLayersMap();
+   initOpenLayersMap();
 });
-
-const toggleMap = () => {
-  if (isCesiumMap.value) {
-    cesiumViewer.value.destroy();
-    initOpenLayersMap();
-  } else {
-    map.value.setTarget(null);
-    initCesiumMap();
-  }
-  isCesiumMap.value = !isCesiumMap.value;
-};
 </script>
 
 <style lang="scss" scoped>
