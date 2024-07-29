@@ -47,19 +47,19 @@ window.layerConfig = {
             children: [
               {
                 name: "风险分布",
-                remark: "fengxianfenbu",
                 type: "layer",
                 source: "pipe",
-                layer: "6,7",
-                detailLayer: "11",
-                legendLayer: "",
+                layer: "2,3",
+                remark: "js",
+                detailLayer: "3",
+                legendLayer: "3",
               },
               {
                 name: "风险事件详情",
-                remark: "fengxianshijianxiangqing",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
+                remark: "ys",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -71,19 +71,19 @@ window.layerConfig = {
             children: [
               {
                 name: "隐患分布",
-                remark: "yinhuanfenbu",
                 type: "layer",
                 source: "pipe",
                 layer: "6,7",
+                remark: "ws",
                 detailLayer: "11",
                 legendLayer: "",
               },
               {
                 name: "隐患事件详情",
-                remark: "yinhuanshijianxiangqing",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
+                remark: "ys",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -246,10 +246,10 @@ window.layerConfig = {
             children: [
               {
                 name: "污水管点管线详细",
-                remark: "wushuiguandianguanxianxiangxi",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
+                remark: "ys",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -324,19 +324,19 @@ window.layerConfig = {
               },
               {
                 name: "底数",
-                remark: "dishu",
                 type: "layer",
                 source: "pipe",
                 layer: "12",
+                remark: "底数",
                 detailLayer: "12",
                 legendLayer: "",
               },
               {
                 name: "养护类别",
-                remark: "yanghuleibie",
                 type: "layer",
                 source: "pipe",
                 layer: "13",
+                remark: "养护类别",
                 detailLayer: "13",
                 legendLayer: "",
               },
@@ -807,10 +807,10 @@ window.layerConfig = {
         type: "mainClass",
         children: [],
       },
-    ],
+    ]
   },
   defaultLayers: {
-    //overview: ["gs_js"],
+    overview: ["js"],
   },
   detailFields: [],
   layerList: [
