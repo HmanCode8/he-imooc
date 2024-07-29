@@ -16,10 +16,12 @@ window.layerConfig = {
         children: [
           {
             name: "示范区",
+            remark: "shifanqu",
             children: [],
           },
           {
             name: "建成区",
+            remark: "jianchengqu",
             children: [],
           },
         ],
@@ -31,30 +33,33 @@ window.layerConfig = {
         children: [
           {
             name: "监测对象",
+            remark: "jiance_duixiang",
             children: [],
           },
           {
             name: "设备分布",
+            remark: "shebei_fenbu",
             children: [],
           },
           {
             name: "风险分布",
+            remark: "fengxian_fenbu",
             children: [
               {
                 name: "风险分布",
+                remark: "fengxianfenbu",
                 type: "layer",
                 source: "pipe",
                 layer: "6,7",
-                remark: "ws",
                 detailLayer: "11",
                 legendLayer: "",
               },
               {
                 name: "风险事件详情",
+                remark: "fengxianshijianxiangqing",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
-                remark: "ys",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -62,22 +67,23 @@ window.layerConfig = {
           },
           {
             name: "隐患分布",
+            remark: "yinhuan_fenbu",
             children: [
               {
                 name: "隐患分布",
+                remark: "yinhuanfenbu",
                 type: "layer",
                 source: "pipe",
                 layer: "6,7",
-                remark: "ws",
                 detailLayer: "11",
                 legendLayer: "",
               },
               {
                 name: "隐患事件详情",
+                remark: "yinhuanshijianxiangqing",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
-                remark: "ys",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -91,7 +97,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "供水",
+            remark: "gongshui_child",
             children: [],
           },
         ],
@@ -102,7 +109,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "污水",
+            remark: "wushui_child",
             children: [],
           },
         ],
@@ -113,7 +121,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "雨水",
+            remark: "yushui_child",
             children: [],
           },
         ],
@@ -124,7 +133,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "道路",
+            remark: "daolu_child",
             children: [],
           },
         ],
@@ -135,7 +145,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "桥梁",
+            remark: "qiaoliang_child",
             children: [],
           },
         ],
@@ -146,7 +157,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "项目",
+            remark: "xiangmu_child",
             children: [],
           },
         ],
@@ -158,6 +170,7 @@ window.layerConfig = {
         children: [
           {
             name: "默认",
+            remark: "moren",
             children: [],
           },
         ],
@@ -168,7 +181,8 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "--",
+            name: "路灯",
+            remark: "ludeng_child",
             children: [],
           },
         ],
@@ -182,22 +196,23 @@ window.layerConfig = {
         children: [
           {
             name: "燃气管点管线",
+            remark: "ranqi_guandianguanxian",
             children: [
               {
                 name: "燃气管点管线详细",
+                remark: "ranqiguandianguanxianxiangxi",
                 type: "layer",
                 source: "pipe",
-                layer: "弹窗",
-                remark: "弹窗",
+                layer: "danchuang",
                 detailLayer: "11",
                 legendLayer: "",
               },
               {
                 name: "燃气管点管线详细含管龄",
+                remark: "ranqiguandianguanxianxiangxihanguanling",
                 type: "layer",
                 source: "pipe",
-                layer: "弹窗，下同理",
-                remark: "弹窗",
+                layer: "danchuang",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -205,14 +220,17 @@ window.layerConfig = {
           },
           {
             name: "管径分布",
+            remark: "guanjing_fenbu",
             children: [],
           },
           {
             name: "压力分布",
+            remark: "yali_fenbu",
             children: [],
           },
           {
             name: "燃气场站",
+            remark: "ranqi_changzhan",
             children: [],
           },
         ],
@@ -224,13 +242,14 @@ window.layerConfig = {
         children: [
           {
             name: "污水管点管线",
+            remark: "wushui_guandianguanxian",
             children: [
               {
                 name: "污水管点管线详细",
+                remark: "wushuiguandianguanxianxiangxi",
                 type: "layer",
                 source: "pipe",
                 layer: "9,10",
-                remark: "ys",
                 detailLayer: "10",
                 legendLayer: "",
               },
@@ -245,18 +264,22 @@ window.layerConfig = {
         children: [
           {
             name: "雨水管点管线",
+            remark: "yushui_guandianguanxian",
             children: [],
           },
           {
             name: "管径分布",
+            remark: "guanjing_fenbu",
             children: [],
           },
           {
             name: "压力分布",
+            remark: "yali_fenbu",
             children: [],
           },
           {
             name: "雨水场站",
+            remark: "yushui_changzhan",
             children: [],
           },
         ],
@@ -268,48 +291,52 @@ window.layerConfig = {
         children: [
           {
             name: "桥梁",
+            remark: "qiaoliang_child",
             children: [],
           },
           {
             name: "视频监控",
+            remark: "shipin_jiankong",
             children: [],
           },
           {
             name: "特大桥",
+            remark: "tedaqiao",
             children: [],
           },
           {
             name: "特殊结构桥梁",
+            remark: "teshujiegou_qiaoliang",
             children: [],
           },
           {
             name: "养护分析",
-            // 区城、底数、养护类别（I类、II类、III类、IV类、V类）
+            remark: "yanghu_fenxi",
             children: [
               {
                 name: "区城",
+                remark: "qucheng",
                 type: "layer",
                 source: "pipe",
                 layer: "11",
-                remark: "区城",
                 detailLayer: "11",
                 legendLayer: "",
               },
               {
                 name: "底数",
+                remark: "dishu",
                 type: "layer",
                 source: "pipe",
                 layer: "12",
-                remark: "底数",
                 detailLayer: "12",
                 legendLayer: "",
               },
               {
                 name: "养护类别",
+                remark: "yanghuleibie",
                 type: "layer",
                 source: "pipe",
                 layer: "13",
-                remark: "养护类别",
                 detailLayer: "13",
                 legendLayer: "",
               },
@@ -321,14 +348,459 @@ window.layerConfig = {
         name: "项目",
         remark: "xiangmu",
         type: "mainClass",
-        children: [],
+        children: [
+          {
+            name: "项目",
+            remark: "xiangmu_child",
+            children: [],
+          },
+        ],
       },
       {
         name: "综合管线",
-        remark: "zonghe",
+        remark: "zongheguanxian",
+        type: "mainClass",
+        children: [
+          {
+            name: "综合管线",
+            remark: "zongheguanxian_child",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "路灯",
+        remark: "ludeng",
+        type: "mainClass",
+        children: [
+          {
+            name: "路灯",
+            remark: "ludeng_child",
+            children: [],
+          },
+        ],
+      },
+    ],
+    "running-monitoring": [
+      {
+        name: "覆盖率",
+        remark: "fugaillv",
+        type: "mainClass",
+        children: [
+          {
+            name: "所有类型设备的覆盖率按行政区划划分",
+            remark: "shebeifugaillv",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "燃气",
+        remark: "ranqi",
+        type: "mainClass",
+        children: [
+          {
+            name: "监测对象",
+            remark: "jiance_duixiang",
+            children: [
+              {
+                name: "管点管线",
+                remark: "guandianguanxian",
+                children: [],
+              },
+              {
+                name: "燃气场站",
+                remark: "ranqi_changzhan",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "供水",
+        remark: "gongshui",
+        type: "mainClass",
+        children: [
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "污水",
+        remark: "wushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "雨水",
+        remark: "yushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "监测对象",
+            remark: "jiance_duixiang",
+            children: [
+              {
+                name: "雨水管网",
+                remark: "yushui_guanwang",
+                children: [],
+              },
+              {
+                name: "液位计",
+                remark: "yewei_ji",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "道路",
+        remark: "daolu",
+        type: "mainClass",
+        children: [
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "桥梁",
+        remark: "qiaoliang",
+        type: "mainClass",
+        children: [
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "路灯",
+        remark: "ludeng",
+        type: "mainClass",
+        children: [
+          {
+            name: "设备分布",
+            remark: "shebei_fenbu",
+            children: [],
+          },
+          {
+            name: "报警情况",
+            remark: "baojing_qingkuang",
+            children: [],
+          },
+        ],
+      },
+    ],
+    "operation-maintenance": [
+      {
+        name: "燃气",
+        remark: "ranqi",
+        type: "mainClass",
+        children: [
+          {
+            name: "巡检",
+            remark: "xunjian",
+            children: [
+              {
+                name: "巡检对象",
+                remark: "xunjian_duixiang",
+                children: [],
+              },
+              {
+                name: "巡检完成率",
+                remark: "xunjian_wanchenglv",
+                children: [],
+              },
+              {
+                name: "巡检及时率",
+                remark: "xunjian_jishilv",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "管养",
+            remark: "guanyang",
+            children: [
+              {
+                name: "管养对象",
+                remark: "guanyang_duixiang",
+                children: [],
+              },
+              {
+                name: "管养完成率",
+                remark: "guanyang_wanchenglv",
+                children: [],
+              },
+              {
+                name: "管养及时率",
+                remark: "guanyang_jishilv",
+                children: [],
+              },
+            ],
+          },
+          {
+            name: "维修对象",
+            remark: "weixiu_duixiang",
+            children: [],
+          },
+          {
+            name: "检查对象",
+            remark: "jiancha_duixiang",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "供水",
+        remark: "gongshui",
+        type: "mainClass",
+        children: [
+          {
+            name: "供水",
+            remark: "gongshui_child",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "雨水",
+        remark: "yushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "雨水",
+            remark: "yushui_child",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "污水",
+        remark: "wushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "污水",
+            remark: "wushui_child",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "道路",
+        remark: "daolu",
+        type: "mainClass",
+        children: [
+          {
+            name: "道路",
+            remark: "daolu_child",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "桥梁",
+        remark: "qiaoliang",
+        type: "mainClass",
+        children: [
+          {
+            name: "桥梁",
+            remark: "qiaoliang_child",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "路灯",
+        remark: "ludeng",
+        type: "mainClass",
+        children: [
+          {
+            name: "路灯",
+            remark: "ludeng_child",
+            children: [],
+          },
+        ],
+      },
+    ],
+    "project-management": [
+      {
+        name: "项目",
+        remark: "xiangmu",
+        type: "mainClass",
+        children: [
+          {
+            name: "项目分布",
+            remark: "xiangmu_fenbu",
+            children: [],
+          },
+          {
+            name: "项目详情",
+            remark: "xiangmu_xiangqing",
+            children: [],
+          },
+        ],
+      },
+      {
+        name: "综合管线",
+        remark: "zongheguanxian",
         type: "mainClass",
         children: [],
       },
+    ],
+    "warning-disposal": [
+      {
+        name: "燃气",
+        remark: "ranqi",
+        type: "mainClass",
+        children: [
+          {
+            name: "监测对象",
+            remark: "jiance_duixiang",
+            children: [],
+          },
+          {
+            name: "燃气场站",
+            remark: "ranqi_changzhan",
+            children: [
+              {
+                name: "窨井",
+                remark: "yanjing",
+                children: [],
+              },
+              {
+                name: "管线",
+                remark: "guanxian",
+                children: [],
+              },
+              {
+                name: "终端用户",
+                remark: "zhongduanyonghu",
+                children: [],
+              },
+              {
+                name: "阀门井",
+                remark: "famengjing",
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "供水",
+        remark: "gongshui",
+        type: "mainClass",
+        children: [],
+      },
+      {
+        name: "污水",
+        remark: "wushui",
+        type: "mainClass",
+        children: [
+          {
+            name: "监测对象",
+            remark: "jiance_duixiang",
+            children: [],
+          },
+          {
+            name: "管线",
+            remark: "guanxian",
+            children: [
+              {
+                name: "污水厂",
+                remark: "wushuichang",
+                children: [],
+              },
+              {
+                name: "污水泵站",
+                remark: "wushuibengzhan",
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "雨水",
+        remark: "yushui",
+        type: "mainClass",
+        children: [],
+      },
+      {
+        name: "道路",
+        remark: "daolu",
+        type: "mainClass",
+        children: [],
+      },
+      {
+        name: "桥梁",
+        remark: "qiaoliang",
+        type: "mainClass",
+        children: [],
+      },
+      // {
+      //   name: "三破",
+      //   remark: "sanpo",
+      //   type: "mainClass",
+      //   children: [],
+      // },
       {
         name: "路灯",
         remark: "ludeng",
@@ -336,10 +808,6 @@ window.layerConfig = {
         children: [],
       },
     ],
-    "running-monitoring": [],
-    "operation-maintenance": [],
-    "project-management": [],
-    "warning-disposal": [],
   },
   defaultLayers: {
     overview: ["gs_js"],

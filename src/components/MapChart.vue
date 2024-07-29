@@ -235,7 +235,7 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
       }
     });
   }
-  loadedLayerGroup.value.length = 0;
+  // loadedLayerGroup.value.length = 0;
   const defaultLoadLayerArr = _.get(layerConfig.defaultLayers, configName, []);
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
@@ -284,47 +284,47 @@ const loadDefaultLayers = (configName, isRemoveFirst) => {
 
 
 const updateLayer = async layerParam => {
+  const isHaveChecked = _.includes(loadedLayerGroup.value, layerParam.remark)
+  if (!isHaveChecked) {
+    loadedLayerGroup.value.push(layerParam.remark);
+  } else {
+    loadedLayerGroup.value = loadedLayerGroup.value.filter(v => v !== layerParam.remark);
+  }
   if ("layer" !== layerParam.type) {
     return;
   }
   const loadLayerArr = _.get(layerParam, "layer", "").split(",");
   const detailLayerArr = _.get(layerParam, "detailLayer", "").split(",");
   const legendLayerArr = _.get(layerParam, "legendLayer", "").split(",");
-  if (loadedLayerGroup.value.includes(layerParam.remark)) {
-    loadedLayerGroup.value = loadedLayerGroup.value.filter(
-      layer => layer !== layerParam.remark
-    );
+  if (isHaveChecked) {
+
     const layer = map.value
       .getAllLayers()
       .find(v => layerParam.source === v.get("layerName"));
-    if (layer) {
-      if (layerParam.layer) {
-        legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !loadLayerArr.includes(v.layerId));
-        const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
-        const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
-          .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
-        if (0 < newLayerStr.length) {
-          if (0 < detailLayerArr.length) {
-            layer.set(
-              "detailLayer",
-              layer.get("detailLayer").split(",").filter(l => !detailLayerArr.includes(l)).join(",")
-            );
-          }
-          if (0 < legendLayerArr.length) {
-            layer.set(
-              "legendLayer",
-              layer.get("legendLayer").split(",").filter(l => !legendLayerArr.includes(l)).join(",")
-            );
-          }
-          layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
-          layer.getSource().changed();
-          return;
+    if (layer && layerParam.layer) {
+      legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !loadLayerArr.includes(v.layerId));
+      const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
+      const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
+        .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
+      if (0 < newLayerStr.length) {
+        if (0 < detailLayerArr.length) {
+          layer.set(
+            "detailLayer",
+            layer.get("detailLayer").split(",").filter(l => !detailLayerArr.includes(l)).join(",")
+          );
         }
+        if (0 < legendLayerArr.length) {
+          layer.set(
+            "legendLayer",
+            layer.get("legendLayer").split(",").filter(l => !legendLayerArr.includes(l)).join(",")
+          );
+        }
+        layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
+        layer.getSource().changed();
       }
-      map.value.removeLayer(layer);
     }
+    map.value.removeLayer(layer);
   } else {
-    loadedLayerGroup.value.push(layerParam.remark);
     const layer = map.value
       .getAllLayers().find(v => layerParam.source === v.get("layerName"));
     if (layer) {
@@ -461,7 +461,7 @@ watch(
 }
 );
 onMounted(() => {
-  initOpenLayersMap();
+  // initOpenLayersMap();
 });
 
 const toggleMap = () => {
