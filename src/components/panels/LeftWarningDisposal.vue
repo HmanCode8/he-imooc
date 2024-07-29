@@ -251,7 +251,7 @@ const changeActive = name => {
             @click="changeActive(item.name)">
             <div class="ml-24">{{ item.name }}</div>
             <div class="ml-20">
-              <span class="warningsourcestyle text-2xl">{{ item.value }}</span>个
+              <span :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`">{{ item.value }}</span>个
             </div>
           </div>
         </div>
@@ -436,8 +436,8 @@ const changeActive = name => {
 }
 
 .rightIconChecked {
-  background-image: url("@/assets/imgs/warning/yj-source-type-left-checked.png"),
-    url("@/assets/imgs/warning/warningsource2.png");
+  background-image: url("@/assets/imgs/warning/yj-source-type-right-checked.png"),
+    url("@/assets/imgs/warning/warningsource4.png");
   // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
   background-position: 90% 10%;
   background-size: 40%, 80%;
