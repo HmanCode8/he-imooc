@@ -1,9 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, isRef } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import WarningAreaChart from "../charts/WarningAreaChart.vue";
 import WarningTableChart from "../charts/WarningTableChart.vue";
+import { warningDisposalData } from "@/assets/chartData/data";
+
+const {
+  warningSourceData,
+  warningLevelData,
+  warningTrendData,
+  warningTypeData,
+  warningSpaceFeaturesData
+} = warningDisposalData;
 
 const list = ref([
   {
@@ -43,19 +52,17 @@ const tabs = ref([
   }
 ]);
 
-const warningDataLeft = ref([
-  { name: "燃气", value: 157 },
-  { name: "供水", value: 1137 },
-  { name: "雨水", value: 1000 },
-  { name: "污水", value: 1000 }
-]);
+//预警来源
+const warningDataLeft = ref([]);
+const warningDataRight = ref([]);
 
-const warningDataRight = ref([
-  { name: "道路", value: 1350 },
-  { name: "桥梁", value: 1000 },
-  { name: "路灯", value: 861 },
-  { name: "三破", value: 3 }
-]);
+for (let i = 0; i < 4; i++) {
+  warningDataLeft.value.push(warningSourceData[i]);
+}
+
+for (let i = 4; i < 8; i++) {
+  warningDataRight.value.push(warningSourceData[i]);
+}
 
 const warningType = ref([
   { name: "燃气场站", value: 60, percent: "40" },
@@ -79,6 +86,133 @@ const timeTabs = ref([
 const onTabChange = k => {
   console.log(k);
 };
+
+//设置预警等级
+let levelData = ref(warningLevelData[0]);
+const setWarningLevelData = name => {
+  if (name === "总数") {
+    warningLevelData.forEach(element => {
+      if (element.name === "总数") {
+        levelData = element;
+      }
+    });
+  } else {
+    warningLevelData.forEach(element => {
+      if (element.name === name) {
+        levelData = element;
+      }
+    });
+  }
+};
+//-----------预警事件趋势
+//获取具体时间
+const getPastDate = daysAgo => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date
+    .getDate()
+    .toString()
+    .padStart(2, "0");
+  return `${month}-${day}`;
+};
+
+let areaChartData = ref({});
+const setAreaChartData = data => {
+  //设置面积图echart数据
+  let xArray = [];
+  let yArray = [];
+  let children = isRef(data)
+    ? data.value.children[2].children
+    : data.children[2].children;
+  for (let i = children.length - 1; i >= 0; i--) {
+    const item = children[i];
+    yArray.push(item.value);
+    let date = getPastDate(item.flag);
+    xArray.push(date);
+  }
+  areaChartData.value.xData = xArray;
+  areaChartData.value.yData = yArray;
+};
+
+let trendData = ref(warningTrendData[0]);
+const setWarningTrendData = name => {
+  if (name === "总数") {
+    warningTrendData.forEach(element => {
+      if (element.name === "总数") {
+        trendData = element;
+        setAreaChartData(trendData);
+      }
+    });
+  } else {
+    warningTrendData.forEach(element => {
+      if (element.name === name) {
+        trendData = element;
+        setAreaChartData(trendData);
+      }
+    });
+  }
+};
+setAreaChartData(trendData);
+
+//-----------预警类型
+let typeData = ref(warningTypeData[0].children);
+const setWarningTypeData = name => {
+  if (name === "总数") {
+    warningTypeData.forEach(element => {
+      if (element.name === "总数") {
+        typeData.value = element.children;
+      }
+    });
+  } else {
+    warningTypeData.forEach(element => {
+      if (element.name === name) {
+        typeData.value = element.children;
+      }
+    });
+  }
+};
+
+//-----------预警事件空间特征
+let tableData = ref(warningSpaceFeaturesData[0].children);
+for (let i = 0; i < tableData.value.length; i++) {
+  const element = tableData.value[i];
+  element.id = i + 1;
+}
+const setwarningSpaceFeaturesData = name => {
+  if (name === "总数") {
+    warningSpaceFeaturesData.forEach(element => {
+      if (element.name === "总数") {
+        tableData.value = element.children;
+      }
+    });
+  } else {
+    warningSpaceFeaturesData.forEach(element => {
+      if (element.name === name) {
+        tableData.value = element.children;
+      }
+    });
+  }
+  for (let i = 0; i < tableData.value.length; i++) {
+    const element = tableData.value[i];
+    element.id = i + 1;
+  }
+};
+
+// const pipeActive = ref(warningSourceData[0].name)
+const pipeActive = ref("");
+const changeActive = name => {
+  pipeActive.value = name;
+  //设置预警等级
+  setWarningLevelData(name);
+  //设置预警趋势
+  setWarningTrendData(name);
+  //设置预警类型
+  setWarningTypeData(name);
+  //设置预警事件空间特征
+  setwarningSpaceFeaturesData(name);
+};
 </script>
 
 <template>
@@ -89,23 +223,40 @@ const onTabChange = k => {
       <!-- 左边 -->
       <div class="flex flex-wrap justify-end mt-10">
         <div v-for="(item, index) in warningDataLeft" :key="index">
-          <div class="test w-40 h-12 flex flex-col">
+          <!-- <div class="leftIcon w-40 h-12 flex flex-col"> -->
+          <div
+            :class="`${pipeActive === item.name ? 'leftIconChecked' : 'leftIcon'} w-40 h-12 flex flex-col`"
+            @click="changeActive(item.name)"
+          >
             <div class="ml-6">{{ item.name }}</div>
-            <div class="ml-4"><span class="warningsourcestyle text-2xl">{{ item.value }}</span>个</div>
+            <div class="ml-4">
+              <span
+                :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`"
+              >{{ item.value }}</span>个
+            </div>
           </div>
         </div>
       </div>
       <!-- 中间 -->
       <div
-        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center">
+        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center"
+      >
         <div class="bg-[url('assets/imgs/warning/alarm.png')] bg-cover bg-center w-12 h-12"></div>
       </div>
       <!-- 右边 -->
       <div class="flex flex-wrap mt-10">
         <div v-for="(item, index) in warningDataRight" :key="index">
-          <div class="test2 w-40 h-12 flex flex-col">
+          <!-- <div
+            class="rightIcon w-40 h-12 flex flex-col"
+          >-->
+          <div
+            :class="`${pipeActive === item.name ?'rightIconChecked':'rightIcon'} w-40 h-12 flex flex-col `"
+            @click="changeActive(item.name)"
+          >
             <div class="ml-24">{{ item.name }}</div>
-            <div class="ml-20"><span class="warningsourcestyle text-2xl">{{ item.value }}</span>个</div>
+            <div class="ml-20">
+              <span class="warningsourcestyle text-2xl">{{ item.value }}</span>个
+            </div>
           </div>
         </div>
       </div>
@@ -116,9 +267,10 @@ const onTabChange = k => {
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
         <div class="w-full flex items-center justify-center">
           <div
-            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around">
+            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around"
+          >
             <div class>
-              <span class="warninglevel text-[28px] font-extrabold">157</span>
+              <span class="warninglevel text-2xl font-extrabold">{{ levelData.value }}</span>
               <span>个</span>
             </div>
             <div class="mb-5">持续任务时长</div>
@@ -126,33 +278,36 @@ const onTabChange = k => {
 
           <div class="ml-10">
             <div
-              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around">
+              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around"
+            >
               一级预警
               <div>
-                <span class="text-[14px] font-bold ml-8">37</span>个
+                <span class="text-xl font-bold ml-8">{{ levelData.children[0].value }}</span>个
               </div>
               <div>
-                <span class="text-[14px] font-bold ml-8">24</span>%
+                <span class="text-xl font-bold ml-8">{{ levelData.children[0].percent }}</span>%
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around">
+              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around"
+            >
               二级预警
               <div>
-                <span class="text-[14px] font-bold">120</span>个
+                <span class="text-xl font-bold">{{ levelData.children[1].value }}</span>个
               </div>
               <div>
-                <span class="text-[14px] font-bold">76</span>%
+                <span class="text-xl font-bold">{{ levelData.children[1].percent }}</span>%
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around">
+              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around"
+            >
               三级预警
               <div>
-                <span class="text-[14px] font-bold">120</span>个
+                <span class="text-xl font-bold">{{ levelData.children[2].value }}</span>个
               </div>
               <div>
-                <span class="text-[14px] font-bold">75</span>%
+                <span class="text-xl font-bold">{{ levelData.children[2].percent }}</span>%
               </div>
             </div>
           </div>
@@ -166,22 +321,25 @@ const onTabChange = k => {
           </template>
         </SecondLevelTitle>
         <div class="w-full h-full flex">
-          <div class="w-full h-full">
-            <div class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center">
-              <span class="warninglevel text-2xl font-bold">总事件数</span>
+          <div class="w-full h-full flex-2">
+            <div
+              class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center"
+            >
+              <span class="warninglevel text-2xl font-bold">{{ trendData.children[0].name }}</span>
             </div>
             <div class="flex flex-col justify-center items-center">
               <div class>
-                <span class="warningtotal text-xl font-bold">23</span>
+                <span class="warningtotal text-xl font-bold">{{ trendData.children[0].value }}</span>
                 <span class="warningtotal font-bold">件</span>
               </div>
               <div class>
-                <span class="warningtotal text-xl font-bold">4.5</span>
-                <span class="warningtotal font-bold">%</span>同比
+                <span class="warningtotal text-xl font-bold">{{ trendData.children[1].value }}</span>
+                <span class="warningtotal font-bold">%</span>
+                {{ trendData.children[1].name }}
               </div>
             </div>
           </div>
-          <WarningAreaChart />
+          <WarningAreaChart class="flex-2" :trendChartData="areaChartData" />
         </div>
       </div>
     </div>
@@ -190,16 +348,19 @@ const onTabChange = k => {
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap justify-around">
-          <div class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
-            v-for="(item, index) in warningType" :key="index">
+          <div
+            class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
+            v-for="(item, index) in typeData"
+            :key="index"
+          >
             <div :class="`warningtype_${index + 1} bg-cover mt-2 w-8 h-8`"></div>
             <div class="mt-3">
               <div class="name">{{ item.name }}</div>
               <div class="pipe-point">
-                <span class="text-[18px] font-bold">{{ item.value }}</span>个
+                <span class="text-2xl font-bold">{{ item.value }}</span>个
               </div>
               <div class="pipe-point">
-                <span class="text-[18px] font-bold">{{ item.percent }}</span>%
+                <span class="text-2xl font-bold">{{ item.percent }}</span>%
               </div>
             </div>
           </div>
@@ -208,49 +369,7 @@ const onTabChange = k => {
 
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="预警事件空间特征"></SecondLevelTitle>
-        <WarningTableChart />
-        <!-- <div class="w-full h-full">
-          <div class="itemth grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center mb-2 w-full">
-            <div class></div>
-            <div class>区域</div>
-            <div class>数量/个</div>
-            <div class>占比/%</div>
-          </div>
-          <div class="table-body">
-            <div
-              class="item grid grid-cols-4 px-3 items-center justify-between text-center mb-2 w-full"
-            >
-              <div class="bg-[url('assets/imgs/warning/TOP1.png')] bg-cover h-4 w-12">1</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP2.png')] bg-cover h-4 w-12">2</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP3.png')] bg-cover h-4 w-12">3</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP4.png')] bg-cover h-4 w-12">4</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class="bg-[url('assets/imgs/warning/TOP4.png')] bg-cover h-4 w-12">5</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-          </div>
-        </div> -->
+        <WarningTableChart :tableData="tableData" />
       </div>
     </div>
   </div>
@@ -290,7 +409,15 @@ const onTabChange = k => {
 }
 
 .warningsourcestyle {
-  background: linear-gradient(0deg, #1890FF 0%, #1EE7E7 100%);
+  background: linear-gradient(0deg, #1890ff 0%, #1ee7e7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+.warningsourcestyle_checked {
+  background: linear-gradient(0deg, #ffba00 0%, #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -303,16 +430,36 @@ const onTabChange = k => {
   }
 }
 
-.test {
-  background-image: url('@/assets/imgs/warning/yj-source-type-left.png'), url('@/assets/imgs/warning/warningsource1.png');
+.leftIcon {
+  background-image: url("@/assets/imgs/warning/yj-source-type-left.png"),
+    url("@/assets/imgs/warning/warningsource1.png");
   // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
   background-position: 10% -10%;
   background-size: 40%, 80%;
   background-repeat: no-repeat, no-repeat;
 }
 
-.test2 {
-  background-image: url('@/assets/imgs/warning/yj-source-type-right.png'), url('@/assets/imgs/warning/warningsource2.png');
+.leftIconChecked {
+  background-image: url("@/assets/imgs/warning/yj-source-type-left-checked.png"),
+    url("@/assets/imgs/warning/warningsource3.png");
+  // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
+  background-position: 10% -10%;
+  background-size: 40%, 80%;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.rightIconChecked {
+  background-image: url("@/assets/imgs/warning/yj-source-type-left-checked.png"),
+    url("@/assets/imgs/warning/warningsource2.png");
+  // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
+  background-position: 90% 10%;
+  background-size: 40%, 80%;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.rightIcon {
+  background-image: url("@/assets/imgs/warning/yj-source-type-right.png"),
+    url("@/assets/imgs/warning/warningsource2.png");
   // background-position: center 50%, center center; /* 第二张背景图上升到第一张背景图的一半位置 */
   background-position: 90% 10%;
   background-size: 40%, 80%;
