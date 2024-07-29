@@ -8,16 +8,7 @@ const props = defineProps({
     },
     data: {
         type: Array,
-        default: () => [
-            {
-                name: '近一周',
-                value: 'week'
-            },
-            {
-                name: '近一月',
-                value: 'month'
-            },
-        ]
+        default: () => []
     }
 })
 const active = ref(props.data[0].value)

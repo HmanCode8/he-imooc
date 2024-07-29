@@ -39,7 +39,7 @@ const currentComp = ref('项目规模');
                   {{ overviewData[0].children[1].name }}:&nbsp;{{ overviewData[0].children[1].value }}{{
                     overviewData[0].children[1].unit }}
                 </div>
-                <div class="bg-[url(assets/imgs/project/up-to.png)] bg-cover bg-center w-2 h-4 ml-1"></div>
+                <div class="bg-[url(assets/imgs/project/up-to.png)] bg-size bg-center w-2 h-4 ml-1"></div>
               </div>
             </div>
             <div class="w-1/3 text-center">
@@ -73,7 +73,7 @@ const currentComp = ref('项目规模');
                   {{ overviewData[1].children[1].name }}:&nbsp;{{ overviewData[1].children[1].value }}{{
                     overviewData[1].children[1].unit }}
                 </div>
-                <div class="bg-[url(assets/imgs/project/up-to.png)] bg-cover bg-center w-2 h-4 ml-1"></div>
+                <div class="bg-[url(assets/imgs/project/up-to.png)] bg-size bg-center w-2 h-4 ml-1"></div>
               </div>
             </div>
             <div class="w-1/3 text-center">
@@ -104,9 +104,9 @@ const currentComp = ref('项目规模');
     <div class="w-full 8k:h-1/3 flex justify-between items-center flex-wrap">
       <div v-for="(item, index) in strategicIndustry" :key="index"
         class="8k:w-1/5 4k:w-1/3 flex flex-col items-center mb-4">
-        <div class="bg-[url('assets/imgs/project/zlcy1.png')] bg-cover w-40 h-6 flex items-center justify-center">{{
+        <div class="bg-[url('assets/imgs/project/zlcy1.png')] bg-size w-40 h-6 flex items-center justify-center">{{
           item.name }}</div>
-        <div class="bg-[url('assets/imgs/project/zlcy2.png')] bg-cover bg-center w-40 h-40 flex flex-col items-center">
+        <div class="bg-[url('assets/imgs/project/zlcy2.png')] bg-size bg-center w-40 h-40 flex flex-col items-center">
           <div class="text-xl mt-6">
             {{ item.children[0].name }}:&nbsp;&nbsp;
             <span class="itemStyle font-bold">{{ item.children[0].value }}</span>

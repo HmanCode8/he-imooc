@@ -25,7 +25,7 @@ const basicOverviewData = ref(basicOverview)
                     <li class="flex w-full px-2 items-center" v-for="item, index in basicOverviewData" :key="item.name">
                         <div :class="`base-icon-${index + 1}  bg-size w-20 h-20 `">
                         </div>
-                        <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-cover">
+                        <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-size">
                             <div>{{ item.name }} <span class="ml-2">(km²)</span></div>
                             <div class="px-2">{{ item.value }}</div>
                         </div>
@@ -37,7 +37,7 @@ const basicOverviewData = ref(basicOverview)
 
                     <div class="flex h-1/4 items-center justify-center  w-full">
                         <div
-                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[0].source}.png)] bg-size`">
                             </div>
@@ -50,7 +50,7 @@ const basicOverviewData = ref(basicOverview)
 
                     <div class="flex h-1/4 items-center w-[90%] justify-around mt-[-4%] my-2">
                         <div
-                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
 
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[1].source}.png)] bg-size`">
@@ -61,7 +61,7 @@ const basicOverviewData = ref(basicOverview)
                                 {{ basicData[1].unit }}</div>
                         </div>
                         <div
-                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[2].source}.png)] bg-size`">
                             </div>
@@ -73,7 +73,7 @@ const basicOverviewData = ref(basicOverview)
 
                     <div class="flex h-1/4 items-center justify-around w-full my-2">
                         <div
-                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
 
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[3].source}.png)] bg-size`">
@@ -84,7 +84,7 @@ const basicOverviewData = ref(basicOverview)
                                 {{ basicData[3].unit }}</div>
                         </div>
                         <div
-                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[4].source}.png)] bg-size`">
                             </div>
@@ -97,7 +97,7 @@ const basicOverviewData = ref(basicOverview)
 
                     <div class="flex h-1/4 items-center w-full justify-center my-2">
                         <div
-                            class="flex mx-2 w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex mx-2 w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[5].source}.png)] bg-size`">
                             </div>
@@ -106,7 +106,7 @@ const basicOverviewData = ref(basicOverview)
                                 {{ basicData[5].unit }}</div>
                         </div>
                         <div
-                            class="flex mx-2 w-[24%] h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-cover">
+                            class="flex mx-2 w-[24%] h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
                             <div
                                 :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[6].source}.png)] bg-size`">
                             </div>
