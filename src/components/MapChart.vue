@@ -374,11 +374,17 @@ const initCesiumMap = async () => {
   cesiumViewer.value = new Cesium.Viewer(target.value, {
     // terrainProvider: await Cesium.createWorldTerrainAsync()
     //隐藏自带的信息框
-    infoBox:false
+    infoBox: false
   });
 
   //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
   const viewer = cesiumViewer.value;
+  // 是否支持图像渲染像素化处理，在支持image-rendering: pixelated属性的浏览器中，根据设备像素比例来设置 Cesium 场景的分辨率缩放，以达到更好的视觉效果。
+  if (Cesium.FeatureDetection.supportsImageRenderingPixelated()) {
+    viewer.resolutionScale = window.devicePixelRatio
+  }
+  // 开启抗锯齿
+  viewer.scene.postProcessStages.fxaa.enabled = true;
   //todo
   //加载倾斜
   // try {
@@ -390,7 +396,7 @@ const initCesiumMap = async () => {
   // } catch (error) {
   //   console.error(`Error creating tileset: ${error}`);
   // }
-
+  
   //加载管线
   let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
   let comps = [
@@ -413,7 +419,7 @@ const initCesiumMap = async () => {
         viewer.scene.primitives.add(tileset);
       }
     }
-    
+
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
