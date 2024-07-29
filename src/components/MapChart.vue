@@ -373,8 +373,18 @@ const initCesiumMap = async () => {
 
   cesiumViewer.value = new Cesium.Viewer(target.value, {
     // terrainProvider: await Cesium.createWorldTerrainAsync()
-    //隐藏自带的信息框
-    infoBox: false
+    fullscreenButton: false, // 隐藏界面右下角全屏按钮
+    homeButton: false, // 隐藏界面右上角初始化地球位置按钮
+    animation: false, // 隐藏界面左下角控制动画的面板
+    geocoder: false, //右上角 搜索
+    sceneModePicker: false, // 右上角 2D/3D切换
+    baseLayerPicker: false, // 隐藏界面左上角地图底图的切换按钮
+    navigationHelpButton: false, //右上角 Help
+    shouldAnimate: true,
+    selectionIndicator: false, //隐藏双击entity时候的聚焦框
+    // skyAtmosphere: false, //去除地球外侧光圈
+    infoBox: false, // 点击地球后的信息框
+    timeline: false // 隐藏正下方时间线
   });
 
   //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
@@ -396,7 +406,7 @@ const initCesiumMap = async () => {
   // } catch (error) {
   //   console.error(`Error creating tileset: ${error}`);
   // }
-  
+
   //加载管线
   let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
   let comps = [
