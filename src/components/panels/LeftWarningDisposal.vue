@@ -202,7 +202,11 @@ const setwarningSpaceFeaturesData = name => {
 
 // const pipeActive = ref(warningSourceData[0].name)
 const pipeActive = ref("");
+let oldName = "";
 const changeActive = name => {
+  if(oldName === name){
+    name="总数"
+  }
   pipeActive.value = name;
   //设置预警等级
   setWarningLevelData(name);
@@ -212,6 +216,7 @@ const changeActive = name => {
   setWarningTypeData(name);
   //设置预警事件空间特征
   setwarningSpaceFeaturesData(name);
+  oldName = name;
 };
 </script>
 

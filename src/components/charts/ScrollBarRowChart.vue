@@ -8,9 +8,9 @@ import * as echarts from 'echarts'
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
-  areaData: {
-    type: Array,
-  }
+    areaData: {
+        type: Array,
+    }
 });
 
 const target = ref(null)
@@ -40,6 +40,20 @@ const renderChart = (fontSize) => {
             top: '3%',
             bottom: '3%',
             containLabel: true
+        },
+        tooltip: {
+            show: true,
+            trigger: 'axis',
+            formatter: function (parms) {
+                var str =
+                    "区域:" +
+                    parms[0].axisValue +
+                    "</br>" +
+                    parms[0].marker +
+                    "在建数:" +
+                    parms[0].value;
+                return str;
+            }
         },
         xAxis: {
             show: false,

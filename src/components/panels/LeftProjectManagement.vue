@@ -124,8 +124,8 @@ const currentComp = ref('项目规模');
     <!-- 第三部分 -->
     <div class="w-full 8k:h-1/3 flex justify-between flex-wrap">
       <div class="8k:w-1/2 4k:w-full">
-        <SecondLevelTitle title="管材分析"></SecondLevelTitle>
-        <PipeIconChart :data="projectSize" class="w-full h-60" />
+        <SecondLevelTitle title="项目规模"></SecondLevelTitle>
+        <PipeIconChart :data="projectSize" :comname="currentComp" class="w-full h-60" />
       </div>
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="项目分布"></SecondLevelTitle>
