@@ -1,5 +1,7 @@
 <template>
-  <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+  <div class="">
+    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+  </div>
 </template>
 
 <script setup>
@@ -36,7 +38,7 @@ const renderChart = fontSize => {
       axisPointer: {
         type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
       },
-      formatter: function(parms) {
+      formatter: function (parms) {
         var str =
           "类型:" +
           parms[0].axisValue +
@@ -64,12 +66,12 @@ const renderChart = fontSize => {
     grid: props.barData.grid
       ? props.barData.grid
       : {
-          containLabel: true,
-          left: "6%",
-          top: "20%",
-          bottom: "6%",
-          right: "6%"
-        },
+        containLabel: true,
+        left: "6%",
+        top: "20%",
+        bottom: "6%",
+        right: "6%"
+      },
     xAxis: {
       type: "category",
       data: props.barData.xData,
@@ -88,7 +90,7 @@ const renderChart = fontSize => {
           color: "#ffffff",
           fontSize
         },
-        interval:0
+        interval: 0
       }
     },
     yAxis: {

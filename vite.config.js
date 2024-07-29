@@ -39,11 +39,19 @@ export default defineConfig({
           if (name.endsWith(".css")) {
             return `css/[name].[hash].css`;
           }
+          if (name.endsWith(".ttf")) {
+            return `font/[name].[hash].ttf`;
+          }
           // 其他静态资源类型
           return `assets/[name].[hash][extname]`;
         },
       },
-      treeshake: true,
+      treeshake: {
+        moduleSideEffects: true, // 移除没有副作用的模块
+        propertyReadSideEffects: false, // 禁止属性读取的副作用
+        tryCatchDeoptimization: false, // 禁止try-catch语句的去优化
+        pureExternalModules: true, // 纯外部模块
+      },
       external: ["cesium"],
     },
   },

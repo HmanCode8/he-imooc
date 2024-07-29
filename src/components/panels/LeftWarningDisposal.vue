@@ -259,7 +259,7 @@ const changeActive = name => {
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-40">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
         <div class="w-full flex items-center justify-center">
           <div
@@ -312,7 +312,7 @@ const changeActive = name => {
             <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
           </template>
         </SecondLevelTitle>
-        <div class="w-full h-full flex">
+        <div class="w-full h-full flex items-center justify-center">
           <div class="w-full h-full flex-2">
             <div class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center">
               <span class="warninglevel text-2xl font-bold">{{ trendData.children[0].name }}</span>
@@ -335,7 +335,7 @@ const changeActive = name => {
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap justify-around">
           <div class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"

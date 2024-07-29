@@ -55,8 +55,9 @@ const getPastDate = daysAgo => {
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="施工项目情况" />
 
-        <div class="w-full h-full flex justify-around">
-          <div class="w-1/4 flex flex-col justify-around h-40 bg-[url('assets/imgs/project/project-item-2.png')]">
+        <div class="w-full h-full flex justify-around flex-wrap">
+          <div
+            class="w-1/4 flex flex-col justify-around h-40 bg-[url('assets/imgs/project/project-item-2.png')] bg-size">
             <div class="flex justify-center items-center mt-4 text-2xl font-extrabold cityStyle">
               {{ projectSituation[0].value }}</div>
             <div class="flex flex-col items-center">
@@ -65,7 +66,7 @@ const getPastDate = daysAgo => {
             </div>
           </div>
           <div
-            class="w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')]"
+            class="w-1/4 flex flex-col justify-around items-center h-40 bg-[url('assets/imgs/project/project-item-1.png')] bg-size"
             v-for="(item) in projectSituation[0].children" :key="item.name">
             <div class="text-center mt-4 text-2xl font-extrabold countryStyle">{{ item.value }}</div>
             <div class="flex flex-col items-center">

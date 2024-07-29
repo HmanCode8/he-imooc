@@ -20,7 +20,7 @@ const currentComp = ref('项目规模');
 
 <template>
   <div class="pipe-analy">
-    <div class="8k:h-1/3">
+    <div class="">
       <FristLevelTitle title="2024年全市城乡建设重点项目"></FristLevelTitle>
       <SecondLevelTitle title="项目概览"></SecondLevelTitle>
 
@@ -101,7 +101,7 @@ const currentComp = ref('项目规模');
     <!-- 第二部分 -->
     <SecondLevelTitle title="战略性新兴产业"></SecondLevelTitle>
 
-    <div class="w-full 8k:h-1/3 flex justify-between items-center flex-wrap">
+    <div class="w-full  flex justify-between items-center flex-wrap">
       <div v-for="(item, index) in strategicIndustry" :key="index"
         class="8k:w-1/5 4k:w-1/3 flex flex-col items-center mb-4">
         <div class="bg-[url('assets/imgs/project/zlcy1.png')] bg-size w-40 h-6 flex items-center justify-center">{{
@@ -122,7 +122,7 @@ const currentComp = ref('项目规模');
     </div>
 
     <!-- 第三部分 -->
-    <div class="w-full 8k:h-1/3 flex justify-between flex-wrap">
+    <div class="w-full  flex justify-between flex-wrap">
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="项目规模"></SecondLevelTitle>
         <PipeIconChart :data="projectSize" :comname="currentComp" class="w-full h-60" />

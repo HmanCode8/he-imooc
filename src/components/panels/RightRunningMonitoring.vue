@@ -14,7 +14,7 @@ const runData = ref(alarmData)
     <div class="pipe-analy">
         <FristLevelTitle title="运行监测"></FristLevelTitle>
         <SecondLevelTitle title="运行概况"></SecondLevelTitle>
-        <div class="pipe-analy-content my-10 flex justify-between">
+        <div class="pipe-analy-content my-10 flex justify-between flex-wrap">
             <div v-for="item, index in profileData" :key="item.name"
                 class="flex w-1/3 mx-4 h-36 bg-[url('assets/imgs/running/bg.png')] bg-size items-center justify-around">
                 <div class=" bg-[url('assets/imgs/running/run-b-1.png')] bg-size text-center w-1/3 h-2/3">

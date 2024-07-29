@@ -52,7 +52,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] px-2 py-1 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] px-2 py-1 my-6 bg-[url('assets/imgs/overview/level-title.png')] bg-size m-1 flex  justify-between"
                         v-for="item, i in riskTotalData.data" :key="item.name">
                         <div class="flex items-center mt-[-5%]">
                             <div :style="{ backgroundColor: colors[i], filter: `drop-shadow(2px 2px 5px ${colors[i]})` }"
@@ -84,7 +84,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     </div>
                 </div>
                 <div class="risk-list py-2 flex justify-center flex-wrap">
-                    <div class="risk-item w-[45%] px-2  py-1 my-6 bg-[url('assets/imgs/overview/level-title.png')] m-1 flex  justify-between"
+                    <div class="risk-item w-[45%] px-2  py-1 my-6 bg-[url('assets/imgs/overview/level-title.png')] bg-size m-1 flex  justify-between"
                         v-for="item, i in hideTotalData.data" :key="item.name">
                         <div class="flex items-center mt-[-5%]">
                             <div :style="{ backgroundColor: colors[i], filter: `drop-shadow(2px 2px 5px ${colors[i]})` }"
@@ -100,7 +100,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
 
         <SecondLevelTitle title="监测报警"></SecondLevelTitle>
 
-        <div class="waring flex flex-wrap justify-between w-full h-80">
+        <div class="waring flex flex-wrap justify-between w-full">
             <div class="waring-item flex flex-col justify-between flex-wrap 4k:w-1/3 8k:w-[30%]">
                 <div class="flex justify-between  px-2">
                     <div
@@ -118,7 +118,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                 </div>
                 <div class="flex justify-between px-2">
                     <div
-                        class="check-item  w-24 h-28 my-2 bg-[url(assets/imgs/overview/check-item-2.png)] flex flex-col items-center justify-around">
+                        class="check-item  w-24 h-28 my-2 bg-[url(assets/imgs/overview/check-item-2.png)] bg-size flex flex-col items-center justify-around">
                         <div class="flex">
                             <h2>1960</h2>
                         </div>
@@ -127,7 +127,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                 </div>
             </div>
             <div
-                class="waring-item-center bg-[url('assets/imgs/overview/check-bottom.png')] h-full 4k:w-2/3 8k:w-[40%]">
+                class="waring-item-center bg-[url('assets/imgs/overview/check-bottom.png')] bg-size h-80 4k:w-2/3 8k:w-[40%]">
                 <div class="flex items-center text-[#B0B7CA] justify-center relative ">
                     <div
                         class="warning-item-1 w-32 h-32 flex flex-col items-center justify-center absolute top-1/2 left-0 bg-[url('assets/imgs/overview/level-item-2.png')]">
@@ -153,7 +153,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
             <div class="waring-item  p-2 4k:w-full 8k:w-[30%]">
                 <ul class="flex flex-wrap justify-between items-center  h-full w-full">
                     <li v-for="(item, index) in deviceData" :key="item.value" class="flex items-center">
-                        <div :class="`h-16 w-6 bg-[url('assets/imgs/overview/check-bar-${index + 1}.png')] bg-size`">
+                        <div :class="`h-16 w-6 bar-item-${index + 1}  bg-size`">
                         </div>
                         <div class="px-4">
                             <div class="py-1">{{ item.name }}(件)<span class="px-2 text-2xl font-bold">{{ item.value
@@ -183,18 +183,16 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
     }
 }
 
-.risk-item,
-.check-item,
-.waring-item-center,
-.bar-item {
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-}
-
 @for $i from 1 through 3 {
     .warning-item-#{$i} {
         background-size: 100% 100%;
         background-repeat: no-repeat;
+    }
+}
+
+@for $i from 1 through 3 {
+    .bar-item-#{$i} {
+        background-image: url('@/assets/imgs/overview/check-bar-#{$i}.png');
     }
 }
 

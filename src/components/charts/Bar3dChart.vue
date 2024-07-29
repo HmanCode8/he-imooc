@@ -43,9 +43,7 @@ watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
 
 const handleResize = () => {
     renderChart(rootFontSize.value);
-    if (mChart) {
-        mChart.resize();
-    }
+    mChart && mChart.resize();
 };
 
 const renderChart = (fontSize) => {
