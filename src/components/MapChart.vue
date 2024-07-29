@@ -93,14 +93,13 @@
 
     <!-- 图例 -->
 
-    <div ref="legendRef" v-if="0 < legendGroup.length"
-      class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
+    <div ref="legendRef" v-if="0 < legendGroup.length" class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
       <MapLegend :legendGroup="legendGroup" />
     </div>
 
     <!-- 地图切换 -->
     <div class="absolute bg-slate-400/50 right-[29%] bottom-5 z-10">
-      <MapToggle @update:baseMap="toggleMap"/>
+      <MapToggle @update:baseMap="toggleMap" />
     </div>
   </div>
 </template>
@@ -374,32 +373,23 @@ const initCesiumMap = async () => {
 
   cesiumViewer.value = new Cesium.Viewer(target.value, {
     // terrainProvider: await Cesium.createWorldTerrainAsync()
+    //隐藏自带的信息框
+    infoBox:false
   });
 
   //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
   const viewer = cesiumViewer.value;
   //todo
   //加载倾斜
-  try {
-    const tileset = await Cesium.Cesium3DTileset.fromUrl(
-      "http://127.0.0.1:8089/data/ycosgb3/tileset.json"
-    );
-    viewer.scene.primitives.add(tileset);
-    viewer.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(
-        120.17147298986772,
-        33.301942305971394,
-        137.11303375009118
-      ),
-      orientation: {
-        heading: 0.345650960729154,
-        pitch: -0.28325898231466784,
-        roll: 6.283183439173194
-      }
-    });
-  } catch (error) {
-    console.error(`Error creating tileset: ${error}`);
-  }
+  // try {
+  //   const tileset = await Cesium.Cesium3DTileset.fromUrl(
+  //     "http://127.0.0.1:8089/data/ycosgb3/tileset.json"
+  //   );
+  //   viewer.scene.primitives.add(tileset);
+
+  // } catch (error) {
+  //   console.error(`Error creating tileset: ${error}`);
+  // }
 
   //加载管线
   let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
@@ -418,14 +408,28 @@ const initCesiumMap = async () => {
         const item = comps[j];
 
         const tileset = await Cesium.Cesium3DTileset.fromUrl(
-          "http://127.0.0.1:8089/data/gx/" + element + "/" + item + "/tileset.json"
+          "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json"
         );
         viewer.scene.primitives.add(tileset);
       }
     }
+    
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
+
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(
+      120.17147298986772,
+      33.301942305971394,
+      137.11303375009118
+    ),
+    orientation: {
+      heading: 0.345650960729154,
+      pitch: -0.28325898231466784,
+      roll: 6.283183439173194
+    }
+  });
 };
 
 const initLayerTree = (key) => {
@@ -463,14 +467,14 @@ const toggleMap = mapType => {
 };
 
 watch(
-    () => currentLayerTab.value,
-    () => {
-      gsap.fromTo(
-          leyerRef.value,
-          { opacity: 0, x: -50 },
-          { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
-      );
-    }
+  () => currentLayerTab.value,
+  () => {
+    gsap.fromTo(
+      leyerRef.value,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
+    );
+  }
 );
 
 watch(
@@ -483,7 +487,7 @@ watch(
 }
 );
 onMounted(() => {
-   initOpenLayersMap();
+  initOpenLayersMap();
 });
 </script>
 
