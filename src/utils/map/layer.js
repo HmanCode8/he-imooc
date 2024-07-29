@@ -1,8 +1,9 @@
 import TileLayer from "ol/layer/Tile";
-import {ImageArcGISRest, ImageWMS, WMTS} from "ol/source";
+import {ImageArcGISRest, ImageWMS, TileArcGISRest, WMTS} from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import ImageLayer from "ol/layer/Image";
 import _ from "lodash";
+import {TileGrid} from "ol/tilegrid";
 
 function createLayer(config, group = null) {
     let layer = null;
@@ -24,6 +25,24 @@ function createLayer(config, group = null) {
                     extent: config.extent,
                     resolutions: config.resolutions,
                     matrixIds: matrixIds
+                })
+            })
+        });
+    } else if ("arcgis_WMTS" === config.type) {
+        let matrixIds = new Array(config.resolutions.length);
+        for (let z = 0; z < matrixIds.length; ++z) {
+            matrixIds[z] = z;
+        }
+        layer = new TileLayer({
+            source: new TileArcGISRest({
+                url: config.url,
+                projection: config.projection,
+                params: {DPI: _.get(config, "dpi", 96)},
+                tileGrid: new WMTSTileGrid({
+                    origin: config.origin,
+                    extent: config.extent,
+                    resolutions: config.resolutions,
+                    tileSize: _.get(config, "size", [256, 256])
                 })
             })
         });

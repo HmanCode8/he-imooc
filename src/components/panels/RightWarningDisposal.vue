@@ -7,56 +7,46 @@ import WarningHBarChart from "../charts/WarningHBarChart.vue";
 import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
 import WarningBarRowChart from "../charts/WarningBarRowChart.vue";
 import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
+import { warningDisposalData } from "@/assets/chartData/data";
 
-const list = ref([
-  {
-    name: "官网",
-    value: 100
-  },
-  {
-    name: "微信",
-    value: 30
-  },
-  {
-    name: "微博",
-    value: 20
-  },
-  {
-    name: "官网",
-    value: 100
-  },
-  {
-    name: "微信",
-    value: 30
-  },
-  {
-    name: "其他",
-    value: 10
-  }
-]);
 
-const tabs = ref([
-  {
-    name: "类型",
-    value: "type"
-  },
-  {
-    name: "分区",
-    value: "partition"
-  }
-]);
+const {
+  disposalStageData,
+  disposalReactData,
+  reactTimeData,
+  disposalTimeData,
+  averageEfficiencyData
+} = warningDisposalData;
 
-const Pie3DChartData = ref([
-  { name: "已解除", value: 89, color: "#FF6384", unit: "个" },
-  { name: "处置中", value: 65, color: "#FFCE56", unit: "个" },
-  { name: "已办结", value: 100, color: "#36A2EB", unit: "个" }
-]);
+
+
+//---------处置分析阶段
+const getRandomHexColor =()=> {
+  const hex = Math.floor(Math.random() * 16777215).toString(16);
+  return `#${hex.padStart(6, '0')}`;
+}
+
+const Pie3DChartData = ref([]);
+disposalStageData.forEach(element => {
+    element.color = getRandomHexColor();
+    element.unit="个";
+});
+Pie3DChartData.value = disposalStageData;
+
+//-------响应时长
+let xArray = [];
+let yArray = [];
+
+reactTimeData.children.forEach(item=>{
+  xArray.push(item.name);
+  yArray.push(item.value);
+})
 
 const barChartData = ref({
-  xData: ["燃气", "供水", "阀门井"],
-  yData: [1.5, 2.0, 0.7],
+  xData: xArray,
+  yData: yArray,
   unit: "h",
-  max: "2",
+  max: "3",
   grid: {
     containLabel: true,
     left: "6%",
@@ -84,10 +74,10 @@ const barChartData = ref({
             <div
               class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
-                <span class="warninglevel text-xl font-extrabold">及时响应处置率</span>
+                <span class="warninglevel text-xl font-extrabold">{{ disposalReactData.name }}</span>
               </div>
               <div>
-                <span class="warningtotal text-xl font-extrabold ml-4">93.0</span>
+                <span class="warningtotal text-xl font-extrabold ml-4">{{ disposalReactData.value }}</span>
                 <span class="warningtotal font-bold">%</span>
               </div>
             </div>
@@ -96,7 +86,7 @@ const barChartData = ref({
 
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
-            <WarningBarRowChart />
+            <WarningBarRowChart :data="disposalReactData.children"/>
           </div>
         </div>
       </div>
@@ -108,16 +98,16 @@ const barChartData = ref({
             <div
               class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
-                <span class="warninglevel text-xl font-extrabold">平均响应时长</span>
+                <span class="warninglevel text-xl font-extrabold">{{ reactTimeData.name }}</span>
               </div>
               <div>
-                <span class="warningtotal text-xl font-extrabold ml-4">2.39</span>
+                <span class="warningtotal text-xl font-extrabold ml-4">{{ reactTimeData.value }}</span>
                 <span class="warningtotal font-bold">h</span>
               </div>
             </div>
           </template>
         </SecondLevelTitle>
-        <!-- <Bar3dChartOMFirst :barData="barChartData" /> -->
+        <Bar3dChartOMFirst :barData="barChartData" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80">
@@ -126,17 +116,17 @@ const barChartData = ref({
             <div
               class="bg-[url('assets/imgs/warning/warningtotal.png')] bg-cover bg-center w-70 h-7 flex items-center justify-center">
               <div>
-                <span class="warninglevel text-xl font-extrabold">平均处置时长</span>
+                <span class="warninglevel text-xl font-extrabold">{{ disposalTimeData.name }}</span>
               </div>
               <div>
-                <span class="warningtotal text-xl font-extrabold ml-4">2.39</span>
+                <span class="warningtotal text-xl font-extrabold ml-4">{{ disposalTimeData.value }}</span>
                 <span class="warningtotal font-bold">h</span>
               </div>
             </div>
           </template>
         </SecondLevelTitle>
         <div class="w-full h-full flex">
-          <WarningConeBarChart />
+          <WarningConeBarChart :chartData="disposalTimeData.children"/>
         </div>
       </div>
     </div>
@@ -144,47 +134,7 @@ const barChartData = ref({
     <SecondLevelTitle title="平均效率"></SecondLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
-        <WarningMedalTableChart />
-        <!-- <div class="w-full h-full">
-          <div class="grid grid-cols-4 bg-[#081f51] px-3 justify-between text-center w-full">
-            <div class></div>
-            <div class>区域</div>
-            <div class>数量/个</div>
-            <div class>占比/%</div>
-          </div>
-          <div class="table-body">
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class>1</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class>2</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class>3</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class>4</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-            <div class="item grid grid-cols-4 px-3 justify-between text-center mb-2 w-full">
-              <div class>5</div>
-              <div class>盐城市盐都区</div>
-              <div class>18</div>
-              <div class>24%</div>
-            </div>
-          </div>
-        </div> -->
+      <WarningMedalTableChart :tableData="averageEfficiencyData[0]"/>
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
@@ -192,7 +142,7 @@ const barChartData = ref({
         <div
           class="bg-[url('assets/imgs/warning/average4.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#1AFCFF;">72个</span>
+            <span style="color:#1AFCFF;">{{averageEfficiencyData[1][0].value}}个</span>
           </div>
           <div class>待签收</div>
         </div>
@@ -200,7 +150,7 @@ const barChartData = ref({
         <div
           class="bg-[url('assets/imgs/warning/average2.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#FFAE00;">0个</span>
+            <span style="color:#FFAE00;">{{averageEfficiencyData[1][1].value}}个</span>
           </div>
           <div class="pipe-point">处置中</div>
         </div>
@@ -210,7 +160,7 @@ const barChartData = ref({
         <div
           class="bg-[url('assets/imgs/warning/average3.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#0BFFC3;">7个</span>
+            <span style="color:#0BFFC3;">{{averageEfficiencyData[1][2].value}}个</span>
           </div>
           <div class="pipe-point">已办结</div>
         </div>
@@ -218,7 +168,7 @@ const barChartData = ref({
         <div
           class="bg-[url('assets/imgs/warning/average1.png')] bg-cover bg-center w-32 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#1AFCFF;">100%</span>
+            <span style="color:#1AFCFF;">{{averageEfficiencyData[1][3].percent}}</span>
           </div>
           <div class="pipe-point">按时办结率</div>
         </div>

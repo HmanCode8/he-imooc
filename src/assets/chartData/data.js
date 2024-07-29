@@ -2376,10 +2376,643 @@ const runningMonitoringData = {
   ],
 };
 
+//预警处置
+const warningDisposalData = {
+  name: "预警处置",
+  warningSourceData: [
+    {
+      name: "燃气",
+      value: 18,
+      unit: "个"
+    },
+    {
+      name: "雨水",
+      value: 22,
+      unit: "个"
+    },
+    {
+      name: "污水",
+      value: 26,
+      unit: "个"
+    },
+    {
+      name: "供水",
+      value: 14,
+      unit: "个"
+    },
+    {
+      name: "道路",
+      value: 17,
+      unit: "个"
+    },
+    {
+      name: "桥梁",
+      value: 9,
+      unit: "个"
+    },
+    {
+      name: "第三方施工",
+      value: 10,
+      unit: "个"
+    },
+    {
+      name: "路灯",
+      value: 29,
+      unit: "个"
+    }
+  ],
+  warningLevelData: [
+    {
+      name: "总数",
+      value: 145,
+      children: [
+        {
+          name: "一级",
+          value: 5,
+          percent: 3.45
+        },
+        {
+          name: "二级",
+          value: 49,
+          percent: 33.79
+        },
+        {
+          name: "三级",
+          value: 91,
+          percent: 62.76
+        }
+      ]
+    },
+    {
+      name: "燃气",
+      value: 18,
+      children: [
+        {
+          name: "一级",
+          value: 0,
+          percent: 0
+        },
+        {
+          name: "二级",
+          value: 5,
+          percent: 27.78
+        },
+        {
+          name: "三级",
+          value: 13,
+          percent: 72.22
+        }
+      ]
+    },
+    {
+      name: "雨水",
+      value: 22,
+      children: [
+        {
+          name: "一级",
+          value: 2,
+          percent: 9.09
+        },
+        {
+          name: "二级",
+          value: 8,
+          percent: 36.36
+        },
+        {
+          name: "三级",
+          value: 12,
+          percent: 54.54
+        }
+      ]
+    }
+  ],
+  warningTrendData: [
+    {
+      name: "总数",
+      children: [
+        {
+          name: "总事件数",
+          value: 16,
+        },
+        {
+          name: "同比",
+          value: -5.56
+        },
+        {
+          name: "预警事件趋势",
+          children: [
+            {
+              flag: 0,
+              value: 0,
+            },
+            {
+              flag: 1,
+              value: 2,
+            },
+            {
+              flag: 2,
+              value: 1,
+            },
+            {
+              flag: 3,
+              value: 0,
+            },
+            {
+              flag: 4,
+              value: 3,
+            },
+            {
+              flag: 5,
+              value: 5,
+            },
+            {
+              flag: 6,
+              value: 4,
+            },
+          ]
+        }
+      ]
+    },
+    {
+      name: "燃气",
+      children: [
+        {
+          name: "总事件数",
+          value: 1,
+        },
+        {
+          name: "同比",
+          value: -3.47
+        },
+        {
+          name: "预警事件趋势",
+          children: [
+            {
+              flag: 0,
+              value: 0,
+            },
+            {
+              flag: 1,
+              value: 1,
+            },
+            {
+              flag: 2,
+              value: 0,
+            },
+            {
+              flag: 3,
+              value: 0,
+            },
+            {
+              flag: 4,
+              value: 0,
+            },
+            {
+              flag: 5,
+              value: 0,
+            },
+            {
+              flag: 6,
+              value: 0,
+            },
+          ]
+        }
+      ]
+    },
+    {
+      name: "雨水",
+      children: [
+        {
+          name: "总事件数",
+          value: 7,
+        },
+        {
+          name: "同比",
+          value: -1.04
+        },
+        {
+          name: "预警事件趋势",
+          children: [
+            {
+              flag: 0,
+              value: 0,
+            },
+            {
+              flag: 1,
+              value: 1,
+            },
+            {
+              flag: 2,
+              value: 1,
+            },
+            {
+              flag: 3,
+              value: 0,
+            },
+            {
+              flag: 4,
+              value: 2,
+            },
+            {
+              flag: 5,
+              value: 1,
+            },
+            {
+              flag: 6,
+              value: 2,
+            },
+          ]
+        }
+      ]
+    },
+  ],
+  warningTypeData: [
+    {
+      name: "总数",
+      children: [
+        {
+          name: "天然气汽车加气站",
+          value: 7,
+          percent: 4.83
+        },
+        {
+          name: "液化气汽车加气站",
+          value: 11,
+          percent: 7.59
+        },
+        {
+          name: "水厂",
+          value: 22,
+          percent: 15.17
+        },
+        {
+          name: "增压泵站",
+          value: 15,
+          percent: 10.34
+        },
+        {
+          name: "排涝泵站",
+          value: 1,
+          percent: 0.59
+        },
+        {
+          name: "排水检查井",
+          value: 15,
+          percent: 10.34
+        },
+        {
+          name: "排水应急排口",
+          value: 1,
+          percent: 0.59
+        },
+        {
+          name: "闸站",
+          value: 2,
+          percent: 1.38
+        },
+        {
+          name: "河道标记排口",
+          value: 3,
+          percent: 2.07
+        },
+      ]
+    },
+    {
+      name: "燃气",
+      children: [
+        {
+          name: "天然气汽车加气站",
+          value: 7,
+          percent: 38.89
+        },
+        {
+          name: "液化气汽车加气站",
+          value: 11,
+          percent: 61.11
+        }
+      ]
+    },
+    {
+      name: "雨水",
+      children: [
+        {
+          name: "排涝泵站",
+          value: 1,
+          percent: 4.55
+        },
+        {
+          name: "排水检查井",
+          value: 15,
+          percent: 68.18
+        },
+        {
+          name: "排水应急排口",
+          value: 1,
+          percent: 4.55
+        },
+        {
+          name: "闸站",
+          value: 2,
+          percent: 9.09
+        },
+        {
+          name: "河道标记排口",
+          value: 3,
+          percent: 13.64
+        },
+      ]
+    },
+  ],
+  warningSpaceFeaturesData: [
+    {
+      name: "总数",
+      children: [
+        {
+          name: "亭湖区",
+          value: 20,
+          percent: 13.79
+        },
+        {
+          name: "盐都区",
+          value: 19,
+          percent: 13.10
+        },
+        {
+          name: "大丰区",
+          value: 24,
+          percent: 16.55
+        },
+        {
+          name: "建湖县",
+          value: 31,
+          percent: 21.38
+        },
+        {
+          name: "射阳县",
+          value: 29,
+          percent: 20
+        },
+        {
+          name: "阜宁县",
+          value: 22,
+          percent: 15.17
+        },
+      ]
+    },
+    {
+      name: "燃气",
+      children: [
+        {
+          name: "亭湖区",
+          value: 2,
+          percent: 11.11
+        },
+        {
+          name: "盐都区",
+          value: 1,
+          percent: 5.56
+        },
+        {
+          name: "大丰区",
+          value: 3,
+          percent: 16.67
+        },
+        {
+          name: "建湖县",
+          value: 4,
+          percent: 22.22
+        },
+        {
+          name: "射阳县",
+          value: 3,
+          percent: 16.67
+        },
+        {
+          name: "阜宁县",
+          value: 5,
+          percent: 27.78
+        },
+      ]
+    },
+    {
+      name: "雨水",
+      children: [
+        {
+          name: "亭湖区",
+          value: 3,
+          percent: 13.64
+        },
+        {
+          name: "盐都区",
+          value: 0,
+          percent: 0.00
+        },
+        {
+          name: "大丰区",
+          value: 4,
+          percent: 18.18
+        },
+        {
+          name: "建湖县",
+          value: 6,
+          percent: 27.27
+        },
+        {
+          name: "射阳县",
+          value: 6,
+          percent: 27.27
+        },
+        {
+          name: "阜宁县",
+          value: 3,
+          percent: 13.64
+        },
+      ]
+    }
+  ],
+  disposalStageData: [
+    {
+      name: "待签收",
+      value: 31
+    },
+    {
+      name: "处置中",
+      value: 13
+    },
+    {
+      name: "已办结",
+      value: 101
+    },
+  ],
+  disposalReactData: {
+    name: "及时响应处置率",
+    value: 96.62,
+    children: [
+      {
+        name: "亭湖区",
+        value: 98.14
+      },
+      {
+        name: "盐都区",
+        value: 96.00
+      },
+      {
+        name: "大丰区",
+        value: 95.22
+      },
+      {
+        name: "建湖县",
+        value: 94.17
+      },
+      {
+        name: "射阳县",
+        value: 97.58
+      },
+      {
+        name: "阜宁县",
+        value: 98.66
+      },
+    ]
+  },
+  reactTimeData: {
+    name: "平均响应时长",
+    value: 1.85,
+    children: [
+      {
+        name: "燃气",
+        value: 0.5
+      },
+      {
+        name: "雨水",
+        value: 1.54
+      },
+      {
+        name: "污水",
+        value: 1.24
+      },
+      {
+        name: "供水",
+        value: 1.88
+      },
+      {
+        name: "道路",
+        value: 1.67
+      },
+      {
+        name: "桥梁",
+        value: 1.98
+      },
+      {
+        name: "第三方施工",
+        value: 2.88
+      },
+      {
+        name: "路灯",
+        value: 2.79
+      },
+    ]
+  },
+  disposalTimeData: {
+    name: "平均处置时长",
+    value: 6.49,
+    children: [
+      {
+        name: "燃气",
+        value: 3.99
+      },
+      {
+        name: "雨水",
+        value: 8.25
+      },
+      {
+        name: "污水",
+        value: 6.14
+      },
+      {
+        name: "供水",
+        value: 5.66
+      },
+      {
+        name: "道路",
+        value: 8.95
+      },
+      {
+        name: "桥梁",
+        value: 4.21
+      },
+      {
+        name: "第三方施工",
+        value: 6.21
+      },
+      {
+        name: "路灯",
+        value: 8.27
+      },
+    ]
+  },
+  averageEfficiencyData: [[
+    {
+      name: "亭湖区",
+      value1: 1.12,
+      value2: 6.87
+    },
+    {
+      name: "盐都区",
+      value1: 1.66,
+      value2: 6.94
+    },
+    {
+      name: "大丰区",
+      value1: 2.47,
+      value2: 7.58
+    },
+    {
+      name: "建湖县",
+      value1: 2.68,
+      value2: 8.01
+    },
+    {
+      name: "射阳县",
+      value1: 1.95,
+      value2: 7.14
+    },
+    {
+      name: "阜宁县",
+      value1: 1.22,
+      value2: 6.89
+    }],
+    [
+      {
+        name:"待签收",
+        value:31,
+        percent:21.38
+      },
+      {
+        name:"处置中",
+        value:13,
+        percent:21.38
+      },
+      {
+        name:"已办结",
+        value:101,
+        percent:21.38
+      },
+      {
+        name:"按时办结率",
+        percent:21.38
+      },
+    ]
+  ]
+
+
+
+}
+
 export {
   overviewData,
   basicFacilitiesData,
   operationMaintenanceData,
   runningMonitoringData,
   projectManageData,
+  warningDisposalData
 };
