@@ -121,7 +121,7 @@ const renderChart = (fontSize = 12) => {
         },
         series: [
             {
-                name: '在线人数',
+                name: '问题数',
                 type: 'line',
                 lineStyle: {
                     normal: {

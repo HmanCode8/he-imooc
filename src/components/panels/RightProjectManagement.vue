@@ -121,7 +121,6 @@ const getPastDate = daysAgo => {
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
             <!-- <BarRowChart /> -->
-            dad
             <ScrollTablechart class="w-full ml-2" :tableTitles="pipeDestroy[1].title"
               :tableData="pipeDestroy[1].tableData" />
           </div>
