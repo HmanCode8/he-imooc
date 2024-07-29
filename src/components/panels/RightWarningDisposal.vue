@@ -8,6 +8,7 @@ import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
 import WarningBarRowChart from "../charts/WarningBarRowChart.vue";
 import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
+import Pipe3dChart from "../charts/Pipe3dChart.vue";
 
 
 const {
@@ -28,10 +29,16 @@ const getRandomHexColor = () => {
 
 const Pie3DChartData = ref([]);
 disposalStageData.forEach(element => {
-  element.color = getRandomHexColor();
+  // element.color = getRandomHexColor();
   element.unit = "个";
 });
 Pie3DChartData.value = disposalStageData;
+
+const totalNum = ref(0);
+disposalStageData.forEach(element => {
+  // element.color = getRandomHexColor();
+  totalNum.value+=element.value;
+});
 
 //-------响应时长
 let xArray = [];
@@ -63,7 +70,9 @@ const barChartData = ref({
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="处置阶段分析"></SecondLevelTitle>
-        <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" />
+        <!-- <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" /> -->
+        <!-- <Pipe3dChart class='h-full":data="inspectionChartData -->
+        <Pipe3dChart class="h-full" :data="Pie3DChartData" :total="totalNum" :haveTotal="true" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full h-80">
