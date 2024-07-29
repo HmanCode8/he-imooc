@@ -87,8 +87,8 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
                         class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
                             <div v-if="dataActive === item.name"
-                                class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
-                            <div v-else class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-2.png')] bg-cover">
+                                class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-size"></div>
+                            <div v-else class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-2.png')] bg-size">
                             </div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>
@@ -103,8 +103,8 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
                         class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
                             <div v-if="dataActive === item.name"
-                                class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-cover"></div>
-                            <div v-else class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-2.png')] bg-cover">
+                                class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-size"></div>
+                            <div v-else class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-2.png')] bg-size">
                             </div>
                             <div class="analy-item-name px-1">{{ item.name }}</div>
                         </div>

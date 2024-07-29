@@ -223,36 +223,27 @@ const changeActive = name => {
       <!-- 左边 -->
       <div class="flex flex-wrap justify-end mt-10">
         <div v-for="(item, index) in warningDataLeft" :key="index">
-          <!-- <div class="leftIcon w-40 h-12 flex flex-col"> -->
-          <div
-            :class="`${pipeActive === item.name ? 'leftIconChecked' : 'leftIcon'} w-40 h-12 flex flex-col`"
-            @click="changeActive(item.name)"
-          >
+          <div :class="`${pipeActive === item.name ? 'leftIconChecked' : 'leftIcon'} w-40 h-12 flex flex-col`"
+            @click="changeActive(item.name)">
             <div class="ml-6">{{ item.name }}</div>
             <div class="ml-4">
               <span
-                :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`"
-              >{{ item.value }}</span>个
+                :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`">{{
+                  item.value }}</span>个
             </div>
           </div>
         </div>
       </div>
       <!-- 中间 -->
       <div
-        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center"
-      >
+        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center">
         <div class="bg-[url('assets/imgs/warning/alarm.png')] bg-cover bg-center w-12 h-12"></div>
       </div>
       <!-- 右边 -->
       <div class="flex flex-wrap mt-10">
         <div v-for="(item, index) in warningDataRight" :key="index">
-          <!-- <div
-            class="rightIcon w-40 h-12 flex flex-col"
-          >-->
-          <div
-            :class="`${pipeActive === item.name ?'rightIconChecked':'rightIcon'} w-40 h-12 flex flex-col `"
-            @click="changeActive(item.name)"
-          >
+          <div :class="`${pipeActive === item.name ? 'rightIconChecked' : 'rightIcon'} w-40 h-12 flex flex-col `"
+            @click="changeActive(item.name)">
             <div class="ml-24">{{ item.name }}</div>
             <div class="ml-20">
               <span class="warningsourcestyle text-2xl">{{ item.value }}</span>个
@@ -267,8 +258,7 @@ const changeActive = name => {
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
         <div class="w-full flex items-center justify-center">
           <div
-            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around"
-          >
+            class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around">
             <div class>
               <span class="warninglevel text-2xl font-extrabold">{{ levelData.value }}</span>
               <span>个</span>
@@ -278,8 +268,7 @@ const changeActive = name => {
 
           <div class="ml-10">
             <div
-              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around"
-            >
+              class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around">
               一级预警
               <div>
                 <span class="text-xl font-bold ml-8">{{ levelData.children[0].value }}</span>个
@@ -289,8 +278,7 @@ const changeActive = name => {
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around"
-            >
+              class="bg-[url('assets/imgs/warning/secondwarning.png')] bg-cover bg-center w-80 mt-4 mb-4 h-8 flex items-center justify-around">
               二级预警
               <div>
                 <span class="text-xl font-bold">{{ levelData.children[1].value }}</span>个
@@ -300,8 +288,7 @@ const changeActive = name => {
               </div>
             </div>
             <div
-              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around"
-            >
+              class="bg-[url('assets/imgs/warning/thirdwarning.png')] bg-cover w-80 h-8 flex items-center justify-around">
               三级预警
               <div>
                 <span class="text-xl font-bold">{{ levelData.children[2].value }}</span>个
@@ -322,9 +309,7 @@ const changeActive = name => {
         </SecondLevelTitle>
         <div class="w-full h-full flex">
           <div class="w-full h-full flex-2">
-            <div
-              class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center"
-            >
+            <div class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center">
               <span class="warninglevel text-2xl font-bold">{{ trendData.children[0].name }}</span>
             </div>
             <div class="flex flex-col justify-center items-center">
@@ -348,11 +333,8 @@ const changeActive = name => {
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap justify-around">
-          <div
-            class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
-            v-for="(item, index) in typeData"
-            :key="index"
-          >
+          <div class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
+            v-for="(item, index) in typeData" :key="index">
             <div :class="`warningtype_${index + 1} bg-cover mt-2 w-8 h-8`"></div>
             <div class="mt-3">
               <div class="name">{{ item.name }}</div>

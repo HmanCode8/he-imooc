@@ -41,9 +41,9 @@ const ths = ref([
       <tbody>
         <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
           <td v-for="(col, colIndex) in ths" :key="col.key">
-            <div v-if="colIndex === 0" :class="`warningtype_${rowIndex + 1} bg-cover bg-center h-3 w-15`">{{
+            <div v-if="colIndex === 0" :class="`warningtype_${rowIndex + 1} bg-size bg-center h-3 w-15`">{{
               row[col.prop]
-              }}</div>
+            }}</div>
             <div v-else class="">{{ row[col.prop] }}</div>
           </td>
         </tr>

@@ -51,7 +51,7 @@ watch(pipeActive, (val) => {
             <div class="pipe-list flex justify-between px-1 flex-wrap">
                 <div :class="`${pipeActive === item.name ? 'filter-drop-shadow' : ''} 4k:w-full 8k:w-[32%] my-4 hover:cursor-pointer  flex items-center bg-[url('assets/imgs/infrastructure/pipe-remak-item.png')] bg-size`"
                     v-for="(item, index) in facilitieData" @click="changeActive(item.name)" :key="index">
-                    <div :class="`pipe-icon-${item.iconIndex}  w-24 h-24 bg-cover`"></div>
+                    <div :class="`pipe-icon-${item.iconIndex}  w-24 h-24 bg-size`"></div>
                     <div class="">
                         <div
                             :class="`${pipeActive === item.name ? 'text-[#FFCC00]' : 'gradient-text'} font-[pengmenzhengdao]  text-2xl px-2`">
