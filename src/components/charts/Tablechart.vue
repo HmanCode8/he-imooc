@@ -38,7 +38,7 @@ watchEffect(() => {
 
 <template>
     <div class="w-full">
-        <div class="w-full flex">
+        <div class="w-full  py-2 bg-[#0C3D73] flex">
             <div v-if="showIndex">序号</div>
             <div class="flex-1 text-center" v-for="col in columnData" :key="col.key">{{ col.title }}</div>
         </div>

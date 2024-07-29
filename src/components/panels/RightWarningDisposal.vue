@@ -3,13 +3,12 @@ import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
-import WarningHBarChart from "../charts/WarningHBarChart.vue";
 import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
-import WarningBarRowChart from "../charts/WarningBarRowChart.vue";
-import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
-import { warningDisposalData } from "@/assets/chartData/data";
-import Pipe3dChart from "../charts/Pipe3dChart.vue";
+import ConeBarChart from '../charts/ConeBarChart.vue'
 
+import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
+import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
+import { warningDisposalData } from "@/assets/chartData/data";
 
 const {
   disposalStageData,
@@ -18,8 +17,6 @@ const {
   disposalTimeData,
   averageEfficiencyData
 } = warningDisposalData;
-
-
 
 //---------处置分析阶段
 const getRandomHexColor = () => {
@@ -37,7 +34,7 @@ Pie3DChartData.value = disposalStageData;
 const totalNum = ref(0);
 disposalStageData.forEach(element => {
   // element.color = getRandomHexColor();
-  totalNum.value+=element.value;
+  totalNum.value += element.value;
 });
 
 //-------响应时长
@@ -68,16 +65,14 @@ const barChartData = ref({
   <div class="pipe-analy">
     <FristLevelTitle title="事件处置分析"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="处置阶段分析"></SecondLevelTitle>
         <!-- <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" /> -->
         <!-- <Pipe3dChart class='h-full":data="inspectionChartData -->
         <Pipe3dChart class="h-full" :data="Pie3DChartData" :total="totalNum" :haveTotal="true" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full h-80">
-        <!-- <SecondLevelTitle title="响应处置分析"></SecondLevelTitle> -->
-
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="响应处置分析">
           <template v-slot:title-slot>
             <div
@@ -95,13 +90,14 @@ const barChartData = ref({
 
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
-            <WarningBarRowChart :data="disposalReactData.children" />
+            <BarRowChart :data="disposalReactData.children" />
+
           </div>
         </div>
       </div>
     </div>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="响应时长">
           <template v-slot:title-slot>
             <div
@@ -116,10 +112,10 @@ const barChartData = ref({
             </div>
           </template>
         </SecondLevelTitle>
-        <Bar3dChartOMFirst :barData="barChartData" />
+        <Bar3dChartOMFirst :barData="barChartData" class="h-80" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="处置时长">
           <template v-slot:title-slot>
             <div
@@ -134,22 +130,22 @@ const barChartData = ref({
             </div>
           </template>
         </SecondLevelTitle>
-        <div class="w-full h-full flex">
-          <WarningConeBarChart :chartData="disposalTimeData.children" />
-        </div>
+
+        <!-- <WarningConeBarChart :chartData="disposalTimeData.children" class="h-80" /> -->
+        <ConeBarChart :data="disposalTimeData.children" title="处置时长" class="h-64" />
+
       </div>
     </div>
 
     <SecondLevelTitle title="平均效率"></SecondLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <WarningMedalTableChart :tableData="averageEfficiencyData[0]" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full h-80 flex flex-wrap">
-
+      <div class="8k:w-1/2 4k:w-full flex justify-around flex-wrap">
         <div
-          class="bg-[url('assets/imgs/warning/average4.png')] bg-size bg-center w-32 h-28 flex flex-col items-center ml-20 ">
+          class="bg-[url('assets/imgs/warning/average4.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">{{ averageEfficiencyData[1][0].value }}个</span>
           </div>
@@ -157,17 +153,14 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/warning/average2.png')] bg-size bg-center w-32 h-28 flex flex-col items-center ml-20 ">
+          class="bg-[url('assets/imgs/warning/average2.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#FFAE00;">{{ averageEfficiencyData[1][1].value }}个</span>
           </div>
           <div class="pipe-point">处置中</div>
         </div>
-
-
-
         <div
-          class="bg-[url('assets/imgs/warning/average3.png')] bg-size bg-center w-32 h-28 flex flex-col items-center ml-20">
+          class="bg-[url('assets/imgs/warning/average3.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#0BFFC3;">{{ averageEfficiencyData[1][2].value }}个</span>
           </div>
@@ -175,7 +168,7 @@ const barChartData = ref({
         </div>
 
         <div
-          class="bg-[url('assets/imgs/warning/average1.png')] bg-size bg-center w-32 h-28 flex flex-col items-center ml-20">
+          class="bg-[url('assets/imgs/warning/average1.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20">
           <div class="mt-5 text-2xl font-bold">
             <span style="color:#1AFCFF;">{{ averageEfficiencyData[1][3].percent }}</span>
           </div>

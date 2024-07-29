@@ -75,7 +75,6 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
           <div class="line h-40">
           </div>
         </div>
-        <!-- <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" /> -->
         <Pipe3dChart class="h-full w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" />
 
       </div>

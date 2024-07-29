@@ -25,7 +25,7 @@ const data = props.tableData.map((item) => {
 
 <template>
   <div class="w-full">
-    <div class="w-full flex">
+    <div class="w-full  py-2 bg-[#0C3D73] flex">
       <div class="flex-1 text-center" v-for="(col, index) in tableTitles" :key="index">{{ col }}</div>
     </div>
     <div class="table-container w-full h-60" ref="scrollRef">

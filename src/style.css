@@ -62,7 +62,6 @@ body,#app {
   text-overflow: ellipsis; /* 显示省略号 */
 }
 
-
 .bg-size{
   background-size: 100% 100%;
   background-repeat: no-repeat;

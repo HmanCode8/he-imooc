@@ -1,5 +1,7 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div class="">
+        <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    </div>
 </template>
 
 <script setup>
@@ -13,31 +15,37 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    title: {
+        type: String,
+        default: '区县设备覆盖率'
+    }
 });
 
 const target = ref(null);
-const chartData = toRef(props, 'data')
-const chartFontSize = toRef(useRootFontSize(), 'value')
+const chartData = toRef(props, 'data');
+const rootFontSize = useRootFontSize();
 let mChart = null;
+
 onMounted(() => {
     mChart = echarts.init(target.value);
+    renderChart(rootFontSize.value);
 });
 
-watch(chartData, () => {
-    renderChart();
-})
-
-const handleResize = () => {
-    const rootFontSize = useRootFontSize();
-    renderChart(rootFontSize.value);
+watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
+    renderChart(newFontSize);
     if (mChart) {
         mChart.resize();
     }
-};
+});
 
+const handleResize = () => {
+    renderChart(rootFontSize.value);
+    mChart && mChart.resize();
+};
 const renderChart = (fontSize = chartFontSize) => {
     const xLabel = _.map(props.data, item => item.name);
     const dataValue = _.map(props.data, item => item.value);
+    const unit = props.data[0].unit || '';
     const option = {
         tooltip: {
             show: true,
@@ -54,7 +62,7 @@ const renderChart = (fontSize = chartFontSize) => {
             formatter: function (params) {
                 let result = '';
                 params.forEach(param => {
-                    result += `${param.seriesName}: ${param.value}%<br/>`;
+                    result += `${param.seriesName}: ${param.value}${unit}<br/>`;
                 });
                 return result;
             }
@@ -128,7 +136,7 @@ const renderChart = (fontSize = chartFontSize) => {
                         fontSize
                     },
                     formatter: function (value) {
-                        return value + '%';
+                        return value + unit;
                     }
                 },
                 axisTick: {
@@ -138,7 +146,7 @@ const renderChart = (fontSize = chartFontSize) => {
         ],
         series: [
             {
-                name: '区县设备覆盖率',
+                name: props.title,
                 type: "pictorialBar",
                 barWidth: "25%",
                 label: {

@@ -42,8 +42,8 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
       </div>
     </div>
 
-    <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-40">
+    <div class="flex flex-wrap justify-between">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="巡检及时率"></SecondLevelTitle>
         <Bar3dChart :data="timelinesRate" class="h-60" />
       </div>
