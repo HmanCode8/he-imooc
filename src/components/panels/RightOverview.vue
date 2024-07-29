@@ -36,7 +36,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
             <!-- 风险总数 -->
             <div class="risk-count 4k:w-full 8k:w-[48%] mx-2">
                 <div
-                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-cover my-4 px-2">
+                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-size my-4 px-2">
                     <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao]">风险总数<span
                             class="text-4xl gradient-text">{{ riskTotalData.total
                             }}</span>个
@@ -68,7 +68,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
             <!-- 隐患总数 -->
             <div class="risk-count 4k:w-full 8k:w-[48%] mx-2">
                 <div
-                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-cover my-4 px-2">
+                    class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-size my-4 px-2">
                     <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao]">隐患总数<span
                             class="text-4xl gradient-text">{{ hideTotalData.total
                             }}</span>个
