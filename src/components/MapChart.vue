@@ -387,7 +387,7 @@ const initCesiumMap = async () => {
     timeline: false // 隐藏正下方时间线
   });
 
-  //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
+    cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
   const viewer = cesiumViewer.value;
   // 是否支持图像渲染像素化处理，在支持image-rendering: pixelated属性的浏览器中，根据设备像素比例来设置 Cesium 场景的分辨率缩放，以达到更好的视觉效果。
   if (Cesium.FeatureDetection.supportsImageRenderingPixelated()) {
@@ -397,15 +397,15 @@ const initCesiumMap = async () => {
   viewer.scene.postProcessStages.fxaa.enabled = true;
   //todo
   //加载倾斜
-  // try {
-  //   const tileset = await Cesium.Cesium3DTileset.fromUrl(
-  //     "http://127.0.0.1:8089/data/ycosgb3/tileset.json"
-  //   );
-  //   viewer.scene.primitives.add(tileset);
+  try {
+    const tileset = await Cesium.Cesium3DTileset.fromUrl(
+      "http://10.10.31.84:8090/3dtile_op/tileset.json"
+    );
+    viewer.scene.primitives.add(tileset);
 
-  // } catch (error) {
-  //   console.error(`Error creating tileset: ${error}`);
-  // }
+  } catch (error) {
+    console.error(`Error creating tileset: ${error}`);
+  }
 
   //加载管线
   let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
