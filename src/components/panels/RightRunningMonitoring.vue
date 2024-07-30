@@ -16,8 +16,8 @@ const runData = ref(alarmData)
         <SecondLevelTitle title="运行概况"></SecondLevelTitle>
         <div class="pipe-analy-content my-10 flex justify-between flex-wrap">
             <div v-for="item, index in profileData" :key="item.name"
-                class="flex w-1/3 mx-4 h-36 bg-[url('assets/imgs/running/bg.png')] bg-size items-center justify-around">
-                <div class=" bg-[url('assets/imgs/running/run-b-1.png')] bg-size text-center w-1/3 h-2/3">
+                class="flex 8k:w-[30%] 4k:w-1/3 mx-4 h-36 bg-[url('assets/imgs/running/bg.png')] bg-size items-center justify-around">
+                <div class=" bg-[url('assets/imgs/running/run-b-1.png')] bg-size text-center 8k:w-[30%] 4k:w-1/3 h-2/3">
                     <div class="text-3xl font-bold gradient-text">{{ item.total }}</div>
                     <div>{{ item.name }}</div>
                 </div>
@@ -36,7 +36,7 @@ const runData = ref(alarmData)
             <SecondLevelTitle title="监测报警"></SecondLevelTitle>
             <div class="flex flex-wrap items-center">
                 <div v-for="item, index in runData" :key="item.name" class="w-full 8k:w-1/2 4k:w-full">
-                    <div class="flex items-center pipe-item w-1/3 bg-size h-6">
+                    <div class="flex items-center pipe-item 8k:w-[30%] 4k:w-1/3 bg-size h-6">
                         <div v-if="index === 0" class="w-6 h-6 bg-[url('assets/imgs/running/top-1.png')] bg-size">
                         </div>
                         <div v-else class="w-6 h-6 bg-[url('assets/imgs/running/top-2.png')] bg-size"></div>

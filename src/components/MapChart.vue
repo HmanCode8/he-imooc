@@ -4,7 +4,7 @@
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-size flex justify-between px-10 mt-4">
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/2 h-20 bg-size flex justify-between px-10 mt-4">
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
@@ -20,10 +20,14 @@
     <div class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0 z-10">
       <div class="flex h-full bg-[url('assets/imgs/main/b-tabs.png')] bg-size">
         <div
-          :class="`flex flex-col font-bold items-center hover:cursor-pointer t-item-${index + 1} ${currentBottomTab === tab.value ? 'select-active' : ''}  px-2 m-1`"
-          v-for="(tab, index) in bottomTabs" :key="tab.value" @click="currentBottomTab = tab.value">
-          <div :class="`blink-${index + 1} w-10 h-10 bg-size`"></div>
-          <div class="t-item-name">{{ tab.name }}</div>
+          :class="`flex flex-col hover:cursor-pointer items-center px-2 ${currentBottomTab === tab.value ? ' translate-y-[-20px] duration-150' : ''}`"
+          @click="currentBottomTab = tab.value" v-for=" (tab, index) in bottomTabs" :key="tab.value">
+          <div :class="`${currentBottomTab === tab.value ? 'select-active' : ''} px-2`">
+            <div :class="`blink-${index + 1} w-14  h-10 bg-size`"></div>
+          </div>
+          <div :class="`font-bold ${currentBottomTab === tab.value ? 'text-[#00faff]' : ''}`">
+            {{ tab.name }}
+          </div>
         </div>
       </div>
     </div>
@@ -31,7 +35,7 @@
     <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
     <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[10%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -93,14 +97,13 @@
 
     <!-- 图例 -->
 
-    <div ref="legendRef" v-if="0 < legendGroup.length"
-      class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
+    <div ref="legendRef" v-if="0 < legendGroup.length" class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
       <MapLegend :legendGroup="legendGroup" />
     </div>
 
     <!-- 地图切换 -->
-    <div class="absolute bg-slate-400/50 right-[29%] bottom-5 z-10">
-      <MapToggle @update:baseMap="toggleMap"/>
+    <div class="absolute right-[7%] 4k:bottom-[10%] 8k:bottom-4">
+      <MapToggle v-model="mapType" class="" />
     </div>
   </div>
 </template>
@@ -131,12 +134,11 @@ const leyerRef = ref(null)
 const legendRef = ref(null)
 const global = useGlobalStore()
 const target = ref(null)
-const current2dBaseMap = ref("vector");
-const currentBottomTab = ref('underground-pipeline')
+const currentBottomTab = ref('comprehensive-monitoring')
 const currentLayerTab = ref('ranqi');
 const currentLayerGroup = ref([]);
 const loadedLayerGroup = ref([]);
-
+const mapType = ref('vector')
 const map = ref(null);
 const popupCom = ref(null);
 const popupObject = ref({});
@@ -174,7 +176,7 @@ const initOpenLayersMap = () => {
   }
   register(proj4);
 
-  const baseLayerConfig = layerConfig["baseLayer"][current2dBaseMap.value];
+  const baseLayerConfig = layerConfig["baseLayer"][mapType.value];
   const baseLayers = baseLayerConfig.map(v =>
     createLayer(getLayerSource(v), "base")
   );
@@ -373,7 +375,7 @@ const initCesiumMap = async () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmMwNmM1My03NzI4LTQ0NDUtOTBiYy1hM2I2ZmUxZDNmOWUiLCJpZCI6MjI4NzQzLCJpYXQiOjE3MjExMzU1OTZ9.bZrwv5u7g418lGuDhTuRqkrWJDHAFWGGd1TiTbsM9dU";
 
   cesiumViewer.value = new Cesium.Viewer(target.value, {
-    // terrainProvider: await Cesium.createWorldTerrainAsync()
+    terrainProvider: await Cesium.createWorldTerrainAsync()
   });
 
   //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
@@ -445,14 +447,13 @@ const change2dBaseMap = mapType => {
   }
 }
 
-const toggleMap = mapType => {
-  if ("scene" !== mapType) {
+watch(mapType, (val) => {
+  if ("scene" !== mapType.value) {
     cesiumViewer.value && cesiumViewer.value.destroy();
     cesiumViewer.value = null;
-    current2dBaseMap.value = mapType;
     if (map.value) {
       map.value.setTarget(target.value);
-      change2dBaseMap(current2dBaseMap.value);
+      change2dBaseMap(val);
     } else {
       initOpenLayersMap();
     }
@@ -460,17 +461,17 @@ const toggleMap = mapType => {
     map.value.setTarget(null);
     initCesiumMap();
   }
-};
+})
 
 watch(
-    () => currentLayerTab.value,
-    () => {
-      gsap.fromTo(
-          leyerRef.value,
-          { opacity: 0, x: -50 },
-          { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
-      );
-    }
+  () => currentLayerTab.value,
+  () => {
+    gsap.fromTo(
+      leyerRef.value,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.3, ease: "linear" }
+    );
+  }
 );
 
 watch(
@@ -483,7 +484,7 @@ watch(
 }
 );
 onMounted(() => {
-   initOpenLayersMap();
+  initOpenLayersMap();
 });
 </script>
 
@@ -571,10 +572,10 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
-  color: #00faff;
+  // color: #00faff;
   background-image: url("@/assets/imgs/main/icon-b-active.png");
   background-size: 100% 100%;
-  transform: translateY(-20px);
+  // transform: translateY(-20px);
   transition: all 0.3s ease-in-out;
 }
 

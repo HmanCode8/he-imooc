@@ -12,7 +12,7 @@
                     <component :is="currentComponentMap[currentComponent][0]" class="w-full h-full box-border pb-4" />
 
                 </div>
-                <div class="w-full h-full flex flex-col">
+                <div class="w-[50%] absolute left-1/2 translate-x-[-50%]   rounded-md h-full flex flex-col">
                     <!-- 数据展示图 -->
                     <MapChart class="bg-opacity-50  flex-1" />
                 </div>
@@ -28,9 +28,6 @@
                     class="absolute w-[12%] h-[70%] right-[30%] bottom-[10%]">
                     <Modal />
                 </div>
-                <!-- <div v-if="store.componentId === 'overview'" class="absolute right-[30%] bottom-[10%]">
-                    <MapType class="" />
-                </div> -->
             </div>
         </div>
     </div>
@@ -45,7 +42,6 @@ import MapChart from '@/components/MapChart.vue'
 
 // common组件
 import Modal from '@/components/common/Modal.vue'
-import MapType from '@/components/common/MapType.vue'
 // 左侧栏组件
 import LeftPipeAnaly from '@/components/panels/LeftPipeAnaly.vue'
 import LeftOverview from '@/components/panels/LeftOverview.vue'
@@ -68,7 +64,7 @@ const gsap = inject('gsap')
 
 const store = useGlobalStore()
 
-const data = ref(null)
+const mapType = ref('')
 
 const sizeType = ref('small')
 

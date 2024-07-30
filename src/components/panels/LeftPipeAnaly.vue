@@ -12,6 +12,9 @@ import { basicFacilitiesData } from '@/assets/chartData/data'
 
 const { facilities, baseData, typeAlysisData, totleSize } = basicFacilitiesData
 
+const totalTitle = '总汇聚率'
+const totalNum = _.get(_.find(typeAlysisData, { name: totalTitle }), 'value', 0)
+const inspectionChartData = _.filter(typeAlysisData, (item) => item.name !== totalTitle)
 
 const pipeActive = ref(facilities[0].name)
 const currentData = ref([])
@@ -74,7 +77,9 @@ watch(pipeActive, (val) => {
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full" title="地下管线数据汇聚率"></ThirdLevelTitle>
-                <Pipe3dChart :data="typeAlysisData" />
+                <Pipe3dChart :data="inspectionChartData" :total="totalNum" :haveTotal="true"
+                    :graphicTitle="totalTitle" />
+
             </div>
             <!-- 管龄分析 -->
             <div class="8k:w-1/2 4k:w-full">
@@ -90,8 +95,7 @@ watch(pipeActive, (val) => {
             <!-- 管径分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <SecondLevelTitle title="管径分析"></SecondLevelTitle>
-
-                <Bar3dChart :data="currentData.diameterData" title="管径分析" class="w-full h-60" />
+                <Bar3dChart :data="currentData.diameterData" title="管径" class="w-full h-60" />
             </div>
 
             <!-- 管材分析 -->

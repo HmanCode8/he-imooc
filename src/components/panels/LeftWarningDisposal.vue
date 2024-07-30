@@ -204,8 +204,8 @@ const setwarningSpaceFeaturesData = name => {
 const pipeActive = ref("");
 let oldName = "";
 const changeActive = name => {
-  if(oldName === name){
-    name="总数"
+  if (oldName === name) {
+    name = "总数"
   }
   pipeActive.value = name;
   //设置预警等级
@@ -251,7 +251,9 @@ const changeActive = name => {
             @click="changeActive(item.name)">
             <div class="ml-24">{{ item.name }}</div>
             <div class="ml-20">
-              <span :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`">{{ item.value }}</span>个
+              <span
+                :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`">{{
+                  item.value }}</span>个
             </div>
           </div>
         </div>
@@ -259,7 +261,7 @@ const changeActive = name => {
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
         <div class="w-full flex items-center justify-center">
           <div
@@ -306,7 +308,7 @@ const changeActive = name => {
         </div>
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="预警事件趋势">
           <template v-slot:title-slot>
             <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
@@ -335,12 +337,12 @@ const changeActive = name => {
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
-        <div class="flex flex-wrap justify-around">
-          <div class="flex bg-[url('assets/imgs/warning/waringtype1.png')] bg-cover mt-2 w-40 h-32 flex justify-center"
+        <div class="flex flex-wrap">
+          <div class="bg-[url('assets/imgs/warning/waringtype1.png')] bg-size mt-2 w-[30%] m-2 h-32 flex items-center"
             v-for="(item, index) in typeData" :key="index">
-            <div :class="`warningtype_${index + 1} bg-cover mt-2 w-8 h-8`"></div>
+            <div :class="`warningtype_${index + 1} bg-size mt-2 w-8 h-8`"></div>
             <div class="mt-3">
               <div class="name">{{ item.name }}</div>
               <div class="pipe-point">
@@ -354,7 +356,7 @@ const changeActive = name => {
         </div>
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="预警事件空间特征"></SecondLevelTitle>
         <WarningTableChart :tableData="tableData" />
       </div>
