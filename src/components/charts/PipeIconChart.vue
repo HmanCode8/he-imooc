@@ -57,6 +57,7 @@ const renderChart = (fontSize = chartFontSize) => {
     (pre, cur) => pre + Number(cur.value),
     0
   );
+  const unit = chartData.value[0].unit || "km";
   const echartData = _.map(chartData.value, (c, index) => {
     const p = (Number(c.value) / total) * 100 || 0;
     const percent = p.toFixed(2) + "%";
@@ -123,7 +124,7 @@ const renderChart = (fontSize = chartFontSize) => {
               str = `{name|${name}}\r\r{${"percent" +
                 index}|${item.percent}}`;
             } else {
-              str = `{name|${name}}\r{value|${item.value}kWh}\r\r{${"percent" +
+              str = `{name|${name}}\r{value|${item.value}${unit}}\r\r{${"percent" +
                 index}|${item.percent}}`;
             }
 
@@ -174,7 +175,7 @@ const renderChart = (fontSize = chartFontSize) => {
           right: "10%",
           top: "15%",
           style: {
-            text: `${total}个`,
+            text: `${total}${unit}`,
             textAlign: "center",
             fontSize, // 确保 fontSize 有值
             fill: "#ffff00"

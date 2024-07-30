@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div ref="target" class="w-full h-full"></div>
 
   </div>
 </template>
@@ -24,27 +24,19 @@ const props = defineProps({
 
 const rootFontSize = useRootFontSize();
 const target = ref(null);
-
+const { liquidData } = props;
 let mChart = null;
 onMounted(() => {
   mChart = echarts.init(target.value);
 });
 
-watch([props.liquidData, rootFontSize], ([newChartData, newFontSize]) => {
+watch([liquidData, rootFontSize], ([newChartData, newFontSize]) => {
   renderChart(newFontSize);
   if (mChart) {
     mChart.resize();
   }
 });
 
-
-const handleResize = () => {
-  const rootFontSize = useRootFontSize();
-  renderChart(rootFontSize.value);
-  if (mChart) {
-    mChart.resize();
-  }
-};
 
 const renderChart = (fontSize) => {
   const option = {

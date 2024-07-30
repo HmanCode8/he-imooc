@@ -4,7 +4,7 @@
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/2 h-20 bg-size flex justify-between px-10 mt-4">
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.webp')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4">
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
@@ -35,7 +35,7 @@
     <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
     <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-    <div class="layer-tabs w-60 h-[80%] flex absolute left-[10%] top-1/2 translate-y-[-50%] z-10">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -102,7 +102,7 @@
     </div>
 
     <!-- 地图切换 -->
-    <div class="absolute right-[7%] 4k:bottom-[10%] 8k:bottom-4">
+    <div class="absolute right-[28.5%] 4k:bottom-[10%] 8k:bottom-4">
       <MapToggle v-model="mapType" class="" />
     </div>
   </div>
@@ -558,7 +558,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
   // color: #00faff;
-  background-image: url("@/assets/imgs/main/icon-b-active.png");
+  background-image: url("@/assets/imgs/main/icon-b-active.webp");
   background-size: 100% 100%;
   // transform: translateY(-20px);
   transition: all 0.3s ease-in-out;

@@ -37,8 +37,10 @@ const handleResize = (size) => {
 
 const renderChart = (fontSize) => {
     const { data } = props
-    const sum = data.reduce((acc, cur) => acc + Number(cur.value), 0)
-    const unit = data[0].unit || 'km'
+    // 倒叙排序
+    const sortData = data.sort((a, b) => Number(a.value) - Number(b.value))
+    const sum = sortData.reduce((acc, cur) => acc + Number(cur.value), 0)
+    const unit = sortData[0].unit || 'km'
     const option = {
         grid: {
             left: '3%',
@@ -54,7 +56,7 @@ const renderChart = (fontSize) => {
         },
         yAxis: {
             type: 'category',
-            data: data.map(item => item.name),
+            data: sortData.map(item => item.name),
             axisLine: { show: true },
             axisTick: { show: false },
             axisLabel: {
@@ -80,7 +82,7 @@ const renderChart = (fontSize) => {
         series: [
             {
                 type: 'bar',
-                data: data.map((item, index) => ({
+                data: sortData.map((item, index) => ({
                     value: Number(item.value),
                     itemStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
@@ -93,7 +95,7 @@ const renderChart = (fontSize) => {
             },
             {
                 type: 'bar',
-                data: data.map(d => sum),  // 使用最大值来设置背景柱子的高度
+                data: sortData.map(d => sum),  // 使用最大值来设置背景柱子的高度
                 barGap: '-100%',
                 barWidth: '20%',
                 itemStyle: {
@@ -103,14 +105,14 @@ const renderChart = (fontSize) => {
                     show: true,
                     position: 'right',
                     distance: 10,  // 调整数值和柱子之间的距离
-                    formatter: (params) => `${data[params.dataIndex].value} ${unit}`,  // 显示对应的数值并加单位
+                    formatter: (params) => `${sortData[params.dataIndex].value} ${unit}`,  // 显示对应的数值并加单位
                     color: '#fff',
                     fontSize
                 }
             },
             {
                 type: 'bar',
-                data: data.map(d => d.value),
+                data: sortData.map(d => d.value),
                 barGap: '-100%',
                 barWidth: '20%',
                 itemStyle: {
