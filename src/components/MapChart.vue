@@ -1,6 +1,8 @@
 <template>
   <div class="map relative">
-    <div ref="target" class="w-full h-full" id="sceneGISContainer"></div>
+    <div ref="target" class="w-full h-full" id="sceneGISContainer">
+      <div id="infobox" class="bubble"></div>
+    </div>
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
@@ -31,11 +33,9 @@
         </div>
       </div>
     </div>
-    <!-- 图层栏 -->
-    <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
-    <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10"
+      v-show="'scene' !== mapType">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -52,52 +52,31 @@
         </div>
       </div>
 
-      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0">
-        <div ref="leyerRef" class>
-          <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
-            <div
-              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
-              {{ sub.name }}</div>
-            <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
-              <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-                <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
-                  @click="updateLayer(item)">{{ item.name }}</div>
+      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0" v-show="'scene' !== mapType && showSubLayerTab">
+        <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
+          <div
+            class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
+            {{ sub.name }}
+          </div>
+          <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
+            <div v-for="item in sub.children" :key="item.remark" class="pl-2">
+              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
+                @click="updateLayer(item)">{{ item.name }}
               </div>
             </div>
-            <div v-else>---</div>
           </div>
+          <div v-else>---</div>
         </div>
       </div>
     </div>
 
-    <!-- 右下角图例 -->
-
-    <!-- <div class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
-			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
-			<div class="legend-content px-1">
-				<div class="legend-item flex items-center ">
-					<img :src="legend.img" :alt="legend.source + legend.label" />
-					<div class="legend-item-desc">{{ legend.label }}</div>
-				</div>
-			</div>
-		</div>
-		-->
-
     <!-- 地图弹出框 -->
-
-    <div ref="popupCom" class="popup overflow-auto">
-      <div class="banner">
-        <div class="title">{{ popupObject.layerName }}</div>
-        <div class="close-icon" @click="closePop(map)">✖</div>
-      </div>
-      <div class="info-wrapper overflow-auto">
-        <div class="info-text" v-for="(value, key) in popupObject.properties">{{ key }} : {{ value }}</div>
-      </div>
+    <div ref="popupCom">
+      <MapPopup :popupObject="popupObject" @update:closePop="closePop(map)" />
     </div>
 
     <!-- 图例 -->
-
-    <div ref="legendRef" v-if="0 < legendGroup.length" class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
+    <div v-show="'scene' !== mapType && 0 < legendGroup.length" class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
       <MapLegend :legendGroup="legendGroup" />
     </div>
 
@@ -115,10 +94,11 @@ import { Map, View } from 'ol'
 import { useGlobalStore } from "@/store";
 // import * as Cesium from "cesium";
 // import "cesium/Build/Cesium/Widgets/widgets.css";
-import _ from "lodash";
+import _, { forIn } from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
 import MapToggle from "@/components/MapToggle.vue";
+import MapPopup from "@/components/MapPopup.vue";
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
 
@@ -131,7 +111,6 @@ const { layerConfig = {} } = window;
 const layers = ref([])
 const gsap = inject('gsap')
 const leyerRef = ref(null)
-const legendRef = ref(null)
 const global = useGlobalStore()
 const target = ref(null)
 const currentBottomTab = ref('comprehensive-monitoring')
@@ -140,6 +119,7 @@ const currentLayerGroup = ref([]);
 const loadedLayerGroup = ref([]);
 const mapType = ref('vector')
 const map = ref(null);
+const showSubLayerTab = ref(true);
 const popupCom = ref(null);
 const popupObject = ref({});
 const legendGroup = ref([]);
@@ -189,8 +169,8 @@ const initOpenLayersMap = () => {
     controls: [],
     overlays: [infoOverlay],
     view: new View({
-      center: [120.2327, 33.4905],
-      zoom: 10,
+      center: [120.15648234, 33.35160457],
+      zoom: 13,
       maxZoom: 20,
       minZoom: 8,
       projection: layerConfig.systemProjection
@@ -216,6 +196,9 @@ const setDefaultLayers = moduleName => {
       map.value.removeLayer(v);
     }
   });
+  if ("vector" !== mapType.value) {
+    mapType.value = "vector";
+  }
   if (layerConfig["layerTrees"].hasOwnProperty(moduleName)) {
     layers.value = layerConfig["layerTrees"][moduleName];
     currentLayerGroup.value = traverseLayerDefine(layers.value);
@@ -366,30 +349,16 @@ const addLayer = async layerValue => {
 }
 
 const queryPopupDetail = async evt => {
-  popupObject.value = await getPopInfo(evt, currentLayerGroup.value);
-  0 < Object.keys(popupObject.value).length ? popElement(evt) : closePop(evt.map);
+  const popInfo = await getPopInfo(evt, currentLayerGroup.value);
+  if (0 < Object.keys(popInfo).length) {
+    popupObject.value = popInfo;
+    popElement(evt);
+  } else {
+    closePop(evt.map);
+  }
 };
 
-const initCesiumMap = async () => {
-  cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
-  const viewer = cesiumViewer.value;
-  //加载倾斜
-  const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-    url: 'http://10.10.31.84:8090/3dtile_op/tileset.json'
-  }));
-  //视角初始化
-  viewer.camera.setView({
-    destination: SceneGIS.Cartesian3.fromDegrees(
-      120.17147298986772,
-      33.301942305971394,
-      137.11303375009118
-    ),
-    orientation: {
-      heading: 0.345650960729154,
-      pitch: -0.28325898231466784,
-      roll: 6.283183439173194
-    }
-  });
+const addGX = (viewer) => {
   //加载管线
   let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
   let comps = [
@@ -413,6 +382,250 @@ const initCesiumMap = async () => {
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
+};
+
+const addOsgb = (viewer) => {
+  //加载倾斜
+  const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
+    url: 'http://10.10.31.84:8090/3dtile_op/tileset.json'
+  }));
+};
+
+const setHSV = (viewer, h, s, v) => {
+  //颜色饱和度
+  let Hscale = h;
+  let Sscale = s;
+  let Vscale = v;
+
+  let ShaderCode = `
+      #version 300 es
+      uniform sampler2D colorTexture;
+      in vec2 v_textureCoordinates;
+      uniform float Hscale;
+      uniform float Sscale;
+      uniform float Vscale;
+
+      layout(location=0) out vec4 czm_fragColor;
+
+      vec3 rgb2hsv(vec3 c) {
+        vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+        vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+        vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+
+        float d = q.x - min(q.w, q.y);
+        float e = 1.0e-10;
+        return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+      }
+      vec3 hsv2rgb(vec3 c) {
+        vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+        vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+        return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+      }
+
+      void main() {
+        vec4 color = texture(colorTexture, v_textureCoordinates);//原始图像
+
+        vec3 hsv = rgb2hsv(color.rgb);
+
+        // Adjust HSV values (example: increase saturation)
+        hsv.x *= Hscale;
+        hsv.y *= Sscale;
+        hsv.z *= Vscale;
+
+        // Convert HSV back to RGB
+        vec3 rgb = hsv2rgb(hsv);
+
+        czm_fragColor = vec4(rgb, color.a);;
+      }`;
+
+  let postProcessStage = new SceneGIS.PostProcessStage({
+    fragmentShader: ShaderCode,
+    uniforms: {
+      Hscale: function () {
+        return Hscale;
+      },
+      Sscale: function () {
+        return Sscale;
+      },
+      Vscale: function () {
+        return Vscale;
+      }
+    }
+  });
+  let postProcessStageComposite = new SceneGIS.PostProcessStageComposite({
+    stages: [postProcessStage]
+  });
+  viewer.scene.postProcessStages.add(postProcessStageComposite);
+};
+
+//创建信息框
+let element = null;
+const createBubble = (viewer, clickPosition, infoboxContainer, properties) => {
+  if (element != null) {
+    infoboxContainer.style.display = "none";
+    infoboxContainer.removeChild(element);
+    element = null;
+  }
+  //弹窗
+  infoboxContainer.style.display = "block";
+
+  element = document.createElement("div");
+
+  let str = "";
+  let obj = {};
+  for (let key in properties) {
+    if (Object.prototype.toString.call(properties[key]) === '[object Object]') {
+      let newObj = properties[key];
+      for (let key1 in newObj) {
+        obj[key1] = newObj[key1];
+      }
+    } else {
+      obj[key] = properties[key];
+    }
+
+  }
+
+  for (let key in obj) {
+    str += '<tr><td>' + key + '</td><td>' + obj[key].toString() + '</td></tr>'
+  }
+
+
+  element.innerHTML = `
+      <div class="test"">
+        <div class="thstyle">
+          <div class="textStyle">属性值</div>
+          <div class="closeStyle" id="closeInfoBox">X</div>
+        </div>
+        <div>
+        <table class="tableStyle">`+ str + `
+          </table>
+        </div>
+
+      </div>`;
+
+  //弹窗随屏幕移动而移动
+  infoboxContainer.appendChild(element);
+
+  let btn = document.getElementById("closeInfoBox");
+  btn.onclick = function () {
+    if (element != null) {
+      infoboxContainer.style.display = "none";
+      infoboxContainer.removeChild(element);
+      element = null;
+      silhouetteGreen.selected = [];
+      //如果想让点击事件失效
+      // self.handler.destroy();
+      // self.handler = null;
+    }
+  };
+
+  viewer.scene.postRender.addEventListener(function () {
+    // 每一帧都去计算气泡的正确位置
+    if (clickPosition) {
+      let canvasHeight = viewer.scene.canvas.height;
+      let windowPosition = new SceneGIS.Cartesian2();
+      SceneGIS.SceneTransforms.wgs84ToWindowCoordinates(
+        viewer.scene,
+        clickPosition,
+        windowPosition
+      );
+
+      // infoboxContainer.style.bottom =
+      //   canvasHeight - windowPosition.y - 10 + "px";
+      // infoboxContainer.style.left = windowPosition.x - 80 + "px";
+
+      infoboxContainer.style.bottom =
+        canvasHeight - windowPosition.y + "px";
+      infoboxContainer.style.left = windowPosition.x + "px";
+      infoboxContainer.style.visibility = "visible";
+    }
+  });
+};
+
+
+
+// 当前选中的变量初始信息
+const selected = {
+  feature: undefined,
+  originalColor: new SceneGIS.Color(),
+};
+let silhouetteGreen = null;
+const setInfoBox = (viewer) => {
+
+  //判断是否支持描边，如果支持就使用描边选中，如果不支持就将选中的要素标色
+  if (SceneGIS.PostProcessStageLibrary.isSilhouetteSupported(viewer.scene)) {
+    //绿色描边的边缘检测
+    silhouetteGreen = SceneGIS.PostProcessStageLibrary.createEdgeDetectionStage();
+    silhouetteGreen.uniforms.color = SceneGIS.Color.LIME;
+    silhouetteGreen.uniforms.length = 0.01;
+    silhouetteGreen.selected = [];
+
+    //将两种边缘检测的后置渲染组合到描边的后置渲染
+    viewer.scene.postProcessStages.add(
+      SceneGIS.PostProcessStageLibrary.createSilhouetteStage([
+        silhouetteGreen,
+      ])
+    );
+
+
+    let handler = new SceneGIS.ScreenSpaceEventHandler(
+      viewer.scene.canvas
+    );
+
+    handler.setInputAction(function (event) {
+
+
+      //用来拾取三维空间中的物体
+      let pickedFeature = viewer.scene.pick(event.position);
+
+      // 检查是否点击到 3D Tileset
+      if (pickedFeature instanceof SceneGIS.SceneGIS3DTileFeature) {
+        // 保留选中的初始颜色
+        // var highlightedFeature = silhouetteBlue.selected[0];
+        // if (pickedFeature === highlightedFeature) {
+        //   silhouetteBlue.selected = [];
+        // }
+        // 高亮绿色选中的要素
+        silhouetteGreen.selected = [];
+        silhouetteGreen.selected = [pickedFeature];
+        // 获取属性
+        const properties = pickedFeature.getPropertyNames().reduce((obj, property) => {
+          obj[property] = pickedFeature.getProperty(property);
+          return obj;
+        }, {});
+        let position = viewer.scene.pickPosition(event.position);
+        let infoboxContainer = document.getElementById("infobox");
+        createBubble(viewer, position, infoboxContainer, properties);
+      }
+    }, SceneGIS.ScreenSpaceEventType.LEFT_CLICK);
+  }
+
+
+};
+
+const initCesiumMap = async () => {
+  cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
+  const viewer = cesiumViewer.value;
+
+  //视角初始化
+  viewer.camera.setView({
+    destination: SceneGIS.Cartesian3.fromDegrees(
+      120.17147298986772,
+      33.301942305971394,
+      137.11303375009118
+    ),
+    orientation: {
+      heading: 0.345650960729154,
+      pitch: -0.28325898231466784,
+      roll: 6.283183439173194
+    }
+  });
+
+  addGX(viewer);
+  addOsgb(viewer);
+  setHSV(viewer, 1, 1, 1.2);
+  setInfoBox(viewer);
+
 };
 
 const initLayerTree = (key) => {
@@ -443,7 +656,10 @@ watch(mapType, (val) => {
       initOpenLayersMap();
     }
   } else {
-    map.value.setTarget(null);
+    if (map.value) {
+      closePop(map.value);
+      map.value.setTarget(null);
+    }
     initCesiumMap();
   }
 })
@@ -564,59 +780,62 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   transition: all 0.3s ease-in-out;
 }
 
-.popup {
-  width: 845px;
-  height: 587px;
-  background: url("@/assets/imgs/main/map-popup-bg.png") -1px -1px no-repeat;
-  background-size: 847px 589px;
-  margin-left: 73px;
+.bubble {
+  text-align: center;
+  z-index: 999;
+  position: fixed;
+  /* padding: 15px; */
+  margin: 0;
+  // opacity: 0.6;
+  // background: linear-gradient(0deg, #041536 0%, #031121 100%);
+  background-image: url("@/assets/imgs/main/map-popup-bg.png");
+  background-size: 100% 100%;
+  display: none;
+}
 
-  .banner {
-    height: 62px;
-    color: rgba(255, 255, 255, 1);
-    font-size: 48px;
-    font-family: "YouSheBiaoTiHei";
-    font-weight: normal;
-    text-align: left;
-    white-space: nowrap;
-    line-height: 62px;
-    margin: 48px 0 0 74px;
+// .bubble:after {
+//   content: "";
+//   position: absolute;
+//   bottom: 10;
+//   left: 50%;
+//   border-width: 16px 16px 0;
+//   border-style: solid;
+//   border-color: #2ce6e3 transparent;
+//   transform: translateX(-50%);
+//   opacity: 0.8;
+// }
+
+::v-deep .test {
+  width: 29em;
+  height: 29em;
+  caret-color: transparent; //设置闪烁的光标消失
+  color: #ffffff;
+
+  .thstyle {
+    margin: 4em 0 0 3em;
+    padding: 10 10px 0 10em;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
 
-    .title {
-      overflow-wrap: break-word;
+    .textStyle {
+      font-size: 24px;
     }
 
-    .close-icon {
-      color: rgba(205, 228, 248, 1);
-      font-size: 32px;
+    .closeStyle {
+      margin: 0 0 0 8em;
+      font-size: 24px;
       cursor: pointer;
-      margin: 10px 70px 0 0;
     }
   }
 
-  .info-wrapper {
-    max-height: 370px;
-    width: 610px;
-    overflow-wrap: break-word;
-    font-size: 0;
-    font-family: "PingFangSC-Regular";
-    font-weight: normal;
-    text-align: left;
-    margin: 40px 0 0 85px;
+  .tableStyle {
+    width: 20em;
+    height: 20em;
+    margin: 0 0 0 2.5em;
+    font-size: 14px;
 
-    .info-text {
-      width: 609px;
-      overflow-wrap: break-word;
-      color: rgba(205, 228, 248, 1);
-      font-size: 32px;
-      font-family: "PingFangSC-Regular";
-      font-weight: normal;
-      text-align: left;
-      white-space: normal;
-      line-height: 45px;
+    td {
+      border: 1px solid #3cc2b7;
     }
   }
 }
