@@ -77,7 +77,7 @@
 
     <!-- 图例 -->
     <div v-show="'scene' !== mapType && 0 < legendGroup.length"
-      class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
+      class="absolute right-[28.5%] 4k:bottom-[16%] 8k:bottom-28">
       <MapLegend :legendGroup="legendGroup" />
     </div>
 
@@ -192,11 +192,12 @@ const getLayerSource = sourceName => {
 
 const setDefaultLayers = moduleName => {
   let defaultLayerGroup = ["base", moduleName];
-  map.value && map.value.getLayers().forEach(v => {
-    if (!defaultLayerGroup.includes(v.get("layerGroup"))) {
+  map.value && map.value.getAllLayers().forEach(v => {
+    if (v && !defaultLayerGroup.includes(v.get("layerGroup"))) {
       map.value.removeLayer(v);
     }
   });
+  legendGroup.value = [];
   if ("vector" !== mapType.value) {
     mapType.value = "vector";
   }
@@ -208,15 +209,20 @@ const setDefaultLayers = moduleName => {
 };
 
 const loadDefaultLayers = (configName, isRemoveFirst) => {
+  const defaultLoadLayerArr = _.get(layerConfig.defaultLayers, configName, []);
+  if (0 === defaultLoadLayerArr.length) {
+    return;
+  }
   if (isRemoveFirst) {
-    map.value.getLayers().forEach(v => {
+    map.value.getAllLayers().forEach(v => {
       if ("base" !== v.get("layerGroup")) {
         map.value.removeLayer(v);
       }
     });
+    legendGroup.value = [];
+    loadedLayerGroup.value = [];
   }
   // loadedLayerGroup.value.length = 0;
-  const defaultLoadLayerArr = _.get(layerConfig.defaultLayers, configName, []);
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
     const defaultLoadLayerList = currentLayerGroup.value.filter(
@@ -276,12 +282,11 @@ const updateLayer = async layerParam => {
   const detailLayerArr = _.get(layerParam, "detailLayer", "").split(",");
   const legendLayerArr = _.get(layerParam, "legendLayer", "").split(",");
   if (isHaveChecked) {
-
     const layer = map.value
       .getAllLayers()
       .find(v => layerParam.source === v.get("layerName"));
     if (layer && layerParam.layer) {
-      legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !loadLayerArr.includes(v.layerId));
+      legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !legendLayerArr.includes(v.layerId));
       const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
       const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
         .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
@@ -685,6 +690,14 @@ watch(
   immediate: true
 }
 );
+watch(
+  () => global.moduleName,
+  value => {
+    if (map.value && global.moduleName && 0 < global.moduleName.length) {
+      loadDefaultLayers(global.componentId + "-" + value, true);
+    }
+  }
+);
 onMounted(() => {
   initOpenLayersMap();
 });
@@ -707,7 +720,7 @@ onMounted(() => {
   }
 }
 
-$layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi;
+$layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi, jiance;
 
 // 定义一个数组
 // $colors: guanxian, green, blue;

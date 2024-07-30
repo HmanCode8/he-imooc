@@ -47,17 +47,17 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "给水",
+            name: "综合",
             children: [{
-              name: "给水",
+              name: "管线",
               type: "layer",
               source: "pipe",
-              layer: "2,3",
-              remark: "zh_js",
-              detailLayer: "2,3",
-              legendLayer: "2,3"
+              layer: "2,3,6,7,12,13,16,17,20,21,23,24,16,27,30,31,33,34,36,37,39,40,42,43",
+              remark: "zh_pipe",
+              detailLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43",
+              legendLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43"
             }]
-          },
+          }/*,
           {
             name: "排水",
             children: [{
@@ -145,7 +145,7 @@ window.layerConfig = {
               layer: "42,43",
               remark: "zh_dx"
             }]
-          }
+          }*/
         ]
       },
       {
@@ -154,12 +154,12 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "基础",
+            name: "桥梁",
             children: [{
-              name: "桥梁",
+              name: "桥梁数据",
               type: "layer",
               source: "bridge",
-              layer: "0",
+              layer: "2",
               remark: "bridge"
             }]
           }
@@ -171,12 +171,12 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "基础",
+            name: "道路",
             children: [{
-              name: "道路中线",
+              name: "路网分布",
               type: "layer",
               source: "road",
-              layer: "0",
+              layer: "2",
               remark: "road"
             }]
           }
@@ -190,11 +190,17 @@ window.layerConfig = {
           {
             name: "基础",
             children: [{
-              name: "管线",
+              name: "路灯管点",
               type: "layer",
               source: "ld",
-              layer: "2,3",
-              remark: "ld_pipe"
+              layer: "2",
+              remark: "ld_point"
+            },{
+              name: "路灯管线",
+              type: "layer",
+              source: "ld",
+              layer: "3",
+              remark: "ld_line"
             }]
           }
         ]
@@ -207,7 +213,7 @@ window.layerConfig = {
           {
             name: "基础",
             children: [{
-              name: "范围",
+              name: "项目分布",
               type: "layer",
               source: "program",
               layer: "0",
@@ -221,14 +227,13 @@ window.layerConfig = {
         remark: "ranqi",
         type: "mainClass",
         children: [{
-          name: "监测",
-          remark: "jiance_duixiang",
+          name: "场站",
           children: [{
-            name: "监测对象",
+            name: "场站分布",
             type: "layer",
-            source: "rq",
-            layer: "2",
-            remark: "jcdx_rq",
+            source: "cz",
+            layer: "0",
+            remark: "jc_cz",
             detailLayer: "",
             legendLayer: ""
           }]
@@ -238,53 +243,29 @@ window.layerConfig = {
           children: [{
             name: "设备分布",
             type: "layer",
-            source: "rq",
-            layer: "7",
-            remark: "device_dis_rq",
+            source: "sb",
+            layer: "0",
+            remark: "device",
             detailLayer: "",
             legendLayer: ""
           }]
         },
           {
-            name: "风险",
-            remark: "fengxian_fenbu",
-            children: [
-              {
-                name: "风险分布",
-                type: "layer",
-                source: "rq",
-                layer: "2,3",
-                remark: "js",
-                detailLayer: "3",
-                legendLayer: "3",
-              }
-            ]
-          },
-          {
             name: "隐患",
-            remark: "yinhuan_fenbu",
+            remark: "fengxian_fenbu",
             children: [
               {
                 name: "隐患分布",
                 type: "layer",
-                source: "pipe",
-                layer: "6,7",
-                remark: "ws",
-                detailLayer: "11",
+                source: "yh",
+                layer: "0",
+                remark: "jc_yh",
+                detailLayer: "",
                 legendLayer: "",
-              },
-              {
-                name: "隐患事件详情",
-                type: "layer",
-                source: "pipe",
-                layer: "9,10",
-                remark: "ys",
-                detailLayer: "10",
-                legendLayer: "",
-              },
-            ],
-          },
-        ],
+              }
+            ]
+          }
+        ]
       }
     ],
     infrastructure: [
@@ -295,49 +276,31 @@ window.layerConfig = {
         children: [
           {
             name: "管点管线",
-            children: [
-              {
-                name: "管点",
-                remark: "rqpoint",
+            children: [{
+                name: "管点管线",
+                remark: "rq_pipe",
                 type: "layer",
                 source: "rq",
-                layer: "11",
+                layer: "13,14",
                 detailLayer: "11",
                 legendLayer: "",
-              },
-              {
-                name: "管线",
-                remark: "rqline",
-                type: "layer",
-                source: "rq",
-                layer: "12",
-                detailLayer: "12",
-                legendLayer: "",
-              }
-            ]
-          },
-          {
-            name: "管线分布",
-            children: [
-              {
-                name: "按管龄分布",
+              }, {
+                name: "管龄分布",
                 remark: "rq_glfb",
                 type: "layer",
                 source: "rq",
                 layer: "9",
                 detailLayer: "9",
                 legendLayer: "9",
-              },
-              {
-                name: "按管径分布",
+              }, {
+                name: "管径分布",
                 remark: "rq_gjfb",
                 type: "layer",
                 source: "rq",
                 layer: "10",
                 detailLayer: "10",
                 legendLayer: "10",
-              }
-            ],
+              }]
           },
           {
             name: "燃气场站",
@@ -357,13 +320,39 @@ window.layerConfig = {
         name: "供水",
         remark: "gongshui",
         type: "mainClass",
-        children: []
+        children: [
+          {
+            name: "管点管线",
+            children: [{
+              name: "管点管线",
+              remark: "js_pipe",
+              type: "layer",
+              source: "pipe",
+              layer: "2,3",
+              detailLayer: "",
+              legendLayer: "",
+            }]
+          }
+        ]
       },
       {
         name: "污水",
         remark: "wushui",
         type: "mainClass",
-        children: []
+        children: [
+          {
+            name: "管点管线",
+            children: [{
+              name: "管点管线",
+              remark: "ws_pipe",
+              type: "layer",
+              source: "ws",
+              layer: "4,5",
+              detailLayer: "",
+              legendLayer: "",
+            }]
+          }
+        ]
       },
       {
         name: "雨水",
@@ -372,49 +361,31 @@ window.layerConfig = {
         children: [
           {
             name: "管点管线",
-            children: [
-              {
-                name: "管点",
-                remark: "yspoint",
-                type: "layer",
-                source: "ys",
-                layer: "5",
-                detailLayer: "5",
-                legendLayer: "",
-              },
-              {
-                name: "管线",
-                remark: "ysline",
-                type: "layer",
-                source: "ys",
-                layer: "6",
-                detailLayer: "6",
-                legendLayer: "",
-              }
-            ]
-          },
-          {
-            name: "管线分布",
-            children: [
-              {
-                name: "按管龄分布",
-                remark: "ys_glfb",
-                type: "layer",
-                source: "ys",
-                layer: "3",
-                detailLayer: "3",
-                legendLayer: "3",
-              },
-              {
-                name: "按管径分布",
-                remark: "ys_gjfb",
-                type: "layer",
-                source: "ys",
-                layer: "2",
-                detailLayer: "2",
-                legendLayer: "2",
-              }
-            ],
+            children: [{
+              name: "管点管线",
+              remark: "ys_pipe",
+              type: "layer",
+              source: "ys",
+              layer: "5,6",
+              detailLayer: "",
+              legendLayer: "",
+            }, {
+              name: "管龄分布",
+              remark: "ys_glfb",
+              type: "layer",
+              source: "rq",
+              layer: "2",
+              detailLayer: "2",
+              legendLayer: "2",
+            }, {
+              name: "管径分布",
+              remark: "ys_gjfb",
+              type: "layer",
+              source: "rq",
+              layer: "3",
+              detailLayer: "3",
+              legendLayer: "3",
+            }]
           }
         ]
       },
@@ -424,12 +395,12 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "基础",
+            name: "道路",
             children: [{
-              name: "道路中线",
+              name: "路网分布",
               type: "layer",
               source: "road",
-              layer: "0",
+              layer: "2",
               remark: "road"
             }]
           }
@@ -441,12 +412,12 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "基础",
+            name: "桥梁",
             children: [{
-              name: "桥梁",
+              name: "桥梁数据",
               type: "layer",
               source: "bridge",
-              layer: "0",
+              layer: "2",
               remark: "bridge"
             }]
           }
@@ -458,101 +429,15 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "给水",
+            name: "综合",
             children: [{
-              name: "给水",
+              name: "管线",
               type: "layer",
               source: "pipe",
-              layer: "2,3",
-              remark: "zh_js"
-            }]
-          },
-          {
-            name: "排水",
-            children: [{
-              name: "污水",
-              type: "layer",
-              source: "pipe",
-              layer: "6,7",
-              remark: "zh_ps"
-            },{
-              name: "雨水",
-              type: "layer",
-              source: "pipe",
-              layer: "9,10",
-              remark: "zh_ys"
-            },{
-              name: "雨污合流",
-              type: "layer",
-              source: "pipe",
-              layer: "12,13",
-              remark: "zh_hs"
-            }]
-          },
-          {
-            name: "燃气",
-            children: [{
-              name: "天然气",
-              type: "layer",
-              source: "pipe",
-              layer: "16,17",
-              remark: "zh_rq"
-            }]
-          },
-          {
-            name: "电力",
-            children: [{
-              name: "供电",
-              type: "layer",
-              source: "pipe",
-              layer: "20.21",
-              remark: "zh_gd"
-            },{
-              name: "路灯",
-              type: "layer",
-              source: "pipe",
-              layer: "23,24",
-              remark: "zh_ld"
-            },{
-              name: "信号",
-              type: "layer",
-              source: "pipe",
-              layer: "26,27",
-              remark: "zh_xh"
-            }]
-          },
-          {
-            name: "通讯",
-            children: [{
-              name: "电视",
-              type: "layer",
-              source: "pipe",
-              layer: "30,31",
-              remark: "zh_ds"
-            },{
-              name: "电力通讯",
-              type: "layer",
-              source: "pipe",
-              layer: "33,34",
-              remark: "zh_ex"
-            },{
-              name: "移动",
-              type: "layer",
-              source: "pipe",
-              layer: "36,37",
-              remark: "zh_yd"
-            },{
-              name: "联通",
-              type: "layer",
-              source: "pipe",
-              layer: "39,40",
-              remark: "zh_lt"
-            },{
-              name: "电信",
-              type: "layer",
-              source: "pipe",
-              layer: "42,43",
-              remark: "zh_dx"
+              layer: "2,3,6,7,12,13,16,17,20,21,23,24,16,27,30,31,33,34,36,37,39,40,42,43",
+              remark: "zh_pipe",
+              detailLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43",
+              legendLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43"
             }]
           }
         ]
@@ -565,29 +450,23 @@ window.layerConfig = {
           {
             name: "基础",
             children: [{
-              name: "管线",
+              name: "路灯管点",
               type: "layer",
               source: "ld",
-              layer: "2,3",
-              remark: "ld_pipe"
+              layer: "2",
+              remark: "ld_point"
+            },{
+              name: "路灯管线",
+              type: "layer",
+              source: "ld",
+              layer: "3",
+              remark: "ld_line"
             }]
           }
         ]
       }
     ],
     "running-monitoring": [
-      {
-        name: "覆盖率",
-        remark: "fugaillv",
-        type: "mainClass",
-        children: [
-          {
-            name: "所有类型设备的覆盖率按行政区划划分",
-            remark: "shebeifugaillv",
-            children: [],
-          },
-        ],
-      },
       {
         name: "燃气",
         remark: "ranqi",
@@ -596,30 +475,51 @@ window.layerConfig = {
           {
             name: "监测对象",
             remark: "jiance_duixiang",
-            children: [
-              {
-                name: "管点管线",
-                remark: "guandianguanxian",
-                children: [],
-              },
-              {
-                name: "燃气场站",
-                remark: "ranqi_changzhan",
-                children: [],
-              },
-            ],
+            children: [{
+              name: "管点管线",
+              remark: "rq_pipe",
+              type: "layer",
+              source: "rq",
+              layer: "11,12",
+              detailLayer: "11,12",
+              legendLayer: ""
+            }, {
+              name: "燃气场站",
+              remark: "rq_cz",
+              type: "layer",
+              source: "rq",
+              layer: "3",
+              detailLayer: "3",
+              legendLayer: "3"
+            }]
           },
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "rq_sb",
+              type: "layer",
+              source: "rq",
+              layer: "9",
+              detailLayer: "9",
+              legendLayer: "9"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
-        ],
+            children: [{
+              name: "报警情况",
+              remark: "rq_bj",
+              type: "layer",
+              source: "rq",
+              layer: "8",
+              detailLayer: "8",
+              legendLayer: "8"
+            }]
+          }
+        ]
       },
       {
         name: "供水",
@@ -629,14 +529,30 @@ window.layerConfig = {
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "gs_sb",
+              type: "layer",
+              source: "js",
+              layer: "2",
+              detailLayer: "2",
+              legendLayer: "2"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
-        ],
+            children: [{
+              name: "设备分布",
+              remark: "gs_bj",
+              type: "layer",
+              source: "js",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
+        ]
       },
       {
         name: "污水",
@@ -646,13 +562,29 @@ window.layerConfig = {
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "ws_sb",
+              type: "layer",
+              source: "ws",
+              layer: "3",
+              detailLayer: "3",
+              legendLayer: "3"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
+            children: [{
+              name: "设备分布",
+              remark: "ws_bj",
+              type: "layer",
+              source: "ws",
+              layer: "2",
+              detailLayer: "2",
+              legendLayer: "2"
+            }]
+          }
         ],
       },
       {
@@ -663,30 +595,43 @@ window.layerConfig = {
           {
             name: "监测对象",
             remark: "jiance_duixiang",
-            children: [
-              {
-                name: "雨水管网",
-                remark: "yushui_guanwang",
-                children: [],
-              },
-              {
-                name: "液位计",
-                remark: "yewei_ji",
-                children: [],
-              },
-            ],
+            children: [{
+              name: "管点管线",
+              remark: "ys_pipe",
+              type: "layer",
+              source: "ys",
+              layer: "5,6",
+              detailLayer: "5,6",
+              legendLayer: ""
+            }]
           },
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "ys_sb",
+              type: "layer",
+              source: "ys",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
-        ],
+            children: [{
+              name: "报警情况",
+              remark: "ys_bj",
+              type: "layer",
+              source: "ys",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
+        ]
       },
       {
         name: "道路",
@@ -696,14 +641,30 @@ window.layerConfig = {
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "dl_sb",
+              type: "layer",
+              source: "dl",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
-        ],
+            children: [{
+              name: "报警情况",
+              remark: "dl_bj",
+              type: "layer",
+              source: "dl",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
+        ]
       },
       {
         name: "桥梁",
@@ -713,13 +674,29 @@ window.layerConfig = {
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "ys_sb",
+              type: "layer",
+              source: "ys",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
+            children: [{
+              name: "报警情况",
+              remark: "ys_bj",
+              type: "layer",
+              source: "ys",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
         ],
       },
       {
@@ -730,17 +707,79 @@ window.layerConfig = {
           {
             name: "设备分布",
             remark: "shebei_fenbu",
-            children: [],
+            children: [{
+              name: "设备分布",
+              remark: "ld_sb",
+              type: "layer",
+              source: "ld",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
-            children: [],
-          },
-        ],
+            children: [{
+              name: "报警情况",
+              remark: "ld_bj",
+              type: "layer",
+              source: "ld",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
+        ]
       },
+      {
+        name: "监测",
+        remark: "jiance",
+        type: "mainClass",
+        children:[
+          {
+            name:"设备覆盖率",
+            children:[{
+              name: "设备覆盖率",
+              remark: "sb_fgl",
+              type: "layer",
+              source: "deviceRatio",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
+          }
+        ]
+      }
     ],
     "operation-maintenance": [
+      {
+        name: "基础",
+        remark: "jichu",
+        type: "mainClass",
+        children: [
+          {
+            name: "基础",
+            children: [{
+              name: "大数据产业园",
+              type: "layer",
+              source: "sampleArea",
+              layer: "0",
+              remark: "dsj",
+              detailLayer: "",
+              legendLayer: "0"
+            },{
+              name: "戴庄路",
+              type: "layer",
+              source: "sampleRoad",
+              layer: "0",
+              remark: "dzl",
+              detailLayer: "",
+              legendLayer: "0"
+            }]
+          }
+        ]
+      },
       {
         name: "燃气",
         remark: "ranqi",
@@ -749,56 +788,80 @@ window.layerConfig = {
           {
             name: "巡检",
             remark: "xunjian",
-            children: [
-              {
+            children: [{
                 name: "巡检对象",
-                remark: "xunjian_duixiang",
-                children: [],
-              },
-              {
-                name: "巡检完成率",
-                remark: "xunjian_wanchenglv",
-                children: [],
-              },
-              {
+                type: "layer",
+                source: "rq",
+                layer: "2",
+                remark: "rq_xj",
+                detailLayer: "2",
+                legendLayer: "2"
+              }, {
                 name: "巡检及时率",
-                remark: "xunjian_jishilv",
-                children: [],
-              },
-            ],
+                type: "layer",
+                source: "checkInTime",
+                layer: "0",
+                remark: "rq_xj_jsl",
+              }, {
+                name: "巡检完成率",
+                type: "layer",
+                source: "checkCompletion",
+                layer: "0",
+                remark: "rq_xj_wcl",
+              }]
           },
           {
             name: "管养",
             remark: "guanyang",
-            children: [
-              {
+            children: [{
                 name: "管养对象",
-                remark: "guanyang_duixiang",
-                children: [],
-              },
-              {
-                name: "管养完成率",
-                remark: "guanyang_wanchenglv",
-                children: [],
-              },
-              {
+                type: "layer",
+                source: "rq",
+                layer: "5",
+                remark: "rq_gy",
+                detailLayer: "5",
+                legendLayer: "5"
+              }, {
                 name: "管养及时率",
-                remark: "guanyang_jishilv",
-                children: [],
-              },
-            ],
+                type: "layer",
+                source: "maintenanceInTime",
+                layer: "0",
+                remark: "rq_gy_jsl",
+              }, {
+                name: "管养完成率",
+                type: "layer",
+                source: "maintenanceCompletion",
+                layer: "0",
+                remark: "rq_gy_wcl",
+              }]
           },
           {
             name: "安全专项",
             remark: "weixiu_anquanzhuanxiang",
-            children: [],
+            children: [{
+              name: "检查对象",
+              type: "layer",
+              source: "rq",
+              layer: "0",
+              remark: "rq_jc",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
           },
           {
             name: "维修",
             remark: "jiancha_weixiu",
-            children: [],
-          },
-        ],
+            children: [{
+              name: "维修对象",
+              type: "layer",
+              source: "rq",
+              layer: "1",
+              remark: "rq_wx",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
+        ]
       },
       {
         name: "供水",
@@ -844,7 +907,7 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "基础",
+            name: "项目分布",
             remark: "base",
             children: [{
               name: "项目分布",
@@ -852,7 +915,16 @@ window.layerConfig = {
               source: "program",
               layer: "0",
               remark: "xmfb",
-              detailLayer: "0"
+              detailLayer: "0",
+              legendLayer:"0"
+            },{
+              name: "第三方施工项目",
+              type: "layer",
+              source: "thirdProgram",
+              layer: "0",
+              remark: "dsf",
+              detailLayer: "0",
+              legendLayer:"0"
             }]
           }
         ],
@@ -863,101 +935,15 @@ window.layerConfig = {
         type: "mainClass",
         children: [
           {
-            name: "给水",
+            name: "综合",
             children: [{
-              name: "给水",
+              name: "管线",
               type: "layer",
               source: "pipe",
-              layer: "2,3",
-              remark: "zh_js"
-            }]
-          },
-          {
-            name: "排水",
-            children: [{
-              name: "污水",
-              type: "layer",
-              source: "pipe",
-              layer: "6,7",
-              remark: "zh_ps"
-            },{
-              name: "雨水",
-              type: "layer",
-              source: "pipe",
-              layer: "9,10",
-              remark: "zh_ys"
-            },{
-              name: "雨污合流",
-              type: "layer",
-              source: "pipe",
-              layer: "12,13",
-              remark: "zh_hs"
-            }]
-          },
-          {
-            name: "燃气",
-            children: [{
-              name: "天然气",
-              type: "layer",
-              source: "pipe",
-              layer: "16,17",
-              remark: "zh_rq"
-            }]
-          },
-          {
-            name: "电力",
-            children: [{
-              name: "供电",
-              type: "layer",
-              source: "pipe",
-              layer: "20.21",
-              remark: "zh_gd"
-            },{
-              name: "路灯",
-              type: "layer",
-              source: "pipe",
-              layer: "23,24",
-              remark: "zh_ld"
-            },{
-              name: "信号",
-              type: "layer",
-              source: "pipe",
-              layer: "26,27",
-              remark: "zh_xh"
-            }]
-          },
-          {
-            name: "通讯",
-            children: [{
-              name: "电视",
-              type: "layer",
-              source: "pipe",
-              layer: "30,31",
-              remark: "zh_ds"
-            },{
-              name: "电力通讯",
-              type: "layer",
-              source: "pipe",
-              layer: "33,34",
-              remark: "zh_ex"
-            },{
-              name: "移动",
-              type: "layer",
-              source: "pipe",
-              layer: "36,37",
-              remark: "zh_yd"
-            },{
-              name: "联通",
-              type: "layer",
-              source: "pipe",
-              layer: "39,40",
-              remark: "zh_lt"
-            },{
-              name: "电信",
-              type: "layer",
-              source: "pipe",
-              layer: "42,43",
-              remark: "zh_dx"
+              layer: "2,3,6,7,12,13,16,17,20,21,23,24,16,27,30,31,33,34,36,37,39,40,42,43",
+              remark: "zh_pipe",
+              detailLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43",
+              legendLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43"
             }]
           }
         ]
@@ -972,35 +958,45 @@ window.layerConfig = {
           {
             name: "监测对象",
             remark: "jiance_duixiang",
-            children: [],
+            children: [{
+              name: "燃气场站",
+              remark: "rq_station",
+              type: "layer",
+              source: "rq",
+              layer: "3",
+              detailLayer: "3",
+              legendLayer: "3"
+            },{
+              name: "管点管线",
+              remark: "rq_pipe",
+              type: "layer",
+              source: "rq",
+              layer: "13,14",
+              detailLayer: "13",
+              legendLayer: ""
+            }]
           },
           {
-            name: "燃气场站",
-            remark: "ranqi_changzhan",
-            children: [
-              {
-                name: "窨井",
-                remark: "yanjing",
-                children: [],
-              },
-              {
-                name: "管线",
-                remark: "guanxian",
-                children: [],
-              },
-              {
-                name: "终端用户",
-                remark: "zhongduanyonghu",
-                children: [],
-              },
-              {
-                name: "阀门井",
-                remark: "famengjing",
-                children: [],
-              },
-            ],
-          },
-        ],
+            name: "预警事件",
+            children: [{
+              name: "预警等级",
+              remark: "rq_yj",
+              type: "layer",
+              source: "rq",
+              layer: "6",
+              detailLayer: "6",
+              legendLayer: "6"
+            },{
+              name: "处置阶段",
+              remark: "rq_cz",
+              type: "layer",
+              source: "rq",
+              layer: "7",
+              detailLayer: "7",
+              legendLayer: "7"
+            }]
+          }
+        ]
       },
       {
         name: "供水",
@@ -1016,25 +1012,41 @@ window.layerConfig = {
           {
             name: "监测对象",
             remark: "jiance_duixiang",
-            children: [],
+            children: [{
+              name: "管点管线",
+              remark: "ws_pipe",
+              type: "layer",
+              source: "ws",
+              layer: "4,5",
+              detailLayer: "4,5",
+              legendLayer: "4,5"
+            },{
+              name: "污水厂"
+            },{
+              name: "污水泵站"
+            }]
           },
           {
-            name: "管线",
-            remark: "guanxian",
-            children: [
-              {
-                name: "污水厂",
-                remark: "wushuichang",
-                children: [],
-              },
-              {
-                name: "污水泵站",
-                remark: "wushuibengzhan",
-                children: [],
-              },
-            ],
-          },
-        ],
+            name: "预警事件",
+            children: [{
+              name: "预警等级",
+              remark: "ws_dj",
+              type: "layer",
+              source: "ws",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            },{
+              name: "处置阶段",
+              remark: "ws_cz",
+              type: "layer",
+              source: "ws",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            }]
+          }
+        ]
       },
       {
         name: "雨水",
@@ -1054,22 +1066,70 @@ window.layerConfig = {
         type: "mainClass",
         children: [],
       },
-      // {
-      //   name: "三破",
-      //   remark: "sanpo",
-      //   type: "mainClass",
-      //   children: [],
-      // },
       {
         name: "路灯",
         remark: "ludeng",
         type: "mainClass",
         children: [],
       },
-    ],
+      {
+        name: "综合",
+        remark: "zonghe",
+        type: "mainClass",
+        children: [
+          {
+            name: "综合",
+            children: [{
+              name: "管线",
+              type: "layer",
+              source: "pipe",
+              layer: "2,3,6,7,12,13,16,17,20,21,23,24,16,27,30,31,33,34,36,37,39,40,42,43",
+              remark: "zh_pipe",
+              detailLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43",
+              legendLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43"
+            }]
+          }
+        ]
+      },
+      {
+        name: "监测",
+        remark: "jiance",
+        type: "mainClass",
+        children: [
+          {
+            name: "预警事件汇总",
+            children: [{
+              name: "预警等级",
+              remark: "yj_dj",
+              type: "layer",
+              source: "yj",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
+          }
+        ]
+      }
+    ]
   },
   defaultLayers: {
-    overview: ["zh_js"],
+    overview: ["jcq", "sfq"],
+    infrastructure: ["rq_pipe"],
+    "project-management":["xmfb"],
+    "operation-maintenance":["dsj","dzl","rq_xj"],
+    "running-monitoring":["sb_fgl"],
+    "warning-disposal":["yj_dj","zh_pipe"],
+    "overview-demonstratedArea":["sfq"],
+    "overview-示范区":["sfq"],
+    "overview-建成区":["jcq"],
+    "overview-管线":["zh_pipe"],
+    "overview-场站":["jc_cz"],
+    "overview-设备":["device"],
+    "overview-项目":["program"],
+    "overview-桥梁":["bridge"],
+    "overview-道路":["road"],
+    "overview-路灯":["ld_point","ld_line"],
+    "overview-隐患":["jc_yh"]
   },
   detailFields: [],
   layerList: [
@@ -1187,14 +1247,14 @@ window.layerConfig = {
     },
     {
       name: "bridge",
-      url: "https://gx128.portal.com/server/rest/services/ql/MapServer",
+      url: "https://gx128.portal.com/server/rest/services/ql_full/MapServer",
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32"
     },
     {
       name: "road",
-      url: "https://gx128.portal.com/server/rest/services/dl/MapServer",
+      url: "https://gx128.portal.com/server/rest/services/dl_full/MapServer",
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32"
@@ -1242,8 +1302,29 @@ window.layerConfig = {
       format: "image/png32"
     },
     {
+      name: "rq",
+      url: "https://gx128.portal.com/server/rest/services/rq_full/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
       name: "ld",
       url: "https://gx128.portal.com/server/rest/services/ld_full/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "fx",
+      url: "https://gx128.portal.com/server/rest/services/fx/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "yh",
+      url: "https://gx128.portal.com/server/rest/services/yh/MapServer",
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32"
@@ -1254,6 +1335,69 @@ window.layerConfig = {
       type: "arcgis_WMS",
       projection: "EPSG:4490",
       format: "image/png32"
+    },
+    {
+      name: "thirdProgram",
+      url: "https://gx128.portal.com/server/rest/services/dsfsg/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "deviceRatio",
+      url: "https://gx128.portal.com/server/rest/services/fgl/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "checkCompletion",
+      url: "https://gx128.portal.com/server/rest/services/xjwcl/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "checkInTime",
+      url: "https://gx128.portal.com/server/rest/services/xjjsl/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "maintenanceCompletion",
+      url: "https://gx128.portal.com/server/rest/services/gywcl/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "maintenanceInTime",
+      url: "https://gx128.portal.com/server/rest/services/gyjsl/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "cz",
+      url: "https://gx128.portal.com/server/rest/services/zx_cz/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "sb",
+      url: "https://gx128.portal.com/server/rest/services/zx_device/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
+    },
+    {
+      name: "yj",
+      url: "https://gx128.portal.com/server/rest/services/zx_yj/MapServer",
+      type: "arcgis_WMS",
+      projection: "EPSG:4490",
+      format: "image/png32"
     }
-  ],
+  ]
 };

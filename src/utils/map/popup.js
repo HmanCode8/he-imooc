@@ -95,7 +95,7 @@ function getArcgisIdentifyUrl(layer, mapInstance, queryParam) {
     const params = {
         'F': 'JSON',
         'GEOMETRYTYPE': 'esriGeometryPoint',
-        'TOLERANCE': 2
+        'TOLERANCE': 50
     };
     Object.assign(params, queryParam);
     const extent = getRequestExtent(mapInstance.getView().calculateExtent(mapInstance.getSize()),
