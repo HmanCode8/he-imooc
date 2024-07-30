@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
-import cesium from "vite-plugin-cesium";
+// import cesium from "vite-plugin-cesium";
 
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
@@ -12,7 +12,7 @@ export default defineConfig({
   assetsInclude: ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg"], // 根据需要添加其他静态资源类型
   plugins: [
     vue(),
-    cesium(),
+    // cesium(),
 
     AutoImport({
       resolvers: [ElementPlusResolver()],

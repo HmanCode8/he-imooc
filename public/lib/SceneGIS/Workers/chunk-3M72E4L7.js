@@ -1,0 +1,26 @@
+/**
+ * @license
+ * Cesium - https://github.com/CesiumGS/cesium
+ * Version 1.114
+ *
+ * Copyright 2011-2022 Cesium Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Columbus View (Pat. Pend.)
+ *
+ * Portions licensed separately.
+ * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
+ */
+
+import{a as A,c as J}from"./chunk-GAWEEBEB.js";import{a as j}from"./chunk-24FSEFXQ.js";import{f as D}from"./chunk-XIY2HUS2.js";import{a as e,e as B}from"./chunk-KXWBEOUA.js";import{a as U}from"./chunk-4BEFMW7D.js";import{a as v}from"./chunk-2F4MHS2T.js";import{e as q}from"./chunk-A5XXOFX2.js";var F={},N=new e,X=new e,ee=new e,K=new e,p=[new e,new e],Y=new e,Z=new e,_=new e,te=new e,ne=new e,re=new e,oe=new e,se=new e,le=new e,ae=new e,P=new D,T=new B;function G(o,s,c,i,n,d){let f=e.angleBetween(e.subtract(s,o,N),e.subtract(c,o,X)),u=i===A.BEVELED?1:Math.ceil(f/U.toRadians(5))+1;d=v(d,!1);let t=u*3,a=new Array(t);a[t-3]=c.x,a[t-2]=c.y,a[t-1]=c.z;let y;n?d===!0?y=B.fromQuaternion(D.fromAxisAngle(new e(0,0,-1),f/u,P),T):y=B.fromQuaternion(D.fromAxisAngle(e.negate(o,N),f/u,P),T):(y=B.fromQuaternion(D.fromAxisAngle(o,f/u,P),T),d===!0&&(y=B.fromQuaternion(D.fromAxisAngle(new e(0,0,1),f/u,P),T)));let r=0;s=e.clone(s,N);for(let l=0;l<u;l++)d===!0&&e.subtract(s,o,s),s=B.multiplyByVector(y,s,s),d===!0&&e.add(s,o,s),a[r++]=s.x,a[r++]=s.y,a[r++]=s.z;return a}function ie(o,s){s=v(s,!1);let c=Y,i=Z,n=_,d=o[1];i=e.fromArray(o[1],d.length-3,i),n=e.fromArray(o[0],0,n),c=e.midpoint(i,n,c);let f=G(c,i,n,A.ROUNDED,!1,s),u=o.length-1,t=o[u-1];d=o[u],i=e.fromArray(t,t.length-3,i),n=e.fromArray(d,0,n),c=e.midpoint(i,n,c);let a=G(c,i,n,A.ROUNDED,!1,s);return[f,a]}function W(o,s,c,i){let n=N;return i?n=e.add(o,s,n):(s=e.negate(s,s),n=e.add(o,s,n)),[n.x,n.y,n.z,c.x,c.y,c.z]}function V(o,s,c,i){let n=new Array(o.length),d=new Array(o.length),f=e.multiplyByScalar(s,c,N),u=e.negate(f,X),t=0,a=o.length-1;for(let y=0;y<o.length;y+=3){let r=e.fromArray(o,y,ee),l=e.add(r,u,K);n[t++]=l.x,n[t++]=l.y,n[t++]=l.z;let x=e.add(r,f,K);d[a--]=x.z,d[a--]=x.y,d[a--]=x.x}return i.push(n,d),i}F.addAttribute=function(o,s,c,i){let n=s.x,d=s.y,f=s.z;q(c)&&(o[c]=n,o[c+1]=d,o[c+2]=f),q(i)&&(o[i]=f,o[i-1]=d,o[i-2]=n)};var ce=new e,de=new e;F.computePositions=function(o){let s=o.granularity,c=o.positions,i=o.ellipsoid,n=o.width/2,d=o.cornerType,f=o.saveAttributes,u=o.planeView,t=Y,a=Z,y=_,r=te,l=ne,x=re,w=oe,m=se,g=le,z=ae,E=[],b=f?[]:void 0,L=f?[]:void 0,h=c[0],R=c[1];u===!0&&(s=111e3),a=e.normalize(e.subtract(R,h,a),a),u===!0?t=new e(0,0,1):t=i.geodeticSurfaceNormal(h,t),r=e.normalize(e.cross(t,a,r),r),f&&(b.push(r.x,r.y,r.z),L.push(t.x,t.y,t.z)),w=e.clone(h,w),h=R,y=e.negate(a,y);let S,C=[],Q,$=c.length;for(Q=1;Q<$-1;Q++){u===!0?t=new e(0,0,1):t=i.geodeticSurfaceNormal(h,t),R=c[Q+1],a=e.normalize(e.subtract(R,h,a),a),l=e.add(a,y,l),(l.x!==0||l.y!==0||l.z!==0)&&(l=e.normalize(l,l));let M=e.multiplyByScalar(t,e.dot(a,t),ce);e.subtract(a,M,M),e.normalize(M,M);let O=e.multiplyByScalar(t,e.dot(y,t),de);if(e.subtract(y,O,O),e.normalize(O,O),!U.equalsEpsilon(Math.abs(e.dot(M,O)),1,U.EPSILON7)){l=e.cross(l,t,l),l=e.cross(t,l,l),l=e.normalize(l,l);let H=n/Math.max(.25,e.magnitude(e.cross(l,y,N)));u===!0&&(H=n);let I=J.angleIsGreaterThanPi(a,y,h,i,u);l=e.multiplyByScalar(l,H,l),I?(m=e.add(h,l,m),z=e.add(m,e.multiplyByScalar(r,n,z),z),g=e.add(m,e.multiplyByScalar(r,n*2,g),g),p[0]=e.clone(w,p[0]),p[1]=e.clone(z,p[1]),S=j.generateArc({positions:p,granularity:s,ellipsoid:i,planeView:u}),E=V(S,r,n,E),f&&(b.push(r.x,r.y,r.z),L.push(t.x,t.y,t.z)),x=e.clone(g,x),r=e.normalize(e.cross(t,a,r),r),g=e.add(m,e.multiplyByScalar(r,n*2,g),g),w=e.add(m,e.multiplyByScalar(r,n,w),w),d===A.ROUNDED||d===A.BEVELED?C.push({leftPositions:G(m,x,g,d,I,u)}):C.push({leftPositions:W(h,e.negate(l,l),g,I)})):(g=e.add(h,l,g),z=e.add(g,e.negate(e.multiplyByScalar(r,n,z),z),z),m=e.add(g,e.negate(e.multiplyByScalar(r,n*2,m),m),m),p[0]=e.clone(w,p[0]),p[1]=e.clone(z,p[1]),S=j.generateArc({positions:p,granularity:s,ellipsoid:i,planeView:u}),E=V(S,r,n,E),f&&(b.push(r.x,r.y,r.z),L.push(t.x,t.y,t.z)),x=e.clone(m,x),r=e.normalize(e.cross(t,a,r),r),m=e.add(g,e.negate(e.multiplyByScalar(r,n*2,m),m),m),w=e.add(g,e.negate(e.multiplyByScalar(r,n,w),w),w),d===A.ROUNDED||d===A.BEVELED?C.push({rightPositions:G(g,x,m,d,I,u)}):C.push({rightPositions:W(h,l,m,I)})),y=e.negate(a,y)}h=R}u===!0?t=new e(0,0,1):t=i.geodeticSurfaceNormal(h,t),p[0]=e.clone(w,p[0]),p[1]=e.clone(h,p[1]),S=j.generateArc({positions:p,granularity:s,ellipsoid:i}),E=V(S,r,n,E),f&&(b.push(r.x,r.y,r.z),L.push(t.x,t.y,t.z));let k;return d===A.ROUNDED&&(k=ie(E,u)),{positions:E,corners:C,lefts:b,normals:L,endPositions:k}};var Ae=F;export{Ae as a};

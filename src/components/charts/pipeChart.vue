@@ -5,7 +5,7 @@
 <script setup>
 import { h, onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
-import { Label } from 'cesium';
+// import { Label } from 'cesium';
 
 const props = defineProps({
 

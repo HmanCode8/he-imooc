@@ -1,6 +1,6 @@
 <template>
   <div class="map relative">
-    <div ref="target" class="w-full h-full"></div>
+    <div ref="target" class="w-full h-full" id="sceneGISContainer"></div>
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
@@ -113,8 +113,8 @@ import { computed, inject, onMounted, ref, watch } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
 import { useGlobalStore } from "@/store";
-import * as Cesium from "cesium";
-import "cesium/Build/Cesium/Widgets/widgets.css";
+// import * as Cesium from "cesium";
+// import "cesium/Build/Cesium/Widgets/widgets.css";
 import _ from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
@@ -371,45 +371,25 @@ const queryPopupDetail = async evt => {
 };
 
 const initCesiumMap = async () => {
-  Cesium.Ion.defaultAccessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmMwNmM1My03NzI4LTQ0NDUtOTBiYy1hM2I2ZmUxZDNmOWUiLCJpZCI6MjI4NzQzLCJpYXQiOjE3MjExMzU1OTZ9.bZrwv5u7g418lGuDhTuRqkrWJDHAFWGGd1TiTbsM9dU";
-
-  cesiumViewer.value = new Cesium.Viewer(target.value, {
-    // terrainProvider: await Cesium.createWorldTerrainAsync()
-    fullscreenButton: false, // 隐藏界面右下角全屏按钮
-    homeButton: false, // 隐藏界面右上角初始化地球位置按钮
-    animation: false, // 隐藏界面左下角控制动画的面板
-    geocoder: false, //右上角 搜索
-    sceneModePicker: false, // 右上角 2D/3D切换
-    baseLayerPicker: false, // 隐藏界面左上角地图底图的切换按钮
-    navigationHelpButton: false, //右上角 Help
-    shouldAnimate: true,
-    selectionIndicator: false, //隐藏双击entity时候的聚焦框
-    // skyAtmosphere: false, //去除地球外侧光圈
-    infoBox: false, // 点击地球后的信息框
-    timeline: false // 隐藏正下方时间线
-  });
-
-  cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
+  cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
   const viewer = cesiumViewer.value;
-  // 是否支持图像渲染像素化处理，在支持image-rendering: pixelated属性的浏览器中，根据设备像素比例来设置 Cesium 场景的分辨率缩放，以达到更好的视觉效果。
-  if (Cesium.FeatureDetection.supportsImageRenderingPixelated()) {
-    viewer.resolutionScale = window.devicePixelRatio
-  }
-  // 开启抗锯齿
-  viewer.scene.postProcessStages.fxaa.enabled = true;
-  //todo
   //加载倾斜
-  try {
-    const tileset = await Cesium.Cesium3DTileset.fromUrl(
-      "http://10.10.31.84:8090/3dtile_op/tileset.json"
-    );
-    viewer.scene.primitives.add(tileset);
-
-  } catch (error) {
-    console.error(`Error creating tileset: ${error}`);
-  }
-
+  const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
+    url: 'http://10.10.31.84:8090/3dtile_op/tileset.json'
+  }));
+  //视角初始化
+  viewer.camera.setView({
+    destination: SceneGIS.Cartesian3.fromDegrees(
+      120.17147298986772,
+      33.301942305971394,
+      137.11303375009118
+    ),
+    orientation: {
+      heading: 0.345650960729154,
+      pitch: -0.28325898231466784,
+      roll: 6.283183439173194
+    }
+  });
   //加载管线
   let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
   let comps = [
@@ -425,30 +405,14 @@ const initCesiumMap = async () => {
       const element = gxTypes[i];
       for (let j = 0; j < comps.length; j++) {
         const item = comps[j];
-
-        const tileset = await Cesium.Cesium3DTileset.fromUrl(
-          "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json"
-        );
-        viewer.scene.primitives.add(tileset);
+        const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
+          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json"
+        }));
       }
     }
-
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
-
-  viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(
-      120.17147298986772,
-      33.301942305971394,
-      137.11303375009118
-    ),
-    orientation: {
-      heading: 0.345650960729154,
-      pitch: -0.28325898231466784,
-      roll: 6.283183439173194
-    }
-  });
 };
 
 const initLayerTree = (key) => {
