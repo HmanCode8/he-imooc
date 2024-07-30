@@ -7,7 +7,7 @@ import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
 import Bar3dChart from "../charts/Bar3dChart.vue";
 import BarRowChart from "../charts/BarRowChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
-
+import _ from "lodash";
 const {
   disposalStageData,
   disposalReactData,
@@ -38,7 +38,9 @@ reactTimeData.children.forEach(item => {
   yArray.push(item.value);
 })
 
+const topColors = ['#f00', '#0f0', '#0ff', '#f0f', '#ff0', '#00f', '#f00', '#0f0', '#0ff', '#f0f', '#ff0', '#00f']
 
+const barChartData = disposalReactData.children.sort((a, b) => Number(a.value) - Number(b.value))
 </script>
 
 <template>
@@ -68,7 +70,7 @@ reactTimeData.children.forEach(item => {
 
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
-            <BarRowChart :data="disposalReactData.children" />
+            <BarRowChart :data="barChartData" :haveTop="true" />
           </div>
         </div>
       </div>

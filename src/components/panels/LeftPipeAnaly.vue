@@ -14,7 +14,7 @@ const { facilities, baseData, typeAlysisData, totleSize } = basicFacilitiesData
 
 const totalTitle = '总汇聚率'
 const totalNum = _.get(_.find(typeAlysisData, { name: totalTitle }), 'value', 0)
-const inspectionChartData = _.filter(typeAlysisData, (item) => item.name !== totalTitle)
+const inspectionChartData = _.filter(typeAlysisData, (item) => item.name !== totalTitle).sort((a, b) => Number(b.value) - Number(a.value))
 
 const pipeActive = ref(facilities[0].name)
 const currentData = ref([])
@@ -27,6 +27,8 @@ const changeActive = (name) => {
 
 watch(pipeActive, (val) => {
     // _.find(baseData, m => m.name === val)
+    // const data = data.sort((a, b) => Number(a.value) - Number(b.value))
+
     currentData.value = _.find(baseData, m => m.name === val)
 
 }, {
@@ -37,7 +39,7 @@ watch(pipeActive, (val) => {
 
 <template>
     <div class="pipe-analy">
-        <FristLevelTitle title="官网分析">
+        <FristLevelTitle title="管网分析">
             <template v-slot:title-slot>
                 <div class="flex justify-between items-center">
                     <div v-for="t in totleSize" :key="t.name" class="flex mx-2 items-center">
@@ -71,7 +73,7 @@ watch(pipeActive, (val) => {
             </div>
         </div>
 
-        <SecondLevelTitle title="官网分析"></SecondLevelTitle>
+        <SecondLevelTitle title="管网分析"></SecondLevelTitle>
 
         <div class="flex w-full flex-wrap justify-between">
             <!-- 行政区划分析 -->

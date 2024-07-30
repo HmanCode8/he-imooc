@@ -16,7 +16,7 @@ const {
 
 const list = ref([
   {
-    name: "官网",
+    name: "管网",
     value: 100
   },
   {
@@ -28,7 +28,7 @@ const list = ref([
     value: 20
   },
   {
-    name: "官网",
+    name: "管网",
     value: 100
   },
   {

@@ -35,7 +35,7 @@ const tableData = computed(() => active.value === 'natural' ? naturalTableData :
 const columns1 = [
     { title: "区域", key: "区域", },
     { title: "底数", key: "底数", },
-    { title: "养护类别", key: "养护类别", },
+    // { title: "养护类别", key: "养护类别", },
     { title: "养护类别(I类)", key: "I类", },
     { title: "养护类别(II类)", key: "II类", },
     { title: "养护类别(III类)", key: "III类", },
@@ -61,7 +61,7 @@ const tableData1 = [
 <template>
     <div class="pipe-analy">
         <FristLevelTitle title="场站分析" />
-        <div class="pipe-analy-content w-full flex flex-wrap justify-between">
+        <div class="pipe-analy-content w-full  flex flex-wrap justify-between">
             <div class="8k:w-[48%] 4k:w-full">
                 <ThirdLevelTitle title="燃气">
                     <template v-slot:title-slot>
@@ -98,7 +98,7 @@ const tableData1 = [
             </div>
         </div>
 
-        <div class="w-full mt-16 flex flex-wrap justify-between">
+        <div class="w-full mt-20 flex flex-wrap justify-between">
             <div class="8k:w-[48%] 4k:w-full">
                 <FristLevelTitle title="道路分析" />
                 <div class="analy-list w-full flex flex-wrap justify-between">

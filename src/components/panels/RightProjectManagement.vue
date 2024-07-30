@@ -6,6 +6,7 @@ import Tab from "../common/Tab.vue";
 import LineAreaChart from "../charts/LineAreaChart.vue";
 import { projectManageData } from "@/assets/chartData/data";
 import ScrollBarRowChart from "../charts/ScrollBarRowChart.vue";
+import BarRowChart from "../charts/BarRowChart.vue";
 import Tablechart from "../charts/Tablechart.vue";
 
 import PipeDestroyPie from "../charts/PipeDestroyPie.vue";
@@ -85,7 +86,9 @@ const getPastDate = daysAgo => {
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
             <!-- <BarRowChart /> -->
-            <ScrollBarRowChart :areaData="areaConstruction" />
+            <BarRowChart :data="areaConstruction" :baseSum="true" />
+
+            <!-- <ScrollBarRowChart :areaData="areaConstruction" /> -->
           </div>
         </div>
       </div>

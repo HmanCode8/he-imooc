@@ -450,7 +450,7 @@ const basicFacilitiesData = {
         },
         {
           name: "管点",
-          value: 2162,
+          value: 21626,
           unit: "个",
         },
       ],
@@ -604,13 +604,13 @@ const basicFacilitiesData = {
         { name: "20年以上", value: 1120, unit: "km" },
       ],
       pipeTextureData: [
-        { name: "球墨铸铁", value: "1294", unit: "km" },
-        { name: "灰口铸铁", value: "2650", unit: "km" },
-        { name: "塑料", value: "2890", unit: "km" },
-        { name: "钢筋混凝土", value: "1416", unit: "km" },
-        { name: "钢", value: "1120", unit: "km" },
-        { name: "镀锌", value: "0", unit: "km" },
-        { name: "其它", value: "0", unit: "km" },
+        { name: "球墨铸铁", value: "2497", unit: "km" },
+        { name: "灰口铸铁", value: "918", unit: "km" },
+        { name: "塑料", value: "1601", unit: "km" },
+        { name: "钢筋混凝土", value: "1133", unit: "km" },
+        { name: "钢", value: "309", unit: "km" },
+        { name: "镀锌", value: "2379", unit: "km" },
+        { name: "其它", value: "513", unit: "km" },
       ],
     },
     {
@@ -630,11 +630,12 @@ const basicFacilitiesData = {
         { name: "20年以上", value: "901", unit: "km" },
       ],
       pipeTextureData: [
-        { name: "PE", value: "1254", unit: "km" },
-        { name: "PVC", value: "2021", unit: "km" },
-        { name: "铸铁", value: "1895", unit: "km" },
-        { name: "砖", value: "783", unit: "km" },
-        { name: "其它", value: "901", unit: "km" },
+        { name: "PE", value: "759", unit: "km" },
+        { name: "PVC", value: "3026", unit: "km" },
+        { name: "铸铁", value: "521", unit: "km" },
+        { name: "砼", value: "1825", unit: "km" },
+        { name: "塑料", value: "560", unit: "km" },
+        { name: "其它", value: "163", unit: "km" },
       ],
     },
     {
@@ -1307,50 +1308,62 @@ const projectManageData = {
     {
       name: "市级",
       value: 25,
+      unit: "个",
     },
     {
       name: "盐都区",
       value: 58,
+      unit: "个",
     },
     {
       name: "亭湖区",
       value: 63,
+      unit: "个",
     },
     {
       name: "大丰区",
       value: 90,
+      unit: "个",
     },
     {
       name: "盐城经济技术开发区",
       value: 48,
+      unit: "个",
     },
     {
       name: "盐南高新技术产业开发区",
       value: 66,
+      unit: "个",
     },
     {
       name: "东台市",
       value: 140,
+      unit: "个",
     },
     {
       name: "建湖县",
       value: 26,
+      unit: "个",
     },
     {
       name: "射阳县",
       value: 111,
+      unit: "个",
     },
     {
       name: "阜宁县",
       value: 139,
+      unit: "个",
     },
     {
       name: "滨海县",
       value: 119,
+      unit: "个",
     },
     {
       name: "响水县",
       value: 41,
+      unit: "个",
     },
   ],
   inspectionData: [

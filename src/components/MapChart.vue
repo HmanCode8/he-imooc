@@ -6,7 +6,7 @@
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.webp')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4">
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4">
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
@@ -76,7 +76,8 @@
     </div>
 
     <!-- 图例 -->
-    <div v-show="'scene' !== mapType && 0 < legendGroup.length" class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
+    <div v-show="'scene' !== mapType && 0 < legendGroup.length"
+      class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
       <MapLegend :legendGroup="legendGroup" />
     </div>
 
@@ -774,7 +775,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
   // color: #00faff;
-  background-image: url("@/assets/imgs/main/icon-b-active.webp");
+  background-image: url("@/assets/imgs/main/icon-b-active.png");
   background-size: 100% 100%;
   // transform: translateY(-20px);
   transition: all 0.3s ease-in-out;

@@ -6,27 +6,33 @@
 import { onMounted, ref, toRef, watch } from 'vue'
 import * as echarts from 'echarts'
 import useRootFontSize from '@/hooks/useRootFontSize';
-
+import _ from 'lodash'
 const props = defineProps({
     data: {
         type: Array,
         default: () => []
+    },
+    baseSum: {
+        type: Number,
+        default: false
+    },
+    haveTop: {
+        type: Boolean,
+        default: false
     }
 })
 
 const target = ref(null)
-const chartData = toRef(props, 'data')
+const { data } = toRef(props)
 const rootFontSize = useRootFontSize();
 let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
 
-watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
+watch([data, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
-    if (mChart) {
-        mChart.resize();
-    }
+    mChart && mChart.resize();
 });
 
 const handleResize = (size) => {
@@ -37,10 +43,14 @@ const handleResize = (size) => {
 
 const renderChart = (fontSize) => {
     const { data } = props
+    console.log('data==', data)
+    const isPrecent = _.some(data, item => item.unit === '%')
     // 倒叙排序
-    const sortData = data.sort((a, b) => Number(a.value) - Number(b.value))
-    const sum = sortData.reduce((acc, cur) => acc + Number(cur.value), 0)
-    const unit = sortData[0].unit || 'km'
+    let sum = isPrecent ? 100 : data.reduce((acc, cur) => acc + Number(cur.value), 0)
+    if (props.baseSum) {
+        sum = 200
+    }
+    const unit = data[0].unit || 'km'
     const option = {
         grid: {
             left: '3%',
@@ -56,7 +66,7 @@ const renderChart = (fontSize) => {
         },
         yAxis: {
             type: 'category',
-            data: sortData.map(item => item.name),
+            data: data.map(item => item.name),
             axisLine: { show: true },
             axisTick: { show: false },
             axisLabel: {
@@ -82,20 +92,33 @@ const renderChart = (fontSize) => {
         series: [
             {
                 type: 'bar',
-                data: sortData.map((item, index) => ({
-                    value: Number(item.value),
-                    itemStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                            { offset: 0, color: index % 2 === 0 ? '#408391' : '#8c8441' },
-                            { offset: 1, color: index % 2 === 0 ? '#71f4e3' : '#e6c443' }
-                        ])
-                    },
-                })),
-                barWidth: '20%'
+                data: data.map((item, index) => {
+                    const top3 = [0, 1, 2]
+                    const topColors = ['#00f', '#0f0', '#f00']
+                    let startColor = ''
+                    let endColor = ''
+                    if (!top3.includes(index) && props.haveTop) {
+                        startColor = topColors[index % 3]
+                        endColor = topColors[index % 3]
+                    } else {
+                        startColor = index % 2 === 0 ? '#408391' : '#8c8441'
+                        endColor = index % 2 === 0 ? '#71f4e3' : '#e6c443'
+                    }
+                    return {
+                        value: Number(item.value),
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                { offset: 0, color: startColor },
+                                { offset: 1, color: endColor },
+                            ])
+                        },
+                    }
+                }),
+                barWidth: '25%'
             },
             {
                 type: 'bar',
-                data: sortData.map(d => sum),  // 使用最大值来设置背景柱子的高度
+                data: data.map(d => sum),  // 使用最大值来设置背景柱子的高度
                 barGap: '-100%',
                 barWidth: '20%',
                 itemStyle: {
@@ -104,15 +127,15 @@ const renderChart = (fontSize) => {
                 label: {
                     show: true,
                     position: 'right',
-                    distance: 10,  // 调整数值和柱子之间的距离
-                    formatter: (params) => `${sortData[params.dataIndex].value} ${unit}`,  // 显示对应的数值并加单位
+                    distance: 13,  // 调整数值和柱子之间的距离
+                    formatter: (params) => `${data[params.dataIndex].value} ${unit}`,  // 显示对应的数值并加单位
                     color: '#fff',
                     fontSize
                 }
             },
             {
                 type: 'bar',
-                data: sortData.map(d => d.value),
+                data: data.map(d => d.value),
                 barGap: '-100%',
                 barWidth: '20%',
                 itemStyle: {

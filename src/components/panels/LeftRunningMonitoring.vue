@@ -76,7 +76,7 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
                 </div>
             </div>
             <div
-                class="flex 8k:w-1/3 4k:w-full bg-[url('assets/imgs/running/run-center-bg.webp')] bg-size items-center justify-center h-80 flex-wrap">
+                class="flex 8k:w-1/3 4k:w-full bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
             </div>
             <div class="flex 8k:w-1/3 4:w-full items-center justify-between flex-wrap">
                 <div v-for="item, index in analyDeatailData.slice(analyDeatailData.length / 2)"
