@@ -4,10 +4,14 @@ import { defineStore } from "pinia";
 export default defineStore("global", {
   state: () => ({
     componentId: "overview",
+    moduleName:""
   }),
   actions: {
     setMapCurrentTab(value) {
       this.componentId = value;
+    },
+    setCurrentModule(value) {
+      this.moduleName = value;
     },
   },
 });
