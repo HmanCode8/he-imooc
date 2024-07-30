@@ -1,9 +1,9 @@
 import TileLayer from "ol/layer/Tile";
-import { ImageArcGISRest, ImageWMS, TileArcGISRest, WMTS } from "ol/source";
+import {ImageArcGISRest, ImageWMS, TileArcGISRest, WMTS} from "ol/source";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import ImageLayer from "ol/layer/Image";
 import _ from "lodash";
-import { TileGrid } from "ol/tilegrid";
+import {TileGrid} from "ol/tilegrid";
 
 function createLayer(config, group = null) {
   let layer = null;
@@ -91,34 +91,23 @@ function traverseLayerDefine(layerList) {
 }
 
 async function getLegend(map, layer, legendLayer) {
-  const legendUrl =
-    "arcgis_WMS" === layer.get("layerType")
-      ? layer.getSource().getUrl() +
-        "/queryLegends?f=json&transparent=true&size=20,20&LAYERS=show:" +
-        legendLayer
-      : layer
-          .getSource()
-          .getLegendUrl(map.getView().getResolution(), { LAYER: legendLayer });
-  if (legendUrl) {
-    return await fetch(legendUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.layers) {
-          return res.layers
-            .map((v) =>
-              v.legend.map((it) => {
-                return {
-                  source: layer.get("layerName"),
-                  layerId: "" + v.layerId,
-                  img: "data:" + it.contentType + ";base64," + it.imageData,
-                  label: it.label,
-                };
-              })
-            )
-            .flat(Infinity);
-        }
-      });
-  }
-}
+    const legendUrl = "arcgis_WMS" === layer.get("layerType") ?
+        layer.getSource().getUrl() + "/queryLegends?f=json&transparent=true&size=20,20&LAYERS=show:" + legendLayer :
+        layer.getSource().getLegendUrl(map.getView().getResolution(), {"LAYER": legendLayer});
+    if (legendUrl) {
+        return await fetch(legendUrl).then(res => res.json()).then(res => {
+            if (res.layers) {
+                return res.layers.map(v => v.legend.map(it => {
+                    return {
+                        "source": layer.get("layerName"),
+                        "layerId": "" + v.layerId,
+                        "img": "data:" + it.contentType + ";base64," + it.imageData,
+                        "label": it.label
+                    }
+                })).flat(Infinity);
+            }
+        });
+    }
+};
 
 export { createLayer, traverseLayerDefine, getLegend };
