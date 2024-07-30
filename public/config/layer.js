@@ -807,7 +807,7 @@ window.layerConfig = {
         type: "mainClass",
         children: [],
       },
-    ]
+    ],
   },
   defaultLayers: {
     overview: ["js"],
@@ -849,7 +849,7 @@ window.layerConfig = {
       style: "default",
       format: "image/png32",
       origin: [-180, 90],
-      size: [1024,1024],
+      size: [1024, 1024],
       extent: [
         116.10358013377254, 30.710719079012677, 122.09030402444137,
         35.21265930204362,
@@ -875,7 +875,7 @@ window.layerConfig = {
       style: "default",
       format: "image/png32",
       origin: [-180, 90],
-      size: [1024,1024],
+      size: [512, 512],
       extent: [
         116.10358013377254, 30.710719079012677, 122.09030402444137,
         35.21265930204362,

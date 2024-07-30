@@ -1,62 +1,63 @@
 <script setup>
-import {ref} from 'vue';
-import _ from "lodash";
+import { ref } from 'vue'
 
-const currentBaseMap = ref("vector");
-const mapTypeArr = [
-  {name: "矢量", type: "vector"},
-  {name: "影像", type: "raster"},
-  {name: "全景", type: "scene"}];
-const emits = defineEmits(['update:baseMap']);
-const onUpdateBaseMap = mapType => {
-  if (_.some(mapTypeArr, v => mapType === v.type)) {
-    if(mapType!==currentBaseMap.value){
-      currentBaseMap.value = mapType;
-      emits('update:baseMap', mapType);
+const props = defineProps({
+    modelValue: {
+        type: String,
+        default: 'img'
     }
-  }
-};
+})
+const emits = defineEmits(['update:modelValue'])
+
+const types = [
+    { name: "矢量", value: "vector" },
+    { name: "影像", value: "raster" },
+    { name: "全景", value: "scene" }
+]
+const mapTypes = ref(types)
 </script>
 
 <template>
-  <div class="basemap-block flex flex-row justify-between">
-    <div :class="`map-type-wrapper flex justify-end items-end map-type-bg-${item.type} hover:cursor-pointer`"
-         :style="`border: 8px solid ${currentBaseMap===item.type?'rgba(41, 236, 241, 1)':'rgba(41, 131, 241, 1)'}`"
-         v-for="item in mapTypeArr" @click="onUpdateBaseMap(item.type)">
-      <div class="map-type-text">{{ item.name }}</div>
+    <div class="">
+        <div class="map-type relative flex">
+            <div :class="`wrap-item rounded-sm 4k:w-20 4k:h-16 8k:w-32 8k:h-20 ${modelValue === type.value ? 'active' : ''}`"
+                @click="emits('update:modelValue', type.value)" v-for="(type, index) in mapTypes" :key="type.value">
+                <div :class="`map-type-item-${index} rounded-sm w-full h-full bg-size relative hover:cursor-pointer`">
+                    <div class="absolute bottom-0 right-1">{{ type.name }}</div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped lang="scss">
-.basemap-block {
-  width: 660px;
-  height: 135px;
+.wrap-item {
+    border: 2px solid #124842;
 
-  .map-type-wrapper {
-    height: 135px;
-    width: 210px;
-
-    .map-type-text {
-      overflow-wrap: break-word;
-      color: rgba(255, 255, 255, 1);
-      font-size: 32px;
-      letter-spacing: 2px;
-      font-family: PingFangSC-Medium;
-      font-weight: 500;
-      text-align: right;
-      white-space: nowrap;
-      line-height: 45px;
-      margin: 0 10px 7px 0;
+    &:hover {
+        border-color: #3d89c9;
     }
-  }
 }
 
-$layers: vector, raster, scene;
-@each $layer in $layers {
-  .map-type-bg-#{$layer} {
-    // 在这里定义你的 CSS 属性
-    background-image: url("@/assets/imgs/main/map-base-#{$layer}.png");
-  }
+.active {
+    border-color: #3d89c9;
+}
+
+.map-type {
+    // width: 0;
+
+    .map-type-item-0 {
+        background-image: url('@/assets/imgs/main/map-default.png');
+    }
+
+    .map-type-item-1 {
+        background-image: url('@/assets/imgs/main/map-image.png');
+
+    }
+
+    .map-type-item-2 {
+        background-image: url('@/assets/imgs/main/map-panorama.png');
+
+    }
 }
 </style>

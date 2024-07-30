@@ -2,12 +2,10 @@
 import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import Pie3dChartOMFirst from "../charts/Pie3dChartOMFirst.vue";
-import WarningConeBarChart from "../charts/WarningConeBarChart.vue";
 import ConeBarChart from '../charts/ConeBarChart.vue'
-
 import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
 import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
+import BarRowChart from "../charts/BarRowChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
 
 const {
@@ -65,14 +63,12 @@ const barChartData = ref({
   <div class="pipe-analy">
     <FristLevelTitle title="事件处置分析"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="处置阶段分析"></SecondLevelTitle>
-        <!-- <Pie3dChartOMFirst class="w-full h-full flex" :pieChartData="Pie3DChartData" /> -->
-        <!-- <Pipe3dChart class='h-full":data="inspectionChartData -->
         <Pipe3dChart class="h-full" :data="Pie3DChartData" :total="totalNum" :haveTotal="true" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="响应处置分析">
           <template v-slot:title-slot>
             <div
@@ -91,13 +87,12 @@ const barChartData = ref({
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
             <BarRowChart :data="disposalReactData.children" />
-
           </div>
         </div>
       </div>
     </div>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="响应时长">
           <template v-slot:title-slot>
             <div
@@ -115,7 +110,7 @@ const barChartData = ref({
         <Bar3dChartOMFirst :barData="barChartData" class="h-80" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="处置时长">
           <template v-slot:title-slot>
             <div
@@ -139,11 +134,11 @@ const barChartData = ref({
 
     <SecondLevelTitle title="平均效率"></SecondLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full">
         <WarningMedalTableChart :tableData="averageEfficiencyData[0]" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full flex justify-around flex-wrap">
+      <div class="8k:w-[48%] 4k:w-full flex justify-around flex-wrap">
         <div
           class="bg-[url('assets/imgs/warning/average4.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20 ">
           <div class="mt-5 text-2xl font-bold">

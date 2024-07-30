@@ -846,6 +846,58 @@ const basicFacilitiesData = {
   ],
   typeAlysisData: [
     {
+      name: "总汇聚率",
+      value: 96,
+      unit: "%",
+    },
+    {
+      name: "亭湖区",
+      value: 96.01,
+      unit: "%",
+    },
+    {
+      name: "盐都区",
+      value: 94.2,
+      unit: "%",
+    },
+    {
+      name: "大丰区",
+      value: 95.5,
+      unit: "%",
+    },
+    {
+      name: "建湖县",
+      value: 93.6,
+      unit: "%",
+    },
+    {
+      name: "射阳县",
+      value: 96.72,
+      unit: "%",
+    },
+    {
+      name: "阜宁县",
+      value: 95.25,
+      unit: "%",
+    },
+    {
+      name: "滨海县",
+      value: 95.76,
+      unit: "%",
+    },
+    {
+      name: "响水县",
+      value: 96.3,
+      unit: "%",
+    },
+    {
+      name: "东台市",
+      value: 97.62,
+      unit: "%",
+    },
+  ],
+  convergenceRate: [
+    {
       name: "主干路",
       value: "1450",
       unit: "km",
@@ -2851,26 +2903,32 @@ const warningDisposalData = {
       {
         name: "亭湖区",
         value: 98.14,
+        unit: "%",
       },
       {
         name: "盐都区",
         value: 96.0,
+        unit: "%",
       },
       {
         name: "大丰区",
         value: 95.22,
+        unit: "%",
       },
       {
         name: "建湖县",
         value: 94.17,
+        unit: "%",
       },
       {
         name: "射阳县",
         value: 97.58,
+        unit: "%",
       },
       {
         name: "阜宁县",
         value: 98.66,
+        unit: "%",
       },
     ],
   },

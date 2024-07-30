@@ -27,6 +27,10 @@ const props = defineProps({
     total: {
         type: Number,
         default: 0
+    },
+    graphicTitle: {
+        type: String,
+        default: '总数'
     }
 });
 
@@ -49,9 +53,8 @@ watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
 const handleResize = () => {
     const rootFontSize = useRootFontSize();
     renderChart(rootFontSize.value);
-    if (mChart) {
-        mChart.resize();
-    }
+    mChart && mChart.resize();
+
 };
 const renderChart = (fontSize) => {
     // const total = props.data.reduce((acc, cur) => acc + Number(cur.value), 0);
@@ -408,14 +411,52 @@ const renderChart = (fontSize) => {
 
         };
         if (props.haveTotal) {
-
+            const t = props.graphicTitle === '总数'
+            const leftItem = {
+                type: "text",
+                left: "30%",
+                top: "15%",
+                style: {
+                    text: `${props.total}`,
+                    textAlign: "center",
+                    fontSize,
+                    fill: "#ffff00"
+                }
+            }
+            const rightItem = {
+                type: "text",
+                right: '20%',
+                top: "15%",
+                style: {
+                    text: `${props.total}`,
+                    textAlign: "center",
+                    fontSize,
+                    fill: "#ffff00"
+                }
+            }
+            const item = t ? rightItem : leftItem
+            const defaultGraphic = [
+                {
+                    type: "text",
+                    left: t ? "44%" : "16%",
+                    top: "15%",
+                    style: {
+                        text: props.graphicTitle,
+                        textAlign: "center",
+                        fill: "#fff",
+                        fontSize
+                    }
+                },
+                item
+            ]
+            const unit = props.data[0].unit
             option.graphic = [
                 {
                     type: "text",
-                    left: "44%",
+                    left: t ? "44%" : "16%",
                     top: "15%",
                     style: {
-                        text: "总数",
+                        text: props.graphicTitle,
                         textAlign: "center",
                         fill: "#fff",
                         fontSize
@@ -423,18 +464,20 @@ const renderChart = (fontSize) => {
                 },
                 {
                     type: "text",
-                    right: "20%",
+                    left: "30%",
                     top: "15%",
                     style: {
-                        text: `${props.total}`,
+                        text: `${props.total} ${unit}`,
                         textAlign: "center",
                         fontSize,
-                        fill: "#ffff00"
+                        fill: t ? "#ffff00" : "#4aa5b5"
                     }
                 },
-                {
+            ]
+            if (t) {
+                const g = {
                     type: "image",
-                    left: "44%",
+                    left: t ? "44%" : "24%",
                     top: "20%",
                     style: {
                         image: bgimage,
@@ -442,7 +485,8 @@ const renderChart = (fontSize) => {
                         height: 10
                     }
                 }
-            ]
+                option.graphic = [...defaultGraphic, g]
+            }
         }
         return option;
     }

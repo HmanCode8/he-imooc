@@ -64,8 +64,8 @@ const barWidth = (index) => {
             </div>
         </div>
 
-        <div class="flex items-center my-4 justify-between">
-            <div class="flex 8:w-1/3 4:w-full items-center justify-between flex-wrap">
+        <div class="flex items-center my-4 justify-between flex-wrap">
+            <div class="flex 8k:w-1/3 4:w-full items-center justify-between flex-wrap">
                 <div v-for="item, index in analyDeatailData.slice(0, analyDeatailData.length / 2)"
                     @click="onTabChange(item.name)"
                     :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
@@ -75,9 +75,9 @@ const barWidth = (index) => {
                 </div>
             </div>
             <div
-                class="flex 8:w-1/3 4:w-full bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
+                class="flex 8k:w-1/3 4k:w-full bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
             </div>
-            <div class="flex 8:w-1/3 4:w-full items-center justify-between flex-wrap">
+            <div class="flex 8k:w-1/3 4:w-full items-center justify-between flex-wrap">
                 <div v-for="item, index in analyDeatailData.slice(analyDeatailData.length / 2)"
                     @click="onTabChange(item.name)"
                     :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">

@@ -21,17 +21,6 @@ let mChart = null
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
-const colors = [
-    ['#0175c4', '#03163a'],
-    ['#01a0c7', '#032748'],
-    ['#b99c0b', '#1a232b'],
-    ['#c16b27', 'transparent'],
-    ['#c16b27', 'transparent'],
-    ['#c16b27', 'transparent'],
-    ['#c16b27', 'transparent'],
-    ['#FF3939', 'transparent']
-];
-
 
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
@@ -49,6 +38,7 @@ const handleResize = (size) => {
 const renderChart = (fontSize) => {
     const { data } = props
     const sum = data.reduce((acc, cur) => acc + Number(cur.value), 0)
+    const unit = data[0].unit || 'km'
     const option = {
         grid: {
             left: '3%',
@@ -81,7 +71,7 @@ const renderChart = (fontSize) => {
                 let result = '';
                 params.forEach(function (item) {
                     if (item.seriesType === 'bar' && item.seriesIndex === 0) {
-                        result += `${item.name}: ${item.value} km<br/>`;
+                        result += `${item.name}: ${item.value} ${unit}<br/>`;
                     }
                 });
                 return result;
@@ -113,7 +103,7 @@ const renderChart = (fontSize) => {
                     show: true,
                     position: 'right',
                     distance: 10,  // 调整数值和柱子之间的距离
-                    formatter: (params) => `${data[params.dataIndex].value} km`,  // 显示对应的数值并加单位
+                    formatter: (params) => `${data[params.dataIndex].value} ${unit}`,  // 显示对应的数值并加单位
                     color: '#fff',
                     fontSize
                 }

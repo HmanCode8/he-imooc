@@ -14,15 +14,16 @@ const props = defineProps({
 </script>
 
 <template>
-    <!-- 有插槽传tabs -->
-    <div class="my-2 px-2 bg-[url('assets/imgs/main//title-h-third.png')] h-6  bg-size">
-        <div class="flex items-center justify-between">
-            <div class="title flex items-center">
-                {{ title }}
+    <div class="w-full flex items-center">
+        <div class="my-4 w-2/3 px-2 bg-[url('assets/imgs/main//title-h-third.png')] h-4  bg-size">
+            <div class="flex items-center justify-between">
+                <div class="mt-[-4%] flex items-center">
+                    {{ title }}
+                </div>
             </div>
-            <div class="slot-container">
-                <slot name="title-slot"></slot>
-            </div>
+        </div>
+        <div class="slot-container">
+            <slot name="title-slot"></slot>
         </div>
     </div>
 </template>
