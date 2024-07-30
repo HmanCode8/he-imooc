@@ -375,30 +375,37 @@ const initCesiumMap = async () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmMwNmM1My03NzI4LTQ0NDUtOTBiYy1hM2I2ZmUxZDNmOWUiLCJpZCI6MjI4NzQzLCJpYXQiOjE3MjExMzU1OTZ9.bZrwv5u7g418lGuDhTuRqkrWJDHAFWGGd1TiTbsM9dU";
 
   cesiumViewer.value = new Cesium.Viewer(target.value, {
-    terrainProvider: await Cesium.createWorldTerrainAsync()
+    // terrainProvider: await Cesium.createWorldTerrainAsync()
+    fullscreenButton: false, // 隐藏界面右下角全屏按钮
+    homeButton: false, // 隐藏界面右上角初始化地球位置按钮
+    animation: false, // 隐藏界面左下角控制动画的面板
+    geocoder: false, //右上角 搜索
+    sceneModePicker: false, // 右上角 2D/3D切换
+    baseLayerPicker: false, // 隐藏界面左上角地图底图的切换按钮
+    navigationHelpButton: false, //右上角 Help
+    shouldAnimate: true,
+    selectionIndicator: false, //隐藏双击entity时候的聚焦框
+    // skyAtmosphere: false, //去除地球外侧光圈
+    infoBox: false, // 点击地球后的信息框
+    timeline: false // 隐藏正下方时间线
   });
 
-  //   cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
+  cesiumViewer.value.scene.globe.depthTestAgainstTerrain = true;
   const viewer = cesiumViewer.value;
+  // 是否支持图像渲染像素化处理，在支持image-rendering: pixelated属性的浏览器中，根据设备像素比例来设置 Cesium 场景的分辨率缩放，以达到更好的视觉效果。
+  if (Cesium.FeatureDetection.supportsImageRenderingPixelated()) {
+    viewer.resolutionScale = window.devicePixelRatio
+  }
+  // 开启抗锯齿
+  viewer.scene.postProcessStages.fxaa.enabled = true;
   //todo
   //加载倾斜
   try {
     const tileset = await Cesium.Cesium3DTileset.fromUrl(
-      "http://127.0.0.1:8089/data/ycosgb3/tileset.json"
+      "http://10.10.31.84:8090/3dtile_op/tileset.json"
     );
     viewer.scene.primitives.add(tileset);
-    viewer.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(
-        120.17147298986772,
-        33.301942305971394,
-        137.11303375009118
-      ),
-      orientation: {
-        heading: 0.345650960729154,
-        pitch: -0.28325898231466784,
-        roll: 6.283183439173194
-      }
-    });
+
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
@@ -420,14 +427,28 @@ const initCesiumMap = async () => {
         const item = comps[j];
 
         const tileset = await Cesium.Cesium3DTileset.fromUrl(
-          "http://127.0.0.1:8089/data/gx/" + element + "/" + item + "/tileset.json"
+          "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json"
         );
         viewer.scene.primitives.add(tileset);
       }
     }
+
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
+
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(
+      120.17147298986772,
+      33.301942305971394,
+      137.11303375009118
+    ),
+    orientation: {
+      heading: 0.345650960729154,
+      pitch: -0.28325898231466784,
+      roll: 6.283183439173194
+    }
+  });
 };
 
 const initLayerTree = (key) => {
