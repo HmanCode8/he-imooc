@@ -6,9 +6,11 @@ import Tab from "../common/Tab.vue";
 import LineAreaChart from "../charts/LineAreaChart.vue";
 import { projectManageData } from "@/assets/chartData/data";
 import ScrollBarRowChart from "../charts/ScrollBarRowChart.vue";
+import Tablechart from "../charts/Tablechart.vue";
+
 import PipeDestroyPie from "../charts/PipeDestroyPie.vue";
 
-const { projectSituation, areaConstruction, pipeDestroy, inspectionData } = projectManageData;
+const { projectSituation, areaConstruction, statisticDestroy, pipeDestroyColumns, pipeDestroyTableData, inspectionData } = projectManageData;
 
 const timeTabs = ref([
   {
@@ -91,9 +93,9 @@ const getPastDate = daysAgo => {
 
     <div>
       <SecondLevelTitle class="w-full" title="巡检巡查">
-        <template v-slot:title-slot>
+        <!-- <template v-slot:title-slot>
           <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
-        </template>
+        </template> -->
       </SecondLevelTitle>
 
       <div class="chart-container w-full h-80">
@@ -114,7 +116,7 @@ const getPastDate = daysAgo => {
         <SecondLevelTitle class="w-full" title="管线破坏事件" />
         <div class="chart-container w-full h-60">
           <!-- <Pipe3dChart :pieChartData="pieChartData" /> -->
-          <PipeDestroyPie class="w-full h-full flex" :pieChartData="pipeDestroy[0].statisticDestroy" />
+          <PipeDestroyPie class="w-full h-full flex" :pieChartData="statisticDestroy" />
         </div>
       </div>
 
@@ -122,8 +124,7 @@ const getPastDate = daysAgo => {
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
             <!-- <BarRowChart /> -->
-            <ScrollTablechart class="w-full ml-2" :tableTitles="pipeDestroy[1].title"
-              :tableData="pipeDestroy[1].tableData" />
+            <Tablechart :columns="pipeDestroyColumns" :tableData="pipeDestroyTableData" scrollable class="h-40 mt-10" />
           </div>
         </div>
       </div>

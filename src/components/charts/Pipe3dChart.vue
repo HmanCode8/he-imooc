@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, toRef, watch } from "vue";
 import * as echarts from "echarts";
 import bgimage from "@/assets/imgs/main/title-h-third.png";
 
@@ -37,13 +37,13 @@ const props = defineProps({
 const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
 const target = ref(null);
 const rootFontSize = useRootFontSize();
-
+const { data } = toRef(props);
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
 
-watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
+watch([data, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     if (mChart) {
         mChart.resize();

@@ -43,6 +43,7 @@ const barWidth = (index) => {
     return index === 1 ? (internetDevices[1].value / internetDevices[0].value).toFixed(2) * 100 : internetDevices[2].value
 }
 
+console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
 </script>
 
 <template>
@@ -75,7 +76,7 @@ const barWidth = (index) => {
                 </div>
             </div>
             <div
-                class="flex 8k:w-1/3 4k:w-full bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
+                class="flex 8k:w-1/3 4k:w-full bg-[url('assets/imgs/running/run-center-bg.webp')] bg-size items-center justify-center h-80 flex-wrap">
             </div>
             <div class="flex 8k:w-1/3 4:w-full items-center justify-between flex-wrap">
                 <div v-for="item, index in analyDeatailData.slice(analyDeatailData.length / 2)"

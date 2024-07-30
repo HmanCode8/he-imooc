@@ -3,7 +3,7 @@ import { ref } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import PipeIconChart from "../charts/PipeIconChart.vue";
-import ScrollTablechart from "../charts/ScrollTablechart.vue";
+import Tablechart from "../charts/Tablechart.vue";
 
 import { projectManageData } from "@/assets/chartData/data";
 
@@ -11,6 +11,8 @@ const {
   overviewData,
   strategicIndustry,
   projectDistribution,
+  projectDistributionColumns,
+  projectDistributionTableData,
   projectSize
 } = projectManageData;
 
@@ -129,9 +131,8 @@ const currentComp = ref('项目规模');
       </div>
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="项目分布"></SecondLevelTitle>
-        <!-- <Tablechart class="w-full h-60" /> -->
-        <ScrollTablechart class="w-full" :tableTitles="projectDistribution.titles"
-          :tableData="projectDistribution.tableData" />
+        <Tablechart :columns="projectDistributionColumns" :tableData="projectDistributionTableData" :scrollable="false"
+          class="h-80 mt-10" />
       </div>
     </div>
   </div>

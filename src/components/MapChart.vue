@@ -6,7 +6,7 @@
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/2 h-20 bg-size flex justify-between px-10 mt-4">
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.webp')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4">
         <div
           :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
@@ -34,7 +34,8 @@
       </div>
     </div>
 
-    <div class="layer-tabs w-60 h-[80%] flex absolute left-[10%] top-1/2 translate-y-[-50%] z-10" v-show="'scene'!==mapType">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10"
+      v-show="'scene' !== mapType">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -51,15 +52,16 @@
         </div>
       </div>
 
-      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0" v-show="'scene'!==mapType&&showSubLayerTab">
+      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0" v-show="'scene' !== mapType && showSubLayerTab">
         <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
-          <div class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
+          <div
+            class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
             {{ sub.name }}
           </div>
           <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
             <div v-for="item in sub.children" :key="item.remark" class="pl-2">
               <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
-                   @click="updateLayer(item)">{{ item.name }}
+                @click="updateLayer(item)">{{ item.name }}
               </div>
             </div>
           </div>
@@ -70,17 +72,17 @@
 
     <!-- 地图弹出框 -->
     <div ref="popupCom">
-      <MapPopup :popupObject="popupObject" @update:closePop="closePop(map)"/>
+      <MapPopup :popupObject="popupObject" @update:closePop="closePop(map)" />
     </div>
 
     <!-- 图例 -->
-    <div v-show="'scene'!==mapType&&0 < legendGroup.length" class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
-      <MapLegend :legendGroup="legendGroup"/>
+    <div v-show="'scene' !== mapType && 0 < legendGroup.length" class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
+      <MapLegend :legendGroup="legendGroup" />
     </div>
 
     <!-- 地图切换 -->
-    <div class="absolute right-[7%] 4k:bottom-[10%] 8k:bottom-4">
-      <MapToggle v-model="mapType"/>
+    <div class="absolute right-[28.5%] 4k:bottom-[10%] 8k:bottom-4">
+      <MapToggle v-model="mapType" class="" />
     </div>
   </div>
 </template>
@@ -654,7 +656,7 @@ watch(mapType, (val) => {
       initOpenLayersMap();
     }
   } else {
-    if(map.value){
+    if (map.value) {
       closePop(map.value);
       map.value.setTarget(null);
     }
@@ -772,7 +774,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
   // color: #00faff;
-  background-image: url("@/assets/imgs/main/icon-b-active.png");
+  background-image: url("@/assets/imgs/main/icon-b-active.webp");
   background-size: 100% 100%;
   // transform: translateY(-20px);
   transition: all 0.3s ease-in-out;

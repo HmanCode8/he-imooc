@@ -120,9 +120,9 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     <div
                         class="check-item  w-24 h-28 my-2 bg-[url(assets/imgs/overview/check-item-2.png)] bg-size flex flex-col items-center justify-around">
                         <div class="flex">
-                            <h2>1960</h2>
+                            <h2>300</h2>
                         </div>
-                        <div>设备总数(台)</div>
+                        <div>数据上报(条)</div>
                     </div>
                 </div>
             </div>

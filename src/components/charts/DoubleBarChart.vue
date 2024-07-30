@@ -14,7 +14,7 @@ import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
   data: {
-    type: Array,
+    type: Object,
     required: true
   },
 });

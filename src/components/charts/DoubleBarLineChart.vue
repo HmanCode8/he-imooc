@@ -1,9 +1,9 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div ref="target" class="w-full h-full"></div>
 </template>
 
 <script setup>
-import { onMounted, ref, toRef, watch } from 'vue'
+import { onMounted, ref, toRef, watch, nextTick } from 'vue'
 import * as echarts from 'echarts'
 import useRootFontSize from "@/hooks/useRootFontSize";
 import _ from 'lodash';
@@ -31,19 +31,19 @@ const rootFontSize = useRootFontSize();
 let mChart = null;
 
 onMounted(() => {
-    mChart = echarts.init(target.value);
-    renderChart(rootFontSize.value);
+    nextTick(() => {
+        mChart = echarts.init(target.value);
+        renderChart(rootFontSize.value);
+    });
 });
 
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
-    if (mChart) {
-        mChart.resize();
-    }
+    mChart && mChart.resize();
+
 });
 
 const renderChart = (fontSize) => {
-
     const option = {
         title: {
             text: props.title,
