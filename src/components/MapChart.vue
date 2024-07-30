@@ -136,6 +136,7 @@ const leyerRef = ref(null)
 const legendRef = ref(null)
 const global = useGlobalStore()
 const target = ref(null)
+const threedtree = ref(null);
 const currentBottomTab = ref('comprehensive-monitoring')
 const currentLayerTab = ref('ranqi');
 const currentLayerGroup = ref([]);
@@ -372,9 +373,13 @@ const queryPopupDetail = async evt => {
   0 < Object.keys(popupObject.value).length ? popElement(evt) : closePop(evt.map);
 };
 
+let layers_3d = [];
+let defaultCheckedKeys = ref([]);
+
 const addGX = (viewer) => {
   //加载管线
-  let gxTypes = ["dxline", "gdline", "jsline", "trline", "ysline"];
+  // let gxTypes = [ "DSLINE", "DXLINE",  "GDLINE",  "JSLINE",  "LTLINE",  "TRLINE", "TTLINE", "WSLINE", "XHLINE", "YDLINE", "YSLINE"];
+  let gxTypes = [ "DSLINE", "DXLINE",  "GDLINE",  "JSLINE",  "LTLINE",  "TRLINE", "TTLINE"];
   let comps = [
     "pipelineGeo",
     "pipelineI3dm",
@@ -386,21 +391,109 @@ const addGX = (viewer) => {
   try {
     for (let i = 0; i < gxTypes.length; i++) {
       const element = gxTypes[i];
+      let name = "";
+      switch (element) {
+        // case "BMLINE":
+        //   name = "不明";
+        //   break;
+        case "DSLINE":
+          name = "有线电视";
+          break;
+        case "DXLINE":
+          name = "电信";
+          break;
+        // case "trline":
+        //   name = "天然气";
+        //   break;
+        // case "EXLINE":
+        //   name = "电力通讯";
+        //   break;
+        // case "GDLINE":
+        //   name = "供电";
+        //   break;
+        // case "HSLINE":
+        //   name = "雨污合流";
+        //   break;
+        // case "JKLINE":
+        //   name = "监控";
+        //   break;
+        case "JSLINE":
+          name = "给水";
+          break;
+        // case "JYLINE":
+        //   name = "军用";
+        //   break;
+        case "LDLINE":
+          name = "路灯";
+          break;
+        case "LTLINE":
+          name = "联通";
+          break;
+        // case "RSLINE":
+        //   name = "热水";
+        //   break;
+        case "TRLINE":
+          name = "天然气";
+          break;
+        case "TTLINE":
+          name = "铁通";
+          break;
+        case "WSLINE":
+          name = "污水";
+          break;
+        case "TTLINE":
+          name = "铁通";
+          break;
+        case "XHLINE":
+          name = "信号";
+          break;
+        case "YDLINE":
+          name = "移动";
+          break;
+        case "YSLINE":
+          name = "雨水";
+          break;
+        // case "ZQLINE":
+        //   name = "蒸汽";
+        //   break;
+      }
+      threeDData.value[0].children.push({
+        label: name
+      })
       for (let j = 0; j < comps.length; j++) {
         const item = comps[j];
         const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json"
+          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json",          
         }));
+        layers_3d.push({
+          name: name + '-' + item,
+          obj: tileset
+        });
       }
     }
+
+    // layers_3d.forEach(item=>{
+    //   if(item.name.indexOf('雨水')>-1||item.name.indexOf('供电')>-1||item.name.indexOf('移动')>-1){
+    //     item.obj.show = true
+    //   }else{
+    //     item.obj.show = false
+    //   }
+    // });
+    
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
 };
 
+const loadNode = ()=>{
+  defaultCheckedKeys.value = [1,2,3,4,5];
+};
+
+
+let qxtileset = null;
 const addOsgb = (viewer) => {
   //加载倾斜
-  const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
+  qxtileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
     url: 'http://10.10.31.84:8090/3dtile_op/tileset.json'
   }));
 };
@@ -556,8 +649,6 @@ const createBubble = (viewer, clickPosition, infoboxContainer, properties) => {
   });
 };
 
-
-
 // 当前选中的变量初始信息
 const selected = {
   feature: undefined,
@@ -581,24 +672,16 @@ const setInfoBox = (viewer) => {
       ])
     );
 
-
     let handler = new SceneGIS.ScreenSpaceEventHandler(
       viewer.scene.canvas
     );
 
     handler.setInputAction(function (event) {
-
-      
       //用来拾取三维空间中的物体
       let pickedFeature = viewer.scene.pick(event.position);
 
       // 检查是否点击到 3D Tileset
       if (pickedFeature instanceof SceneGIS.SceneGIS3DTileFeature) {
-        // 保留选中的初始颜色
-        // var highlightedFeature = silhouetteBlue.selected[0];
-        // if (pickedFeature === highlightedFeature) {
-        //   silhouetteBlue.selected = [];
-        // }
         // 高亮绿色选中的要素
         silhouetteGreen.selected = [];
         silhouetteGreen.selected = [pickedFeature];
@@ -613,10 +696,12 @@ const setInfoBox = (viewer) => {
       }
     }, SceneGIS.ScreenSpaceEventType.LEFT_CLICK);
   }
-
-
 };
 
+const defaultList = ref([]);
+for (let i = 1; i < 40; i++) {
+  defaultList.value.push(i);
+}
 const initCesiumMap = async () => {
   cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
   const viewer = cesiumViewer.value;
@@ -634,12 +719,44 @@ const initCesiumMap = async () => {
       roll: 6.283183439173194
     }
   });
-
-  addGX(viewer);
   addOsgb(viewer);
+  setTimeout(()=>{
+    addGX(viewer);
+  },2000)
   setHSV(viewer, 1, 1, 1.2);
   setInfoBox(viewer);
+};
 
+const threeDData = ref([
+  {
+    label: '管线',
+    children: [
+    ],
+  },
+  {
+    label: '倾斜模型',
+  }
+]);
+
+const defaultProps = {
+  children: 'children',
+  label: 'label',
+}
+
+const handleCheckChange = (data, checked, indeterminate) => {
+  let currentData = JSON.parse(JSON.stringify(data))
+  if (currentData.label === "倾斜模型") {
+    qxtileset.show = checked;
+  } else {
+    layers_3d.forEach(item => {
+      if (currentData.label.indexOf(item.name.split('-')[0]) > -1) {
+        item.obj.show = checked;
+      }
+    })
+  }
+};
+
+const handleNodeClick = (data, checked, indeterminate) => {
 };
 
 const initLayerTree = (key) => {
@@ -906,5 +1023,11 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
       border: 1px solid #3cc2b7;
     }
   }
+}
+
+.el-tree {
+  background: rgba(11, 29, 65, 0.0);
+  --el-tree-node-hover-bg-color: #2166cd;
+  color: #ffffff;
 }
 </style>
