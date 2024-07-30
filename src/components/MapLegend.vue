@@ -10,7 +10,6 @@ const props = defineProps({ "legendGroup": { type: Array, default: [] } })
         <img class="w-6 h-6" :src="item.img" :alt="item.source + item.label" />
         <div class="ml-3 text-sm self-center">{{ item.label }}</div>
       </div>
-
     </div>
   </div>
 </template>
