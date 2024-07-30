@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, toRef, watch } from "vue";
 import * as echarts from "echarts";
 import bgimage from "@/assets/imgs/main/title-h-third.png";
 
@@ -37,13 +37,13 @@ const props = defineProps({
 const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
 const target = ref(null);
 const rootFontSize = useRootFontSize();
-
+const { data } = toRef(props);
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
 
-watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
+watch([data, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     if (mChart) {
         mChart.resize();
@@ -373,7 +373,6 @@ const renderChart = (fontSize) => {
                         value: {
                             fontSize,
                             width: 240,
-
                             padding: [0, 0, 0, 30]
                         },
                         percent: {
@@ -391,6 +390,7 @@ const renderChart = (fontSize) => {
                         total += Number(datas[i].value);
                     }
                     const arr = [`{iconName|}{name|${name}}{value|${obj.value}${obj.unit}}`];
+                    console.log(arr)
                     return arr.join("");
                 }
             },
@@ -465,12 +465,25 @@ const renderChart = (fontSize) => {
                 {
                     type: "text",
                     left: "30%",
-                    top: "15%",
+                    top: t ? "15%" : '12%',
                     style: {
-                        text: `${props.total} ${unit}`,
+                        text: `${props.total}`,
                         textAlign: "center",
-                        fontSize,
-                        fill: t ? "#ffff00" : "#4aa5b5"
+                        fontSize: t ? fontSize : fontSize * 1.5,
+                        fill: t ? "#ffff00" : "#4aa5b5",
+                        fontWeight: "bold"
+                    }
+                },
+                {
+                    type: "text",
+                    left: "37%",
+                    top: t ? "15%" : '12%',
+                    style: {
+                        text: `${unit}`,
+                        textAlign: "center",
+                        fontSize: t ? fontSize : fontSize * 1.5,
+                        fill: '#fff',
+                        fontWeight: "bold"
                     }
                 },
             ]

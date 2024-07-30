@@ -32,7 +32,7 @@ const overviewData = {
     },
     {
       name: "场站",
-      value: "350",
+      value: "135",
       unit: "个",
       source: 8,
     },
@@ -71,29 +71,29 @@ const overviewData = {
     },
     {
       name: "供水",
-      completed: 152,
-      planned: 140,
+      completed: 140,
+      planned: 152,
       rate: 92,
       unit: "%",
     },
     {
       name: "雨水",
-      completed: 105,
-      planned: 104,
+      completed: 104,
+      planned: 105,
       rate: 99,
       unit: "%",
     },
     {
       name: "污水",
-      completed: 182,
-      planned: 175,
+      completed: 175,
+      planned: 182,
       rate: 96,
       unit: "%",
     },
     {
       name: "道路",
-      completed: 216,
-      planned: 206,
+      completed: 206,
+      planned: 216,
       rate: 95,
       unit: "%",
     },
@@ -106,15 +106,15 @@ const overviewData = {
     },
     {
       name: "第三方施工",
-      completed: 180,
-      planned: 172,
+      completed: 172,
+      planned: 180,
       rate: 95,
       unit: "%",
     },
     {
       name: "路灯",
-      completed: 230,
-      planned: 216,
+      completed: 216,
+      planned: 230,
       rate: 94,
       unit: "%",
     },
@@ -433,7 +433,7 @@ const basicFacilitiesData = {
       unit: "km",
     },
     {
-      name: "管线总点数",
+      name: "管点总数",
       value: 1098433,
       unit: "个",
     },
@@ -445,13 +445,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: "5259",
+          value: 5259,
           unit: "km",
         },
         {
           name: "管点",
-          value: 0,
-          unit: 0,
+          value: 21626,
+          unit: "个",
         },
       ],
     },
@@ -466,8 +466,8 @@ const basicFacilitiesData = {
         },
         {
           name: "管点",
-          value: 0,
-          unit: 0,
+          value: 86317,
+          unit: "个",
         },
       ],
     },
@@ -482,8 +482,8 @@ const basicFacilitiesData = {
         },
         {
           name: "管点",
-          value: 0,
-          unit: 0,
+          value: 240205,
+          unit: "个",
         },
       ],
     },
@@ -493,13 +493,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: 0,
-          unit: 0,
+          value: 6625.61,
+          unit: "km",
         },
         {
           name: "管点",
-          value: 0,
-          unit: 0,
+          value: 399934,
+          unit: "个",
         },
       ],
     },
@@ -509,13 +509,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: 0,
-          unit: 0,
+          value: 2362.02,
+          unit: "km",
         },
         {
           name: "管点",
-          value: 0,
-          unit: 0,
+          value: 349987,
+          unit: "个",
         },
       ],
     },
@@ -525,13 +525,13 @@ const basicFacilitiesData = {
       children: [
         {
           name: "管线",
-          value: 0,
-          unit: 0,
+          value: 2.37,
+          unit: "km",
         },
         {
           name: "管点",
-          value: 0,
-          unit: 0,
+          value: 164,
+          unit: "个",
         },
       ],
     },
@@ -573,11 +573,11 @@ const basicFacilitiesData = {
         { name: "<75mm", value: "1085", unit: "km" },
       ],
       pipeAgeData: [
-        { name: "5年以下", value: "286", unit: "km" },
-        { name: "5-10年", value: "4200", unit: "km" },
-        { name: "10-15年", value: "506", unit: "km" },
-        { name: "15-20年", value: "60", unit: "km" },
-        { name: "20年以上", value: "168", unit: "km" },
+        { name: "5年以下", value: 630, unit: "km" },
+        { name: "5-10年", value: 690, unit: "km" },
+        { name: "10-15年", value: 1565, unit: "km" },
+        { name: "15-20年", value: 1485, unit: "km" },
+        { name: "20年以上", value: 889, unit: "km" },
       ],
       pipeTextureData: [
         { name: "G", value: "286", unit: "km" },
@@ -597,20 +597,20 @@ const basicFacilitiesData = {
         { name: "<75mm", value: "1834", unit: "km" },
       ],
       pipeAgeData: [
-        { name: "5年以下", value: "1294", unit: "km" },
-        { name: "5-10年", value: "2650", unit: "km" },
-        { name: "10-15年", value: "2890", unit: "km" },
-        { name: "15-20年", value: "1416", unit: "km" },
-        { name: "20年以上", value: "1120", unit: "km" },
+        { name: "5年以下", value: 1294, unit: "km" },
+        { name: "5-10年", value: 2650, unit: "km" },
+        { name: "10-15年", value: 2890, unit: "km" },
+        { name: "15-20年", value: 1416, unit: "km" },
+        { name: "20年以上", value: 1120, unit: "km" },
       ],
       pipeTextureData: [
-        { name: "球墨铸铁", value: "1294", unit: "km" },
-        { name: "灰口铸铁", value: "2650", unit: "km" },
-        { name: "塑料", value: "2890", unit: "km" },
-        { name: "钢筋混凝土", value: "1416", unit: "km" },
-        { name: "钢", value: "1120", unit: "km" },
-        { name: "镀锌", value: "0", unit: "km" },
-        { name: "其它", value: "0", unit: "km" },
+        { name: "球墨铸铁", value: "2497", unit: "km" },
+        { name: "灰口铸铁", value: "918", unit: "km" },
+        { name: "塑料", value: "1601", unit: "km" },
+        { name: "钢筋混凝土", value: "1133", unit: "km" },
+        { name: "钢", value: "309", unit: "km" },
+        { name: "镀锌", value: "2379", unit: "km" },
+        { name: "其它", value: "513", unit: "km" },
       ],
     },
     {
@@ -630,11 +630,12 @@ const basicFacilitiesData = {
         { name: "20年以上", value: "901", unit: "km" },
       ],
       pipeTextureData: [
-        { name: "PE", value: "1254", unit: "km" },
-        { name: "PVC", value: "2021", unit: "km" },
-        { name: "铸铁", value: "1895", unit: "km" },
-        { name: "砖", value: "783", unit: "km" },
-        { name: "其它", value: "901", unit: "km" },
+        { name: "PE", value: "759", unit: "km" },
+        { name: "PVC", value: "3026", unit: "km" },
+        { name: "铸铁", value: "521", unit: "km" },
+        { name: "砼", value: "1825", unit: "km" },
+        { name: "塑料", value: "560", unit: "km" },
+        { name: "其它", value: "163", unit: "km" },
       ],
     },
     {
@@ -658,20 +659,20 @@ const basicFacilitiesData = {
   ],
   naturalColumns: [
     { title: "区域", key: "area" },
-    { title: "供气管道长度(km)", key: "length" },
+    // { title: "供气管道长度(km)", key: "length" },
     { title: "储气能力(万立方米)", key: "gas" },
     { title: "供气总量合计(万立方米)", key: "total" },
     { title: "用气户数(户)", key: "home" },
-    { title: "用气人口(万人)", key: "user" },
+    // { title: "用气人口(万人)", key: "user" },
     { title: "汽车加气站(座)", key: "natural" },
   ],
   liquefiedColumns: [
     { title: "区域", key: "area" },
-    { title: "供气管道长度(公里)", key: "length" },
+    // { title: "供气管道长度(公里)", key: "length" },
     { title: "储气能力(吨)", key: "gas" },
     { title: "供气总量合计(吨)", key: "total" },
     { title: "用气户数(户)", key: "home" },
-    { title: "用气人口(万人)", key: "user" },
+    // { title: "用气人口(万人)", key: "user" },
     { title: "汽车加气站(座)", key: "natural" },
   ],
   naturalTableData: [
@@ -1108,18 +1109,18 @@ const projectManageData = {
         },
         {
           name: "同比",
-          value: "35",
+          value: "35.53",
           unit: "%",
         },
         {
           name: "工业数量",
           value: 0,
-          unit: 0,
+          unit: "%",
         },
         {
           name: "占比",
           value: 0,
-          unit: 0,
+          unit: "%",
         },
       ],
     },
@@ -1137,13 +1138,13 @@ const projectManageData = {
         },
         {
           name: "同比",
-          value: "1.38",
+          value: 1.38,
           unit: "%",
         },
         {
           name: "工业项目投资额度",
-          value: "1.38",
-          unit: "%",
+          value: 1091,
+          unit: "亿元",
         },
         {
           name: "占比",
@@ -1252,71 +1253,33 @@ const projectManageData = {
       unit: "万",
     },
   ],
-  projectDistribution: {
-    titles: ["县区", "在建项目/个", "已完成项目/个"],
-    tableData: [
-      {
-        name: "盐都区",
-        construction: 86,
-        completion: 0,
-      },
-      {
-        name: "阜宁县",
-        construction: 45,
-        completion: 0,
-      },
-      {
-        name: "滨海县",
-        construction: 132,
-        completion: 0,
-      },
-      {
-        name: "东台市",
-        construction: 73,
-        completion: 0,
-      },
-      {
-        name: "盐都区",
-        construction: 86,
-        completion: 0,
-      },
-      {
-        name: "阜宁县",
-        construction: 45,
-        completion: 0,
-      },
-      {
-        name: "滨海县",
-        construction: 132,
-        completion: 0,
-      },
-      {
-        name: "东台市",
-        construction: 73,
-        completion: 0,
-      },
-      {
-        name: "盐都区",
-        construction: 86,
-        completion: 0,
-      },
-      {
-        name: "阜宁县",
-        construction: 45,
-        completion: 0,
-      },
-      {
-        name: "滨海县",
-        construction: 132,
-        completion: 0,
-      },
-      {
-        name: "东台市",
-        construction: 73,
-        completion: 0,
-      },
-    ],
-  },
+  projectDistributionColumns: [
+    { title: "县区", key: "name" },
+    { title: "在建项目/个", key: "construction" },
+    // { title: "已完成项目/个", key: "completion" },
+  ],
+  projectDistributionTableData: [
+    {
+      name: "盐都区",
+      construction: 86,
+      completion: 0,
+    },
+    {
+      name: "阜宁县",
+      construction: 45,
+      completion: 0,
+    },
+    {
+      name: "滨海县",
+      construction: 132,
+      completion: 0,
+    },
+    {
+      name: "东台市",
+      construction: 73,
+      completion: 0,
+    },
+  ],
   projectSituation: [
     {
       name: "项目总数",
@@ -1345,50 +1308,62 @@ const projectManageData = {
     {
       name: "市级",
       value: 25,
+      unit: "个",
     },
     {
       name: "盐都区",
       value: 58,
+      unit: "个",
     },
     {
       name: "亭湖区",
       value: 63,
+      unit: "个",
     },
     {
       name: "大丰区",
       value: 90,
+      unit: "个",
     },
     {
       name: "盐城经济技术开发区",
       value: 48,
+      unit: "个",
     },
     {
       name: "盐南高新技术产业开发区",
       value: 66,
+      unit: "个",
     },
     {
       name: "东台市",
       value: 140,
+      unit: "个",
     },
     {
       name: "建湖县",
       value: 26,
+      unit: "个",
     },
     {
       name: "射阳县",
       value: 111,
+      unit: "个",
     },
     {
       name: "阜宁县",
       value: 139,
+      unit: "个",
     },
     {
       name: "滨海县",
       value: 119,
+      unit: "个",
     },
     {
       name: "响水县",
       value: 41,
+      unit: "个",
     },
   ],
   inspectionData: [
@@ -1433,94 +1408,64 @@ const projectManageData = {
       },
     ],
   ],
-  pipeDestroy: [
+  statisticDestroy: [
     {
-      statisticDestroy: [
-        {
-          name: "待签收",
-          value: 2,
-          percent: "20%",
-          color: "#3796FF",
-        },
-        {
-          name: "处置中",
-          value: 1,
-          percent: "10%",
-          color: "#FFF500",
-        },
-        {
-          name: "已办结",
-          value: 7,
-          percent: "70%",
-          unit: "个",
-          color: "#23FF5F",
-        },
-      ],
+      name: "待签收",
+      value: 2,
+      percent: "20%",
+      color: "#3796FF",
     },
     {
-      title: ["序号", "名称", "区域", "状态"],
-      tableData: [
-        {
-          id: "1",
-          name: "排水管线挖断事件",
-          district: "盐都区",
-          status: "待签收",
-        },
-        {
-          id: "2",
-          name: "给水管线挖断事件",
-          district: "大丰区",
-          status: "待签收",
-        },
-        {
-          id: "3",
-          name: "违法占压事件",
-          district: "大丰区",
-          status: "已办结",
-        },
-        {
-          id: "4",
-          name: "电力管线挖断事件",
-          district: "射阳县",
-          status: "已办结",
-        },
-        {
-          id: "5",
-          name: "给水管线挖断事件",
-          district: "亭湖区",
-          status: "已办结",
-        },
-        {
-          id: "1",
-          name: "排水管线挖断事件",
-          district: "盐都区",
-          status: "待签收",
-        },
-        {
-          id: "2",
-          name: "给水管线挖断事件",
-          district: "大丰区",
-          status: "待签收",
-        },
-        {
-          id: "3",
-          name: "违法占压事件",
-          district: "大丰区",
-          status: "已办结",
-        },
-        {
-          id: "4",
-          name: "电力管线挖断事件",
-          district: "射阳县",
-          status: "已办结",
-        },
-        {
-          id: "5",
-          name: "给水管线挖断事件",
-          district: "亭湖区",
-          status: "已办结",
-        },
-      ],
+      name: "处置中",
+      value: 1,
+      percent: "10%",
+      color: "#FFF500",
+    },
+    {
+      name: "已办结",
+      value: 7,
+      percent: "70%",
+      unit: "个",
+      color: "#23FF5F",
+    },
+  ],
+
+  pipeDestroyColumns: [
+    { title: "序号", key: "id" },
+    { title: "名称", key: "name" },
+    { title: "区域", key: "district" },
+    { title: "状态", key: "status" },
+  ],
+  pipeDestroyTableData: [
+    {
+      id: "1",
+      name: "排水管线挖断事件",
+      district: "盐都区",
+      status: "已办结",
+    },
+    {
+      id: "2",
+      name: "给水管线挖断事件",
+      district: "大丰区",
+      status: "已办结",
+    },
+    {
+      id: "3",
+      name: "违法占压事件",
+      district: "大丰区",
+      status: "已办结",
+    },
+    {
+      id: "4",
+      name: "电力管线挖断事件",
+      district: "射阳县",
+      status: "已办结",
+    },
+    {
+      id: "5",
+      name: "给水管线挖断事件",
+      district: "亭湖区",
+      status: "已办结",
     },
   ],
 };
@@ -2198,9 +2143,9 @@ const runningMonitoringData = {
     {
       name: "燃气",
       layRates: [
-        { name: "覆盖率", value: 96.44, unit: "%" },
-        { name: "设备总数", value: 654, unit: "台" },
-        { name: "在线率", value: 95.01, unit: "%" },
+        { name: "覆盖率", value: 99.47, unit: "%" },
+        { name: "设备总数", value: 1002, unit: "台" },
+        { name: "在线率", value: 99.71, unit: "%" },
       ],
       sensorData: [
         { name: "可燃气体探测器", value: 1002, unit: "台" },
@@ -2208,7 +2153,16 @@ const runningMonitoringData = {
         { name: "燃气压力设备", value: 0, unit: "台" },
         { name: "流量计", value: 0, unit: "台" },
       ],
-      coverageData: [],
+      coverageData: [
+        { name: "亭湖区", value: 100.0, unit: "%" },
+        { name: "盐都区", value: 99.5, unit: "%" },
+        { name: "大丰区", value: 98.56, unit: "%" },
+        { name: "建湖县", value: 98.86, unit: "%" },
+        { name: "阜宁县", value: 100.0, unit: "%" },
+        { name: "滨海县", value: 100.0, unit: "%" },
+        { name: "响水县", value: 100.0, unit: "%" },
+        { name: "东台市", value: 99.14, unit: "%" },
+      ],
     },
     {
       name: "污水",
@@ -2219,9 +2173,9 @@ const runningMonitoringData = {
       ],
       sensorData: [
         { name: "COD传感器", value: 396, unit: "台" },
-        { name: "浊度仪", value: 195, unit: "台" },
+        { name: "液位仪", value: 195, unit: "台" },
         { name: "电子水尺", value: 34, unit: "台" },
-        { name: "水质温度传感器", value: 49, unit: "台" },
+        { name: "水质监测传感器", value: 49, unit: "台" },
         { name: "水位计", value: 10, unit: "台" },
       ],
       coverageData: [],
@@ -2239,7 +2193,7 @@ const runningMonitoringData = {
         { name: "噪声监测仪", value: "103", unit: "台" },
         { name: "水质温度仪", value: "23", unit: "台" },
         { name: "智能消火栓", value: "20", unit: "台" },
-        { name: "智能井盖", value: "11", unit: "台" },
+        { name: "智能井盖", value: "20", unit: "台" },
       ],
       coverageData: [],
     },
@@ -2274,9 +2228,9 @@ const runningMonitoringData = {
       ],
       sensorData: [
         { name: "电子水尺", value: 34, unit: "台" },
-        { name: "压力计", value: 44, unit: "台" },
-        { name: "液位计", value: 41, unit: "台" },
-        { name: "流量计", value: 138, unit: "台" },
+        { name: "压力计", value: 42, unit: "台" },
+        { name: "液位计", value: 3, unit: "台" },
+        { name: "流量计", value: 158, unit: "台" },
       ],
       coverageData: [
         { name: "亭湖区", value: "89.22", unit: "%" },
@@ -2311,7 +2265,7 @@ const runningMonitoringData = {
       ],
       sensorData: [
         { name: "光纤传感设备", value: "1", unit: "台" },
-        { name: "光纤感知终端分析系统", value: 0, unit: 0 },
+        { name: "光纤感知终端分析系统", value: 1, unit: "台" },
         { name: "摄像头", value: 28, unit: "台" },
         { name: "精密水准仪", value: 18, unit: "台" },
         { name: "全站仪", value: 1, unit: "台" },
@@ -2939,34 +2893,42 @@ const warningDisposalData = {
       {
         name: "燃气",
         value: 0.5,
+        unit: "h",
       },
       {
         name: "雨水",
         value: 1.54,
+        unit: "h",
       },
       {
         name: "污水",
         value: 1.24,
+        unit: "h",
       },
       {
         name: "供水",
         value: 1.88,
+        unit: "h",
       },
       {
         name: "道路",
         value: 1.67,
+        unit: "h",
       },
       {
         name: "桥梁",
         value: 1.98,
+        unit: "h",
       },
       {
         name: "第三方施工",
         value: 2.88,
+        unit: "h",
       },
       {
         name: "路灯",
         value: 2.79,
+        unit: "h",
       },
     ],
   },
@@ -3024,9 +2986,19 @@ const warningDisposalData = {
         value2: 6.87,
       },
       {
+        name: "阜宁县",
+        value1: 1.22,
+        value2: 6.89,
+      },
+      {
         name: "盐都区",
         value1: 1.66,
         value2: 6.94,
+      },
+      {
+        name: "射阳县",
+        value1: 1.95,
+        value2: 7.14,
       },
       {
         name: "大丰区",
@@ -3038,16 +3010,6 @@ const warningDisposalData = {
         value1: 2.68,
         value2: 8.01,
       },
-      {
-        name: "射阳县",
-        value1: 1.95,
-        value2: 7.14,
-      },
-      {
-        name: "阜宁县",
-        value1: 1.22,
-        value2: 6.89,
-      },
     ],
     [
       {
@@ -3058,16 +3020,16 @@ const warningDisposalData = {
       {
         name: "处置中",
         value: 13,
-        percent: 21.38,
+        percent: 8.97,
       },
       {
         name: "已办结",
         value: 101,
-        percent: 21.38,
+        percent: 69.66,
       },
       {
         name: "按时办结率",
-        percent: 21.38,
+        percent: 98.14,
       },
     ],
   ],

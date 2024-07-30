@@ -5,14 +5,14 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import DoubleBarLineChart from '../charts/DoubleBarLineChart.vue'
 import ProcessBar from '../charts/ProcessBar.vue'
 import { overviewData } from '@/assets/chartData/data'
+import {useGlobalStore} from "@/store/index.js";
+const global = useGlobalStore()
 
 const { basicOverview, basicData, combinedData, inspectionDetails, oldRenovation } = overviewData
 
 const legendData = ['巡检完成量', '计划巡检量', '巡检完成率']
 
 const basicOverviewData = ref(basicOverview)
-
-
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const basicOverviewData = ref(basicOverview)
             <div class="l 4k:w-full 8k:w-[35%]">
                 <ul class="flex w-full flex-col">
                     <li class="flex w-full px-2 items-center" v-for="item, index in basicOverviewData" :key="item.name">
-                        <div :class="`base-icon-${index + 1}  bg-size w-20 h-20 `">
+                        <div :class="`base-icon-${index + 1}  bg-size w-20 h-20 hover:cursor-pointer`" @click="global.setCurrentModule(item.name)">
                         </div>
                         <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-size">
                             <div>{{ item.name }} <span class="ml-2">(km²)</span></div>
@@ -38,8 +38,8 @@ const basicOverviewData = ref(basicOverview)
                     <div class="flex h-1/4 items-center justify-center  w-full">
                         <div
                             class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[0].source}.png)] bg-size`">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-3.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[0].name)">
                             </div>
                             <div class="pl-1">{{ basicData[0].name }} <span class="font-bold text-xl">{{
                                 basicData[0].value
@@ -52,8 +52,8 @@ const basicOverviewData = ref(basicOverview)
                         <div
                             class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
 
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[1].source}.png)] bg-size`">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-2.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[1].name)">
                             </div>
 
                             <div class="pl-1">{{ basicData[1].name }} <span class="font-bold text-xl">{{
@@ -62,8 +62,8 @@ const basicOverviewData = ref(basicOverview)
                         </div>
                         <div
                             class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[2].source}.png)] bg-size`">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-8.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[2].name)">
                             </div>
                             <div class="pl-1">{{ basicData[2].name }} <span class="font-bold text-xl">{{
                                 basicData[2].value }}</span>
@@ -75,8 +75,8 @@ const basicOverviewData = ref(basicOverview)
                         <div
                             class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
 
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[3].source}.png)] bg-size`">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-5.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[3].name)">
                             </div>
 
                             <div class="pl-1">{{ basicData[3].name }} <span class="font-bold text-xl">{{
@@ -85,8 +85,8 @@ const basicOverviewData = ref(basicOverview)
                         </div>
                         <div
                             class="flex w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[4].source}.png)] bg-size`">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-6.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[4].name)">
                             </div>
 
                             <div class="pl-1">{{ basicData[4].name }} <span class="font-bold text-xl">{{
@@ -98,17 +98,17 @@ const basicOverviewData = ref(basicOverview)
                     <div class="flex h-1/4 items-center w-full justify-center my-2">
                         <div
                             class="flex mx-2 w-[24%] h-full items-center justify-center bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[5].source}.png)] bg-size`">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-7.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[5].name)">
                             </div>
                             <div class="pl-1">{{ basicData[5].name }} <span class="font-bold text-xl">{{
                                 basicData[5].value }}</span>
                                 {{ basicData[5].unit }}</div>
                         </div>
                         <div
-                            class="flex mx-2 w-[24%] h-full border items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
-                            <div
-                                :class="`icon w-4 h-4 border bg-[url(assets/imgs/overview/ic-item-${basicData[6].source}.png)] bg-size`">
+                            class="flex mx-2 w-[24%] h-full  items-center justify-around bg-[url(assets/imgs/overview/base-item-bg.png)] bg-size">
+                            <div :class="`icon w-4 h-4  bg-[url(assets/imgs/overview/ic-item-4.png)] bg-size hover:cursor-pointer`"
+                                 @click="global.setCurrentModule(basicData[6].name)">
                             </div>
 
                             <div>{{ basicData[6].name }} <span class="font-bold text-xl">{{ basicData[6].value

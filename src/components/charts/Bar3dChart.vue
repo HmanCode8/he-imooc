@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+        <div ref="target" class="w-full h-full"></div>
     </div>
 </template>
 
@@ -19,9 +19,13 @@ const props = defineProps({
     data: {
         type: Array,
     },
+    seriesName: {
+        type: String,
+        default: "管径",
+    },
     colors: {
         type: Array,
-        default: () => ['#0FA0FF', '#24F3FF'],
+        default: () => ['#01EBFA', '#00676D'],
     },
 });
 const target = ref(null);
@@ -35,21 +39,14 @@ onMounted(() => {
 });
 
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
-    renderChart(newFontSize);
-    if (mChart) {
-        mChart.resize();
-    }
-});
-
-const handleResize = () => {
-    renderChart(rootFontSize.value);
     mChart && mChart.resize();
-};
+});
 
 const renderChart = (fontSize) => {
     const xData = _.map(chartData.value, c => c.name);
     const data = _.map(chartData.value, c => Number(c.value));
     const unit = _.get(chartData.value, '0.unit', '--');
+    const maxData = _.max(data);
     const option = {
         title: {
             text: `单位：${unit}`,
@@ -64,8 +61,13 @@ const renderChart = (fontSize) => {
             axisPointer: {
                 type: 'shadow',
             },
-            formatter: function (params) {
-                var str = `${props.title}：${params[0].axisValue}</br>${params[0].marker}${params[0].value}${unit}`;
+            formatter: function (parms) {
+                var str = parms[0].axisValue +
+                    "</br>" +
+                    parms[0].marker +
+                    props.title +
+                    "：" +
+                    parms[0].value;
                 return str;
             },
         },
@@ -82,6 +84,7 @@ const renderChart = (fontSize) => {
         textStyle: {
             color: '#ffffff',
         },
+        color: ["#24F3FF", "#24F3FF", "#FDBF47", "#FDBF47"],
         grid: {
             containLabel: true,
             left: '6%',
@@ -101,6 +104,8 @@ const renderChart = (fontSize) => {
                 show: false,
             },
             axisLabel: {
+                // interval: 0,
+                // rotate: 45,
                 margin: 10,
                 textStyle: {
                     fontFamily: 'Microsoft YaHei',
@@ -112,6 +117,7 @@ const renderChart = (fontSize) => {
         yAxis: {
             type: 'value',
             min: 0,
+            max: maxData,
             boundaryGap: ['20%', '60%'],
             axisLine: {
                 show: true,
@@ -121,10 +127,11 @@ const renderChart = (fontSize) => {
             },
             splitLine: {
                 lineStyle: {
-                    color: ['#61d2e0'],
-                    type: 'dashed',
-                    opacity: 0.5,
-                },
+                    // 使用深浅的间隔色
+                    color: ["#B5B5B5"],
+                    type: "dashed",
+                    opacity: 0.5
+                }
             },
             axisLabel: {
                 textStyle: {
@@ -132,13 +139,27 @@ const renderChart = (fontSize) => {
                 },
             },
         },
+        // dataZoom: [
+        //     {
+        //         type: 'inside', // 内置滚动，通过鼠标滚轮或双指滑动控制
+        //         start: 0,
+        //         end: 100,
+        //     },
+        //     {
+        //         type: 'slider', // 滑动条
+        //         start: 0,
+        //         end: 100,
+        //         bottom: 0, // 滑动条位置
+        //     },
+        // ],
         series: [
             {
-                name: "管径",
+                name: props.seriesName,
                 data: data,
-                type: 'bar',
+                stack: "zs",
+                type: "bar",
                 barMaxWidth: 'auto',
-                barWidth: 22,
+                barWidth: 20,
                 itemStyle: {
                     color: {
                         x: 0,

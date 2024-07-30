@@ -43,6 +43,7 @@ const barWidth = (index) => {
     return index === 1 ? (internetDevices[1].value / internetDevices[0].value).toFixed(2) * 100 : internetDevices[2].value
 }
 
+console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
 </script>
 
 <template>

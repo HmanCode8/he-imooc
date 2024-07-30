@@ -3,6 +3,9 @@ import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import Tablechart from '../charts/Tablechart.vue'
 import { overviewData } from '@/assets/chartData/data'
+import {useGlobalStore} from "@/store/index.js";
+
+const global = useGlobalStore();
 
 const { riskTotalData, hideTotalData, warningColumns, warningTableData, deviceData } = overviewData
 
@@ -69,7 +72,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
             <div class="risk-count 4k:w-full 8k:w-[48%] mx-2">
                 <div
                     class="flex items-center w-full bg-[url('assets/imgs/overview/o-title-bg.png')] h-10  bg-size my-4 px-2">
-                    <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao]">隐患总数<span
+                    <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao] hover:cursor-pointer" @click="global.setCurrentModule('隐患')">隐患总数<span
                             class="text-4xl gradient-text">{{ hideTotalData.total
                             }}</span>个
                     </div>
@@ -120,9 +123,9 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     <div
                         class="check-item  w-24 h-28 my-2 bg-[url(assets/imgs/overview/check-item-2.png)] bg-size flex flex-col items-center justify-around">
                         <div class="flex">
-                            <h2>1960</h2>
+                            <h2>300</h2>
                         </div>
-                        <div>设备总数(台)</div>
+                        <div>数据上报(条)</div>
                     </div>
                 </div>
             </div>

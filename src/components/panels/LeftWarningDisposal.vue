@@ -16,7 +16,7 @@ const {
 
 const list = ref([
   {
-    name: "官网",
+    name: "管网",
     value: 100
   },
   {
@@ -28,7 +28,7 @@ const list = ref([
     value: 20
   },
   {
-    name: "官网",
+    name: "管网",
     value: 100
   },
   {
@@ -270,7 +270,7 @@ const changeActive = name => {
               <span class="warninglevel text-2xl font-extrabold">{{ levelData.value }}</span>
               <span>个</span>
             </div>
-            <div class="mb-5">持续任务时长</div>
+            <div class="mb-5">总数</div>
           </div>
 
           <div class="ml-10">
@@ -310,9 +310,9 @@ const changeActive = name => {
 
       <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="预警事件趋势">
-          <template v-slot:title-slot>
+          <!-- <template v-slot:title-slot>
             <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
-          </template>
+          </template> -->
         </SecondLevelTitle>
         <div class="w-full h-full flex items-center justify-center">
           <div class="w-full h-full flex-2">

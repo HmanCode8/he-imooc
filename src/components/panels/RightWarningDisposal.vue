@@ -4,10 +4,10 @@ import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import ConeBarChart from '../charts/ConeBarChart.vue'
 import WarningMedalTableChart from "../charts/WarningMedalTableChart.vue";
-import Bar3dChartOMFirst from "../charts/Bar3dChartOMFirst.vue";
+import Bar3dChart from "../charts/Bar3dChart.vue";
 import BarRowChart from "../charts/BarRowChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
-
+import _ from "lodash";
 const {
   disposalStageData,
   disposalReactData,
@@ -15,12 +15,6 @@ const {
   disposalTimeData,
   averageEfficiencyData
 } = warningDisposalData;
-
-//---------处置分析阶段
-const getRandomHexColor = () => {
-  const hex = Math.floor(Math.random() * 16777215).toString(16);
-  return `#${hex.padStart(6, '0')}`;
-}
 
 const Pie3DChartData = ref([]);
 disposalStageData.forEach(element => {
@@ -44,19 +38,9 @@ reactTimeData.children.forEach(item => {
   yArray.push(item.value);
 })
 
-const barChartData = ref({
-  xData: xArray,
-  yData: yArray,
-  unit: "h",
-  max: "3",
-  grid: {
-    containLabel: true,
-    left: "6%",
-    top: "15%",
-    bottom: "16%",
-    right: "6%"
-  }
-});
+const topColors = ['#f00', '#0f0', '#0ff', '#f0f', '#ff0', '#00f', '#f00', '#0f0', '#0ff', '#f0f', '#ff0', '#00f']
+
+const barChartData = disposalReactData.children.sort((a, b) => Number(a.value) - Number(b.value))
 </script>
 
 <template>
@@ -86,7 +70,7 @@ const barChartData = ref({
 
         <div class="w-full flex">
           <div class="chart-container w-full h-60">
-            <BarRowChart :data="disposalReactData.children" />
+            <BarRowChart :data="barChartData" :haveTop="true" />
           </div>
         </div>
       </div>
@@ -107,7 +91,7 @@ const barChartData = ref({
             </div>
           </template>
         </SecondLevelTitle>
-        <Bar3dChartOMFirst :barData="barChartData" class="h-80" />
+        <Bar3dChart :data="reactTimeData.children" seriesName="响应时长" title="响应时长" class="h-64" />
       </div>
 
       <div class="8k:w-[48%] 4k:w-full">
@@ -127,7 +111,7 @@ const barChartData = ref({
         </SecondLevelTitle>
 
         <!-- <WarningConeBarChart :chartData="disposalTimeData.children" class="h-80" /> -->
-        <ConeBarChart :data="disposalTimeData.children" title="处置时长" class="h-64" />
+        <ConeBarChart :data="disposalTimeData.children" title="处置时长" class="h-64 w-full" />
 
       </div>
     </div>
@@ -139,33 +123,29 @@ const barChartData = ref({
       </div>
 
       <div class="8k:w-[48%] 4k:w-full flex justify-around flex-wrap">
-        <div
-          class="bg-[url('assets/imgs/warning/average4.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20 ">
+        <div class="bg-[url('assets/imgs/warning/average4.png')] bg-size w-[40%] h-32 flex flex-col items-center  ">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#1AFCFF;">{{ averageEfficiencyData[1][0].value }}个</span>
+            <span style="color:#1AFCFF;">{{ averageEfficiencyData[1][0].percent }}%</span>
           </div>
           <div class>待签收</div>
         </div>
 
-        <div
-          class="bg-[url('assets/imgs/warning/average2.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20 ">
+        <div class="bg-[url('assets/imgs/warning/average2.png')] bg-size w-[40%] h-32 flex flex-col items-center  ">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#FFAE00;">{{ averageEfficiencyData[1][1].value }}个</span>
+            <span style="color:#FFAE00;">{{ averageEfficiencyData[1][1].percent }}%</span>
           </div>
           <div class="pipe-point">处置中</div>
         </div>
-        <div
-          class="bg-[url('assets/imgs/warning/average3.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20">
+        <div class="bg-[url('assets/imgs/warning/average3.png')] bg-size w-[40%] h-32 flex flex-col items-center mt-2">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#0BFFC3;">{{ averageEfficiencyData[1][2].value }}个</span>
+            <span style="color:#0BFFC3;">{{ averageEfficiencyData[1][2].percent }}%</span>
           </div>
           <div class="pipe-point">已办结</div>
         </div>
 
-        <div
-          class="bg-[url('assets/imgs/warning/average1.png')] bg-size bg-center w-1/4 h-28 flex flex-col items-center ml-20">
+        <div class="bg-[url('assets/imgs/warning/average1.png')] bg-size  w-[40%] h-32 flex flex-col items-center ">
           <div class="mt-5 text-2xl font-bold">
-            <span style="color:#1AFCFF;">{{ averageEfficiencyData[1][3].percent }}</span>
+            <span style="color:#1AFCFF;">{{ averageEfficiencyData[1][3].percent }}%</span>
           </div>
           <div class="pipe-point">按时办结率</div>
         </div>
