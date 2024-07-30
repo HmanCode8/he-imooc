@@ -6,7 +6,7 @@
 import { h, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
-import { Label } from "cesium";
+// import { Label } from "cesium";
 import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
