@@ -33,11 +33,8 @@
         </div>
       </div>
     </div>
-    <!-- 图层栏 -->
-    <!-- <button class="absolute top-5 left-20 z-20" @click="toggleMap">切换地图</button> -->
-    <!-- :style="`transform: translateX(${computerLayout(layerTabs.length, index, 10)}px)`" -->
 
-    <div class="layer-tabs w-60 h-[80%] flex absolute left-[10%] top-1/2 translate-y-[-50%] z-10">
+    <div class="layer-tabs w-60 h-[80%] flex absolute left-[10%] top-1/2 translate-y-[-50%] z-10" v-show="'scene'!==mapType">
       <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
@@ -54,58 +51,36 @@
         </div>
       </div>
 
-      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0">
-        <div ref="leyerRef" class>
-          <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
-            <div
-              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
-              {{ sub.name }}</div>
-            <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
-              <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-                <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
-                  @click="updateLayer(item)">{{ item.name }}</div>
+      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0" v-show="'scene'!==mapType&&showSubLayerTab">
+        <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
+          <div class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
+            {{ sub.name }}
+          </div>
+          <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
+            <div v-for="item in sub.children" :key="item.remark" class="pl-2">
+              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
+                   @click="updateLayer(item)">{{ item.name }}
               </div>
             </div>
-            <div v-else>---</div>
           </div>
+          <div v-else>---</div>
         </div>
       </div>
     </div>
 
-    <!-- 右下角图例 -->
-
-    <!-- <div class="legend absolute bg-slate-400 right-[30%] mr-10 bottom-20 z-10">
-			<div class="legend-title px-2 border-b-2 border-slate-600">图例</div>
-			<div class="legend-content px-1">
-				<div class="legend-item flex items-center ">
-					<img :src="legend.img" :alt="legend.source + legend.label" />
-					<div class="legend-item-desc">{{ legend.label }}</div>
-				</div>
-			</div>
-		</div>
-		-->
-
     <!-- 地图弹出框 -->
-
-    <div ref="popupCom" class="popup overflow-auto">
-      <div class="banner">
-        <div class="title">{{ popupObject.layerName }}</div>
-        <div class="close-icon" @click="closePop(map)">✖</div>
-      </div>
-      <div class="info-wrapper overflow-auto">
-        <div class="info-text" v-for="(value, key) in popupObject.properties">{{ key }} : {{ value }}</div>
-      </div>
+    <div ref="popupCom">
+      <MapPopup :popupObject="popupObject" @update:closePop="closePop(map)"/>
     </div>
 
     <!-- 图例 -->
-
-    <div ref="legendRef" v-if="0 < legendGroup.length" class="legend absolute bg-slate-400 right-[29%] bottom-20 z-10">
-      <MapLegend :legendGroup="legendGroup" />
+    <div v-show="'scene'!==mapType&&0 < legendGroup.length" class="absolute right-[7%] 4k:bottom-[16%] 8k:bottom-28">
+      <MapLegend :legendGroup="legendGroup"/>
     </div>
 
     <!-- 地图切换 -->
     <div class="absolute right-[7%] 4k:bottom-[10%] 8k:bottom-4">
-      <MapToggle v-model="mapType" class="" />
+      <MapToggle v-model="mapType"/>
     </div>
   </div>
 </template>
@@ -121,6 +96,7 @@ import _, { forIn } from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
 import MapToggle from "@/components/MapToggle.vue";
+import MapPopup from "@/components/MapPopup.vue";
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
 
@@ -133,7 +109,6 @@ const { layerConfig = {} } = window;
 const layers = ref([])
 const gsap = inject('gsap')
 const leyerRef = ref(null)
-const legendRef = ref(null)
 const global = useGlobalStore()
 const target = ref(null)
 const currentBottomTab = ref('comprehensive-monitoring')
@@ -142,6 +117,7 @@ const currentLayerGroup = ref([]);
 const loadedLayerGroup = ref([]);
 const mapType = ref('vector')
 const map = ref(null);
+const showSubLayerTab = ref(true);
 const popupCom = ref(null);
 const popupObject = ref({});
 const legendGroup = ref([]);
@@ -191,8 +167,8 @@ const initOpenLayersMap = () => {
     controls: [],
     overlays: [infoOverlay],
     view: new View({
-      center: [120.2327, 33.4905],
-      zoom: 10,
+      center: [120.15648234, 33.35160457],
+      zoom: 13,
       maxZoom: 20,
       minZoom: 8,
       projection: layerConfig.systemProjection
@@ -218,6 +194,9 @@ const setDefaultLayers = moduleName => {
       map.value.removeLayer(v);
     }
   });
+  if ("vector" !== mapType.value) {
+    mapType.value = "vector";
+  }
   if (layerConfig["layerTrees"].hasOwnProperty(moduleName)) {
     layers.value = layerConfig["layerTrees"][moduleName];
     currentLayerGroup.value = traverseLayerDefine(layers.value);
@@ -368,8 +347,13 @@ const addLayer = async layerValue => {
 }
 
 const queryPopupDetail = async evt => {
-  popupObject.value = await getPopInfo(evt, currentLayerGroup.value);
-  0 < Object.keys(popupObject.value).length ? popElement(evt) : closePop(evt.map);
+  const popInfo = await getPopInfo(evt, currentLayerGroup.value);
+  if (0 < Object.keys(popInfo).length) {
+    popupObject.value = popInfo;
+    popElement(evt);
+  } else {
+    closePop(evt.map);
+  }
 };
 
 const addGX = (viewer) => {
@@ -514,7 +498,7 @@ const createBubble = (viewer, clickPosition, infoboxContainer, properties) => {
         <table class="tableStyle">`+ str + `
           </table>
         </div>
-     
+
       </div>`;
 
   //弹窗随屏幕移动而移动
@@ -588,7 +572,7 @@ const setInfoBox = (viewer) => {
 
     handler.setInputAction(function (event) {
 
-      
+
       //用来拾取三维空间中的物体
       let pickedFeature = viewer.scene.pick(event.position);
 
@@ -670,7 +654,10 @@ watch(mapType, (val) => {
       initOpenLayersMap();
     }
   } else {
-    map.value.setTarget(null);
+    if(map.value){
+      closePop(map.value);
+      map.value.setTarget(null);
+    }
     initCesiumMap();
   }
 })
@@ -789,63 +776,6 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   background-size: 100% 100%;
   // transform: translateY(-20px);
   transition: all 0.3s ease-in-out;
-}
-
-.popup {
-  width: 845px;
-  height: 587px;
-  background: url("@/assets/imgs/main/map-popup-bg.png") -1px -1px no-repeat;
-  background-size: 847px 589px;
-  margin-left: 73px;
-
-  .banner {
-    height: 62px;
-    color: rgba(255, 255, 255, 1);
-    font-size: 48px;
-    font-family: "YouSheBiaoTiHei";
-    font-weight: normal;
-    text-align: left;
-    white-space: nowrap;
-    line-height: 62px;
-    margin: 48px 0 0 74px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .title {
-      overflow-wrap: break-word;
-    }
-
-    .close-icon {
-      color: rgba(205, 228, 248, 1);
-      font-size: 32px;
-      cursor: pointer;
-      margin: 10px 70px 0 0;
-    }
-  }
-
-  .info-wrapper {
-    max-height: 370px;
-    width: 610px;
-    overflow-wrap: break-word;
-    font-size: 0;
-    font-family: "PingFangSC-Regular";
-    font-weight: normal;
-    text-align: left;
-    margin: 40px 0 0 85px;
-
-    .info-text {
-      width: 609px;
-      overflow-wrap: break-word;
-      color: rgba(205, 228, 248, 1);
-      font-size: 32px;
-      font-family: "PingFangSC-Regular";
-      font-weight: normal;
-      text-align: left;
-      white-space: normal;
-      line-height: 45px;
-    }
-  }
 }
 
 .bubble {

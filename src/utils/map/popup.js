@@ -19,7 +19,7 @@ function createDefaultPopup(element) {
         id: "popup",
         element: element,
         positioning: 'bottom-center',
-        offset: [0, -30],
+        offset: [0, 0],
         autoPan: true,
         autoPanAnimation: {
             duration: 250,
@@ -54,8 +54,11 @@ async function getPopInfo(evt, currentLayerGroup) {
                     geoJsonParser.readFeatures(responseText);
                 if (0 < features.length) {
                     const filterFields = _.get(layerConfig, "detailFields", []);
-                    const showProperties = _.pickBy(features[0].getProperties(),
-                        (v, k) => "geometry" !== k && (0 === filterFields.length || filterFields.includes(k)));
+                    const englishRegExp=new RegExp("[A-Za-z]");
+                    const showProperties = _.mapValues(
+                        _.pickBy(features[0].getProperties(),
+                            (v, k) => !englishRegExp.test(k) && (0 === filterFields.length || filterFields.includes(k))),
+                        v => _.isNil(v) || "null" === _.toLower(v) ? "" : v);
                     if (0 < Object.keys(showProperties).length) {
                         const name = _.get(
                             _.find(currentLayerGroup, v =>
@@ -65,9 +68,9 @@ async function getPopInfo(evt, currentLayerGroup) {
                     }
                 }
             }
-            return {};
         }
     }
+    return {};
 }
 
 function popElement(evt, popElementName = "popup") {
