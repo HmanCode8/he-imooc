@@ -3,6 +3,12 @@
     <div ref="target" class="w-full h-full" id="sceneGISContainer">
       <div id="infobox" class="bubble"></div>
     </div>
+    <div
+      class="absolute w-60 h-80 top-40 right-1/3 bg-[url('assets/imgs/main/layercontrol.png')] bg-size overflow-auto"
+      v-show="threedlayercontrol">
+      <el-tree ref="threedtree" :data="threeDData" :props="defaultProps" show-checkbox @node-click="handleNodeClick"
+        @check-change="handleCheckChange" node-key="id" default-expand-all :default-checked-keys="[2]"></el-tree>
+    </div>
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
       <div
@@ -127,6 +133,8 @@ const popupObject = ref({});
 const legendGroup = ref([]);
 const cesiumViewer = ref(null);
 const iconctive = ref(iconList[0].value);
+const threedlayercontrol = ref(false);
+let viewer = ref(null);
 
 const currentItem = computed(() =>
   _.get(
@@ -370,8 +378,7 @@ let defaultCheckedKeys = ref([]);
 
 const addGX = (viewer) => {
   //加载管线
-  // let gxTypes = [ "DSLINE", "DXLINE",  "GDLINE",  "JSLINE",  "LTLINE",  "TRLINE", "TTLINE", "WSLINE", "XHLINE", "YDLINE", "YSLINE"];
-  let gxTypes = [ "DSLINE", "DXLINE",  "GDLINE",  "JSLINE",  "LTLINE",  "TRLINE", "TTLINE"];
+  let gxTypes = ["BMLINE", "DSLINE", "DXLINE", "EXLINE", "GDLINE", "HSLINE", "JKLINE", "JSLINE", "JYLINE", "LDLINE", "LTLINE", "RSLINE", "TRLINE", "TTLINE", "WSLINE", "XHLINE", "YDLINE", "YSLINE", "ZQLINE"];
   let comps = [
     "pipelineGeo",
     "pipelineI3dm",
@@ -385,45 +392,45 @@ const addGX = (viewer) => {
       const element = gxTypes[i];
       let name = "";
       switch (element) {
-        // case "BMLINE":
-        //   name = "不明";
-        //   break;
+        case "BMLINE":
+          name = "不明";
+          break;
         case "DSLINE":
           name = "有线电视";
           break;
         case "DXLINE":
           name = "电信";
           break;
-        // case "trline":
-        //   name = "天然气";
-        //   break;
-        // case "EXLINE":
-        //   name = "电力通讯";
-        //   break;
-        // case "GDLINE":
-        //   name = "供电";
-        //   break;
-        // case "HSLINE":
-        //   name = "雨污合流";
-        //   break;
-        // case "JKLINE":
-        //   name = "监控";
-        //   break;
+        case "trline":
+          name = "天然气";
+          break;
+        case "EXLINE":
+          name = "电力通讯";
+          break;
+        case "GDLINE":
+          name = "供电";
+          break;
+        case "HSLINE":
+          name = "雨污合流";
+          break;
+        case "JKLINE":
+          name = "监控";
+          break;
         case "JSLINE":
           name = "给水";
           break;
-        // case "JYLINE":
-        //   name = "军用";
-        //   break;
+        case "JYLINE":
+          name = "军用";
+          break;
         case "LDLINE":
           name = "路灯";
           break;
         case "LTLINE":
           name = "联通";
           break;
-        // case "RSLINE":
-        //   name = "热水";
-        //   break;
+        case "RSLINE":
+          name = "热水";
+          break;
         case "TRLINE":
           name = "天然气";
           break;
@@ -445,23 +452,37 @@ const addGX = (viewer) => {
         case "YSLINE":
           name = "雨水";
           break;
-        // case "ZQLINE":
-        //   name = "蒸汽";
-        //   break;
+        case "ZQLINE":
+          name = "蒸汽";
+          break;
       }
       threeDData.value[0].children.push({
+        id: i + 2,
         label: name
       })
       for (let j = 0; j < comps.length; j++) {
         const item = comps[j];
         const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json",          
+          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json",
         }));
         layers_3d.push({
           name: name + '-' + item,
           obj: tileset
         });
       }
+
+      // threeDData.value[0].children.forEach(item=>{
+      //   threedtree.value.setChe
+      // })
+
+      setTimeout(() => {
+        threedtree.value.setCheckedNodes(threeDData.value[0].children);
+        threedlayercontrol.value = true;
+      }, 1000);
+
+      // 
+
+
     }
 
     // layers_3d.forEach(item=>{
@@ -471,14 +492,14 @@ const addGX = (viewer) => {
     //     item.obj.show = false
     //   }
     // });
-    
+
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
 };
 
-const loadNode = ()=>{
-  defaultCheckedKeys.value = [1,2,3,4,5];
+const loadNode = () => {
+  defaultCheckedKeys.value = [1, 2, 3, 4, 5];
 };
 
 
@@ -612,6 +633,7 @@ const createBubble = (viewer, clickPosition, infoboxContainer, properties) => {
       infoboxContainer.removeChild(element);
       element = null;
       silhouetteGreen.selected = [];
+      checkedPostProcessStage = null;
       //如果想让点击事件失效
       // self.handler.destroy();
       // self.handler = null;
@@ -628,13 +650,8 @@ const createBubble = (viewer, clickPosition, infoboxContainer, properties) => {
         clickPosition,
         windowPosition
       );
-
-      // infoboxContainer.style.bottom =
-      //   canvasHeight - windowPosition.y - 10 + "px";
-      // infoboxContainer.style.left = windowPosition.x - 80 + "px";
-
       infoboxContainer.style.bottom =
-        canvasHeight - windowPosition.y - 950+ "px";
+        canvasHeight - windowPosition.y - 950 + "px";
       infoboxContainer.style.left = windowPosition.x + "px";
       infoboxContainer.style.visibility = "visible";
     }
@@ -647,22 +664,25 @@ const selected = {
   originalColor: new SceneGIS.Color(),
 };
 let silhouetteGreen = null;
+let checkedPostProcessStage = null;
 const setInfoBox = (viewer) => {
 
   //判断是否支持描边，如果支持就使用描边选中，如果不支持就将选中的要素标色
-  if (SceneGIS.PostProcessStageLibrary.isSilhouetteSupported(viewer.scene)) {
+  // if (SceneGIS.PostProcessStageLibrary.isSilhouetteSupported(viewer.scene)) {
     //绿色描边的边缘检测
-    silhouetteGreen = SceneGIS.PostProcessStageLibrary.createEdgeDetectionStage();
-    silhouetteGreen.uniforms.color = SceneGIS.Color.LIME;
-    silhouetteGreen.uniforms.length = 0.01;
-    silhouetteGreen.selected = [];
+    // silhouetteGreen = SceneGIS.PostProcessStageLibrary.createEdgeDetectionStage();
+    // silhouetteGreen.uniforms.color = SceneGIS.Color.LIME;
+    // silhouetteGreen.uniforms.length = 0.01;
+    // silhouetteGreen.selected = [];
 
-    //将两种边缘检测的后置渲染组合到描边的后置渲染
-    viewer.scene.postProcessStages.add(
-      SceneGIS.PostProcessStageLibrary.createSilhouetteStage([
-        silhouetteGreen,
-      ])
-    );
+    // checkedPostProcessStage = SceneGIS.PostProcessStageLibrary.createSilhouetteStage([
+    //     silhouetteGreen,
+    //   ])
+
+    // //将两种边缘检测的后置渲染组合到描边的后置渲染
+    // viewer.scene.postProcessStages.add(
+    //   checkedPostProcessStage
+    // );
 
     let handler = new SceneGIS.ScreenSpaceEventHandler(
       viewer.scene.canvas
@@ -675,8 +695,8 @@ const setInfoBox = (viewer) => {
       // 检查是否点击到 3D Tileset
       if (pickedFeature instanceof SceneGIS.SceneGIS3DTileFeature) {
         // 高亮绿色选中的要素
-        silhouetteGreen.selected = [];
-        silhouetteGreen.selected = [pickedFeature];
+        // silhouetteGreen.selected = [];
+        // silhouetteGreen.selected = [pickedFeature];
         // 获取属性
         const properties = pickedFeature.getPropertyNames().reduce((obj, property) => {
           obj[property] = pickedFeature.getProperty(property);
@@ -687,7 +707,7 @@ const setInfoBox = (viewer) => {
         createBubble(viewer, position, infoboxContainer, properties);
       }
     }, SceneGIS.ScreenSpaceEventType.LEFT_CLICK);
-  }
+  // }
 };
 
 const defaultList = ref([]);
@@ -696,7 +716,7 @@ for (let i = 1; i < 40; i++) {
 }
 const initCesiumMap = async () => {
   cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
-  const viewer = cesiumViewer.value;
+  viewer = cesiumViewer.value;
 
   //视角初始化
   viewer.camera.setView({
@@ -711,21 +731,31 @@ const initCesiumMap = async () => {
       roll: 6.283183439173194
     }
   });
+
+  //TAA抗锯齿
+  viewer.scene.postProcessStages.taa.enabled = true;
+  viewer.scene._taaProcessStage._brightDiff = 20;
+  viewer.scene._taaProcessStage._depthDiff = 20;
+  viewer.scene._taaProcessStage.disableCameraStatic = true;
+
   addOsgb(viewer);
-  setTimeout(()=>{
-    addGX(viewer);
-  },2000)
+  addGX(viewer);
+  // setTimeout(()=>{
+
+  // },2000)
   setHSV(viewer, 1, 1, 1.2);
   setInfoBox(viewer);
 };
 
 const threeDData = ref([
   {
+    id: 1,
     label: '管线',
     children: [
     ],
   },
   {
+    id: 2,
     label: '倾斜模型',
   }
 ]);
@@ -748,7 +778,21 @@ const handleCheckChange = (data, checked, indeterminate) => {
   }
 };
 
-const handleNodeClick = (data, checked, indeterminate) => {
+const handleNodeClick = (data, checked, indeterminate, event) => {
+  if (checked.checked) {
+    let currentData = JSON.parse(JSON.stringify(data));
+    if (currentData.label === "倾斜模型") {
+      viewer.flyTo(qxtileset);
+    } else {
+      for (let i = 0; i < layers_3d.length; i++) {
+        const element = layers_3d[i];
+        if (element.name.indexOf(currentData.label) > -1) {
+          viewer.flyTo(element.obj);
+          break;
+        }
+      }
+    }
+  }
 };
 
 const initLayerTree = (key) => {
@@ -778,6 +822,7 @@ watch(mapType, (val) => {
     } else {
       initOpenLayersMap();
     }
+    threedlayercontrol.value = false;
   } else {
     if (map.value) {
       closePop(map.value);
@@ -975,5 +1020,9 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   background: rgba(11, 29, 65, 0.0);
   --el-tree-node-hover-bg-color: #2166cd;
   color: #ffffff;
+}
+
+::v-deep .el-tree-node__label {
+  font-size: 20px;
 }
 </style>
