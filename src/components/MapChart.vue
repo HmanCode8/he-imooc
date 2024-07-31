@@ -634,7 +634,7 @@ const createBubble = (viewer, clickPosition, infoboxContainer, properties) => {
       // infoboxContainer.style.left = windowPosition.x - 80 + "px";
 
       infoboxContainer.style.bottom =
-        canvasHeight - windowPosition.y + "px";
+        canvasHeight - windowPosition.y - 950+ "px";
       infoboxContainer.style.left = windowPosition.x + "px";
       infoboxContainer.style.visibility = "visible";
     }
@@ -938,7 +938,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 
 ::v-deep .test {
   width: 29em;
-  height: 29em;
+  height: 27em;
   caret-color: transparent; //设置闪烁的光标消失
   color: #ffffff;
 
@@ -953,15 +953,15 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
     }
 
     .closeStyle {
-      margin: 0 0 0 8em;
+      margin: 0 0 0 12em;
       font-size: 24px;
       cursor: pointer;
     }
   }
 
   .tableStyle {
-    width: 20em;
-    height: 20em;
+    width: 28em;
+    height: 26em;
     margin: 0 0 0 2.5em;
     font-size: 14px;
 
