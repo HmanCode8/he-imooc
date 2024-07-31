@@ -1,8 +1,6 @@
 <template>
     <div class>
-        <div class="chart-container w-full h-60">
-            <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
-        </div>
+        <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
     </div>
 </template>
 
@@ -57,6 +55,8 @@ const handleResize = () => {
 
 };
 const renderChart = (fontSize) => {
+    const total = props.total !== 0 ? props.total : _.sum(_.map(props.data, d => Number(d.value)), "value");
+
     // const total = props.data.reduce((acc, cur) => acc + Number(cur.value), 0);
     // 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
     function getParametricEquation(
@@ -390,7 +390,6 @@ const renderChart = (fontSize) => {
                         total += Number(datas[i].value);
                     }
                     const arr = [`{iconName|}{name|${name}}{value|${obj.value}${obj.unit}}`];
-                    console.log(arr)
                     return arr.join("");
                 }
             },
@@ -417,7 +416,7 @@ const renderChart = (fontSize) => {
                 left: "30%",
                 top: "15%",
                 style: {
-                    text: `${props.total}`,
+                    text: `${total}`,
                     textAlign: "center",
                     fontSize,
                     fill: "#ffff00"
@@ -428,7 +427,7 @@ const renderChart = (fontSize) => {
                 right: '20%',
                 top: "15%",
                 style: {
-                    text: `${props.total}`,
+                    text: `${total}`,
                     textAlign: "center",
                     fontSize,
                     fill: "#ffff00"
@@ -467,7 +466,7 @@ const renderChart = (fontSize) => {
                     left: "30%",
                     top: t ? "15%" : '12%',
                     style: {
-                        text: `${props.total}`,
+                        text: `${total}`,
                         textAlign: "center",
                         fontSize: t ? fontSize : fontSize * 1.5,
                         fill: t ? "#ffff00" : "#4aa5b5",

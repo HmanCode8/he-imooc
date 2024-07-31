@@ -14,78 +14,6 @@ const {
   warningSpaceFeaturesData
 } = warningDisposalData;
 
-const list = ref([
-  {
-    name: "管网",
-    value: 100
-  },
-  {
-    name: "微信",
-    value: 30
-  },
-  {
-    name: "微博",
-    value: 20
-  },
-  {
-    name: "管网",
-    value: 100
-  },
-  {
-    name: "微信",
-    value: 30
-  },
-  {
-    name: "其他",
-    value: 10
-  }
-]);
-
-const tabs = ref([
-  {
-    name: "类型",
-    value: "type"
-  },
-  {
-    name: "分区",
-    value: "partition"
-  }
-]);
-
-//预警来源
-const warningDataLeft = ref([]);
-const warningDataRight = ref([]);
-
-for (let i = 0; i < 4; i++) {
-  warningDataLeft.value.push(warningSourceData[i]);
-}
-
-for (let i = 4; i < 8; i++) {
-  warningDataRight.value.push(warningSourceData[i]);
-}
-
-const warningType = ref([
-  { name: "燃气场站", value: 60, percent: "40" },
-  { name: "窨井", value: 23, percent: "40" },
-  { name: "管线", value: 25, percent: "40" },
-  { name: "终端用户", value: 99, percent: "40" },
-  { name: "阀门井", value: 60, percent: "40" }
-]);
-
-const timeTabs = ref([
-  {
-    name: "近一周",
-    value: "week"
-  },
-  {
-    name: "近一月",
-    value: "month"
-  }
-]);
-
-const onTabChange = k => {
-  console.log(k);
-};
 
 //设置预警等级
 let levelData = ref(warningLevelData[0]);
@@ -224,37 +152,43 @@ const changeActive = name => {
   <div class="pipe-analy">
     <FristLevelTitle title="预警事件分析"></FristLevelTitle>
     <SecondLevelTitle title="预警来源"></SecondLevelTitle>
-    <div class="w-full h-60 flex justify-around">
+    <div class="w-full  flex flex-wrap">
       <!-- 左边 -->
-      <div class="flex flex-wrap justify-end mt-10">
-        <div v-for="(item, index) in warningDataLeft" :key="index">
-          <div :class="`${pipeActive === item.name ? 'leftIconChecked' : 'leftIcon'} w-40 h-12 flex flex-col`"
-            @click="changeActive(item.name)">
-            <div class="ml-6">{{ item.name }}</div>
-            <div class="ml-4">
-              <span
-                :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`">{{
-                  item.value }}</span>个
-            </div>
+      <div class="8k:w-1/3 4k:w-full flex flex-wrap justify-between">
+        <div @click="changeActive(item.name)" :class="`w-1/2 flex flex-col items-center justify-center`"
+          v-for="(item, index) in warningSourceData.slice(0, warningSourceData.length / 2)" :key="index">
+          <div v-if="pipeActive === item.name"
+            class="w-[60%] h-[40%] bg-[url('assets/imgs/warning/yj-source-type-left-checked.png')] bg-size flex items-center justify-center">
+            <span class="font-bold">{{ item.name }}</span>
+          </div>
+          <div v-else
+            class="w-[60%] h-[40%] bg-[url('assets/imgs/warning/yj-source-type-left.png')] bg-size flex items-center justify-center">
+            <span class="font-bold">{{ item.name }}</span>
+          </div>
+          <div :class="`font-bold text-3xl ${pipeActive === item.name ? 'gradient-text-top' : ''}`">{{ item.value
+            }}{{ item.unit }}
           </div>
         </div>
       </div>
       <!-- 中间 -->
       <div
-        class="bg-[url('assets/imgs/warning/yj-source1.png')] bg-cover bg-center w-80 h-60 flex items-center justify-center">
-        <div class="bg-[url('assets/imgs/warning/alarm.png')] bg-cover bg-center w-12 h-12"></div>
+        class="8k:w-1/3 4k:w-full bg-[url('assets/imgs/warning/yj-source1.png')] bg-size bg-center h-60 flex items-center justify-center">
+        <div class="bg-[url('assets/imgs/warning/alarm.png')] bg-size bg-center w-12 h-12"></div>
       </div>
       <!-- 右边 -->
-      <div class="flex flex-wrap mt-10">
-        <div v-for="(item, index) in warningDataRight" :key="index">
-          <div :class="`${pipeActive === item.name ? 'rightIconChecked' : 'rightIcon'} w-40 h-12 flex flex-col `"
-            @click="changeActive(item.name)">
-            <div class="ml-24">{{ item.name }}</div>
-            <div class="ml-20">
-              <span
-                :class="`${pipeActive === item.name ? 'warningsourcestyle_checked' : 'warningsourcestyle'} text-2xl`">{{
-                  item.value }}</span>个
-            </div>
+      <div class="8k:w-1/3 4k:w-full w-1/3 flex flex-wrap justify-between">
+        <div class="w-1/2 flex flex-col items-center justify-center" @click="changeActive(item.name)"
+          v-for="(item, index) in warningSourceData.slice(warningSourceData.length / 2)" :key="index">
+          <div v-if="pipeActive === item.name"
+            class="w-[60%] h-[40%] bg-[url('assets/imgs/warning/yj-source-type-right-checked.png')] bg-size flex items-center justify-center">
+            <span class="font-bold">{{ item.name }}</span>
+          </div>
+          <div v-else
+            class="w-[60%] h-[40%] bg-[url('assets/imgs/warning/yj-source-type-right.png')] bg-size flex items-center justify-center">
+            <span class="font-bold">{{ item.name }}</span>
+          </div>
+          <div :class="`font-bold text-2xl ${pipeActive === item.name ? 'gradient-text-top' : ''}`">{{ item.value }}{{
+            item.unit }}
           </div>
         </div>
       </div>
@@ -263,7 +197,7 @@ const changeActive = name => {
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="预警等级"></SecondLevelTitle>
-        <div class="w-full flex items-center justify-center">
+        <div class="w-full h-full flex items-center justify-around">
           <div
             class="bg-[url('assets/imgs/warning/yjlevel.png')] bg-cover bg-center w-28 h-28 flex flex-col items-center justify-around">
             <div class>
@@ -273,7 +207,7 @@ const changeActive = name => {
             <div class="mb-5">总数</div>
           </div>
 
-          <div class="ml-10">
+          <div class="flex flex-col">
             <div
               class="bg-[url('assets/imgs/warning/firstwarning.png')] bg-cover bg-center w-80 h-8 flex items-center justify-around">
               一级预警
@@ -308,14 +242,14 @@ const changeActive = name => {
         </div>
       </div>
 
-      <div class="8k:w-[48%] 4k:w-full">
+      <div class="8k:w-[48%] 4k:w-full h-full">
         <SecondLevelTitle class="w-full" title="预警事件趋势">
           <!-- <template v-slot:title-slot>
             <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
           </template> -->
         </SecondLevelTitle>
-        <div class="w-full h-full flex items-center justify-center">
-          <div class="w-full h-full flex-2">
+        <div class="w-full h-full flex items-center">
+          <div class="">
             <div class="bg-[url('assets/imgs/warningtotal.png')] bg-cover w-90 flex items-center justify-center">
               <span class="warninglevel text-2xl font-bold">{{ trendData.children[0].name }}</span>
             </div>
@@ -331,7 +265,7 @@ const changeActive = name => {
               </div>
             </div>
           </div>
-          <WarningAreaChart class="flex-2" :trendChartData="areaChartData" />
+          <WarningAreaChart class="h-60 w-2/3" :trendChartData="areaChartData" />
         </div>
       </div>
     </div>
@@ -340,11 +274,14 @@ const changeActive = name => {
       <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="预警类型"></SecondLevelTitle>
         <div class="flex flex-wrap">
-          <div class="bg-[url('assets/imgs/warning/waringtype1.png')] bg-size mt-2 w-[30%] m-2 h-32 flex items-center"
+          <div
+            class="bg-[url('assets/imgs/warning/waringtype1.png')] bg-size p-2 w-[30%] m-2 h-32 flex flex-col items-center"
             v-for="(item, index) in typeData" :key="index">
-            <div :class="`warningtype_${index + 1} bg-size mt-2 w-8 h-8`"></div>
-            <div class="mt-3">
+            <div class=" flex items-center w-full ">
+              <div :class="`warningtype_${index + 1} bg-size mt-2 w-8 h-8`"></div>
               <div class="name">{{ item.name }}</div>
+            </div>
+            <div class="h-full">
               <div class="pipe-point">
                 <span class="text-2xl font-bold">{{ item.value }}</span>个
               </div>
@@ -365,21 +302,12 @@ const changeActive = name => {
 </template>
 
 <style scoped lang="scss">
-.itemth {
-  grid-template-columns: 1fr 3fr 3fr 3fr;
+.gradient-text-top {
+  background: linear-gradient(to bottom, #ffffff, #f6c44a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.item {
-  grid-template-columns: 1fr 3fr 3fr 3fr;
-}
-
-.item:nth-child(odd) {
-  background-color: #053b66;
-}
-
-.item:nth-child(even) {
-  background-color: #012451;
-}
 
 .warninglevel {
   font-family: "PangMenZhengDao";
@@ -401,8 +329,6 @@ const changeActive = name => {
   background: linear-gradient(0deg, #1890ff 0%, #1ee7e7 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
-  font-weight: 800;
 }
 
 .warningsourcestyle_checked {
@@ -413,7 +339,7 @@ const changeActive = name => {
   font-weight: 800;
 }
 
-@for $i from 1 through 5 {
+@for $i from 1 through 9 {
   .warningtype_#{$i} {
     background-image: url("@/assets/imgs/warning/ic_#{$i}.png");
   }

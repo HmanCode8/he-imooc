@@ -17,6 +17,10 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  legendData: {
+    type: Array,
+    default: () => ["已完成数量", "未完成数量"]
+  }
 });
 
 const rootFontSize = useRootFontSize();
@@ -44,14 +48,25 @@ const handleResize = () => {
 
 const renderChart = fontSize => {
   const { xData, y1Data, y2Data } = props.data
-  const data2 = []
-
   const option = {
     tooltip: {
-      trigger: "axis"
+      trigger: "axis",
+      formatter: function (params) {
+        return params.map(function (param) {
+          return param.name + " : " + param.value + " " + props.data.unit;
+        }).join("<br/>");
+      },
+    },
+    title: {
+      text: `单位：${props.data.unit}`,
+      right: 0,
+      textStyle: {
+        fontSize,
+        color: "#fff"
+      }
     },
     legend: {
-      data: ["已完成数量", "未完成数量"],
+      data: props.legendData,
       textStyle: {
         color: "#fff",
         fontSize
@@ -65,7 +80,8 @@ const renderChart = fontSize => {
         data: xData,
         axisLabel: {
           textStyle: {
-            fontSize
+            fontSize,
+            color: "#fff"
           }
         }
       }
@@ -84,7 +100,8 @@ const renderChart = fontSize => {
         },
         axisLabel: {
           textStyle: {
-            fontSize
+            fontSize,
+            color: "#fff"
           }
         }
       }

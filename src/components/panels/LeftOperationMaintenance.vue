@@ -4,6 +4,7 @@ import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import Bar3dChart from "../charts/Bar3dChart.vue";
 import Pipe3dChart from "../charts/Pipe3dChart.vue";
+import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 import _ from "lodash";
 
 import { operationMaintenanceData } from '@/assets/chartData/data'
@@ -21,18 +22,18 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
   <div class="pipe-analy">
     <FristLevelTitle title="巡检巡查"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full ">
+      <div class="8k:w-[45%] 4k:w-full ">
         <div class="h-60 mb-8">
           <SecondLevelTitle class="w-full" title="巡检次数"></SecondLevelTitle>
-          <Pipe3dChart class="h-full" :data="inspectionChartData" :total="totalNum" :haveTotal="true" />
+          <Pipe3dLengendChart class="h-full" :data="inspectionChartData" :total="totalNum" :haveTotal="true" />
         </div>
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="上报问题数量"></SecondLevelTitle>
-        <div class="w-full flex flex-wrap justify-between">
+        <div class="w-full flex flex-wrap ">
           <div class="pipe-item m-2 flex" v-for="(item, index) in problems" :key="index">
-            <div :class="`inspection_${(index + 1) > 6 ? 6 : index + 1}  w-20 h-16 bg-size`"></div>
+            <div :class="`inspection_${index + 1}  w-20 h-16 bg-size`"></div>
             <div class="ml-4 flex flex-col justify-center items-center">
               <div class="problemType">{{ item.name }}({{ item.unit }})</div>
               <div class="problemNumber">{{ item.value }}</div>
@@ -43,12 +44,12 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
     </div>
 
     <div class="flex flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle title="巡检及时率"></SecondLevelTitle>
         <Bar3dChart :data="timelinesRate" class="h-60" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="巡检完成率"></SecondLevelTitle>
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex flex-wrap justify-between">
@@ -65,19 +66,19 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
     <FristLevelTitle title="设施管养"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
 
-      <div class="8k:w-1/2 4k:w-full ">
+      <div class="8k:w-[45%] 4k:w-full ">
         <div class="h-60  mb-14">
           <SecondLevelTitle class="w-full" title="营养次数"></SecondLevelTitle>
           <Pipe3dChart class="h-full" :data="freqChartData" :total="freqTotalNum" :haveTotal="true" />
         </div>
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="发现问题数量"></SecondLevelTitle>
         <div class="w-full flex flex-wrap">
-          <div class="w-full flex flex-wrap justify-between">
+          <div class="w-full flex flex-wrap">
             <div class="pipe-item m-2 flex" v-for="(item, index) in findProblems" :key="index">
-              <div :class="`inspection_${(index + 1) === 6 ? 6 : index + 1}  w-20 h-16 bg-size`"></div>
+              <div :class="`inspection_${index + 1}  w-20 h-16 bg-size`"></div>
               <div class="ml-4 flex flex-col justify-center items-center">
                 <div class="problemType">{{ item.name }}({{ item.unit }})</div>
                 <div class="problemNumber">{{ item.value }}</div>
@@ -89,12 +90,12 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
     </div>
 
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle title="管养及时率"></SecondLevelTitle>
         <Bar3dChart :data="custodyTimeRate" class="h-60" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full">
+      <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="管养完成率"></SecondLevelTitle>
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex flex-wrap justify-between">
@@ -111,7 +112,7 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 </template>
 
 <style scoped lang="scss">
-@for $i from 1 through 7 {
+@for $i from 1 through 8 {
   .inspection_#{$i} {
     background-image: url('@/assets/imgs/operation/inspection_#{$i}.png');
   }

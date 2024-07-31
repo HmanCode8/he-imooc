@@ -43,7 +43,6 @@ const handleResize = (size) => {
 
 const renderChart = (fontSize) => {
     const { data } = props
-    console.log('data==', data)
     const isPrecent = _.some(data, item => item.unit === '%')
     // 倒叙排序
     let sum = isPrecent ? 100 : data.reduce((acc, cur) => acc + Number(cur.value), 0)

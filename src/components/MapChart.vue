@@ -58,13 +58,14 @@
             class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
             {{ sub.name }}
           </div>
-          <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
+          <div ref="leyerRef" v-if="sub.children && 0 < sub.children.length" class="ml-4">
             <div v-for="item in sub.children" :key="item.remark" class="pl-2">
               <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
                 @click="updateLayer(item)">{{ item.name }}
               </div>
             </div>
           </div>
+
           <div v-else>---</div>
         </div>
       </div>
@@ -371,7 +372,7 @@ let defaultCheckedKeys = ref([]);
 const addGX = (viewer) => {
   //加载管线
   // let gxTypes = [ "DSLINE", "DXLINE",  "GDLINE",  "JSLINE",  "LTLINE",  "TRLINE", "TTLINE", "WSLINE", "XHLINE", "YDLINE", "YSLINE"];
-  let gxTypes = [ "DSLINE", "DXLINE",  "GDLINE",  "JSLINE",  "LTLINE",  "TRLINE", "TTLINE"];
+  let gxTypes = ["DSLINE", "DXLINE", "GDLINE", "JSLINE", "LTLINE", "TRLINE", "TTLINE"];
   let comps = [
     "pipelineGeo",
     "pipelineI3dm",
@@ -455,7 +456,7 @@ const addGX = (viewer) => {
       for (let j = 0; j < comps.length; j++) {
         const item = comps[j];
         const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json",          
+          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json",
         }));
         layers_3d.push({
           name: name + '-' + item,
@@ -471,14 +472,14 @@ const addGX = (viewer) => {
     //     item.obj.show = false
     //   }
     // });
-    
+
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
 };
 
-const loadNode = ()=>{
-  defaultCheckedKeys.value = [1,2,3,4,5];
+const loadNode = () => {
+  defaultCheckedKeys.value = [1, 2, 3, 4, 5];
 };
 
 
@@ -712,9 +713,9 @@ const initCesiumMap = async () => {
     }
   });
   addOsgb(viewer);
-  setTimeout(()=>{
+  setTimeout(() => {
     addGX(viewer);
-  },2000)
+  }, 2000)
   setHSV(viewer, 1, 1, 1.2);
   setInfoBox(viewer);
 };

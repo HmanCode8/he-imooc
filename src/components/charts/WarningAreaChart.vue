@@ -1,5 +1,7 @@
 <template>
-  <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+  <div class="">
+    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+  </div>
 </template>
 
 <script setup>
@@ -49,7 +51,7 @@ const renderChart = fontSize => {
       // axisPointer: {
       //   type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
       // },
-      formatter: function(parms) {
+      formatter: function (parms) {
         var str =
           "日期:" +
           parms[0].axisValue +

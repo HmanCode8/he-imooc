@@ -5,7 +5,7 @@ import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import Bar3dChart from "../charts/Bar3dChart.vue";
 import DoubleBarChart from "../charts/DoubleBarChart.vue";
 import LiquidChart from "../charts/LiquidChart.vue";
-import Pipe3dChart from "../charts/Pipe3dChart.vue";
+import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 import _ from "lodash";
 
 import { operationMaintenanceData } from '@/assets/chartData/data'
@@ -24,7 +24,8 @@ const mainChartData = _.filter(maintenanceCounts, (item) => item.name !== "总�
 const doubleBarData = ref({
   xData: _.map(completedRectifications, c => c.name),
   y1Data: _.map(completedRectifications, c => c.value),
-  y2Data: _.map(pendingRectifications, c => c.value)
+  y2Data: _.map(pendingRectifications, c => c.value),
+  unit: '个'
 });
 
 const colors = [
@@ -38,7 +39,6 @@ const colors = [
 ]
 
 const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m, value: Number(m.value) / 100, color: colors[index % 6] }))
-
 </script>
 
 <template>
@@ -58,7 +58,7 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
 
     <div class="">
       <SecondLevelTitle class="w-full" title="整改已完成/未完成数量"></SecondLevelTitle>
-      <DoubleBarChart class="h-60" :data="doubleBarData" />
+      <DoubleBarChart class="h-80" :data="doubleBarData" :legendData="['整改已完成', '未完成']" />
     </div>
 
     <FristLevelTitle title="维护维修  次数/频率"></FristLevelTitle>
@@ -75,8 +75,8 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
           <div class="line h-40">
           </div>
         </div>
-        <Pipe3dChart class="h-full w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" />
-
+        <!-- <Pipe3dChart class="h-full w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" /> -->
+        <Pipe3dLengendChart class="h-full mt-4 w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full flex">

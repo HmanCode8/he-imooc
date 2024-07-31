@@ -92,7 +92,7 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
         <SecondLevelTitle title="布设分析"></SecondLevelTitle>
         <div class="flex flex-wrap justify-between">
             <div class="8k:w-[40%] 4k:w-full flex justify-between">
-                <div v-if="currentRun.layRates.length > 0" class="flex w-[30%]  flex-col items-center">
+                <div v-if="currentRun.layRates.length > 0" class="flex w-[35%] flex-col items-center">
                     <div v-for="r, rIndex in currentRun.layRates"
                         class="bg-size bg-[url('assets/imgs/running/lay-rate.png')] my-2 w-32 h-1/3 flex flex-col items-center">
                         <div :class="`gradient-text-${rIndex}`"><span class="text-xl font-bold ">{{ r.value
@@ -101,12 +101,9 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
                         <div>{{ r.name }}</div>
                     </div>
                 </div>
-                <div v-if="currentRun.sensorData.length > 0" class="w-[65%]">
-                    <div>
-                        <ThirdLevelTitle title="设备类型" />
-
-                    </div>
-                    <div class="flex-col justify-between  h-[80%] overflow-auto">
+                <div v-if="currentRun.sensorData.length > 0" class="w-[60%]">
+                    <ThirdLevelTitle class="w-1/2" title="设备类型" />
+                    <div class="flex-col justify-between max-h-80 overflow-auto">
                         <div class="sen-item flex flex-col my-4" v-for="item in currentRun.sensorData" :key="item.name">
                             <div class="flex items-center">{{ item.name }}</div>
                             <div class="flex h-4 w-full justify-between">
@@ -128,12 +125,10 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
             </div>
             <div class="8k:w-[55%] 4k:w-full flex">
                 <div class="w-full h-full">
-                    <ThirdLevelTitle title="区县设备覆盖" />
-                    <ConeBarChart :data="currentRun.coverageData" title="区县设备覆盖" class="h-64" />
-
+                    <ThirdLevelTitle class="w-1/3 ml-10" title="区县设备覆盖" />
+                    <ConeBarChart :data="currentRun.coverageData" title="区县设备覆盖" class="h-80" />
                 </div>
             </div>
-
         </div>
 
     </div>

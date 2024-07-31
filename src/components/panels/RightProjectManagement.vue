@@ -2,27 +2,16 @@
 import { ref, onMounted } from "vue";
 import FristLevelTitle from "../common/FirstLevelTitle.vue";
 import SecondLevelTitle from "../common/SecondLevelTitle.vue";
-import Tab from "../common/Tab.vue";
 import LineAreaChart from "../charts/LineAreaChart.vue";
 import { projectManageData } from "@/assets/chartData/data";
-import ScrollBarRowChart from "../charts/ScrollBarRowChart.vue";
 import BarRowChart from "../charts/BarRowChart.vue";
 import Tablechart from "../charts/Tablechart.vue";
 
-import PipeDestroyPie from "../charts/PipeDestroyPie.vue";
+import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 
 const { projectSituation, areaConstruction, statisticDestroy, pipeDestroyColumns, pipeDestroyTableData, inspectionData } = projectManageData;
 
-const timeTabs = ref([
-  {
-    name: "近一周",
-    value: "week"
-  },
-  {
-    name: "近一月",
-    value: "month"
-  }
-]);
+
 
 const patrolData = ref(inspectionData);
 const lineAreaData = ref([]);
@@ -118,8 +107,8 @@ const getPastDate = daysAgo => {
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="管线破坏事件" />
         <div class="chart-container w-full h-60">
-          <!-- <Pipe3dChart :pieChartData="pieChartData" /> -->
-          <PipeDestroyPie class="w-full h-full flex" :pieChartData="statisticDestroy" />
+          <Pipe3dLengendChart class="w-full h-full" :data="statisticDestroy" />
+          <!-- <PipeDestroyPie class="w-full h-full flex" :pieChartData="statisticDestroy" /> -->
         </div>
       </div>
 

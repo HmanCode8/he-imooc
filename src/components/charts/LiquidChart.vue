@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { h, onMounted, ref, watch } from "vue";
+import { h, onMounted, ref, toRef, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import "echarts-liquidfill";
@@ -24,24 +24,22 @@ const props = defineProps({
 
 const rootFontSize = useRootFontSize();
 const target = ref(null);
-const { liquidData } = props;
+const data = toRef(props, "liquidData");
 let mChart = null;
 onMounted(() => {
   mChart = echarts.init(target.value);
+  renderChart()
 });
 
-watch([liquidData, rootFontSize], ([newChartData, newFontSize]) => {
+watch([data, rootFontSize], ([newChartData, newFontSize]) => {
   renderChart(newFontSize);
-  if (mChart) {
-    mChart.resize();
-  }
+  mChart && mChart.resize();
 });
-
 
 const renderChart = (fontSize) => {
   const option = {
     title: {
-      text: props.liquidData.name,
+      text: data.value.name,
       textStyle: {
         fontSize,
         color: "rgba(255, 255, 255, 0.7)",
@@ -58,8 +56,8 @@ const renderChart = (fontSize) => {
       {
         type: "liquidFill",
         radius: "100%",
-        data: [Number(props.liquidData.value)],
-        color: props.liquidData.color,
+        data: [Number(data.value.value)],
+        color: data.value.color,
         label: {
           normal: {
             textStyle: {
@@ -94,7 +92,7 @@ const renderChart = (fontSize) => {
               },
               {
                 offset: 1,
-                color: props.liquidData.color
+                color: data.value.color
               }
             ],
             globalCoord: false
@@ -122,7 +120,7 @@ const renderChart = (fontSize) => {
                 },
                 {
                   offset: 1,
-                  color: props.liquidData.color
+                  color: data.value.color
                 }
               ],
               globalCoord: false
