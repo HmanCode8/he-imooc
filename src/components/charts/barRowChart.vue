@@ -51,6 +51,52 @@ const renderChart = (fontSize) => {
         sum = 200
     }
     const unit = data[0].unit || 'km'
+
+    const labelTip = props.haveTop ? {
+        show: true,
+        position: 'right',
+        distance: 13,  // 调整数值和柱子之间的距离
+        formatter: (params) => {
+            const dataIndex = params.dataIndex;
+            let style = 'normal';
+            if (dataIndex === 5) {
+                style = 'first';
+            } else if (dataIndex === 4) {
+                style = 'second';
+            } else if (dataIndex === 3) {
+                style = 'third';
+            }
+            return `{${style}|${data[dataIndex].value} ${unit}}`;
+        },  // 显示对应的数值并加单位
+        rich: {
+            normal: {
+                color: '#fff',
+                fontSize: fontSize
+            },
+            first: {
+                color: '#ffba00', // 金色，第一名
+                fontSize: fontSize
+            },
+            second: {
+                color: '#ffba00', // 银色，第二名
+                fontSize: fontSize
+            },
+            third: {
+                color: '#ffba00', // 铜色，第三名
+                fontSize: fontSize
+            }
+        }
+    } : {
+        show: true,
+        position: 'right',
+        distance: 13,  // 调整数值和柱子之间的距离
+        formatter: (params) => {
+            console.log('params==', params)
+            return `${data[params.dataIndex].value} ${unit}`
+        },  // 显示对应的数值并加单位
+        color: '#fff',
+        fontSize
+    }
     const option = {
         grid: {
             left: '3%',
@@ -93,17 +139,16 @@ const renderChart = (fontSize) => {
             {
                 type: 'bar',
                 data: data.map((item, index) => {
-                    const top3 = [0, 1, 2]
-                    const topColors = ['#00f', '#0f0', '#f00']
-                    let startColor = ''
-                    let endColor = ''
-                    if (!top3.includes(index) && props.haveTop) {
-                        startColor = topColors[index % 3]
-                        endColor = topColors[index % 3]
-                    } else {
-                        startColor = index % 2 === 0 ? '#408391' : '#8c8441'
-                        endColor = index % 2 === 0 ? '#71f4e3' : '#e6c443'
-                    }
+                    // const top3 = [0, 1, 2]
+                    // const topColors = ['#00f', '#0f0', '#f00']
+                    // let startColor = ''
+                    // let endColor = ''
+                    // if (!top3.includes(index) && props.haveTop) {
+                    //     startColor = topColors[index % 3]
+                    //     endColor = topColors[index % 3]
+                    // } else {
+                    const startColor = index % 2 === 0 ? '#408391' : '#8c8441'
+                    const endColor = index % 2 === 0 ? '#71f4e3' : '#e6c443'
                     return {
                         value: Number(item.value),
                         itemStyle: {
@@ -124,14 +169,7 @@ const renderChart = (fontSize) => {
                 itemStyle: {
                     color: 'rgba(255, 255, 255, 0.1)'  // 设置背景柱子的颜色
                 },
-                label: {
-                    show: true,
-                    position: 'right',
-                    distance: 13,  // 调整数值和柱子之间的距离
-                    formatter: (params) => `${data[params.dataIndex].value} ${unit}`,  // 显示对应的数值并加单位
-                    color: '#fff',
-                    fontSize
-                }
+                label: labelTip
             },
             {
                 type: 'bar',

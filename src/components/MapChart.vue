@@ -905,7 +905,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
   // color: #00faff;
-  background-image: url("@/assets/imgs/main/icon-b-active.png");
+  background-image: url("@/assets/imgs/main/icon-b-active.webp");
   background-size: 100% 100%;
   // transform: translateY(-20px);
   transition: all 0.3s ease-in-out;
