@@ -68,11 +68,7 @@ const barChartData = disposalReactData.children.sort((a, b) => Number(a.value) -
           </template>
         </SecondLevelTitle>
 
-        <div class="w-full flex">
-          <div class="chart-container w-full h-60">
-            <BarRowChart :data="barChartData" :haveTop="true" />
-          </div>
-        </div>
+        <BarRowChart class=" w-full h-60" :data="barChartData" :haveTop="true" />
       </div>
     </div>
     <div class="flex w-full flex-wrap justify-between">
@@ -109,10 +105,7 @@ const barChartData = disposalReactData.children.sort((a, b) => Number(a.value) -
             </div>
           </template>
         </SecondLevelTitle>
-
-        <!-- <WarningConeBarChart :chartData="disposalTimeData.children" class="h-80" /> -->
         <ConeBarChart :data="disposalTimeData.children" title="处置时长" class="h-64 w-full" />
-
       </div>
     </div>
 

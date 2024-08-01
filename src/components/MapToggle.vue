@@ -20,7 +20,7 @@ const mapTypes = ref(types)
 <template>
     <div class="">
         <div class="map-type relative flex">
-            <div :class="`wrap-item rounded-sm 4k:w-20 4k:h-16 8k:w-32 8k:h-20 ${modelValue === type.value ? 'active' : ''}`"
+            <div :class="`wrap-item rounded-sm 4k:w-20 4k:h-16 bg-white 8k:w-32 8k:h-20 ${modelValue === type.value ? 'active' : ''}`"
                 @click="emits('update:modelValue', type.value)" v-for="(type, index) in mapTypes" :key="type.value">
                 <div :class="`map-type-item-${index} rounded-sm w-full h-full bg-size relative hover:cursor-pointer`">
                     <div class="absolute bottom-0 right-1">{{ type.name }}</div>

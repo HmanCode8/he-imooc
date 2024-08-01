@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { h, onMounted, ref, toRef, watch } from "vue";
+import { h, onMounted, ref, toRef, watch, onUnmounted } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 import "echarts-liquidfill";
@@ -26,10 +26,15 @@ const rootFontSize = useRootFontSize();
 const target = ref(null);
 const data = toRef(props, "liquidData");
 let mChart = null;
+
 onMounted(() => {
   mChart = echarts.init(target.value);
   renderChart()
 });
+
+onUnmounted(() => {
+  mChart.dispose();
+})
 
 watch([data, rootFontSize], ([newChartData, newFontSize]) => {
   renderChart(newFontSize);

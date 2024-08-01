@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, nextTick } from "vue";
+import { onMounted, ref, watch, nextTick, toRef, onUnmounted } from "vue";
 import * as echarts from "echarts";
 import bgimage from "@/assets/imgs/main/title-h-third.png";
 
@@ -23,7 +23,7 @@ const props = defineProps({
         default: false
     },
     total: {
-        type: Number,
+        type: Number || String,
         default: 0
     },
     graphicTitle: {
@@ -35,27 +35,29 @@ const props = defineProps({
 const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
 const target = ref(null);
 const rootFontSize = useRootFontSize();
-
+const chartData = toRef(props.data);
 let mChart = null;
+
 onMounted(() => {
     nextTick(() => {
-        if (target.value) {
-            mChart = echarts.init(target.value);
-            renderChart(rootFontSize.value);
-        }
+        mChart = echarts.init(target.value);
+        renderChart(rootFontSize.value);
     });
 });
 
+onUnmounted(() => {
+    mChart.dispose();
+})
 
-watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
+watch([chartData.value, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     mChart && mChart.resize();
 });
 
 const renderChart = (fontSize) => {
-    const unit = props.data[0].unit || "";
-    const total = props.total !== 0 ? props.total : _.sum(_.map(props.data, d => Number(d.value)), "value");
-    const optionData = _.map(props.data, (dItem, index) => {
+    const unit = chartData.value[0].unit || "";
+    const total = props.total !== 0 ? props.total : _.sum(_.map(chartData.value, d => Number(d.value)), "value");
+    const optionData = _.map(chartData.value, (dItem, index) => {
         return {
             ...dItem,
             value: Number(dItem.value),

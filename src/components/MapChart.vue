@@ -9,11 +9,11 @@
         @check-change="handleCheckChange" node-key="id" default-expand-all :default-checked-keys="[2]"></el-tree>
     </div>
     <!-- 专题栏 -->
-    <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
+    <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0">
       <div
-        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4">
+        class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4 z-10">
         <div
-          :class="`t-item hover:cursor-pointer font-bold flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
+          :class="`t-item hover:cursor-pointer flex items-center h-full relative ${global.componentId === tab.value ? 'text-[#75fbfd] ' : ''}`"
           v-for="tab in topTabs" :key="tab.value" @click="global.setMapCurrentTab(tab.value)">
           <div class="font-[pengmenzhengdao]">{{ tab.name }}</div>
           <div v-if="global.componentId === tab.value"
@@ -157,13 +157,10 @@ const currentItem = computed(() =>
 // }
 
 const initOpenLayersMap = () => {
-  if (layerConfig.hasOwnProperty("customProjections")) {
-    let projectionArr = [];
-    for (let key in layerConfig.customProjections) {
-      projectionArr.push([key, layerConfig.customProjections[key]]);
-    }
-    proj4.defs(projectionArr);
-  }
+  const { customProjections = '' } = layerConfig
+  const key = Object.keys(customProjections)[0];
+  const value = Object.values(customProjections)[0];
+  proj4.defs([[key, value]]);
   register(proj4);
 
   const baseLayerConfig = layerConfig["baseLayer"][mapType.value];
@@ -778,18 +775,16 @@ const handleCheckChange = (data, checked, indeterminate) => {
   }
 };
 
-const handleNodeClick = (data, checked, indeterminate, event) => {
-  if (checked.checked) {
-    let currentData = JSON.parse(JSON.stringify(data));
-    if (currentData.label === "倾斜模型") {
-      viewer.flyTo(qxtileset);
-    } else {
-      for (let i = 0; i < layers_3d.length; i++) {
-        const element = layers_3d[i];
-        if (element.name.indexOf(currentData.label) > -1) {
-          viewer.flyTo(element.obj);
-          break;
-        }
+const handleNodeClick = (data, { checked }) => {
+  let { label = '' } = JSON.parse(JSON.stringify(data));
+  if (label === "倾斜模型") {
+    viewer.flyTo(qxtileset);
+  } else {
+    for (let i = 0; i < layers_3d.length; i++) {
+      const element = layers_3d[i];
+      if (element.name.indexOf(currentData.label) > -1) {
+        viewer.flyTo(element.obj);
+        break;
       }
     }
   }
@@ -801,36 +796,45 @@ const initLayerTree = (key) => {
 }
 
 const change2dBaseMap = mapType => {
-  const baseLayerArr = _.get(layerConfig, "baseLayer." + mapType, []);
-  if (!_.some(map.value.getAllLayers(), v => "base" === v.get("layerGroup") && baseLayerArr.includes(v.get("layerName")))) {
+  try {
+    const baseLayerArr = _.get(layerConfig, `baseLayer.${mapType}`, []);
     const baseLayers = baseLayerArr.map(v => createLayer(getLayerSource(v), "base"));
-    map.value.getAllLayers().filter(v => "base" === v.get("layerGroup")).forEach(v => map.value.removeLayer(v));
-    const layerCollection = map.value.getLayers();
-    for (let i = 0; i < baseLayers.length; i++) {
-      layerCollection.insertAt(i, baseLayers[i]);
+    const existingBaseLayers = map.value.getAllLayers().filter(v => "base" === v.get("layerGroup"));
+
+    if (existingBaseLayers.length !== baseLayerArr.length || !existingBaseLayers.every(layer => baseLayerArr.includes(layer.get("layerName")))) {
+      existingBaseLayers.forEach(v => map.value.removeLayer(v));
+      const layerCollection = map.value.getLayers();
+      baseLayers.forEach((layer, index) => layerCollection.insertAt(index, layer));
     }
+  } catch (error) {
+    console.error("Error changing 2D base map:", error);
   }
 }
 
 watch(mapType, (val) => {
-  if ("scene" !== mapType.value) {
-    cesiumViewer.value && cesiumViewer.value.destroy();
-    cesiumViewer.value = null;
-    if (map.value) {
-      map.value.setTarget(target.value);
-      change2dBaseMap(val);
+  try {
+    if (mapType.value !== "scene") {
+      cesiumViewer.value?.destroy();
+      cesiumViewer.value = null;
+      if (map.value) {
+        map.value.setTarget(target.value);
+        change2dBaseMap(val);
+      } else {
+        initOpenLayersMap();
+      }
+      threedlayercontrol.value = false;
     } else {
-      initOpenLayersMap();
+      if (map.value) {
+        closePop(map.value);
+        map.value.setTarget(null);
+      }
+      initCesiumMap();
     }
-    threedlayercontrol.value = false;
-  } else {
-    if (map.value) {
-      closePop(map.value);
-      map.value.setTarget(null);
-    }
-    initCesiumMap();
+  } catch (error) {
+    console.error("Error in mapType watcher:", error);
   }
-})
+});
+
 
 watch(
   () => currentLayerTab.value,

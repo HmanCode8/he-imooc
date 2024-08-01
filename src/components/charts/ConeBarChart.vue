@@ -1,11 +1,11 @@
 <template>
     <div class="">
-        <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+        <div ref="target" class="w-full h-full"></div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref, toRef, watch } from 'vue';
+import { onMounted, ref, toRef, watch, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
 import useRootFontSize from '@/hooks/useRootFontSize';
 import _ from 'lodash';
@@ -31,6 +31,10 @@ onMounted(() => {
     renderChart(rootFontSize.value);
 });
 
+onUnmounted(() => {
+    mChart.dispose();
+})
+
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     if (mChart) {
@@ -38,10 +42,7 @@ watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     }
 });
 
-const handleResize = () => {
-    renderChart(rootFontSize.value);
-    mChart && mChart.resize();
-};
+
 const renderChart = (fontSize = chartFontSize) => {
     const xLabel = _.map(props.data, item => item.name);
     const dataValue = _.map(props.data, item => item.value);

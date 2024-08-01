@@ -78,19 +78,14 @@ watch(pipeActive, (val) => {
             <!-- 行政区划分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full" title="地下管线数据汇聚率"></ThirdLevelTitle>
-                <Pipe3dChart :data="inspectionChartData" :total="totalNum" :haveTotal="true"
+                <Pipe3dChart class="w-full h-60" :data="inspectionChartData" :total="totalNum" :haveTotal="true"
                     :graphicTitle="totalTitle" />
 
             </div>
             <!-- 管龄分析 -->
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full" title="管龄分析"></ThirdLevelTitle>
-
-                <div class="w-full flex">
-                    <div class="chart-container w-full h-60">
-                        <BarRowChart :data="currentData.pipeAgeData" />
-                    </div>
-                </div>
+                <BarRowChart class="w-full h-60" :data="currentData.pipeAgeData" />
             </div>
 
             <!-- 管径分析 -->

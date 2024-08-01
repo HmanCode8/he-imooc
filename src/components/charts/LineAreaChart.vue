@@ -1,34 +1,44 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div class="">
+        <div ref="target" class="w-full h-full"></div>
+
+    </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, onUnmounted, toRef, watch, nextTick } from 'vue';
 import * as echarts from 'echarts';
 import useRootFontSize from '@/hooks/useRootFontSize';
 
 const props = defineProps({
-    lineAreaChartData: {
+    data: {
         type: Array,
+        default: () => [],
     }
 });
-
 
 const target = ref(null);
+const chartData = toRef(props.data);
+const rootFontSize = useRootFontSize();
 let mChart = null;
+
 onMounted(() => {
-    mChart = echarts.init(target.value);
+    nextTick(() => {
+        mChart = echarts.init(target.value);
+        renderChart(rootFontSize.value);
+    })
 });
 
-const handleResize = () => {
-    const rootFontSize = useRootFontSize();
-    renderChart(rootFontSize.value);
-    if (mChart) {
-        mChart.resize();
-    }
-};
+onUnmounted(() => {
+    mChart.dispose();
+})
 
+watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
+    renderChart(newFontSize);
+    mChart && mChart.resize();
+});
 const renderChart = (fontSize = 12) => {
+    console.log(chartData.value, '00120');
     const option = {
         title: {
             right: '5%',
@@ -59,7 +69,7 @@ const renderChart = (fontSize = 12) => {
                     show: false,
                 },
                 boundaryGap: false,
-                data: props.lineAreaChartData[0],
+                data: chartData.value[0],
             },
         ],
         yAxis: [
@@ -143,11 +153,10 @@ const renderChart = (fontSize = 12) => {
                         shadowBlur: 20,
                     },
                 },
-                data: props.lineAreaChartData[1],
+                data: chartData.value[1],
             },
         ],
     };
-
     mChart.setOption(option);
 };
 </script>

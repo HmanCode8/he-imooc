@@ -71,36 +71,27 @@ const getPastDate = daysAgo => {
 
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="区域在建" />
-
-        <div class="w-full flex">
-          <div class="chart-container w-full h-60">
-            <!-- <BarRowChart /> -->
-            <BarRowChart :data="areaConstruction" :baseSum="true" />
-
-            <!-- <ScrollBarRowChart :areaData="areaConstruction" /> -->
-          </div>
-        </div>
+        <BarRowChart class=" w-full h-60" :data="areaConstruction" :baseSum="true" />
       </div>
     </div>
 
-    <div>
+    <div class="w-full">
       <SecondLevelTitle class="w-full" title="巡检巡查">
         <!-- <template v-slot:title-slot>
           <Tab :data="timeTabs" @onTabOnchage="onTabChange" />
         </template> -->
       </SecondLevelTitle>
 
-      <div class="chart-container w-full h-80">
-        <div class="flex justify-center items-center">
-          <div class="px-2">{{ patrolData[0].name }}:{{ patrolData[0].value }}</div>
-          <div class="px-2 flex items-center">
-            {{ patrolData[1].name }}:
-            <span>{{ patrolData[1].value }}</span>
-            <i class="w-2 h-4 ml-2 bg-[url('assets/imgs/project/down.png')] bg-size"></i>
-          </div>
+      <div class="flex justify-center items-center">
+        <div class="px-2">{{ patrolData[0].name }}:{{ patrolData[0].value }}</div>
+        <div class="px-2 flex items-center">
+          {{ patrolData[1].name }}:
+          <span>{{ patrolData[1].value }}</span>
+          <i class="w-2 h-4 ml-2 bg-[url('assets/imgs/project/down.png')] bg-size"></i>
         </div>
-        <LineAreaChart :lineAreaChartData="lineAreaData" />
       </div>
+      <LineAreaChart class="h-60 w-full" :data="lineAreaData" />
+
     </div>
 
     <div class="flex flex-wrap justify-between">

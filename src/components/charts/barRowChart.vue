@@ -1,9 +1,11 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div class="">
+        <div ref="target" class="w-full h-full"></div>
+    </div>
 </template>
 
 <script setup>
-import { onMounted, ref, toRef, watch } from 'vue'
+import { onMounted, ref, toRef, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import useRootFontSize from '@/hooks/useRootFontSize';
 import _ from 'lodash'
@@ -14,7 +16,7 @@ const props = defineProps({
     },
     baseSum: {
         type: Number,
-        default: false
+        default: 0
     },
     haveTop: {
         type: Boolean,
@@ -23,26 +25,26 @@ const props = defineProps({
 })
 
 const target = ref(null)
-const { data } = toRef(props)
+const chartData = toRef(props.data)
 const rootFontSize = useRootFontSize();
 let mChart = null
+
 onMounted(() => {
     mChart = echarts.init(target.value);
+    renderChart(rootFontSize.value);
 });
 
-watch([data, rootFontSize], ([newChartData, newFontSize]) => {
+onUnmounted(() => {
+    mChart.dispose();
+})
+
+watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     mChart && mChart.resize();
 });
 
-const handleResize = (size) => {
-    const fontSize = useRootFontSize()
-    renderChart(fontSize.value)
-    mChart.resize()
-}
-
 const renderChart = (fontSize) => {
-    const { data } = props
+    const data = chartData.value
     const isPrecent = _.some(data, item => item.unit === '%')
     // 倒叙排序
     let sum = isPrecent ? 100 : data.reduce((acc, cur) => acc + Number(cur.value), 0)
@@ -90,7 +92,6 @@ const renderChart = (fontSize) => {
         position: 'right',
         distance: 13,  // 调整数值和柱子之间的距离
         formatter: (params) => {
-            console.log('params==', params)
             return `${data[params.dataIndex].value} ${unit}`
         },  // 显示对应的数值并加单位
         color: '#fff',

@@ -1476,7 +1476,7 @@ const operationMaintenanceData = {
   inspectionNum: [
     {
       name: "总数",
-      value: "16393",
+      value: 16393,
       unit: "次",
     },
     {
@@ -1760,7 +1760,7 @@ const operationMaintenanceData = {
   frequNums: [
     {
       name: "总数",
-      value: "431",
+      value: 431,
       unit: "次",
     },
     {
@@ -1803,7 +1803,7 @@ const operationMaintenanceData = {
   inspectionCounts: [
     {
       name: "总数",
-      value: "8808",
+      value: 8808,
       unit: "次",
     },
     {
@@ -1960,7 +1960,7 @@ const operationMaintenanceData = {
   maintenanceCounts: [
     {
       name: "总数",
-      value: "170",
+      value: 170,
       unit: "次",
     },
     {

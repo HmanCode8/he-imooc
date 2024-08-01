@@ -1,9 +1,11 @@
 <template>
-    <div ref="target" v-resize-ob="handleResize" class="w-full h-full"></div>
+    <div class="">
+        <div ref="target" class="w-full h-full"></div>
+    </div>
 </template>
 
 <script setup>
-import { h, onMounted, ref, watch } from 'vue'
+import { h, onMounted, ref, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 // import { Label } from 'cesium';
 
@@ -17,10 +19,10 @@ onMounted(() => {
     mChart = echarts.init(target.value)
     renderChart()
 })
+onUnmounted(() => {
+    mChart.dispose();
+})
 
-const handleResize = (size) => {
-    mChart.resize()
-}
 
 const renderChart = () => {
     const option = {

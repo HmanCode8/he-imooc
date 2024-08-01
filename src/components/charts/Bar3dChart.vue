@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { h, onMounted, ref, watch, toRef } from 'vue';
+import { h, onMounted, onUnmounted, ref, watch, toRef } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts-gl';
 import useRootFontSize from '@/hooks/useRootFontSize';
@@ -38,7 +38,11 @@ onMounted(() => {
     renderChart(rootFontSize.value);
 });
 
+onUnmounted(() => {
+    mChart.dispose();
+})
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
+    renderChart(newFontSize);
     mChart && mChart.resize();
 });
 

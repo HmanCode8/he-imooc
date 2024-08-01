@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRef, watch, nextTick } from 'vue'
+import { onMounted, ref, toRef, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import useRootFontSize from "@/hooks/useRootFontSize";
 import _ from 'lodash';
@@ -31,16 +31,17 @@ const rootFontSize = useRootFontSize();
 let mChart = null;
 
 onMounted(() => {
-    nextTick(() => {
-        mChart = echarts.init(target.value);
-        renderChart(rootFontSize.value);
-    });
+    mChart = echarts.init(target.value);
+    renderChart(rootFontSize.value);
 });
+
+onUnmounted(() => {
+    mChart.dispose();
+})
 
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     mChart && mChart.resize();
-
 });
 
 const renderChart = (fontSize) => {

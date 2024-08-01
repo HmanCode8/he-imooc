@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRef, watch } from "vue";
+import { onMounted, onUnmounted, ref, toRef, watch } from "vue";
 import * as echarts from "echarts";
 import bgimage from "@/assets/imgs/main/title-h-third.png";
 
@@ -23,7 +23,7 @@ const props = defineProps({
         default: false
     },
     total: {
-        type: Number,
+        type: Number || String,
         default: 0
     },
     graphicTitle: {
@@ -35,13 +35,16 @@ const props = defineProps({
 const colors = ['#3796FF', '#FFF500', '#23FF5F', '#FF3784', '#FFA514', '#AF5AFF', '#FFCE56', '#36A2EB', '#FFA07A']
 const target = ref(null);
 const rootFontSize = useRootFontSize();
-const { data } = toRef(props);
+const chartData = toRef(props.data);
 let mChart = null;
 onMounted(() => {
     mChart = echarts.init(target.value);
 });
+onUnmounted(() => {
+    mChart.dispose();
+})
 
-watch([data, rootFontSize], ([newChartData, newFontSize]) => {
+watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
     renderChart(newFontSize);
     if (mChart) {
         mChart.resize();
@@ -55,7 +58,7 @@ const handleResize = () => {
 
 };
 const renderChart = (fontSize) => {
-    const total = props.total !== 0 ? props.total : _.sum(_.map(props.data, d => Number(d.value)), "value");
+    const total = props.total !== 0 ? props.total : _.sum(_.map(chartData.value, d => Number(d.value)), "value");
 
     // const total = props.data.reduce((acc, cur) => acc + Number(cur.value), 0);
     // 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
@@ -448,7 +451,7 @@ const renderChart = (fontSize) => {
                 },
                 item
             ]
-            const unit = props.data[0].unit
+            const unit = chartData.value[0].unit
             option.graphic = [
                 {
                     type: "text",
@@ -503,7 +506,7 @@ const renderChart = (fontSize) => {
         return option;
     }
 
-    const serData = _.map(props.data, (dItem, index) => {
+    const serData = _.map(chartData.value, (dItem, index) => {
         return {
             ...dItem,
             value: Number(dItem.value),

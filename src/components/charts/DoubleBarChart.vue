@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { h, onMounted, ref, watch } from "vue";
+import { h, onMounted, ref, watch, onUnmounted } from "vue";
 import * as echarts from "echarts";
 import "echarts-gl";
 // import { Label } from "cesium";
@@ -31,11 +31,15 @@ onMounted(() => {
   mChart = echarts.init(target.value);
 });
 
+onUnmounted(() => {
+  mChart.dispose();
+})
+
+
 watch([props.data, rootFontSize], ([newChartData, newFontSize]) => {
   renderChart(newFontSize);
-  if (mChart) {
-    mChart.resize();
-  }
+  mChart && mChart.resize();
+
 });
 
 const handleResize = () => {
@@ -108,7 +112,7 @@ const renderChart = fontSize => {
     ],
     series: [
       {
-        name: "整改完成",
+        name: props.legendData[0],
         type: "bar",
         data: y1Data,
         label: {
@@ -131,7 +135,7 @@ const renderChart = fontSize => {
         }
       },
       {
-        name: "未整改",
+        name: props.legendData[1],
         type: "bar",
         data: y2Data,
         label: {

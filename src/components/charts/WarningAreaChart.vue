@@ -12,10 +12,10 @@ import "echarts-gl";
 import useRootFontSize from "@/hooks/useRootFontSize";
 
 const props = defineProps({
-  barData: {
-    type: Object,
-    required: true
-  },
+  // barData: {
+  //   type: Object,
+  //   required: true
+  // },
   trendChartData: {
     type: Object,
     required: true
