@@ -76,7 +76,7 @@ const iconList = [
     value: "icon-tuceng",
   },
   {
-    name: "删除",
+    name: "清除",
     value: "icon-delete",
   },
   {

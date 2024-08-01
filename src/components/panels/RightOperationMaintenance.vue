@@ -9,7 +9,9 @@ import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 import _ from "lodash";
 
 import { operationMaintenanceData } from '@/assets/chartData/data'
+import {useGlobalStore} from "@/store/index.js";
 
+const global = useGlobalStore();
 const { inspectionCounts, reportedIssues, completedRectifications, pendingRectifications, maintenanceCounts, maintenanceFrequencies } = operationMaintenanceData
 
 const totalNum = _.get(_.find(inspectionCounts, { name: "总数" }), 'value', 0)
@@ -43,7 +45,7 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
 
 <template>
   <div class="pipe-analy">
-    <FristLevelTitle title="安全专项检查"></FristLevelTitle>
+    <FristLevelTitle title="安全专项检查" class="hover:cursor-pointer" @click="global.setCurrentModule('安全专项检查')" />
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80">
         <SecondLevelTitle class="w-full" title="检查次数"></SecondLevelTitle>
@@ -61,7 +63,7 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
       <DoubleBarChart class="h-80" :data="doubleBarData" :legendData="['整改已完成', '未完成']" />
     </div>
 
-    <FristLevelTitle title="维护维修  次数/频率"></FristLevelTitle>
+    <FristLevelTitle title="维护维修  次数/频率" class="hover:cursor-pointer" @click="global.setCurrentModule('维护维修')" />
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full h-80 flex">
         <div class="longstrip h-40 flex flex-col items-center pt-2">

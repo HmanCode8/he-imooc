@@ -8,6 +8,9 @@ import Bar3dChart from "../charts/Bar3dChart.vue";
 import BarRowChart from "../charts/BarRowChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
 import _ from "lodash";
+import {useGlobalStore} from "@/store/index.js";
+
+const global = useGlobalStore();
 const {
   disposalStageData,
   disposalReactData,
@@ -48,7 +51,7 @@ const barChartData = disposalReactData.children.sort((a, b) => Number(a.value) -
     <FristLevelTitle title="事件处置分析"></FristLevelTitle>
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-[48%] 4k:w-full">
-        <SecondLevelTitle title="处置阶段分析"></SecondLevelTitle>
+        <SecondLevelTitle title="处置阶段分析" class="hover:cursor-pointer" @click="global.setCurrentModule('处置阶段分析')"/>
         <Pipe3dChart class="h-full" :data="Pie3DChartData" :total="totalNum" :haveTotal="true" />
       </div>
 

@@ -27,7 +27,7 @@ function createDefaultPopup(element) {
     });
 }
 
-async function getPopInfo(evt, currentLayerGroup) {
+async function getPopInfo(evt, currentLayerGroup, getEnglishKey = true) {
     const viewResolution = evt.map.getView().getResolution();
     const projection = evt.map.getView().getProjection();
     let layers = evt.map.getAllLayers();
@@ -54,16 +54,19 @@ async function getPopInfo(evt, currentLayerGroup) {
                     geoJsonParser.readFeatures(responseText);
                 if (0 < features.length) {
                     const filterFields = _.get(layerConfig, "detailFields", []);
+                    const exceptFields = ["geometry", "shape", "objectid", "_"];
                     const englishRegExp=new RegExp("[A-Za-z]");
                     const showProperties = _.mapValues(
                         _.pickBy(features[0].getProperties(),
-                            (v, k) => !englishRegExp.test(k) && (0 === filterFields.length || filterFields.includes(k))),
+                            (v, k) => (getEnglishKey || !englishRegExp.test(k))
+                                && !exceptFields.some(prefix => _.toLower(k).startsWith(prefix))
+                                && (0 === filterFields.length || filterFields.includes(k))),
                         v => _.isNil(v) || "null" === _.toLower(v) ? "" : v);
                     if (0 < Object.keys(showProperties).length) {
                         const name = _.get(
                             _.find(currentLayerGroup, v =>
                                 v.source === layers[index].get("layerName") && _.get(v, "detailLayer", "").split(",").includes(layerId)),
-                            "name", "详情");
+                            "name", "") + "详情";
                         return {layerName: name, properties: showProperties};
                     }
                 }
@@ -95,7 +98,7 @@ function getArcgisIdentifyUrl(layer, mapInstance, queryParam) {
     const params = {
         'F': 'JSON',
         'GEOMETRYTYPE': 'esriGeometryPoint',
-        'TOLERANCE': 50
+        'TOLERANCE': 2
     };
     Object.assign(params, queryParam);
     const extent = getRequestExtent(mapInstance.getView().calculateExtent(mapInstance.getSize()),

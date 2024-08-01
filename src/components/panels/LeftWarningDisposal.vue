@@ -5,7 +5,9 @@ import SecondLevelTitle from "../common/SecondLevelTitle.vue";
 import WarningAreaChart from "../charts/WarningAreaChart.vue";
 import WarningTableChart from "../charts/WarningTableChart.vue";
 import { warningDisposalData } from "@/assets/chartData/data";
+import {useGlobalStore} from "@/store/index.js";
 
+const global = useGlobalStore();
 const {
   warningSourceData,
   warningLevelData,
@@ -136,6 +138,8 @@ const changeActive = name => {
     name = "总数"
   }
   pipeActive.value = name;
+  global.setCurrentModule(name);
+
   //设置预警等级
   setWarningLevelData(name);
   //设置预警趋势
@@ -155,7 +159,7 @@ const changeActive = name => {
     <div class="w-full  flex flex-wrap">
       <!-- 左边 -->
       <div class="8k:w-1/3 4k:w-full flex flex-wrap justify-between">
-        <div @click="changeActive(item.name)" :class="`w-1/2 flex flex-col items-center justify-center`"
+        <div @click="changeActive(item.name)" class="w-1/2 flex flex-col items-center justify-center hover:cursor-pointer"
           v-for="(item, index) in warningSourceData.slice(0, warningSourceData.length / 2)" :key="index">
           <div v-if="pipeActive === item.name"
             class="w-[60%] h-[40%] bg-[url('assets/imgs/warning/yj-source-type-left-checked.png')] bg-size flex items-center justify-center">
@@ -177,7 +181,7 @@ const changeActive = name => {
       </div>
       <!-- 右边 -->
       <div class="8k:w-1/3 4k:w-full w-1/3 flex flex-wrap justify-between">
-        <div class="w-1/2 flex flex-col items-center justify-center" @click="changeActive(item.name)"
+        <div class="w-1/2 flex flex-col items-center justify-center hover:cursor-pointer" @click="changeActive(item.name)"
           v-for="(item, index) in warningSourceData.slice(warningSourceData.length / 2)" :key="index">
           <div v-if="pipeActive === item.name"
             class="w-[60%] h-[40%] bg-[url('assets/imgs/warning/yj-source-type-right-checked.png')] bg-size flex items-center justify-center">

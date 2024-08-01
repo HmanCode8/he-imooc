@@ -9,9 +9,10 @@ import BarRowChart from '../charts/BarRowChart.vue';
 import Bar3dChart from '../charts/Bar3dChart.vue';
 import PipeIconChart from '../charts/PipeIconChart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
+import { useGlobalStore } from "@/store/index.js";
 
 const { facilities, baseData, typeAlysisData, totleSize } = basicFacilitiesData
-
+const global = useGlobalStore();
 const totalTitle = '总汇聚率'
 const totalNum = _.get(_.find(typeAlysisData, { name: totalTitle }), 'value', 0)
 const inspectionChartData = _.filter(typeAlysisData, (item) => item.name !== totalTitle).sort((a, b) => Number(b.value) - Number(a.value))
@@ -29,7 +30,7 @@ watch(pipeActive, (val) => {
     // _.find(baseData, m => m.name === val)
     // const data = data.sort((a, b) => Number(a.value) - Number(b.value))
     currentData.value = _.find(baseData, m => m.name === val)
-
+    global.setCurrentModule(val + "管线");
 }, {
     immediate: true
 })
@@ -84,19 +85,24 @@ watch(pipeActive, (val) => {
             </div>
             <!-- 管龄分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <ThirdLevelTitle class="w-full" title="管龄分析"></ThirdLevelTitle>
+                <ThirdLevelTitle class="w-full hover:cursor-pointer" title="管龄分析"
+                    @click="global.setCurrentModule(pipeActive + '管龄')"></ThirdLevelTitle>
                 <BarRowChart class="w-full h-60" :data="currentData.pipeAgeData" />
             </div>
 
             <!-- 管径分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="管径分析"></SecondLevelTitle>
+                <SecondLevelTitle class="hover:cursor-pointer" title="管径分析"
+                    @click="global.setCurrentModule(pipeActive + '管径')">
+                </SecondLevelTitle>
                 <Bar3dChart :data="currentData.diameterData" title="管径" class="w-full h-60" />
             </div>
 
             <!-- 管材分析 -->
             <div class="8k:w-1/2 4k:w-full">
-                <SecondLevelTitle title="管材分析"></SecondLevelTitle>
+                <SecondLevelTitle class="hover:cursor-pointer" title="管材分析"
+                    @click="global.setCurrentModule(pipeActive + '管材')">
+                </SecondLevelTitle>
                 <PipeIconChart :data="currentData.pipeTextureData" class="w-full h-60" />
             </div>
         </div>

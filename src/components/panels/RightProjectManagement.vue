@@ -99,7 +99,6 @@ const getPastDate = daysAgo => {
         <SecondLevelTitle class="w-full" title="管线破坏事件" />
         <div class="chart-container w-full h-60">
           <Pipe3dLengendChart class="w-full h-full" :data="statisticDestroy" />
-          <!-- <PipeDestroyPie class="w-full h-full flex" :pieChartData="statisticDestroy" /> -->
         </div>
       </div>
 
