@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
-// import cesium from "vite-plugin-cesium";
-
+import ImageminPlugin from "vite-plugin-imagemin";
+import ImageminWebp from "imagemin-webp";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
@@ -12,8 +12,17 @@ export default defineConfig({
   assetsInclude: ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg"], // 根据需要添加其他静态资源类型
   plugins: [
     vue(),
-    // cesium(),
-
+    new ImageminPlugin({
+      // 启用开发模式，在开发环境中可以设置为false
+      disable: process.env.NODE_ENV !== "production",
+      pngquant: {
+        quality: [0.65, 0.9],
+        speed: 4,
+      },
+      webp: {
+        quality: 75, // 设置适当的质量
+      },
+    }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
