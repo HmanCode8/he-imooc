@@ -6,8 +6,9 @@ import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import _ from 'lodash'
 import ConeBarChart from '../charts/ConeBarChart.vue'
 import { runningMonitoringData } from '@/assets/chartData/data'
+import {useGlobalStore} from "@/store/index.js";
 
-
+const global = useGlobalStore();
 const { internetDevices, analyDeatailData, monitorData } = runningMonitoringData
 
 const runActive = ref('总数')
@@ -34,6 +35,7 @@ const onTabChange = (name) => {
         runActive.value = '总数'
         return
     }
+    global.setCurrentModule(name);
     runActive.value = name
 }
 const barWidth = (index) => {
@@ -51,12 +53,11 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
         <FristLevelTitle title="设施概况"></FristLevelTitle>
         <SecondLevelTitle title="状态分析"></SecondLevelTitle>
         <div class="flex w-full justify-around">
-            <div class="flex w-full items-center justify-center px-2" v-for="item, index in internetDevices"
+            <div class="flex w-full items-center justify-center px-2" v-for="(item, index) in internetDevices"
                 :key="item.name">
                 <div
                     :class="`w-1/4 flex items-center text-center ${index === 0 ? 'h-10 bg-[url(assets/imgs/overview/o-bottom.png)] bg-size' : ''}`">
-                    {{
-                        item.name }}</div>
+                    {{ item.name }}</div>
                 <div v-if="index !== 0" class="w-2/4 bg-[#30518d] h-6 rounded-2xl">
                     <div :style="{ width: `${barWidth(index)}%` }" class="bar h-full bg-gradient rounded-2xl"></div>
                 </div>
@@ -67,7 +68,7 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
 
         <div class="flex items-center my-4 justify-between flex-wrap">
             <div class="flex 8k:w-1/3 4:w-full items-center justify-between flex-wrap">
-                <div v-for="item, index in analyDeatailData.slice(0, analyDeatailData.length / 2)"
+                <div v-for="(item, index) in analyDeatailData.slice(0, analyDeatailData.length / 2)"
                     @click="onTabChange(item.name)"
                     :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
                     <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
@@ -79,7 +80,7 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
                 class="flex 8k:w-1/3 4k:w-full bg-[url('assets/imgs/running/run-center-bg.png')] bg-size items-center justify-center h-80 flex-wrap">
             </div>
             <div class="flex 8k:w-1/3 4:w-full items-center justify-between flex-wrap">
-                <div v-for="item, index in analyDeatailData.slice(analyDeatailData.length / 2)"
+                <div v-for="(item, index) in analyDeatailData.slice(analyDeatailData.length / 2)"
                     @click="onTabChange(item.name)"
                     :class="`${runActive === item.name ? 'run-item-active' : 'run-item'} bg-size hover:cursor-pointer flex w-[43%] mx-2 py-20 flex-col h-24 justify-center items-center`">
                     <div>在线：<span class="gradient-text text-2xl font-bold">{{ item.onLine }}</span></div>
@@ -89,11 +90,11 @@ console.log('----', analyDeatailData.slice(0, analyDeatailData.length / 2))
             </div>
         </div>
 
-        <SecondLevelTitle title="布设分析"></SecondLevelTitle>
+        <SecondLevelTitle title="布设分析" class="hover:cursor-pointer" @click="global.setCurrentModule('布设分析')" />
         <div class="flex flex-wrap justify-between">
             <div class="8k:w-[40%] 4k:w-full flex justify-between">
                 <div v-if="currentRun.layRates.length > 0" class="flex w-[35%] flex-col items-center">
-                    <div v-for="r, rIndex in currentRun.layRates"
+                    <div v-for="(r, rIndex) in currentRun.layRates"
                         class="bg-size bg-[url('assets/imgs/running/lay-rate.png')] my-2 w-32 h-1/3 flex flex-col items-center">
                         <div :class="`gradient-text-${rIndex}`"><span class="text-xl font-bold ">{{ r.value
                                 }}</span>{{

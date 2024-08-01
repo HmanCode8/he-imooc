@@ -9,7 +9,7 @@
         @check-change="handleCheckChange" node-key="id" default-expand-all :default-checked-keys="[2]"></el-tree>
     </div>
     <!-- 专题栏 -->
-    <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0 z-10">
+    <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0">
       <div
         class="tabs-container bg-[url('assets/imgs/main/t-tabs.png')] w-1/4 h-20 bg-size flex justify-around px-10 mt-4">
         <div
@@ -39,11 +39,12 @@
       </div>
     </div>
 
+    <!-- 图层树-->
     <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10"
       v-show="'scene' !== mapType">
-      <div class="h-full w-1/2 layer-bg bg-[url('assets/imgs/main/layer-tabs.png')]">
+      <div class="h-full w-16 bg-size bg-[url('assets/imgs/main/layer-tabs.png')] z-20">
         <div class="img-list flex flex-col items-center h-[80%]">
-          <div :class="`layer-item-${layer.remark} bg-size w-1/2 h-[9%] relative hover:cursor-pointer`"
+          <div :class="`layer-item-${layer.remark} bg-size w-2/3 h-[9%] relative hover:cursor-pointer`"
             @click="currentLayerTab = layer.remark" v-for="(layer, index) in layers " :key="layer.name">
             <div v-if="currentLayerTab === layer.remark"
               class="w-full h-full absolute top-0 left-0 bg-[url('assets/imgs/main/layer-active.png')] bg-size">
@@ -51,29 +52,30 @@
           </div>
         </div>
         <div class="h-[20%] flex flex-col justify-around items-center">
-          <div class=" hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name" @click="iconctive = i.value">
-            <i :class="`iconfont ${i.value} ${iconctive === i.value ? 'text-[#00BAFF]' : ''} font-bold text-xl`"></i>
+          <div class=" hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name" @click="changeActiveIcon(i.name)">
+            <i :class="`iconfont ${i.value} ${'图层' === i.name && showSubLayerTab ? 'text-[#00BAFF]' : ''} font-bold text-xl`"></i>
           </div>
         </div>
       </div>
 
-      <div class="layer-shaw p-3 w-full h-full ml-[-10px] bottom-0" v-show="'scene' !== mapType && showSubLayerTab">
-        <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
-          <div
-            class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
-            {{ sub.name }}
-          </div>
-          <div ref="leyerRef" v-if="sub.children && 0 < sub.children.length" class="ml-4">
-            <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-              <div :class="` hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
-                @click="updateLayer(item)">{{ item.name }}
+      <Transition name="subLayerTab">
+        <div class="layer-shaw p-3 w-32 h-full bottom-0" v-show="'scene' !== mapType && showSubLayerTab">
+          <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
+            <div
+                class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
+              {{ sub.name }}
+            </div>
+            <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
+              <div v-for="item in sub.children" :key="item.remark" class="pl-2">
+                <div :class="`hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
+                     @click="updateLayer(item)">{{ item.name }}
+                </div>
               </div>
             </div>
+            <div v-else>---</div>
           </div>
-
-          <div v-else>---</div>
         </div>
-      </div>
+      </Transition>
     </div>
 
     <!-- 地图弹出框 -->
@@ -132,7 +134,7 @@ const popupCom = ref(null);
 const popupObject = ref({});
 const legendGroup = ref([]);
 const cesiumViewer = ref(null);
-const iconctive = ref(iconList[0].value);
+const iconActive = ref(iconList[0].name);
 const threedlayercontrol = ref(false);
 let viewer = ref(null);
 
@@ -144,17 +146,20 @@ const currentItem = computed(() =>
   )
 );
 
-// const computerLayout = (size, index, initStyle = 10) => {
-// 	let styles = []
-// 	for (let key = 0; key <= size; key++) {
-// 		styles.push(initStyle * key)
-// 	}
-// 	const newStyles = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
-// 	const newStyles1 = _.difference(styles, _.takeRight(styles, Math.ceil(_.size(styles) / 2)))
-// 	const arr = [..._.reverse(newStyles), ...newStyles1]
-// 	const nextstyles = [...newStyles1, ...(size % 2 === 0 ? _.reverse(newStyles1) : _.tail(_.reverse(newStyles1)))]
-// 	return size === 10 ? nextstyles[index] : arr[index]
-// }
+const changeActiveIcon = iconName => {
+  iconActive.value = iconName;
+  switch (iconName) {
+    case "图层":
+      showSubLayerTab.value = !showSubLayerTab.value;
+      break;
+    case "清除":
+      removeAllLayerExcept();
+      break;
+    case "展开":
+      showSubLayerTab.value = true;
+      break;
+  }
+};
 
 const initOpenLayersMap = () => {
   if (layerConfig.hasOwnProperty("customProjections")) {
@@ -200,38 +205,25 @@ const getLayerSource = sourceName => {
 }
 
 const setDefaultLayers = moduleName => {
-  let defaultLayerGroup = ["base", moduleName];
-  map.value && map.value.getAllLayers().forEach(v => {
-    if (v && !defaultLayerGroup.includes(v.get("layerGroup"))) {
-      map.value.removeLayer(v);
-    }
-  });
-  legendGroup.value = [];
   if ("vector" !== mapType.value) {
     mapType.value = "vector";
   }
   if (layerConfig["layerTrees"].hasOwnProperty(moduleName)) {
     layers.value = layerConfig["layerTrees"][moduleName];
     currentLayerGroup.value = traverseLayerDefine(layers.value);
-    loadDefaultLayers(moduleName, false);
+    loadDefaultLayers(moduleName, ["base", moduleName]);
   }
 };
 
-const loadDefaultLayers = (configName, isRemoveFirst) => {
+const loadDefaultLayers = (configName, stayLayerGroup = ["base"]) => {
   const defaultLoadLayerArr = _.get(layerConfig.defaultLayers, configName, []);
   if (0 === defaultLoadLayerArr.length) {
     return;
   }
-  if (isRemoveFirst) {
-    map.value.getAllLayers().forEach(v => {
-      if ("base" !== v.get("layerGroup")) {
-        map.value.removeLayer(v);
-      }
-    });
-    legendGroup.value = [];
-    loadedLayerGroup.value = [];
+  closePop(map.value);
+  if (0 < stayLayerGroup.length) {
+    removeAllLayerExcept(stayLayerGroup)
   }
-  // loadedLayerGroup.value.length = 0;
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
     const defaultLoadLayerList = currentLayerGroup.value.filter(
@@ -291,6 +283,7 @@ const updateLayer = async layerParam => {
   const detailLayerArr = _.get(layerParam, "detailLayer", "").split(",");
   const legendLayerArr = _.get(layerParam, "legendLayer", "").split(",");
   if (isHaveChecked) {
+    closePop(map.value);
     const layer = map.value
       .getAllLayers()
       .find(v => layerParam.source === v.get("layerName"));
@@ -314,6 +307,7 @@ const updateLayer = async layerParam => {
         }
         layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
         layer.getSource().changed();
+        return;
       }
     }
     map.value.removeLayer(layer);
@@ -339,7 +333,7 @@ const updateLayer = async layerParam => {
         }
         layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
         layer.getSource().changed();
-        const newLegend = await getLegend(map.value, layer, layerValue["legendLayer"]);
+        const newLegend = await getLegend(map.value, layer, layerParam["legendLayer"]);
         legendGroup.value = legendGroup.value.concat(newLegend);
       }
     } else {
@@ -357,14 +351,25 @@ const addLayer = async layerValue => {
   }
   const layer = createLayer(layerParam, global.componentId);
   map.value && map.value.addLayer(layer);
-  if (layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
+  if (map.value && layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
     const newLegend = await getLegend(map.value, layer, layerValue["legendLayer"]);
-    legendGroup.value = legendGroup.value.concat(newLegend);
+    legendGroup.value = newLegend.filter(v =>
+        !legendGroup.value.some(l => v.source === l.source && v.layerId === l.layerId)).concat(legendGroup.value);
   }
 }
 
+const removeAllLayerExcept = (stayLayerGroup = ["base"]) => {
+  map.value && map.value.getAllLayers().forEach(v => {
+    if (!stayLayerGroup.includes(v.get("layerGroup"))) {
+      map.value.removeLayer(v);
+    }
+  });
+  legendGroup.value = [];
+  loadedLayerGroup.value = [];
+}
+
 const queryPopupDetail = async evt => {
-  const popInfo = await getPopInfo(evt, currentLayerGroup.value);
+  const popInfo = await getPopInfo(evt, currentLayerGroup.value,layerConfig.getEnglishKey);
   if (0 < Object.keys(popInfo).length) {
     popupObject.value = popInfo;
     popElement(evt);
@@ -856,7 +861,7 @@ watch(
   () => global.moduleName,
   value => {
     if (map.value && global.moduleName && 0 < global.moduleName.length) {
-      loadDefaultLayers(global.componentId + "-" + value, true);
+      loadDefaultLayers(global.componentId + "-" + value);
     }
   }
 );
@@ -947,6 +952,20 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   }
 }
 
+.subLayerTab-enter-active {
+  transition: all 0.8s ease-in;
+}
+
+.subLayerTab-leave-active {
+  transition: all 0.8s ease-in;
+}
+
+.subLayerTab-enter-from,
+.subLayerTab-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
 .select-active {
   // filter: drop-shadow(2px 4px 6px red);
   // color: #00faff;
@@ -989,7 +1008,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 
   .thstyle {
     margin: 4em 0 0 3em;
-    padding: 10 10px 0 10em;
+    padding: 10em 10em 0 10em;
     display: flex;
     // justify-content: space-between;
 

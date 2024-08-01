@@ -91,23 +91,25 @@ function traverseLayerDefine(layerList) {
 }
 
 async function getLegend(map, layer, legendLayer) {
-    const legendUrl = "arcgis_WMS" === layer.get("layerType") ?
-        layer.getSource().getUrl() + "/queryLegends?f=json&transparent=true&size=20,20&LAYERS=show:" + legendLayer :
-        layer.getSource().getLegendUrl(map.getView().getResolution(), {"LAYER": legendLayer});
-    if (legendUrl) {
-        return await fetch(legendUrl).then(res => res.json()).then(res => {
-            if (res.layers) {
-                return res.layers.map(v => v.legend.map(it => {
-                    return {
-                        "source": layer.get("layerName"),
-                        "layerId": "" + v.layerId,
-                        "img": "data:" + it.contentType + ";base64," + it.imageData,
-                        "label": it.label
-                    }
-                })).flat(Infinity);
-            }
-        });
-    }
-};
+  const legendUrl = "arcgis_WMS" === layer.get("layerType") ?
+      layer.getSource().getUrl() + "/legend?f=json&size=20,20" :
+      layer.getSource().getLegendUrl(map.getView().getResolution(), {"LAYER": legendLayer});
+  if (legendUrl) {
+    const layerIds = legendLayer.split(",");
+    return await fetch(legendUrl).then(res => res.json()).then(res => {
+      if (res.layers) {
+        return res.layers.filter(v => layerIds.includes("" + v.layerId))
+            .map(v => v.legend.filter(it=>it.label!=="<all other values>").map(it => {
+              return {
+                "source": layer.get("layerName"),
+                "layerId": "" + v.layerId,
+                "img": "data:" + it.contentType + ";base64," + it.imageData,
+                "label": it.label
+              }
+            })).flat(Infinity);
+      }
+    });
+  }
+}
 
 export { createLayer, traverseLayerDefine, getLegend };

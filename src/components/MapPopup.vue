@@ -22,7 +22,7 @@ const closePop = () => {
         v-for="(value, key) in popupObject.properties">
         <div class="w-5 text-[#ffcf00]">&gt</div>
         <div class="w-20 text-[#cde4f8] border-r border-r-[#2e6a91]">{{ key }} :</div>
-        <div class="w-60 ml-3 text-white">{{ value }}</div>
+        <div class="w-52 ml-3 text-white">{{ value }}</div>
       </div>
     </div>
   </div>

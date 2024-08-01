@@ -6,9 +6,10 @@ import LineAreaChart from "../charts/LineAreaChart.vue";
 import { projectManageData } from "@/assets/chartData/data";
 import BarRowChart from "../charts/BarRowChart.vue";
 import Tablechart from "../charts/Tablechart.vue";
-
+import {useGlobalStore} from "@/store/index.js";
 import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 
+const global = useGlobalStore();
 const { projectSituation, areaConstruction, statisticDestroy, pipeDestroyColumns, pipeDestroyTableData, inspectionData } = projectManageData;
 
 
@@ -42,7 +43,7 @@ const getPastDate = daysAgo => {
 
 <template>
   <div class="pipe-analy">
-    <FristLevelTitle title="第三方施工项目"></FristLevelTitle>
+    <FristLevelTitle title="第三方施工项目" class="hover:cursor-pointer" @click="global.setCurrentModule('第三方施工项目')" />
     <div class="flex flex-wrap justify-between">
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="施工项目情况" />

@@ -8,7 +8,9 @@ import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 import _ from "lodash";
 
 import { operationMaintenanceData } from '@/assets/chartData/data'
+import {useGlobalStore} from "@/store/index.js";
 
+const global = useGlobalStore();
 const { inspectionNum, frequNums, problems, findProblems, timelinesRate, completionRate, custodyTimeRate, custodycompletioRate } = operationMaintenanceData
 
 const totalNum = _.get(_.find(inspectionNum, { name: "总数" }), 'value', 0)
@@ -20,7 +22,7 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
 <template>
   <div class="pipe-analy">
-    <FristLevelTitle title="巡检巡查"></FristLevelTitle>
+    <FristLevelTitle title="巡检巡查" class="hover:cursor-pointer z-50" @click="global.setCurrentModule('巡检巡查')" />
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-[45%] 4k:w-full ">
         <div class="h-60 mb-8">
@@ -45,12 +47,12 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
     <div class="flex flex-wrap justify-between">
       <div class="8k:w-[45%] 4k:w-full">
-        <SecondLevelTitle title="巡检及时率"></SecondLevelTitle>
+        <SecondLevelTitle title="巡检及时率" class="hover:cursor-pointer" @click="global.setCurrentModule('巡检及时率')" />
         <Bar3dChart :data="timelinesRate" class="h-60" />
       </div>
 
       <div class="8k:w-[45%] 4k:w-full">
-        <SecondLevelTitle class="w-full" title="巡检完成率"></SecondLevelTitle>
+        <SecondLevelTitle class="w-full hover:cursor-pointer" title="巡检完成率" @click="global.setCurrentModule('巡检完成率')" />
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex flex-wrap justify-between">
             <div :class="`inspection_success_1 m-2 flex flex-col items-center w-1/5 h-20 bg-size`"
@@ -63,12 +65,12 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
       </div>
     </div>
 
-    <FristLevelTitle title="设施管养"></FristLevelTitle>
+    <FristLevelTitle title="设施管养" class="hover:cursor-pointer" @click="global.setCurrentModule('设施管养')" />
     <div class="flex w-full flex-wrap justify-between">
 
       <div class="8k:w-[45%] 4k:w-full ">
         <div class="h-60  mb-14">
-          <SecondLevelTitle class="w-full" title="营养次数"></SecondLevelTitle>
+          <SecondLevelTitle class="w-full" title="管养次数"></SecondLevelTitle>
           <Pipe3dChart class="h-full" :data="freqChartData" :total="freqTotalNum" :haveTotal="true" />
         </div>
       </div>
@@ -91,12 +93,12 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-[45%] 4k:w-full">
-        <SecondLevelTitle title="管养及时率"></SecondLevelTitle>
+        <SecondLevelTitle title="管养及时率" class="hover:cursor-pointer" @click="global.setCurrentModule('管养及时率')" />
         <Bar3dChart :data="custodyTimeRate" class="h-60" />
       </div>
 
       <div class="8k:w-[45%] 4k:w-full">
-        <SecondLevelTitle class="w-full" title="管养完成率"></SecondLevelTitle>
+        <SecondLevelTitle class="w-full hover:cursor-pointer" title="管养完成率" @click="global.setCurrentModule('管养完成率')" />
         <div class="w-full flex">
           <div class="chart-container w-full h-60 flex flex-wrap justify-between">
             <div :class="`inspection_success_1 m-2 flex flex-col items-center w-1/5 h-20 bg-size`"
