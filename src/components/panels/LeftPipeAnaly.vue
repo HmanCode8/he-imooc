@@ -116,10 +116,6 @@ watch(pipeActive, (val) => {
     }
 }
 
-.filter-drop-shadow {
-    filter: drop-shadow(2px 4px 6px #1add1a);
-}
-
 .gradient-text {
     background: linear-gradient(to bottom, #c8f1fd, #68d1fa);
     -webkit-background-clip: text;

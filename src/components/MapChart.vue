@@ -23,7 +23,6 @@
       </div>
     </div>
     <!-- 导航栏 -->
-    <!-- :style="`transform: translateY(-${computerLayout(bottomTabs.length, index)}px)`" -->
     <div class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0 z-10">
       <div class="flex h-full bg-[url('assets/imgs/main/b-tabs.png')] bg-size">
         <div
@@ -52,16 +51,15 @@
           </div>
         </div>
         <div class="h-[20%] flex flex-col justify-around items-center">
-          <div class=" hover:cursor-pointer" v-for="(i, index) in iconList" :key="i.name"
-            @click="changeActiveIcon(i.name)">
+          <div class=" hover:cursor-pointer" v-for="i in iconList" :key="i.name" @click="changeActiveIcon(i.name)">
             <i
               :class="`iconfont ${i.value} ${'图层' === i.name && showSubLayerTab ? 'text-[#00BAFF]' : ''} font-bold text-xl`"></i>
           </div>
         </div>
       </div>
 
-      <Transition name="subLayerTab">
-        <div class="layer-shaw p-3 w-32 h-full bottom-0" v-show="'scene' !== mapType && showSubLayerTab">
+      <div class="layer-shaw p-3 w-32 h-full bottom-0" v-show="'scene' !== mapType && showSubLayerTab">
+        <div ref="leyerRef">
           <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
             <div
               class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
@@ -77,7 +75,8 @@
             <div v-else>---</div>
           </div>
         </div>
-      </Transition>
+
+      </div>
     </div>
 
     <!-- 地图弹出框 -->
@@ -103,9 +102,7 @@ import { computed, inject, onMounted, ref, watch } from 'vue'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
 import { useGlobalStore } from "@/store";
-// import * as Cesium from "cesium";
-// import "cesium/Build/Cesium/Widgets/widgets.css";
-import _, { forIn } from "lodash";
+import _ from "lodash";
 
 import MapLegend from "@/components/MapLegend.vue";
 import MapToggle from "@/components/MapToggle.vue";
@@ -114,11 +111,11 @@ import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
 
 import { topTabs, bottomTabs, iconList } from '@/assets/chartData/const'
-
+import { gxTypes, ShaderCode } from "@/utils/map3d/const";
 import { createLayer, getLegend, traverseLayerDefine } from "@/utils/map/layer";
 import { closePop, createDefaultPopup, getPopInfo, popElement } from "@/utils/map/popup";
 
-const { layerConfig = {} } = window;
+const { layerConfig = {}, map3dServer } = window;
 const layers = ref([])
 const gsap = inject('gsap')
 const leyerRef = ref(null)
@@ -138,6 +135,7 @@ const legendGroup = ref([]);
 const cesiumViewer = ref(null);
 const iconActive = ref(iconList[0].name);
 const threedlayercontrol = ref(false);
+const defaultList = ref([]);
 let viewer = ref(null);
 
 const currentItem = computed(() =>
@@ -378,88 +376,21 @@ const queryPopupDetail = async evt => {
 };
 
 let layers_3d = [];
-let defaultCheckedKeys = ref([]);
 
 const addGX = (viewer) => {
   //加载管线
-  let gxTypes = ["BMLINE", "DSLINE", "DXLINE", "EXLINE", "GDLINE", "HSLINE", "JKLINE", "JSLINE", "JYLINE", "LDLINE", "LTLINE", "RSLINE", "TRLINE", "TTLINE", "WSLINE", "XHLINE", "YDLINE", "YSLINE", "ZQLINE"];
-  let comps = [
+  const comps = [
     "pipelineGeo",
     "pipelineI3dm",
     "pipelineJG",
     "pipelinePointInstance",
     "pipelineWellGeo"
   ];
-
+  const gxKeys = Object.keys(gxTypes)
   try {
-    for (let i = 0; i < gxTypes.length; i++) {
-      const element = gxTypes[i];
-      let name = "";
-      switch (element) {
-        case "BMLINE":
-          name = "不明";
-          break;
-        case "DSLINE":
-          name = "有线电视";
-          break;
-        case "DXLINE":
-          name = "电信";
-          break;
-        case "trline":
-          name = "天然气";
-          break;
-        case "EXLINE":
-          name = "电力通讯";
-          break;
-        case "GDLINE":
-          name = "供电";
-          break;
-        case "HSLINE":
-          name = "雨污合流";
-          break;
-        case "JKLINE":
-          name = "监控";
-          break;
-        case "JSLINE":
-          name = "给水";
-          break;
-        case "JYLINE":
-          name = "军用";
-          break;
-        case "LDLINE":
-          name = "路灯";
-          break;
-        case "LTLINE":
-          name = "联通";
-          break;
-        case "RSLINE":
-          name = "热水";
-          break;
-        case "TRLINE":
-          name = "天然气";
-          break;
-        case "TTLINE":
-          name = "铁通";
-          break;
-        case "WSLINE":
-          name = "污水";
-          break;
-        case "TTLINE":
-          name = "铁通";
-          break;
-        case "XHLINE":
-          name = "信号";
-          break;
-        case "YDLINE":
-          name = "移动";
-          break;
-        case "YSLINE":
-          name = "雨水";
-          break;
-        case "ZQLINE":
-          name = "蒸汽";
-          break;
-      }
+    for (let i = 0; i < gxKeys.length; i++) {
+      const element = gxKeys[i];
+      let name = gxTypes[element];
       threeDData.value[0].children.push({
         id: i + 2,
         label: name
@@ -467,51 +398,30 @@ const addGX = (viewer) => {
       for (let j = 0; j < comps.length; j++) {
         const item = comps[j];
         const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-          url: "http://10.10.31.84:8090/3dtile_gx/" + element + "/" + item + "/tileset.json",
+          url: `${map3dServer}/3dtile_gx/" + element + "/" + item + "/tileset.json`,
         }));
         layers_3d.push({
           name: name + '-' + item,
           obj: tileset
         });
       }
-
-      // threeDData.value[0].children.forEach(item=>{
-      //   threedtree.value.setChe
-      // })
-
       setTimeout(() => {
         threedtree.value.setCheckedNodes(threeDData.value[0].children);
         threedlayercontrol.value = true;
       }, 1000);
-
-      // 
-
-
     }
 
-    // layers_3d.forEach(item=>{
-    //   if(item.name.indexOf('雨水')>-1||item.name.indexOf('供电')>-1||item.name.indexOf('移动')>-1){
-    //     item.obj.show = true
-    //   }else{
-    //     item.obj.show = false
-    //   }
-    // });
 
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
   }
 };
 
-const loadNode = () => {
-  defaultCheckedKeys.value = [1, 2, 3, 4, 5];
-};
-
-
 let qxtileset = null;
 const addOsgb = (viewer) => {
   //加载倾斜
   qxtileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-    url: 'http://10.10.31.84:8090/3dtile_op/tileset.json'
+    url: `${map3dServer}/3dtile_op/tileset.json`
   }));
 };
 
@@ -521,57 +431,16 @@ const setHSV = (viewer, h, s, v) => {
   let Sscale = s;
   let Vscale = v;
 
-  let ShaderCode = `
-      #version 300 es
-      uniform sampler2D colorTexture;
-      in vec2 v_textureCoordinates;
-      uniform float Hscale;
-      uniform float Sscale;
-      uniform float Vscale;
-
-      layout(location=0) out vec4 czm_fragColor;
-
-      vec3 rgb2hsv(vec3 c) {
-        vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-        vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
-        vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
-
-        float d = q.x - min(q.w, q.y);
-        float e = 1.0e-10;
-        return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-      }
-      vec3 hsv2rgb(vec3 c) {
-        vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-        vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-        return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-      }
-
-      void main() {
-        vec4 color = texture(colorTexture, v_textureCoordinates);//原始图像
-
-        vec3 hsv = rgb2hsv(color.rgb);
-
-        // Adjust HSV values (example: increase saturation)
-        hsv.x *= Hscale;
-        hsv.y *= Sscale;
-        hsv.z *= Vscale;
-
-        // Convert HSV back to RGB
-        vec3 rgb = hsv2rgb(hsv);
-
-        czm_fragColor = vec4(rgb, color.a);;
-      }`;
-
   let postProcessStage = new SceneGIS.PostProcessStage({
     fragmentShader: ShaderCode,
     uniforms: {
-      Hscale: function () {
+      Hscale() {
         return Hscale;
       },
-      Sscale: function () {
+      Sscale() {
         return Sscale;
       },
-      Vscale: function () {
+      Vscale() {
         return Vscale;
       }
     }
@@ -714,7 +583,6 @@ const setInfoBox = (viewer) => {
   // }
 };
 
-const defaultList = ref([]);
 for (let i = 1; i < 40; i++) {
   defaultList.value.push(i);
 }
@@ -744,9 +612,6 @@ const initCesiumMap = async () => {
 
   addOsgb(viewer);
   addGX(viewer);
-  // setTimeout(()=>{
-
-  // },2000)
   setHSV(viewer, 1, 1, 1.2);
   setInfoBox(viewer);
 };
@@ -842,7 +707,6 @@ watch(mapType, (val) => {
   }
 });
 
-
 watch(
   () => currentLayerTab.value,
   () => {
@@ -871,6 +735,7 @@ watch(
     }
   }
 );
+
 onMounted(() => {
   initOpenLayersMap();
 });
@@ -894,9 +759,6 @@ onMounted(() => {
 }
 
 $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xiangmu, ranqi, jiance;
-
-// 定义一个数组
-// $colors: guanxian, green, blue;
 
 // 使用 @each 遍历数组
 @each $layer in $layers {
@@ -985,26 +847,12 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   text-align: center;
   z-index: 999;
   position: fixed;
-  /* padding: 15px; */
   margin: 0;
-  // opacity: 0.6;
-  // background: linear-gradient(0deg, #041536 0%, #031121 100%);
   background-image: url("@/assets/imgs/main/map-popup-bg.png");
   background-size: 100% 100%;
   display: none;
 }
 
-// .bubble:after {
-//   content: "";
-//   position: absolute;
-//   bottom: 10;
-//   left: 50%;
-//   border-width: 16px 16px 0;
-//   border-style: solid;
-//   border-color: #2ce6e3 transparent;
-//   transform: translateX(-50%);
-//   opacity: 0.8;
-// }
 
 ::v-deep .test {
   width: 29em;

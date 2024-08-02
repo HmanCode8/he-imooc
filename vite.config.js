@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 import ImageminPlugin from "vite-plugin-imagemin";
-import ImageminWebp from "imagemin-webp";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
@@ -72,6 +71,9 @@ export default defineConfig({
   },
   // 主动开启热更新
   server: {
-    hmr: true,
+    hmr: process.env.NODE_ENV !== "production",
+  },
+  esbuild: {
+    drop: ["console", "debugger"],
   },
 });

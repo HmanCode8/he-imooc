@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@dataview/datav-vue3": "^0.0.0-test.1672506674342",
+    "@vueuse/core": "^10.11.0",
     "axios": "^1.4.0",
     "countup.js": "^2.6.2",
     "echarts": "^5.5.1",

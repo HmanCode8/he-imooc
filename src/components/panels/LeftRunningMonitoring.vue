@@ -5,8 +5,9 @@ import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import _ from 'lodash'
 import ConeBarChart from '../charts/ConeBarChart.vue'
+import BarRowChart from "../charts/BarRowChart.vue";
 import { runningMonitoringData } from '@/assets/chartData/data'
-import {useGlobalStore} from "@/store/index.js";
+import { useGlobalStore } from "@/store/index.js";
 
 const global = useGlobalStore();
 const { internetDevices, analyDeatailData, monitorData } = runningMonitoringData

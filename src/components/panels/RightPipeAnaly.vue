@@ -9,7 +9,7 @@ import Bar3dChart from '../charts/Bar3dChart.vue';
 import Pipe3dChart from '../charts/Pipe3dChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
-import {useGlobalStore} from "@/store/index.js";
+import { useGlobalStore } from "@/store/index.js";
 
 const global = useGlobalStore();
 const { naturalColumns, naturalTableData, liquefiedColumns, liquefiedTableData, roadData, convergenceRate, densityData, bridgeData, bridgeColumns, bridgeTableData, stationData } = basicFacilitiesData
@@ -62,7 +62,7 @@ const tableData1 = [
 
 <template>
     <div class="pipe-analy">
-        <FristLevelTitle title="场站分析" class="hover:cursor-pointer" @click="global.setCurrentModule('场站分析')"/>
+        <FristLevelTitle title="场站分析" class="hover:cursor-pointer" @click="global.setCurrentModule('场站分析')" />
         <div class="pipe-analy-content w-full  flex flex-wrap justify-between">
             <div class="8k:w-[48%] 4k:w-full">
                 <ThirdLevelTitle title="燃气">
@@ -102,7 +102,7 @@ const tableData1 = [
 
         <div class="w-full mt-20 flex flex-wrap justify-between">
             <div class="8k:w-[48%] 4k:w-full">
-                <FristLevelTitle title="道路分析" class="hover:cursor-pointer" @click="global.setCurrentModule('道路分析')"/>
+                <FristLevelTitle title="道路分析" class="hover:cursor-pointer" @click="global.setCurrentModule('道路分析')" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in roadData" :key="index" @click="dataChnage(item.name)"
                         class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
@@ -119,7 +119,7 @@ const tableData1 = [
                 </div>
             </div>
             <div class="8k:w-[48%] 4k:w-full">
-                <FristLevelTitle title="桥梁分析" class="hover:cursor-pointer" @click="global.setCurrentModule('桥梁分析')"/>
+                <FristLevelTitle title="桥梁分析" class="hover:cursor-pointer" @click="global.setCurrentModule('桥梁分析')" />
                 <div class="analy-list w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in bridgeData" :key="index" @click="dataChnage(item.name)"
                         class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">

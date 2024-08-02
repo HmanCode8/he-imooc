@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import { runningMonitoringData } from '@/assets/chartData/data'
-import {useGlobalStore} from "@/store/index.js";
+import { useGlobalStore } from "@/store/index.js";
 
 const global = useGlobalStore();
 const { profileData, alarmData } = runningMonitoringData
@@ -25,8 +25,9 @@ const runData = ref(alarmData)
                 </div>
                 <div :class="`${item.key === 'down' ? 'text-[#76fbc7]' : 'text-[#eb4650]'}`">
                     <div :class="`text-3xl  text-[${item.key === 'down' ? '#d14150' : '#75f9c5'}]`">
-                      {{ item.change }}{{ item.unit  }}
-                      <i :class="`iconfont icon-${item.key === 'down' ? 'c041xiangxiajiantou' : 'jiantou-copy-copy'} text-xl`"></i>
+                        {{ item.change }}{{ item.unit }}
+                        <i
+                            :class="`iconfont icon-${item.key === 'down' ? 'c041xiangxiajiantou' : 'jiantou-copy-copy'} text-xl`"></i>
                     </div>
                     <div>{{ item.description }}</div>
                 </div>
@@ -36,15 +37,15 @@ const runData = ref(alarmData)
             <SecondLevelTitle title="监测报警"></SecondLevelTitle>
             <div class="flex flex-wrap items-center">
                 <div class="w-full 8k:w-1/2 4k:w-full hover:cursor-pointer" v-for="(item, index) in runData"
-                     :key="item.name" @click="global.setCurrentModule(item.name)">
+                    :key="item.name" @click="global.setCurrentModule(item.name)">
                     <div class="flex items-center pipe-item 8k:w-[30%] 4k:w-1/3 bg-size h-6">
                         <div v-if="index === 0" class="w-6 h-6 bg-[url('assets/imgs/running/top-1.png')] bg-size">
                         </div>
                         <div v-else class="w-6 h-6 bg-[url('assets/imgs/running/top-2.png')] bg-size"></div>
                         <div class="name py-4 font-bold text-lg">{{ item.name }}</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div v-for="child in item.children" :key="child.name" class="flex w-[33%] h-32 items-center">
+                    <div class=" grid grid-cols-3 mt-4 gap-4">
+                        <div v-for="child in item.children" :key="child.name" class="flex w-full h-32 items-center">
                             <div
                                 class="flex w-2/3 h-full mt-10 flex-col items-center text-center bg-[url('assets/imgs/running/run-b-2.png')] bg-size">
                                 <div class="">{{ child.name }}({{ child.unit }})</div>
