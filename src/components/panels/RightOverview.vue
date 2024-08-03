@@ -49,7 +49,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                             :key="item.value">
                             <div class=" relative">
                                 <div v-if="index === 0"
-                                    class=" absolute bg-[#98374e] rounded-full w-12 h-12 animate-ping ">
+                                    class=" absolute bg-[#98374e] rounded-full w-12 h-12 animate-ping">
                                 </div>
                                 <div :class="`flex items-center justify-center warning-icon-${index + 1}  w-12 h-12`">
                                     {{ riskTotalData[item.key] }}
@@ -69,7 +69,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                                 class=" w-3 h-3 mx-1 rounded-full"></div>
                             <div class="risk-item-name text-xl">{{ item.name }}</div>
                         </div>
-                        <div class="risk-item-value mt-[-5%]"><span class="text-2    xl">{{ item.value }}</span>件</div>
+                        <div class="risk-item-value mt-[-5%]"><span class="text-2xl">{{ item.value }}</span>件</div>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao] hover:cursor-pointer"
                         @click="global.setCurrentModule('隐患')">隐患总数<span class="text-4xl gradient-text">{{
                             hideTotalData.total
-                        }}</span>个
+                            }}</span>个
                     </div>
                     <div class="level flex">
                         <div class="level-item flex items-center mx-1" v-for="(item, index) in riskLevel"
@@ -91,7 +91,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                                     class=" absolute bg-[#98374e] rounded-full w-12 h-12 animate-ping ">
                                 </div>
                                 <div :class="`flex items-center justify-center warning-icon-${index + 1}  w-12 h-12`">
-                                    {{ hideTotalData[item.key] }}1
+                                    {{ hideTotalData[item.key] }}
                                 </div>
                             </div>
                             <!-- <div :class="`flex items-center justify-center warning-icon-${index + 1} w-12 h-12`">
