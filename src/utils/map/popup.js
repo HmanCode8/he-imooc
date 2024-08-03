@@ -95,12 +95,6 @@ function getArcgisIdentifyUrl(layer, mapInstance, queryParam) {
         layer.getSource().getProjection() : mapInstance.getProjection());
     const resolution = mapInstance.getView().getResolution();
     const pixelRatio = layer.getSource().hidpi_ ? mapInstance.pixelRatio_ : 1;
-    const params = {
-        'F': 'JSON',
-        'GEOMETRYTYPE': 'esriGeometryPoint',
-        'TOLERANCE': 2
-    };
-    Object.assign(params, queryParam);
     const extent = getRequestExtent(mapInstance.getView().calculateExtent(mapInstance.getSize()),
         resolution, pixelRatio, layer.getSource().ratio_);
     const srid = projection.getCode().split(/:(?=\d+$)/).pop();
@@ -111,6 +105,12 @@ function getArcgisIdentifyUrl(layer, mapInstance, queryParam) {
     const height = round(getHeight(extent) / imageResolution, DECIMALS);
     const dpi = Math.round(_.get(layer.getSource().getParams(), "DPI", 90) * pixelRatio);
 
+    const params = {
+        'F': 'JSON',
+        'GEOMETRYTYPE': 'esriGeometryPoint',
+        'TOLERANCE': 5
+    };
+    Object.assign(params, queryParam);
     params['IMAGEDISPLAY'] = width + ',' + height + ',' + dpi;
     params['MAPEXTENT'] = extent.join(',');
     params['SR'] = srid;
