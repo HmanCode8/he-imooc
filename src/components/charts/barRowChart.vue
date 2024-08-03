@@ -46,6 +46,7 @@ watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
 const renderChart = (fontSize) => {
     const data = chartData.value
     const isPrecent = _.some(data, item => item.unit === '%')
+    const barWidth = "50%"
     // 倒叙排序
     let sum = isPrecent ? 100 : data.reduce((acc, cur) => acc + Number(cur.value), 0)
     if (props.baseSum) {
@@ -112,6 +113,7 @@ const renderChart = (fontSize) => {
         },
         yAxis: {
             type: 'category',
+
             data: data.map(item => item.name),
             axisLine: { show: true },
             axisTick: { show: false },
@@ -159,13 +161,13 @@ const renderChart = (fontSize) => {
                         },
                     }
                 }),
-                barWidth: '25%'
+                barWidth
             },
             {
                 type: 'bar',
                 data: data.map(d => sum),  // 使用最大值来设置背景柱子的高度
                 barGap: '-100%',
-                barWidth: '20%',
+                barWidth,
                 itemStyle: {
                     color: 'rgba(255, 255, 255, 0.1)'  // 设置背景柱子的颜色
                 },
@@ -175,7 +177,7 @@ const renderChart = (fontSize) => {
                 type: 'bar',
                 data: data.map(d => d.value),
                 barGap: '-100%',
-                barWidth: '20%',
+                barWidth,
                 itemStyle: {
                     color: 'rgba(255, 255, 255, 0.1)'
                 }

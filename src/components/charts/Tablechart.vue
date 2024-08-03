@@ -46,7 +46,7 @@ const props = defineProps({
             </div>
         </div>
         <div class="table-container w-full h-full" ref="scrollRef">
-            <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableData" :step="0.5" :hover="true">
+            <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableData" :step="0.2" :hover="true">
                 <ul class="w-full ">
                     <li v-for="(row, rowIndex) in tableData" :key="rowIndex" class="liStyle w-full  flex text-center">
                         <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}

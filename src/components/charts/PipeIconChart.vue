@@ -191,18 +191,6 @@ const renderChart = (fontSize = chartFontSize) => {
             height: 10
           }
         }
-        // {
-        //     type: 'image',
-        //     left: "84%",
-        //     top: "20%",
-        //     style: {
-        //         image: '/src/assets/imgs/chart/pie-icon.png', // Ensure the image path is correct
-        //         width: 20,
-        //         height: 20,
-        //     },
-        //     left: 'center',
-        //     top: 'center',
-        // },
       ]
     }
   };

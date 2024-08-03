@@ -81,7 +81,7 @@ const colors = ['#f5bd41', '#4090d8', '#75fb8c', '#eb4650']
                     <div class="risk-title text-xl mt-[-5px] font-[pengmenzhengdao] hover:cursor-pointer"
                         @click="global.setCurrentModule('隐患')">隐患总数<span class="text-4xl gradient-text">{{
                             hideTotalData.total
-                            }}</span>个
+                        }}</span>个
                     </div>
                     <div class="level flex">
                         <div class="level-item flex items-center mx-1" v-for="(item, index) in riskLevel"

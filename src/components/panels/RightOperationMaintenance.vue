@@ -9,7 +9,7 @@ import Pipe3dLengendChart from "../charts/Pipe3dLengendChart.vue";
 import _ from "lodash";
 
 import { operationMaintenanceData } from '@/assets/chartData/data'
-import {useGlobalStore} from "@/store/index.js";
+import { useGlobalStore } from "@/store/index.js";
 
 const global = useGlobalStore();
 const { inspectionCounts, reportedIssues, completedRectifications, pendingRectifications, maintenanceCounts, maintenanceFrequencies } = operationMaintenanceData
@@ -47,12 +47,12 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
   <div class="pipe-analy">
     <FristLevelTitle title="安全专项检查" class="hover:cursor-pointer" @click="global.setCurrentModule('安全专项检查')" />
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="检查次数"></SecondLevelTitle>
-        <Pipe3dChart class="h-full" :data="inspectionChartData" :total="totalNum" :haveTotal="true" />
+        <Pipe3dChart class="h-60" :data="inspectionChartData" :total="totalNum" :haveTotal="true" />
       </div>
 
-      <div class="8k:w-1/2 4k:w-full h-80">
+      <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle title="上报问题数量"></SecondLevelTitle>
         <Bar3dChart class="h-60" :data="reportedIssues" :colors="['#FF9C11', '#873D0A']" />
       </div>
@@ -65,7 +65,7 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
 
     <FristLevelTitle title="维护维修  次数/频率" class="hover:cursor-pointer" @click="global.setCurrentModule('维护维修')" />
     <div class="flex w-full flex-wrap justify-between">
-      <div class="8k:w-1/2 4k:w-full h-80 flex">
+      <div class="8k:w-1/2 4k:w-full flex">
         <div class="longstrip h-40 flex flex-col items-center pt-2">
           <div class="star w-1 h-2">
           </div>
@@ -78,7 +78,7 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
           </div>
         </div>
         <!-- <Pipe3dChart class="h-full w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" /> -->
-        <Pipe3dLengendChart class="h-full mt-4 w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" />
+        <Pipe3dLengendChart class="h-80 mt-4 w-full" :data="mainChartData" :total="mainTotalNum" :haveTotal="true" />
       </div>
 
       <div class="8k:w-1/2 4k:w-full flex">
@@ -88,7 +88,7 @@ const maintenanceChartData = _.map(maintenanceFrequencies, (m, index) => ({ ...m
             维修频率
           </div>
         </div>
-        <div class="flex w-full h-full flex-wrap">
+        <div class="flex w-full flex-wrap">
           <div class="w-1/3" v-for="(m, index) in maintenanceChartData" :key="index">
             <LiquidChart class="w-full h-20" :liquidData="m" />
           </div>

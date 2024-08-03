@@ -6,7 +6,7 @@ import ThirdLevelTitle from '../common/ThirdLevelTitle.vue'
 import Tab from '../common/Tab.vue'
 import _ from 'lodash'
 import Bar3dChart from '../charts/Bar3dChart.vue';
-import Pipe3dChart from '../charts/Pipe3dChart.vue';
+import Pipe3dChart from '../charts/Pipe3dLengendChart.vue';
 import Tablechart from '../charts/Tablechart.vue';
 import { basicFacilitiesData } from '@/assets/chartData/data'
 import { useGlobalStore } from "@/store/index.js";
@@ -141,7 +141,7 @@ const tableData1 = [
         <div class="w-full flex flex-wrap justify-between">
             <div class="8k:w-[48%] 4k:w-full flex flex-col">
                 <SecondLevelTitle title="类型分析" />
-                <div class="w-full mb-14">
+                <div class="w-full">
                     <Pipe3dChart class="w-full h-60" :data="convergenceRate" />
                 </div>
                 <SecondLevelTitle title="密度分析" />

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="">
         <div ref="target" class="w-full h-full"></div>
     </div>
 </template>
@@ -88,7 +88,7 @@ const renderChart = (fontSize) => {
         textStyle: {
             color: '#ffffff',
         },
-        color: ["#24F3FF", "#24F3FF", "#FDBF47", "#FDBF47"],
+        color: props.colors,
         grid: {
             containLabel: true,
             left: '6%',
