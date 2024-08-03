@@ -31,11 +31,9 @@ const colors = [
   ["#0175c4", "#03163a"],
   ["#01a0c7", "#032748"],
   ["#b99c0b", "#1a232b"],
-  ["#c16b27", "transparent"],
-  ["#c16b27", "transparent"],
-  ["#c16b27", "transparent"],
-  ["#c16b27", "transparent"],
-  ["#FF3939", "transparent"]
+  ["#c16b27", "#2c3e50"],
+  ["#FF3939", "#2c3e50"],
+  ["#FF9900", "#2c3e50"], // 黄色
 ];
 
 watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
@@ -76,7 +74,7 @@ const renderChart = (fontSize = chartFontSize) => {
       }
     };
   });
-  let colorArr = ["#0175c4", "#01a0c7", "#b99c0b", "#c16b27", "#FF3939"];
+  let colorArr = _.map(colors, (c) => c[0]);
   // 图例的样式
 
   let legendRich = {

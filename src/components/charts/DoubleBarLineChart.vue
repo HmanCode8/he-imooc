@@ -6,7 +6,7 @@
 import { onMounted, ref, toRef, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import useRootFontSize from "@/hooks/useRootFontSize";
-import _ from 'lodash';
+import _, { max } from 'lodash';
 
 const props = defineProps({
     title: {
@@ -45,6 +45,7 @@ watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
 });
 
 const renderChart = (fontSize) => {
+    const maxVal = _.get(_.maxBy(chartData.value, v => v.planned), 'planned', 0) * 1.2;  // 最大值
     const option = {
         title: {
             text: props.title,
@@ -98,6 +99,7 @@ const renderChart = (fontSize) => {
             containLabel: true
         },
         xAxis: {
+            max: 'dataMax',
             type: 'category',
             data: chartData.value.map(item => item.name),
             axisLine: {
@@ -113,7 +115,7 @@ const renderChart = (fontSize) => {
             {
                 type: 'value',
                 min: 0,
-                max: 200,
+                max: maxVal,
                 interval: 50,
                 axisLabel: {
                     formatter: '{value}',
