@@ -27,13 +27,13 @@ const props = defineProps({
     }
 });
 
-// const columnData = toRef(props, 'columns')
-// const tableDatas = toRef(props, 'tableData')
+const columnData = toRef(props, 'columns')
+const tableDatas = toRef(props, 'tableData')
 
-// watchEffect(() => {
-//     columnData.value = props.columns
-//     tableDatas.value = props.tableData
-// })
+watchEffect(() => {
+    columnData.value = columnData
+    tableDatas.value = props.tableData
+})
 </script>
 
 <template>
@@ -41,18 +41,18 @@ const props = defineProps({
         <div class="w-full  py-2 bg-[#0C3D73] flex">
             <div v-if="showIndex">序号</div>
             <div class="w-full flex items-center">
-                <div class="flex-1 text-center" v-for="col in props.columns" :key="col.key">{{ col.title }}</div>
+                <div class="flex-1 text-center" v-for="col in columnData" :key="col.key">{{ col.title }}</div>
 
             </div>
         </div>
         <div class="table-container w-full h-full" ref="scrollRef">
-            <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableData" :step="0.2" :hover="true">
+            <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableDatas" :step="0.5" :hover="true">
                 <ul class="w-full ">
-                    <li v-for="(row, rowIndex) in tableData" :key="rowIndex" class="liStyle w-full  flex text-center">
+                    <li v-for="(row, rowIndex) in tableDatas" :key="rowIndex" class="liStyle w-full  flex text-center">
                         <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}
                         </div>
                         <div :class="`flex-1 py-2 flex items-center justify-center ${border ? 'border-[#071b43]' : ''}`"
-                            v-for="col in props.columns" :key="col.key">
+                            v-for="col in columnData" :key="col.key">
                             <span>{{ row[col.key] }}</span>
                         </div>
                     </li>
@@ -60,11 +60,11 @@ const props = defineProps({
             </vue3-seamless-scroll>
             <div v-else class="h-full">
                 <ul class="w-full h-full">
-                    <li v-for="(row, rowIndex) in tableData" :key="rowIndex" class="liStyle w-full  flex text-center">
+                    <li v-for="(row, rowIndex) in tableDatas" :key="rowIndex" class="liStyle w-full  flex text-center">
                         <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}
                         </div>
                         <div :class="`flex-1 py-2 flex items-center justify-center ${border ? 'border-[#071b43]' : ''}`"
-                            v-for="col in props.columns" :key="col.key">
+                            v-for="col in columnData" :key="col.key">
                             <span>{{ row[col.key] }}</span>
                         </div>
                     </li>

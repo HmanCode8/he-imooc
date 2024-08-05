@@ -3,10 +3,17 @@
     <div ref="target" class="w-full h-full" id="sceneGISContainer">
       <div id="infobox" class="bubble"></div>
     </div>
-    <div class="absolute w-60 h-80 top-40 right-1/3 bg-[url('assets/imgs/main/layercontrol.png')] bg-size overflow-auto"
+    <div class="absolute top-40 right-1/3 bg-[url('assets/imgs/main/layercontrol.png')] w-80 h-80 bg-size "
       v-show="threedlayercontrol">
-      <el-tree ref="threedtree" :data="threeDData" :props="defaultProps" show-checkbox @node-click="handleNodeClick"
-        @check-change="handleCheckChange" node-key="id" default-expand-all :default-checked-keys="[2]"></el-tree>
+      <div
+        class="h-14 w-full px-2 border-b-2 border-b-slate-500 flex flex-row justify-between items-center text-2xl font-[YouSheBiaoTiHei]">
+        图层目录
+      </div>
+      <div class="w-full max-h-60 mt-4 overflow-auto">
+        <el-tree ref="threedtree" :data="threeDData" :props="defaultProps" show-checkbox @node-click="handleNodeClick"
+          @check-change="handleCheckChange" node-key="id" default-expand-all
+          :default-checked-keys="defaultCheckedKeys"></el-tree>
+      </div>
     </div>
     <!-- 专题栏 -->
     <div class="top-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] top-0">
@@ -135,7 +142,7 @@ const legendGroup = ref([]);
 const cesiumViewer = ref(null);
 const iconActive = ref(iconList[0].name);
 const threedlayercontrol = ref(false);
-const defaultList = ref([]);
+const defaultCheckedKeys = ref([1, 2]); // 默认(选中)展开的3D图层
 let viewer = ref(null);
 
 const currentItem = computed(() =>
@@ -386,34 +393,24 @@ const addGX = (viewer) => {
     "pipelinePointInstance",
     "pipelineWellGeo"
   ];
-  const gxKeys = Object.keys(gxTypes)
   try {
-    for (let i = 0; i < gxKeys.length; i++) {
-      const element = gxKeys[i];
-      let name = gxTypes[element];
-      threeDData.value[0].children.push({
-        id: i + 2,
-        label: name
-      })
+    const { children } = threeDData.value[0]
+    for (let i = 0; i < children.length; i++) {
       for (let j = 0; j < comps.length; j++) {
         const item = comps[j];
         const tileset = viewer.scene.primitives.add(new SceneGIS.SceneGIS3DTileset({
-          url: `${map3dServer}/3dtile_gx/" + element + "/" + item + "/tileset.json`,
+          url: `${map3dServer}/3dtile_gx/${children[i].key}/${item}/tileset.json`,
         }));
         layers_3d.push({
-          name: name + '-' + item,
+          name: children[i].label + '-' + item,
           obj: tileset
         });
       }
-      setTimeout(() => {
-        threedtree.value.setCheckedNodes(threeDData.value[0].children);
-        threedlayercontrol.value = true;
-      }, 1000);
     }
-
-
   } catch (error) {
     console.error(`Error creating tileset: ${error}`);
+  } finally {
+    threedlayercontrol.value = true;
   }
 };
 
@@ -583,45 +580,47 @@ const setInfoBox = (viewer) => {
   // }
 };
 
-for (let i = 1; i < 40; i++) {
-  defaultList.value.push(i);
-}
 const initCesiumMap = async () => {
-  cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
-  viewer = cesiumViewer.value;
+  return new Promise((resolve, reject) => {
+    cesiumViewer.value = new SceneGISEX.SceneEX("sceneGISContainer").viewer;
+    viewer = cesiumViewer.value;
 
-  //视角初始化
-  viewer.camera.setView({
-    destination: SceneGIS.Cartesian3.fromDegrees(
-      120.17147298986772,
-      33.301942305971394,
-      137.11303375009118
-    ),
-    orientation: {
-      heading: 0.345650960729154,
-      pitch: -0.28325898231466784,
-      roll: 6.283183439173194
-    }
-  });
+    //视角初始化
+    viewer.camera.setView({
+      destination: SceneGIS.Cartesian3.fromDegrees(
+        120.17147298986772,
+        33.301942305971394,
+        137.11303375009118
+      ),
+      orientation: {
+        heading: 0.345650960729154,
+        pitch: -0.28325898231466784,
+        roll: 6.283183439173194
+      }
+    });
 
-  //TAA抗锯齿
-  viewer.scene.postProcessStages.taa.enabled = true;
-  viewer.scene._taaProcessStage._brightDiff = 20;
-  viewer.scene._taaProcessStage._depthDiff = 20;
-  viewer.scene._taaProcessStage.disableCameraStatic = true;
-
-  addOsgb(viewer);
-  addGX(viewer);
-  setHSV(viewer, 1, 1, 1.2);
-  setInfoBox(viewer);
+    //TAA抗锯齿
+    viewer.scene.postProcessStages.taa.enabled = true;
+    viewer.scene._taaProcessStage._brightDiff = 20;
+    viewer.scene._taaProcessStage._depthDiff = 20;
+    viewer.scene._taaProcessStage.disableCameraStatic = true;
+    resolve(viewer);
+  })
 };
+
+const gxKeys = Object.keys(gxTypes)
 
 const threeDData = ref([
   {
     id: 1,
     label: '管线',
-    children: [
-    ],
+    children: _.map(gxKeys, k => {
+      return {
+        id: k + 2,
+        key: k,
+        label: gxTypes[k]
+      }
+    }),
   },
   {
     id: 2,
@@ -635,12 +634,12 @@ const defaultProps = {
 }
 
 const handleCheckChange = (data, checked, indeterminate) => {
-  let currentData = JSON.parse(JSON.stringify(data))
-  if (currentData.label === "倾斜模型") {
+  let { label = '' } = JSON.parse(JSON.stringify(data));
+  if (label === "倾斜模型") {
     qxtileset.show = checked;
   } else {
     layers_3d.forEach(item => {
-      if (currentData.label.indexOf(item.name.split('-')[0]) > -1) {
+      if (label.indexOf(item.name.split('-')[0]) > -1) {
         item.obj.show = checked;
       }
     })
@@ -654,7 +653,7 @@ const handleNodeClick = (data, { checked }) => {
   } else {
     for (let i = 0; i < layers_3d.length; i++) {
       const element = layers_3d[i];
-      if (element.name.indexOf(currentData.label) > -1) {
+      if (element.name.indexOf(label) > -1) {
         viewer.flyTo(element.obj);
         break;
       }
@@ -683,7 +682,7 @@ const change2dBaseMap = mapType => {
   }
 }
 
-watch(mapType, (val) => {
+watch(mapType, async (val) => {
   try {
     if (mapType.value !== "scene") {
       cesiumViewer.value?.destroy();
@@ -700,7 +699,12 @@ watch(mapType, (val) => {
         closePop(map.value);
         map.value.setTarget(null);
       }
-      initCesiumMap();
+      const viewer = await initCesiumMap();
+
+      addOsgb(viewer);
+      addGX(viewer);
+      setHSV(viewer, 1, 1, 1.2);
+      setInfoBox(viewer);
     }
   } catch (error) {
     console.error("Error in mapType watcher:", error);
