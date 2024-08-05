@@ -30,7 +30,7 @@ function createDefaultPopup(element) {
 async function getPopInfo(evt, currentLayerGroup, getEnglishKey = true) {
     const viewResolution = evt.map.getView().getResolution();
     const projection = evt.map.getView().getProjection();
-    let layers = evt.map.getAllLayers();
+    let layers = evt.map.getAllLayers().reverse();
     for (let index in layers) {
         if (layers[index].get("detailLayer") && 0 < layers[index].get("detailLayer").length) {
             const url = "arcgis_WMS" === layers[index].get("layerType") ?

@@ -219,7 +219,7 @@ const setDefaultLayers = moduleName => {
   }
 };
 
-const loadDefaultLayers = (configName, stayLayerGroup = ["base"]) => {
+const loadDefaultLayers = async (configName, stayLayerGroup = ["base"]) => {
   const defaultLoadLayerArr = _.get(layerConfig.defaultLayers, configName, []);
   if (0 === defaultLoadLayerArr.length) {
     return;
@@ -230,9 +230,7 @@ const loadDefaultLayers = (configName, stayLayerGroup = ["base"]) => {
   }
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
-    const defaultLoadLayerList = currentLayerGroup.value.filter(
-      v => defaultLoadLayerArr.includes(v.remark)
-    );
+    const defaultLoadLayerList = defaultLoadLayerArr.map(v=> _.find(currentLayerGroup.value,it=>it.remark===v));
     currentLayerTab.value = _.get(_.find(layers.value,
       v => v.children && v.children.some(
         sub => sub.children && sub.children.some(
@@ -266,7 +264,7 @@ const loadDefaultLayers = (configName, stayLayerGroup = ["base"]) => {
         detailLayer: showDetailLayerStr,
         legendLayer: showLegendLayerStr
       };
-      addLayer(layerParam);
+      await addLayer(layerParam);
     }
   } else {
     currentLayerTab.value = _.get(layers.value, "0.name", "");
@@ -292,7 +290,7 @@ const updateLayer = async layerParam => {
       .getAllLayers()
       .find(v => layerParam.source === v.get("layerName"));
     if (layer && layerParam.layer) {
-      legendGroup.value = legendGroup.value.filter(v => v.source !== layerParam.source || !legendLayerArr.includes(v.layerId));
+      _.remove(legendGroup.value, v => v.source === layerParam.source && legendLayerArr.includes(v.layerId));
       const layerPrefix = "arcgis_WMS" === layer.get("layerType") ? "show:" : "";
       const newLayerStr = layer.getSource().getParams()["LAYERS"].substring(layerPrefix.length)
         .split(",").filter(l => !loadLayerArr.includes(l)).join(",");
@@ -338,7 +336,7 @@ const updateLayer = async layerParam => {
         layer.getSource().getParams()["LAYERS"] = layerPrefix + newLayerStr;
         layer.getSource().changed();
         const newLegend = await getLegend(map.value, layer, layerParam["legendLayer"]);
-        legendGroup.value = legendGroup.value.concat(newLegend);
+        legendGroup.value = _.union(newLegend, legendGroup.value);
       }
     } else {
       addLayer(layerParam);
@@ -357,8 +355,7 @@ const addLayer = async layerValue => {
   map.value && map.value.addLayer(layer);
   if (map.value && layerValue["legendLayer"] && 0 < layerValue["legendLayer"].length) {
     const newLegend = await getLegend(map.value, layer, layerValue["legendLayer"]);
-    legendGroup.value = newLegend.filter(v =>
-      !legendGroup.value.some(l => v.source === l.source && v.layerId === l.layerId)).concat(legendGroup.value);
+    legendGroup.value = _.union(newLegend, legendGroup.value);
   }
 }
 
