@@ -145,7 +145,7 @@ window.layerConfig = {
       },
       {
         name: "监测",
-        remark: "ranqi",
+        remark: "jiance",
         type: "mainClass",
         children: [{
           name: "场站",
@@ -425,7 +425,7 @@ window.layerConfig = {
               type: "layer",
               source: "rq",
               layer: "13,14",
-              detailLayer: "13,14",
+              detailLayer: "",
               legendLayer: "14"
             }, {
               name: "燃气场站",
@@ -479,7 +479,7 @@ window.layerConfig = {
               type: "layer",
               source: "pipe",
               layer: "2,3",
-              detailLayer: "2,3",
+              detailLayer: "",
               legendLayer: "3"
             }, {
               name: "供水场站",
@@ -533,7 +533,7 @@ window.layerConfig = {
               type: "layer",
               source: "ws",
               layer: "4,5",
-              detailLayer: "4,5",
+              detailLayer: "",
               legendLayer: "5"
             }]
           },
@@ -579,7 +579,7 @@ window.layerConfig = {
               type: "layer",
               source: "ys",
               layer: "5,6",
-              detailLayer: "5,6",
+              detailLayer: "",
               legendLayer: "6"
             }]
           },
@@ -717,7 +717,7 @@ window.layerConfig = {
               type: "layer",
               source: "ld",
               layer: "2,3",
-              detailLayer: "2,3",
+              detailLayer: "",
               legendLayer: "3"
             }]
           },
@@ -762,7 +762,7 @@ window.layerConfig = {
               type: "layer",
               source: "deviceRatio",
               layer: "0",
-              detailLayer: "0",
+              detailLayer: "",
               legendLayer: "0"
             }]
           }
@@ -944,7 +944,7 @@ window.layerConfig = {
               source: "thirdProgram",
               layer: "0",
               remark: "dsf",
-              detailLayer: "0",
+              detailLayer: "",
               legendLayer:"0"
             }]
           }
@@ -963,7 +963,7 @@ window.layerConfig = {
               source: "pipe",
               layer: "2,3,6,7,12,13,16,17,20,21,23,24,16,27,30,31,33,34,36,37,39,40,42,43",
               remark: "zh_pipe",
-              detailLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43",
+              detailLayer: "",
               legendLayer: "3,7,10,13,17,21,24,27,31,34,37,40,43"
             }]
           }
@@ -993,7 +993,7 @@ window.layerConfig = {
               type: "layer",
               source: "rq",
               layer: "13,14",
-              detailLayer: "13,14",
+              detailLayer: "",
               legendLayer: "14"
             }]
           },
@@ -1039,12 +1039,14 @@ window.layerConfig = {
               type: "layer",
               source: "ws",
               layer: "4,5",
-              detailLayer: "4,5",
+              detailLayer: "",
               legendLayer: "5"
             },{
-              name: "污水厂"
+              name: "污水厂",
+              remark: "ws_factory"
             },{
-              name: "污水泵站"
+              name: "污水泵站",
+              remark: "ws_pump"
             }]
           },
           {
@@ -1134,60 +1136,60 @@ window.layerConfig = {
     ]
   },
   defaultLayers: {
-    overview: ["jcq", "sfq"],
+    overview: ["sfq"],
     infrastructure: ["rq_pipe"],
-    "project-management": ["xmfb" ,"zh_pipe"],
-    "operation-maintenance":["dsj","dzl","rq_xj"],
-    "running-monitoring":["sb_fgl"],
-    "warning-disposal":["yj_dj","zh_pipe"],
-    "overview-demonstratedArea":["sfq"],
-    "overview-示范区":["sfq"],
-    "overview-建成区":["jcq"],
-    "overview-管线":["zh_pipe"],
-    "overview-场站":["jc_cz"],
-    "overview-设备":["device"],
-    "overview-项目":["program"],
-    "overview-桥梁":["bridge"],
-    "overview-道路":["road"],
-    "overview-路灯":["ld_point","ld_line"],
-    "overview-隐患":["jc_yh"],
-    "infrastructure-燃气管线":["rq_pipe"],
-    "infrastructure-供水管线":["js_pipe"],
-    "infrastructure-排水管线":["ys_pipe"],
-    "infrastructure-燃气管龄":["rq_glfb"],
-    "infrastructure-排水管龄":["ys_glfb"],
-    "infrastructure-燃气管径":["rq_gjfb"],
-    "infrastructure-排水管径":["ys_gjfb"],
-    "infrastructure-燃气管材":["rq_gcfb"],
-    "infrastructure-排水管材":["ys_gcfb"],
-    "infrastructure-场站分析":["rq_cz"],
-    "infrastructure-道路分析":["road"],
-    "infrastructure-桥梁分析":["bridge"],
+    "project-management": ["zh_pipe", "xmfb"],
+    "operation-maintenance": ["dsj", "dzl", "rq_xj"],
+    "running-monitoring": ["sb_fgl"],
+    "warning-disposal": ["zh_pipe", "yj_dj"],
+    "overview-demonstratedArea": ["sfq"],
+    "overview-示范区": ["sfq"],
+    "overview-建成区": ["jcq"],
+    "overview-管线": ["zh_pipe"],
+    "overview-场站": ["jc_cz"],
+    "overview-设备": ["device"],
+    "overview-项目": ["program"],
+    "overview-桥梁": ["bridge"],
+    "overview-道路": ["road"],
+    "overview-路灯": ["ld_point", "ld_line"],
+    "overview-隐患": ["jc_yh"],
+    "infrastructure-燃气管线": ["rq_pipe"],
+    "infrastructure-供水管线": ["js_pipe"],
+    "infrastructure-排水管线": ["ys_pipe"],
+    "infrastructure-燃气管龄": ["rq_glfb"],
+    "infrastructure-排水管龄": ["ys_glfb"],
+    "infrastructure-燃气管径": ["rq_gjfb"],
+    "infrastructure-排水管径": ["ys_gjfb"],
+    "infrastructure-燃气管材": ["rq_gcfb"],
+    "infrastructure-排水管材": ["ys_gcfb"],
+    "infrastructure-场站分析": ["rq_cz"],
+    "infrastructure-道路分析": ["road"],
+    "infrastructure-桥梁分析": ["bridge"],
     "project-management-第三方施工项目": ["dsf"],
-    "operation-maintenance-巡检巡查":["rq_xj"],
-    "operation-maintenance-巡检及时率":["rq_xj_jsl"],
-    "operation-maintenance-巡检完成率":["rq_xj_wcl"],
-    "operation-maintenance-设施管养":["rq_gy"],
-    "operation-maintenance-管养及时率":["rq_gy_jsl"],
-    "operation-maintenance-管养完成率":["rq_gy_wcl"],
-    "operation-maintenance-安全专项检查":["rq_jc"],
-    "operation-maintenance-维护维修":["rq_wx"],
-    "running-monitoring-燃气":["rq_pipe","rq_sb"],
-    "running-monitoring-供水":["gs_pipe","gs_sb"],
-    "running-monitoring-雨水":["ys_pipe","ys_sb"],
-    "running-monitoring-污水":["ws_pipe","ws_sb"],
-    "running-monitoring-道路":["dl","dl_sb"],
-    "running-monitoring-桥梁":["ql","ql_sb"],
-    "running-monitoring-路灯":["ld_pipe","ld_sb"],
-    "running-monitoring-布设分析":["sb_fgl"],
-    "running-monitoring-燃气报警":["rq_bj"],
-    "running-monitoring-供水报警":["gs_bj"],
-    "running-monitoring-排水报警":["ys_bj","ws_bj"],
-    "running-monitoring-道路报警":["dl_bj"],
-    "running-monitoring-桥梁报警":["ql_bj"],
-    "warning-disposal-燃气":["rq_pipe","rq_yj"],
-    "warning-disposal-污水":["ws_pipe","ws_yj"],
-    "warning-disposal-处置阶段分析":["rq_cz"]
+    "operation-maintenance-巡检巡查": ["dsj", "dzl", "rq_xj"],
+    "operation-maintenance-巡检及时率": ["rq_xj_jsl"],
+    "operation-maintenance-巡检完成率": ["rq_xj_wcl"],
+    "operation-maintenance-设施管养": ["dsj", "dzl", "rq_gy"],
+    "operation-maintenance-管养及时率": ["rq_gy_jsl"],
+    "operation-maintenance-管养完成率": ["rq_gy_wcl"],
+    "operation-maintenance-安全专项检查": ["dsj", "dzl", "rq_jc"],
+    "operation-maintenance-维护维修": ["dsj", "dzl", "rq_wx"],
+    "running-monitoring-燃气": ["rq_pipe", "rq_sb"],
+    "running-monitoring-供水": ["gs_pipe", "gs_sb"],
+    "running-monitoring-雨水": ["ys_pipe", "ys_sb"],
+    "running-monitoring-污水": ["ws_pipe", "ws_sb"],
+    "running-monitoring-道路": ["dl", "dl_sb"],
+    "running-monitoring-桥梁": ["ql", "ql_sb"],
+    "running-monitoring-路灯": ["ld_pipe", "ld_sb"],
+    "running-monitoring-布设分析": ["sb_fgl"],
+    "running-monitoring-燃气报警": ["rq_bj"],
+    "running-monitoring-供水报警": ["gs_bj"],
+    "running-monitoring-排水报警": ["ys_bj", "ws_bj"],
+    "running-monitoring-道路报警": ["dl_bj"],
+    "running-monitoring-桥梁报警": ["ql_bj"],
+    "warning-disposal-燃气": ["rq_pipe", "rq_yj"],
+    "warning-disposal-污水": ["ws_pipe", "ws_yj"],
+    "warning-disposal-处置阶段分析": ["rq_cz"]
   },
   detailFields: [],
   getEnglishKey: true,
@@ -1460,3 +1462,4 @@ window.layerConfig = {
     }
   ]
 };
+window.map3dServer = "http://gx128.portal.com:8090"
