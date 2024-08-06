@@ -25,7 +25,7 @@
 
                 </div>
                 <!-- <div v-if="store.componentId === 'warning-disposal'"
-                    class="absolute w-[12%] h-[70%] right-[30%] bottom-[10%]">
+                    class="absolute w-[20%] h-[70%] right-[30%] bottom-[10%]">
                     <Modal />
                 </div> -->
             </div>

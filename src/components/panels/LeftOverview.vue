@@ -28,7 +28,7 @@ const basicOverviewData = ref(basicOverview)
                         </div>
                         <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-size">
                             <div>{{ item.name }} <span class="ml-2">(km²)</span></div>
-                            <div class="px-2">{{ item.value }}</div>
+                            <div class="px-2 text-2xl font-bold text-gradient ">{{ item.value }}</div>
                         </div>
                     </li>
                 </ul>
@@ -175,5 +175,14 @@ const basicOverviewData = ref(basicOverview)
         top: ($i - 1) * 15%;
         width: ($i - 1) * 25%;
     }
+}
+
+.text-gradient {
+    /* 背景渐变 */
+    background: linear-gradient(180deg, #b5f4ff 32.81%, #b5f4ff 34.38%, #dffaff 64.58%);
+    /* 元素背景延伸到文本 */
+    -webkit-background-clip: text;
+    /* 文本字符填充颜色透明 */
+    -webkit-text-fill-color: transparent;
 }
 </style>

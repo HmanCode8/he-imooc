@@ -25,6 +25,62 @@ const visible = toRef(props.visible);
 const tabs = toRef(props.tabs);
 const currentTab = ref(props.tabs[0].name);
 
+const arr = [
+    {
+        name: '预警编号',
+        value: 12213331
+    },
+    {
+        name: '预警类型',
+        value: '违法行为'
+    },
+
+    {
+        name: '预警级别',
+        value: '高危'
+    },
+
+    {
+        name: '预警时间',
+        value: '2021-08-12 12:00:00'
+    },
+
+    {
+        name: '预警内容',
+        value: 'xxxxx'
+    },
+
+    {
+        name: '预警状态',
+        value: '已处理'
+    },
+
+    {
+        name: '处理结果',
+        value: 'xxxxx'
+    },
+
+    {
+        name: '处理时间',
+        value: '2021-08-12 12:00:00'
+    },
+
+    {
+        name: '处理人',
+        value: 'xxxxx'
+    },
+
+    {
+        name: '处理部门',
+        value: 'xxxxx'
+    },
+
+    {
+        name: '处理方式',
+        value: 'xxxxx'
+    },
+]
+
 const data = ref([
     {
         name: '事件签收',
@@ -69,29 +125,19 @@ const onchangeTab = (name) => {
                 </div>
             </div>
             <div class="tab-container">
-                <div ref="tab1Ref" v-show="currentTab === 'tab1'" class="tab1">
-                    <ul class="w-full h-full">
-                        <li class="flex justify-between items-center p-2">
-                            <div>预警编号： xxxxxxx</div>
+                <div ref="tab1Ref" v-show="currentTab === 'tab1'" class="tab1 w-full">
+                    <ul class="w-full h-full p-10">
+                        <li v-for="i in arr" :key="i.value" class="w-full flex justify-between items-center p-2">
+                            <div>{{ i.name }}{{ i.value }}</div>
                         </li>
-                        <li class="flex justify-between items-center p-2">
-                            <div>预警编号： xxxxxxx</div>
-                        </li>
-                        <li class="flex justify-between items-center p-2">
-                            <div>预警编号： xxxxxxx</div>
-                        </li>
-                        <li class="flex justify-between items-center p-2">
-                            <div>预警编号： xxxxxxx</div>
-                        </li>
+
                     </ul>
                 </div>
-                <div ref="tab2Ref" v-show="currentTab === 'tab2'" class="tab1">
+                <div ref="tab2Ref" v-show="currentTab === 'tab2'" class="tab2 w-full">
                     <ul class="w-full h-full">
-
-
                         <li v-for="item in data" :key="item.name"
                             class="flex py-4 w-full justify-between items-center px-2">
-                            <div class="relative w-1/2 text-right px-10">
+                            <div class="relative  w-1/2 text-right px-10">
                                 <div class="text-md w-full font-bold">{{ item.date }}</div>
                                 <div class="text-[#d9a13c] font-bold">{{ item.time }}</div>
                                 <div

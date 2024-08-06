@@ -71,7 +71,7 @@ const getPastDate = daysAgo => {
 
       <div class="8k:w-1/2 4k:w-full">
         <SecondLevelTitle class="w-full" title="区域在建" />
-        <BarRowChart class=" w-full h-60" :data="areaConstruction" :baseSum="true" />
+        <BarRowChart class=" w-full h-60" :data="areaConstruction.sort((a, b) => a.value - b.value)" :baseSum="true" />
       </div>
     </div>
 
