@@ -1,5 +1,8 @@
 <script setup>
 import { ref, defineProps, toRef } from 'vue';
+import img1 from '@/assets/imgs/dataimgs/img1.png';
+import img2 from '@/assets/imgs/dataimgs/img2.png';
+import img3 from '@/assets/imgs/dataimgs/img3.png';
 
 const props = defineProps({
     visible: {
@@ -10,95 +13,93 @@ const props = defineProps({
         type: Array,
         default: () => [
             {
-                label: '基本信息',
+                label: '详情',
                 name: 'tab1'
             },
             {
-                label: '流程跟踪',
+                label: '处置',
                 name: 'tab2'
             }
         ]
     }
 });
+const emit = defineEmits(["update:closePop"]);
 
 const visible = toRef(props.visible);
 const tabs = toRef(props.tabs);
 const currentTab = ref(props.tabs[0].name);
 
+const dict = {
+    success: '已办结',
+    pedding: '已处置',
+    sign: '已签收'
+}
+
 const arr = [
     {
-        name: '预警编号',
-        value: 12213331
+        name: '预警类型',
+        value: '排水破裂'
     },
     {
-        name: '预警类型',
-        value: '违法行为'
+        name: '预警等级',
+        value: '二级'
     },
 
     {
-        name: '预警级别',
-        value: '高危'
+        name: '处置阶段',
+        value: '已办结'
+    },
+
+    {
+        name: '预警地址',
+        value: '戴庄路'
+    },
+
+    {
+        name: '行政区划',
+        value: '亭湖区'
+    },
+
+    {
+        name: '预警说明',
+        value: '污水输送管操守破坏造成排水不畅'
     },
 
     {
         name: '预警时间',
-        value: '2021-08-12 12:00:00'
+        value: '2024-05-12 12:00:00'
     },
 
     {
-        name: '预警内容',
-        value: 'xxxxx'
-    },
-
-    {
-        name: '预警状态',
-        value: '已处理'
-    },
-
-    {
-        name: '处理结果',
-        value: 'xxxxx'
-    },
-
-    {
-        name: '处理时间',
-        value: '2021-08-12 12:00:00'
-    },
-
-    {
-        name: '处理人',
-        value: 'xxxxx'
-    },
-
-    {
-        name: '处理部门',
-        value: 'xxxxx'
-    },
-
-    {
-        name: '处理方式',
-        value: 'xxxxx'
+        name: '预警编号',
+        value: 'yjbh2024805001'
     },
 ]
 
 const data = ref([
     {
-        name: '事件签收',
-        date: '2024-05-12',
-        time: '12:00:00',
-        unit: '盐城市XXXX有限公司'
+        desc: '张花花：确认排水管道已修复',
+        status: 'success',
+        date: '2024-07-11',
+        time: '18:00:55',
+        unit: '盐城供排水管理处',
+        src: img1,
     },
     {
-        name: '事件处置',
-        date: '2024-05-12',
-        time: '12:00:00',
-        unit: '盐城市XXXX有限公司'
+        desc: '吴起：应急抢修队已至现场排查并组织维修破裂排水管道',
+        status: 'pedding',
+        date: '2024-07-11',
+        time: '15:12:54',
+        unit: '盐城供自来水有限公司',
+        src: img2,
     },
     {
-        name: '事件办结',
-        date: '2024-05-12',
-        time: '12:00:00',
-        unit: '盐城市XXXX有限公司'
+        desc: '张鑫：签收【污水输送管遭受破坏造成排水不畅】问题',
+        status: 'sign',
+        date: '2024-07-10',
+        time: '17:14:55',
+        unit: '盐城供自来水有限公司',
+        src: img3,
     },
 ])
 
@@ -106,50 +107,67 @@ const onchangeTab = (name) => {
     console.log(name);
     currentTab.value = name
 }
+const closePop = () => {
+    emit('update:closePop');
+}
 </script>
 
 <template>
     <div class="w-full h-full">
-        <div class="bg-[url('assets/imgs/main/modal-bg.png')] w-full h-full bg-size p-2">
+        <div class="bg-[#011235] w-full h-full bg-size p-2">
             <div class="flex justify-between items-center">
-                <div class="pl-3 w-full bg-size">事件处理详情</div>
-                <div @click="visible = false" class="close-btn"><i class="iconfont icon-close"></i></div>
-            </div>
-            <div :class="`w-full bg-tabs-${currentTab} bg-size mt-4 p-2 h-16 flex justify-around items-center`">
-                <div @click="onchangeTab(tab.name)" v-for="tab in tabs" :key="tab.name"
-                    :class="`w-1/2 flex justify-center items-center  h-full relative hover:cursor-pointer ${currentTab === tab.name ? 'font-bold text-md gradient-text' : ''}`">
-                    <div> {{ tab.label }}</div>
-                    <div v-show="currentTab === tab.name"
-                        class="w-1/3 absolute bottom-0 h-4 bg-[url('assets/imgs/main/modal-active.png')] bg-size">
-                    </div>
+                <div class=" w-full px-12 flex items-center h-12 bg-size bg-[url('assets/imgs/main/modal-tabs-l.png')]">
+                    事件处理详情</div>
+                <div @click="visible = false" class="close-btn"><i class="iconfont icon-close" @click="closePop"></i>
                 </div>
             </div>
-            <div class="tab-container">
+            <div :class="`w-full flex  py-2 px-5`">
+                <div @click="onchangeTab(tab.name)" v-for="tab in tabs" :key="tab.name"
+                    :class="`flex justify-center items-center px-2 h-full relative hover:cursor-pointer ${currentTab === tab.name ? 'font-bold text-md gradient-text border-b border-[#46b4ee]' : ''}`">
+                    <div> {{ tab.label }}</div>
+                    <!-- <div v-show="currentTab === tab.name"
+                        class="w-1/3 absolute bottom-0 h-4 bg-[url('assets/imgs/main/modal-active.png')] bg-size">
+                    </div> -->
+                </div>
+            </div>
+            <div class="tab-container max-h-2160p overflow-y-auto">
                 <div ref="tab1Ref" v-show="currentTab === 'tab1'" class="tab1 w-full">
-                    <ul class="w-full h-full p-10">
-                        <li v-for="i in arr" :key="i.value" class="w-full flex justify-between items-center p-2">
-                            <div>{{ i.name }}{{ i.value }}</div>
+                    <ul class="w-full h-full  mt-5 px-5">
+                        <li v-for="i in arr" :key="i.value" class="w-full flex  items-center py-2">
+                            <div>{{ i.name }}</div>
+                            <div class="px-5 text-right">{{ i.value }}</div>
                         </li>
-
                     </ul>
                 </div>
                 <div ref="tab2Ref" v-show="currentTab === 'tab2'" class="tab2 w-full">
-                    <ul class="w-full h-full">
-                        <li v-for="item in data" :key="item.name"
-                            class="flex py-4 w-full justify-between items-center px-2">
-                            <div class="relative  w-1/2 text-right px-10">
-                                <div class="text-md w-full font-bold">{{ item.date }}</div>
-                                <div class="text-[#d9a13c] font-bold">{{ item.time }}</div>
-                                <div
-                                    class="w-6 h-20 bg-[url('assets/imgs/main/modal-time.png')] absolute top-0 right-0 bg-size">
+                    <ul class="w-full h-full px-2">
+                        <li class="bg-[#1a2949] my-2 px-2 flex flex-col" v-for="item in data" :key="item.name">
+                            <div class="flex items-center py-2 text-[#3ba8f4]">
+                                <div>{{ item.date }}</div>
+                                <div class="px-4">{{ item.unit }}</div>
+                            </div>
+                            <div class="flex items-center py-2">
+                                <div>{{ item.time }}</div>
+                                <div class="px-4 w-3/4">{{ item.desc }}</div>
+                            </div>
+                            <div class="flex py-3  justify-between ">
+                                <div class="w-16 h-16 ml-20">
+                                    <el-image :teleported="true" :src="item.src" :zoom-rate="1.2" :max-scale="7"
+                                        :min-scale="0.2" :preview-src-list="data.map((item) => item.src)"
+                                        :initial-index="4" fit="cover" teleport="body" />
+
+                                    <!-- <img class="w-full h-full bg-size" :src="item.src" alt=""
+                                        srcset=""> -->
+                                </div>
+                                <div class="flex flex-col justify-end ">
+                                    <div :class="`border px-2 rounded-sm text-${item.status}`">
+                                        {{ dict[item.status]
+                                        }}
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="w-1/2 pl-2">
-                                <div>{{ item.name }}</div>
-                                <div>签收公司：{{ item.unit }}</div>
-                            </div>
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -170,5 +188,20 @@ const onchangeTab = (name) => {
 
 .bg-tabs-tab2 {
     background-image: url('@/assets/imgs/main/modal-tabs-r.png');
+}
+
+.text-success {
+    color: #4b791f;
+    border-color: #4b791f;
+}
+
+.text-pedding {
+    color: #df8e25;
+    border-color: #df8e25;
+}
+
+.text-sign {
+    color: #0b7584;
+    border-color: #0b7584;
 }
 </style>

@@ -25,8 +25,8 @@
 
                 </div>
                 <!-- <div v-if="store.componentId === 'warning-disposal'"
-                    class="absolute w-[20%] h-[70%] right-[30%] bottom-[10%]">
-                    <Modal />
+                    class="absolute 4k:w-[18%] 8k:w-[12%] h-[70%] right-[30%] bottom-[10%]">
+                    <imageView />
                 </div> -->
             </div>
         </div>
@@ -41,7 +41,7 @@ import Header from '@/components/Header.vue'
 import MapChart from '@/components/MapChart.vue'
 
 // common组件
-// import Modal from '@/components/common/Modal.vue'
+import imageView from '@/components/common/imageView.vue'
 // 左侧栏组件
 import LeftPipeAnaly from '@/components/panels/LeftPipeAnaly.vue'
 import LeftOverview from '@/components/panels/LeftOverview.vue'

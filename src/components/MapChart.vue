@@ -88,7 +88,8 @@
 
     <!-- 地图弹出框 -->
     <div ref="popupCom">
-      <MapPopup :popupObject="popupObject" @update:closePop="closePop(map)" />
+      <warningLevelModal v-if="global.componentId === 'warning-disposal'" @update:closePop="closePop(map)" />
+      <MapPopup v-else :popupObject="popupObject" @update:closePop="closePop(map)" />
     </div>
 
     <!-- 图例 -->
@@ -114,6 +115,7 @@ import _ from "lodash";
 import MapLegend from "@/components/MapLegend.vue";
 import MapToggle from "@/components/MapToggle.vue";
 import MapPopup from "@/components/MapPopup.vue";
+import warningLevelModal from '@/components/common/Modal.vue'
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4";
 
@@ -180,7 +182,7 @@ const initOpenLayersMap = () => {
     createLayer(getLayerSource(v), "base")
   );
 
-  const infoOverlay = createDefaultPopup(popupCom.value);
+  const infoOverlay = createDefaultPopup(popupCom.value, '');
 
   const p = new Map({
     target: target.value,
@@ -230,7 +232,7 @@ const loadDefaultLayers = async (configName, stayLayerGroup = ["base"]) => {
   }
   if (0 < defaultLoadLayerArr.length) {
     const firstDefaultLayer = defaultLoadLayerArr[0];
-    const defaultLoadLayerList = defaultLoadLayerArr.map(v=> _.find(currentLayerGroup.value,it=>it.remark===v));
+    const defaultLoadLayerList = defaultLoadLayerArr.map(v => _.find(currentLayerGroup.value, it => it.remark === v));
     currentLayerTab.value = _.get(_.find(layers.value,
       v => v.children && v.children.some(
         sub => sub.children && sub.children.some(
