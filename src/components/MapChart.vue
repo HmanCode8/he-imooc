@@ -1,6 +1,6 @@
 <template>
   <div class="map relative">
-    <div ref="target" class="w-full h-full" id="sceneGISContainer">
+    <div ref="target" class="w-full h-[99.9999%]" id="sceneGISContainer">
       <div id="infobox" class="bubble"></div>
     </div>
     <div class="absolute top-40 right-1/3 bg-[url('assets/imgs/main/layercontrol.png')] w-80 h-80 bg-size "
