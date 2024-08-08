@@ -25,8 +25,8 @@ const onMouse = (type) => {
     const item2 = document.querySelector('.wrap-item-1')
     const width1 = item1.offsetWidth
     const width2 = item2.offsetWidth
-    item1.style.right = `${type === 'enter' ? width1 * 2 : 10}px`
-    item2.style.right = `${type === 'enter' ? width2 : 5}px`
+    item1.style.right = `${type === 'enter' ? width1 * 2 : 30}px`
+    item2.style.right = `${type === 'enter' ? width2 : 15}px`
 }
 
 /**
@@ -43,12 +43,15 @@ onMounted(() => {
 
 <template>
     <div class="">
-        <div class="map-type relative 4k:w-20 4k:h-16  8k:w-32 8k:h-20 flex" @mouseenter="onMouse('enter')"
+        <div class="map-type relative bg-1 4k:w-24 4k:h-16  8k:w-36 8k:h-20 flex" @mouseenter="onMouse('enter')"
             @mouseleave="onMouse('leave')" @click="onMapTypeClick">
-            <div :class="`wrap-item-${index} absolute duration-300 ease-in-out  rounded-sm 4k:w-20 4k:h-16 8k:w-32 8k:h-20 ${modelValue === type.value ? 'active' : ''}`"
+            <div :class="`wrap-item-${index} group absolute duration-300 ease-in-out px-1 rounded-sm 4k:w-24 4k:h-16 8k:w-36 8k:h-20 ${modelValue === type.value ? 'active' : ''}`"
                 @click="emits('update:modelValue', type.value)" v-for="(type, index) in mapTypes" :key="type.value">
-                <div :class="`map-type-item-${index} rounded-sm w-full h-full bg-size relative hover:cursor-pointer`">
-                    <div class="absolute 4k:bottom-0 8k:bottom-2 right-2">{{ type.name }}</div>
+                <div
+                    :class="`map-type-item-${index} rounded-sm w-full h-full px-1 bg-size relative hover:cursor-pointer`">
+                    <div
+                        :class="`absolute ${modelValue === type.value ? 'bg-[#0089fa]' : ''} group-hover:bg-[#0089fa] text-sm p-1 text-center text-white bottom-0 right-0`">
+                        {{ type.name }}</div>
                 </div>
             </div>
         </div>
@@ -59,15 +62,15 @@ onMounted(() => {
 .wrap-item-0,
 .wrap-item-1,
 .wrap-item-2 {
-    border: 2px solid #124842;
+    // border: 1px solid #0799d5;
 
     &:hover {
-        border-color: #5ae758;
+        // border-color: #5ae758;
     }
 }
 
 .active {
-    border: 3px solid #0799d5;
+    // border: 3px solid #0799d5;
 }
 
 .map-type {
