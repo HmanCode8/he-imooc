@@ -857,7 +857,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
 }
 
 
-::v-deep .test {
+.test {
   width: 29em;
   height: 27em;
   caret-color: transparent; //设置闪烁的光标消失
@@ -898,7 +898,7 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   color: #ffffff;
 }
 
-::v-deep .el-tree-node__label {
+:deep(.el-tree-node__label) {
   font-size: 20px;
 }
 </style>

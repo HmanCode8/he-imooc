@@ -38,11 +38,11 @@ const columns1 = [
     { title: "区域", key: "区域", },
     { title: "底数", key: "底数", },
     // { title: "养护类别", key: "养护类别", },
-    { title: "养护类别(I类)", key: "I类", },
-    { title: "养护类别(II类)", key: "II类", },
-    { title: "养护类别(III类)", key: "III类", },
-    { title: "养护类别(IV类)", key: "IV类", },
-    { title: "养护类别(V类)", key: "V类", }
+    { title: "(I类)", key: "I类", },
+    { title: "(II类)", key: "II类", },
+    { title: "(III类)", key: "III类", },
+    { title: "(IV类)", key: "IV类", },
+    { title: "(V类)", key: "V类", }
 ];
 const tableData1 = [
     { "区域": "市直", "底数": 207, "I类": 2, "II类": 78, "III类": 67, "IV类": 28, "V类": 32 },

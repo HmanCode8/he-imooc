@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, toRef } from 'vue';
+import { ref, toRef } from 'vue';
 import img1 from '@/assets/imgs/dataimgs/img1.png';
 import img2 from '@/assets/imgs/dataimgs/img2.png';
 import img3 from '@/assets/imgs/dataimgs/img3.png';

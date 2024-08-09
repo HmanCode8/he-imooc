@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
   columns: {
@@ -43,7 +43,7 @@ const ths = ref([
           <td v-for="(col, colIndex) in ths" :key="col.key">
             <div v-if="colIndex === 0" :class="`warningtype_${rowIndex + 1} bg-size bg-center h-3 w-15`">{{
               row[col.prop]
-            }}</div>
+              }}</div>
             <div v-else class="">{{ row[col.prop] }}</div>
           </td>
         </tr>
