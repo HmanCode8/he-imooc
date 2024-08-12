@@ -88,7 +88,7 @@
 
     <!-- 地图弹出框 -->
     <div ref="popupCom">
-      <warningLevelModal v-if="global.componentId === 'warning-disposal'" @update:closePop="closePop(map)" />
+      <warningLevelModal v-if="layerConfig.staticPopLayers.includes(popupObject.remark)" @update:closePop="closePop(map)" />
       <MapPopup v-else :popupObject="popupObject" @update:closePop="closePop(map)" />
     </div>
 

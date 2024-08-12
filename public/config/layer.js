@@ -1191,8 +1191,8 @@ window.layerConfig = {
     "warning-disposal-污水": ["ws_pipe", "ws_yj"],
     "warning-disposal-处置阶段分析": ["rq_cz"]
   },
-  detailFields: [],
-  getEnglishKey: true,
+  getEnglishKey: false,
+  staticPopLayers:["ws_yj"],
   layerList: [
     {
       name: "vectorBase",

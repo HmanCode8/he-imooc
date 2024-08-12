@@ -2,17 +2,20 @@
 import "ol/ol.css";
 import Overlay from "ol/Overlay";
 import _ from "lodash";
-import { ImageArcGISRest } from "ol/source";
-import { get as getProjection } from "ol/proj";
-import { getRequestExtent } from "ol/source/Image";
-import { round } from "ol/math";
-import { getHeight, getWidth } from "ol/extent";
-import { DECIMALS } from "ol/source/common";
-import { appendParams } from "ol/uri";
-import { EsriJSON, GeoJSON } from "ol/format";
+import {ImageArcGISRest} from "ol/source";
+import {get as getProjection} from "ol/proj";
+import {getRequestExtent} from "ol/source/Image";
+import {round} from "ol/math";
+import {getHeight, getWidth} from "ol/extent";
+import {DECIMALS} from "ol/source/common";
+import {appendParams} from "ol/uri";
+import {EsriJSON, GeoJSON} from "ol/format";
 
 const esriJsonParser = new EsriJSON();
 const geoJsonParser = new GeoJSON();
+const loadedFieldMapping = {};
+const englishRegExp = new RegExp("[A-Za-z]");
+const exceptFields = ["geom", "shape", "objectid", "_"];
 
 function createDefaultPopup(element, position = "bottom-center") {
   return new Overlay({
@@ -65,34 +68,14 @@ async function getPopInfo(evt, currentLayerGroup, getEnglishKey = true) {
               )
             : geoJsonParser.readFeatures(responseText);
         if (0 < features.length) {
-          const filterFields = _.get(layerConfig, "detailFields", []);
-          const exceptFields = ["geometry", "shape", "objectid", "_"];
-          const englishRegExp = new RegExp("[A-Za-z]");
-          const showProperties = _.mapValues(
-            _.pickBy(
-              features[0].getProperties(),
-              (v, k) =>
-                (getEnglishKey || !englishRegExp.test(k)) &&
-                !exceptFields.some((prefix) =>
-                  _.toLower(k).startsWith(prefix)
-                ) &&
-                (0 === filterFields.length || filterFields.includes(k))
-            ),
-            (v) => (_.isNil(v) || "null" === _.toLower(v) ? "" : v)
-          );
+          const showProperties = await arcgisFieldKeyProcess(layers[index].getSource().getUrl(),
+              layerId, features[0].getProperties(), getEnglishKey);
           if (0 < Object.keys(showProperties).length) {
-            const name =
-              _.get(
-                _.find(
-                  currentLayerGroup,
-                  (v) =>
-                    v.source === layers[index].get("layerName") &&
-                    _.get(v, "detailLayer", "").split(",").includes(layerId)
-                ),
-                "name",
-                ""
-              ) + "详情";
-            return { layerName: name, properties: showProperties };
+            const layerConfig = _.find(currentLayerGroup, (v) => v.source === layers[index].get("layerName") &&
+                _.get(v, "detailLayer", "").split(",").includes(layerId));
+            const name = _.get(layerConfig, "name", "") + "详情";
+            const remark = _.get(layerConfig, "remark", "");
+            return {layerName: name, properties: showProperties, remark: remark};
           }
         }
       }
@@ -152,6 +135,32 @@ function getArcgisIdentifyUrl(layer, mapInstance, queryParam) {
   params["MAPEXTENT"] = extent.join(",");
   params["SR"] = srid;
   return appendParams(layer.getSource().getUrl() + "/identify", params);
+}
+
+async function arcgisFieldKeyProcess(serviceUrl, layerId, properties, getEnglishKey = true) {
+  if (getEnglishKey || Object.keys(properties).some(v => !englishRegExp.test(v))) {
+    return _.mapValues(
+        _.pickBy(properties, (v, k) => (getEnglishKey || !englishRegExp.test(k)) &&
+            !exceptFields.some((prefix) => _.toLower(k).startsWith(prefix))),
+        (v) => (_.isNil(v) || "null" === _.toLower(v) ? "" : v));
+  }
+  const url = `${serviceUrl}/${layerId}?f=json`;
+  let fieldMappings = loadedFieldMapping[url];
+  if(!fieldMappings){
+    const layerDefineJson = await fetch(url).then(res => res.text()).then(text => JSON.parse(text));
+    fieldMappings = {};
+    _.get(layerDefineJson, "fields", [])
+        .filter(v => getEnglishKey || (null != v.alias && '' !== v.alias && !englishRegExp.test(v.alias)))
+        .forEach(v => fieldMappings[v.name] = v.alias);
+    loadedFieldMapping[url] = _.cloneDeep(fieldMappings);
+  }
+  return _.mapValues(
+      _.mapKeys(
+          _.pickBy(properties, (v, k) =>
+              !exceptFields.some((prefix) => _.toLower(k).startsWith(prefix)) && Object.keys(fieldMappings).includes(k)),
+          (v,k) => _.get(fieldMappings, k, k)),
+      (v) => (_.isNil(v) || "null" === _.toLower(v) ? "" : v)
+  );
 }
 
 export { createDefaultPopup, getPopInfo, popElement, closePop };
