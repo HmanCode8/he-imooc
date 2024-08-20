@@ -41,7 +41,7 @@ const tableDatas = toRef(props, 'tableData')
 
             </div>
         </div>
-        <div class="table-container w-full h-full" ref="scrollRef">
+        <div class="table-container w-full 8k:h-full 4k:h-40" ref="scrollRef">
             <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableDatas" :step="0.5" :hover="true">
                 <ul class="w-full ">
                     <li v-for="(row, rowIndex) in tableDatas" :key="rowIndex" class="liStyle w-full  flex text-center">
