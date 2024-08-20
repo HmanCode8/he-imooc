@@ -1463,3 +1463,4 @@ window.layerConfig = {
   ]
 };
 window.map3dServer = "http://gx128.portal.com:8090"
+window.thirdPartySys = ""

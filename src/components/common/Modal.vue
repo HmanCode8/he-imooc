@@ -110,16 +110,18 @@ const onchangeTab = (name) => {
 const closePop = () => {
     emit('update:closePop');
 }
+const goToThirdPartySys = () => {
+  window.open(thirdPartySys, "_blank");
+}
 </script>
 
 <template>
     <div class="w-full h-full">
         <div class="bg-[#011235] w-full h-full bg-size p-2">
-            <div class="flex justify-between items-center">
-                <div class=" w-full px-12 flex items-center h-12 bg-size bg-[url('assets/imgs/main/modal-tabs-l.png')]">
+            <div class="flex justify-between items-center text-lg">
+                <div class=" w-full px-5 flex items-center h-12 bg-size bg-[url('assets/imgs/main/modal-tabs-l.png')]">
                     事件处理详情</div>
-                <div @click="visible = false" class="close-btn"><i class="iconfont icon-close" @click="closePop"></i>
-                </div>
+                <div class="mr-3 text-white cursor-pointer" @click="closePop">✖</div>
             </div>
             <div :class="`w-full flex  py-2 px-5`">
                 <div @click="onchangeTab(tab.name)" v-for="tab in tabs" :key="tab.name"
@@ -132,15 +134,19 @@ const closePop = () => {
             </div>
             <div class="tab-container max-h-2160p overflow-y-auto">
                 <div ref="tab1Ref" v-show="currentTab === 'tab1'" class="tab1 w-full">
-                    <ul class="w-full h-full  mt-5 px-5">
+                    <ul class="w-full h-full max-h-56 overflow-y-auto  mt-5 px-5">
                         <li v-for="i in arr" :key="i.value" class="w-full flex  items-center py-2">
                             <div>{{ i.name }}</div>
                             <div class="px-5 text-right">{{ i.value }}</div>
                         </li>
                     </ul>
+                  <div class="flex flex-row justify-end mt-1 mr-2 text-2xl text-left font-[YouSheBiaoTiHei] ">
+                    <button type="button" @click="goToThirdPartySys"
+                            class="bg-[#03d5ff] px-3 py-1 rounded-lg">去处置</button>
+                  </div>
                 </div>
                 <div ref="tab2Ref" v-show="currentTab === 'tab2'" class="tab2 w-full">
-                    <ul class="w-full h-full px-2">
+                    <ul class="w-full h-full max-h-72 overflow-y-auto px-2">
                         <li class="bg-[#1a2949] my-2 px-2 flex flex-col" v-for="item in data" :key="item.name">
                             <div class="flex items-center py-2 text-[#3ba8f4]">
                                 <div>{{ item.date }}</div>

@@ -94,7 +94,7 @@
 
     <!-- 图例 -->
     <div v-show="'scene' !== mapType && 0 < legendGroup.length"
-      class="absolute right-[28.5%] 4k:bottom-[16%] 8k:bottom-28">
+      class="absolute right-[28.5%] 4k:bottom-[16%] 8k:bottom-44">
       <MapLegend :legendGroup="legendGroup" />
     </div>
 

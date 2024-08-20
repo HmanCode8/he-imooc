@@ -23,10 +23,12 @@ function createDefaultPopup(element, position = "bottom-center") {
     element: element,
     positioning: position,
     offset: [0, 0],
-    autoPan: true,
-    autoPanAnimation: {
-      duration: 250,
-    },
+    autoPan: {
+      animation: {
+        duration: 250
+      },
+      margin: 20
+    }
   });
 }
 
