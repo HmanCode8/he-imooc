@@ -30,18 +30,10 @@ const titletabs2 = ref([
     { name: '排水气场站', value: 'drainage' },
 ])
 
-const stationItem = ref([])
-const columns = ref([])
-const tableData = ref([])
+const stationItem = computed(() => _.get(_.find(stationData, (item) => item.key === activeStation.value), 'data', []))
+const columns = computed(() => active.value === 'natural' ? naturalColumns : liquefiedColumns)
 
-watch(active, (newVal) => {
-    tableData.value = newVal === 'natural' ? naturalTableData : liquefiedTableData
-    columns.value = newVal === 'natural' ? naturalColumns : liquefiedColumns
-}, { immediate: true })
-
-watch(activeStation, (newVal) => {
-    stationItem.value = _.get(_.find(stationData, (item) => item.key === newVal), 'data', [])
-}, { immediate: true })
+const tableData = computed(() => active.value === 'natural' ? naturalTableData : liquefiedTableData)
 const columns1 = [
     { title: "区域", key: "区域", },
     { title: "底数", key: "底数", },

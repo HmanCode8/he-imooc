@@ -30,6 +30,10 @@ const props = defineProps({
 const columnData = toRef(props, 'columns')
 const tableDatas = toRef(props, 'tableData')
 
+watchEffect(() => {
+    columnData.value = columnData
+    tableDatas.value = props.tableData
+})
 </script>
 
 <template>
