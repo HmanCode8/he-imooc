@@ -1,6 +1,7 @@
 <script setup>
 import { ref, toRef, onMounted, onUnmounted } from 'vue';
 
+const weatherUrl = 'https://api.vvhan.com/api/weather?city=盐城'
 const emits = defineEmits(['onChageSizeType']);
 const props = defineProps({
     sizeType: {
@@ -12,6 +13,13 @@ const sizeType = toRef(props.sizeType);
 
 const nowDate = ref(new Date().toLocaleTimeString());
 const timeId = ref(null);
+const weatherInfo = ref({
+    type: '阴',
+    fengxiang: '东南风',
+    fengli: '<3级',
+    low: '23℃',
+    high: '31℃'
+});
 
 // 计算星期
 const week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
@@ -26,6 +34,17 @@ const weekday = week[date.getDay()];
 const onChage = () => {
     emits('onChageSizeType', sizeType.value === 'small' ? 'big' : 'small');
 };
+
+const getWeather = async () => {
+    try {
+        const res = await fetch(weatherUrl);
+        const { data } = await res.json();
+        weatherInfo.value = data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+getWeather()
 
 // 定时刷新当前时间
 onMounted(() => {
@@ -61,18 +80,16 @@ onUnmounted(() => {
         <div class="weather flex font-[Electronic] items-center text-gradient mt-[-10px]">
             <!-- 阴东南风:<3级 温度: 231C-29C -->
             <!-- <img src="assets/imgs/weather.png" alt="weather" class="w-8 h-8 mr-2"> -->
-            <span class=""> 阴</span>
-            <span class=" "> 东南风</span>
+            <span class=""> {{ weatherInfo.type }}</span>
             <span class="mx-2">|</span>
-            <span class="">
-                < 3 级</span>
-                    <span class="mx-2"> 23°C ~ 26°C</span>
+
+            <span class="mx-">{{ weatherInfo.fengxiang }}</span>
+            <!-- <span class="mx-2">|</span> -->
+            <span class="mx-2">{{ weatherInfo.fengli }}</span>
+            <span class="mx-2"> {{ weatherInfo.low }} ~ {{ weatherInfo.high }}</span>
         </div>
 
     </div>
 </template>
 
-<style scoped lang="scss">
-// .title-he {
-//     font-family: 'PangMenZhengDao';
-// }</style>
+<style scoped lang="scss"></style>

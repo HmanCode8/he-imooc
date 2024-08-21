@@ -88,7 +88,8 @@
 
     <!-- 地图弹出框 -->
     <div ref="popupCom">
-      <warningLevelModal v-if="layerConfig.staticPopLayers.includes(popupObject.remark)" @update:closePop="closePop(map)" />
+      <warningLevelModal v-if="layerConfig.staticPopLayers.includes(popupObject.remark)"
+        @update:closePop="closePop(map)" />
       <MapPopup v-else :popupObject="popupObject" @update:closePop="closePop(map)" />
     </div>
 
@@ -99,7 +100,7 @@
     </div>
 
     <!-- 地图切换 -->
-    <div class="absolute right-[28.5%] 4k:bottom-[10%] 8k:bottom-20">
+    <div class="absolute right-[32%] 4k:bottom-[10%] 8k:bottom-20">
       <MapToggle v-model="mapType" class="" />
     </div>
   </div>

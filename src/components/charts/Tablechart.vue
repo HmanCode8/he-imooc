@@ -38,23 +38,10 @@ const tableDatas = toRef(props, 'tableData')
             <div v-if="showIndex">序号</div>
             <div class="w-full flex items-center">
                 <div class="flex-1 text-center" v-for="col in columnData" :key="col.key">{{ col.title }}</div>
-
             </div>
         </div>
         <div class="table-container w-full 8k:h-full 4k:h-40" ref="scrollRef">
-            <vue3-seamless-scroll v-if="scrollable" class="seamless" :list="tableDatas" :step="0.5" :hover="true">
-                <ul class="w-full ">
-                    <li v-for="(row, rowIndex) in tableDatas" :key="rowIndex" class="liStyle w-full  flex text-center">
-                        <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}
-                        </div>
-                        <div :class="`flex-1 py-2 flex items-center justify-center ${border ? 'border-[#071b43]' : ''}`"
-                            v-for="col in columnData" :key="col.key">
-                            <span>{{ row[col.key] }}</span>
-                        </div>
-                    </li>
-                </ul>
-            </vue3-seamless-scroll>
-            <div v-else class="h-full">
+            <div class="h-full overflow-auto">
                 <ul class="w-full h-full">
                     <li v-for="(row, rowIndex) in tableDatas" :key="rowIndex" class="liStyle w-full  flex text-center">
                         <div v-if="showIndex" :class="`px-2 ${border ? 'border-[#071b43]' : ''}`">{{ rowIndex + 1 }}
