@@ -15,11 +15,11 @@ const props = defineProps({
             {
                 label: '详情',
                 name: 'tab1'
-            },
+            }/*,
             {
                 label: '处置',
                 name: 'tab2'
-            }
+            }*/
         ]
     }
 });
@@ -38,16 +38,16 @@ const dict = {
 const arr = [
     {
         name: '预警类型',
-        value: '排水破裂'
+        value: '供水破裂'
     },
     {
         name: '预警等级',
-        value: '二级'
+        value: '一级'
     },
 
     {
         name: '处置阶段',
-        value: '已办结'
+        value: '待处置'
     },
 
     {
@@ -62,17 +62,17 @@ const arr = [
 
     {
         name: '预警说明',
-        value: '污水输送管操守破坏造成排水不畅'
+        value: '施工破坏导致供水管网破坏'
     },
 
     {
         name: '预警时间',
-        value: '2024-05-12 12:00:00'
+        value: '2024-8-21 15:03:00'
     },
 
     {
         name: '预警编号',
-        value: 'yjbh2024805001'
+        value: 'yjbh2024821001'
     },
 ]
 

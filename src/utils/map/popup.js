@@ -32,7 +32,7 @@ function createDefaultPopup(element, position = "bottom-center") {
   });
 }
 
-async function getPopInfo(evt, currentLayerGroup, getEnglishKey = true) {
+async function getPopInfo(evt, currentLayerGroup, getEnglishKey = true, searchPixel = 5) {
   const viewResolution = evt.map.getView().getResolution();
   const projection = evt.map.getView().getProjection();
   let layers = evt.map.getAllLayers().reverse();
@@ -46,6 +46,7 @@ async function getPopInfo(evt, currentLayerGroup, getEnglishKey = true) {
           ? getArcgisIdentifyUrl(layers[index], evt.map, {
               GEOMETRY: evt.coordinate[0] + "," + evt.coordinate[1],
               LAYERS: "visible:" + layers[index].get("detailLayer"),
+              TOLERANCE: searchPixel ? searchPixel : 5
             })
           : layers[index]
               .getSource()
