@@ -69,12 +69,13 @@
         <div ref="leyerRef">
           <div v-for="sub in currentItem" :key="sub.name" class="mb-4">
             <div
-              class="bg-[url('assets/imgs/main/layer-child.png')] w-full px-2 mb-4 py-1 flex items-center h-6 bg-size font-bold">
+              class="bg-[url('assets/imgs/main/layer-child.png')] w-full pl-4 mb-4 py-1 flex items-center h-6 bg-size text-xl font-[800]">
               {{ sub.name }}
             </div>
             <div v-if="sub.children && 0 < sub.children.length" class="ml-4">
               <div v-for="item in sub.children" :key="item.remark" class="pl-2">
-                <div :class="`hover:cursor-pointer ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
+                <div
+                  :class="`hover:cursor-pointer hover:border-b hover:border-[#00faff] ${loadedLayerGroup.includes(item.remark) ? 'text-[#00faff]' : ''}`"
                   @click="updateLayer(item)">{{ item.name }}
                 </div>
               </div>
@@ -818,11 +819,12 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   .layer-shaw {
     // 左上角开始渐变背景，从上到下透明度从0到1，颜色#0a234a, #305fad
     background: linear-gradient(to bottom,
-        rgba(11, 29, 65, 0.6) 40%,
-        rgba(48, 95, 173, 0.6) 60%,
-        rgba(48, 95, 173, 0.6) 80%,
-        rgba(11, 29, 65, 0.6) 100%),
-      transparent;
+        rgba(13, 38, 88, 0.6) 40%,
+        rgba(14, 42, 98, 0.6) 60%,
+        rgba(13, 40, 95, 0.6) 80%,
+        rgba(11, 29, 65, 0.6) 90%,
+        transparent 100%);
+
   }
 }
 
