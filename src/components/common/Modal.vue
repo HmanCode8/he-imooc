@@ -111,7 +111,7 @@ const closePop = () => {
     emit('update:closePop');
 }
 const goToThirdPartySys = () => {
-  window.open(thirdPartySys, "_blank");
+    window.open(thirdPartySys, "_blank");
 }
 </script>
 
@@ -140,10 +140,10 @@ const goToThirdPartySys = () => {
                             <div class="px-5 text-right">{{ i.value }}</div>
                         </li>
                     </ul>
-                  <div class="flex flex-row justify-end mt-1 mr-2 text-2xl text-left font-[YouSheBiaoTiHei] ">
-                    <button type="button" @click="goToThirdPartySys"
+                    <div class="flex flex-row justify-end mt-1 mr-2 text-2xl text-left font-[YouSheBiaoTiHei] ">
+                        <button type="button" @click="goToThirdPartySys"
                             class="bg-[#03d5ff] px-3 py-1 rounded-lg">去处置</button>
-                  </div>
+                    </div>
                 </div>
                 <div ref="tab2Ref" v-show="currentTab === 'tab2'" class="tab2 w-full">
                     <ul class="w-full h-full max-h-72 overflow-y-auto px-2">

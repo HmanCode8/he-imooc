@@ -20,20 +20,25 @@ const basicOverviewData = ref(basicOverview)
         <FristLevelTitle title="综合监控"></FristLevelTitle>
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
         <div class="overview-content flex flex-wrap justify-between">
-            <div class="l 4k:w-full 8k:w-[35%]">
+            <div class="4k:w-full 8k:w-[40%]">
                 <ul class="flex w-full flex-col">
-                    <li class="flex w-full px-2 items-center" v-for="item, index in basicOverviewData" :key="item.name">
+                    <li class="flex w-full px-2 my-2 items-center" v-for="item, index in basicOverviewData"
+                        :key="item.name">
                         <div :class="`base-icon-${index + 1}  bg-size w-20 h-20 hover:cursor-pointer`"
                             @click="global.setCurrentModule(item.name)">
                         </div>
-                        <div class="flex justify-between px-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-size">
-                            <div>{{ item.name }} <span class="ml-2">(km²)</span></div>
-                            <div class="px-2 text-2xl font-bold text-gradient ">{{ item.value }}</div>
+                        <div
+                            class="flex justify-between relative px-2  h-4 w-3/4 bg-[url(assets/imgs/overview/o-bg.png)] bg-size">
+                            <div class=" absolute left-2 top-[-60%]">{{ item.name }} <span class="ml-2">(km²)</span>
+                            </div>
+                            <div class="px-2 text-2xl absolute right-0 top-[-60%] font-bold text-gradient ">{{
+                                item.value }}
+                            </div>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="l 4k:w-full relative 8k:w-[65%]">
+            <div class="4k:w-full relative 8k:w-[60%]">
                 <div class="flex absolute flex-col w-full h-full items-center justify-center">
 
                     <div class="flex h-1/4 items-center justify-center w-full">
@@ -139,10 +144,10 @@ const basicOverviewData = ref(basicOverview)
         <SecondLevelTitle class="mt-4" title="运行维护"></SecondLevelTitle>
         <div class="flex">
             <div
-                class="font-bold w-[15%] h-10 bg-[url(assets/imgs/overview/o-bottom.png)] bg-size text-center text-lg mb-2">
+                class="font-bold w-[15%] h-10 bg-[url(assets/imgs/overview/o-bottom.png)] bg-size text-center text-lg my-10">
                 老旧改造完成率
             </div>
-            <div class="flex w-[85%] justify-between">
+            <div class="flex w-[85%] my-10 justify-between">
                 <ProcessBar :data="oldRenovation" />
             </div>
         </div>

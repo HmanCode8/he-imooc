@@ -48,7 +48,7 @@
     <!-- 图层树-->
     <div class="layer-tabs w-60 h-[80%] flex absolute left-[30%] top-1/2 translate-y-[-50%] z-10"
       v-show="'scene' !== mapType">
-      <div class="h-full w-16 bg-size bg-[url('assets/imgs/main/layer-tabs.png')] z-20">
+      <div class="h-full w-20 bg-size bg-[url('assets/imgs/main/layer-tabs.png')] z-20">
         <div class="img-list flex flex-col items-center h-[80%]">
           <div :class="`layer-item-${layer.remark} bg-size w-2/3 h-[9%] relative hover:cursor-pointer`"
             @click="currentLayerTab = layer.remark" v-for="(layer, index) in layers " :key="layer.name">
@@ -818,9 +818,11 @@ $layers: jichu, gongshui, daolu, ludeng, qiaoliang, wushui, yushui, zonghe, xian
   .layer-shaw {
     // 左上角开始渐变背景，从上到下透明度从0到1，颜色#0a234a, #305fad
     background: linear-gradient(to bottom,
-        rgba(11, 29, 65, 0.6),
-        rgb(7, 32, 50),
-        rgba(57, 142, 203, 0.4));
+        rgba(11, 29, 65, 0.6) 40%,
+        rgba(48, 95, 173, 0.6) 60%,
+        rgba(48, 95, 173, 0.6) 80%,
+        rgba(11, 29, 65, 0.6) 100%),
+      transparent;
   }
 }
 

@@ -34,7 +34,7 @@ const tableDatas = toRef(props, 'tableData')
 
 <template>
     <div class="w-full">
-        <div class="w-full  py-2 bg-[#0C3D73] flex">
+        <div class="w-full py-2 bg-[#0C3D73] text-[#A9D4E6] flex">
             <div v-if="showIndex">序号</div>
             <div class="w-full flex items-center">
                 <div class="flex-1 text-center" v-for="col in columnData" :key="col.key">{{ col.title }}</div>

@@ -94,7 +94,7 @@ const tableData1 = [
                     <div class="w-[23%] flex items-center flex-col justify-center h-1/2"
                         v-for="(item, index) in stationItem" :key="index">
                         <div
-                            class="my-4 flex justify-center h-full w-full bg-[url('assets/imgs/infrastructure/top-icon-1.png')] bg-size mb-2">
+                            :class="`station-${index % 2 === 0 ? 'even' : 'odd'} my-4 flex justify-center h-full w-full  bg-size mb-2`">
                             <div class="flex items-center">
                                 {{ item.name }}
                             </div>
@@ -111,9 +111,9 @@ const tableData1 = [
         <div class="w-full mt-20 flex flex-wrap justify-between">
             <div class="8k:w-[48%] 4k:w-full">
                 <FristLevelTitle title="道路分析" class="hover:cursor-pointer" @click="global.setCurrentModule('道路分析')" />
-                <div class="analy-list w-full flex flex-wrap justify-between">
+                <div class="analy-list mt-2 w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in roadData" :key="index" @click="dataChnage(item.name)"
-                        class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
+                        class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] my-4 hover:cursor-pointer bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
                             <div v-if="dataActive === item.name"
                                 class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-size">
@@ -128,9 +128,9 @@ const tableData1 = [
             </div>
             <div class="8k:w-[48%] 4k:w-full">
                 <FristLevelTitle title="桥梁分析" class="hover:cursor-pointer" @click="global.setCurrentModule('桥梁分析')" />
-                <div class="analy-list w-full flex flex-wrap justify-between">
+                <div class="analy-list mt-2 w-full flex flex-wrap justify-between">
                     <div v-for="(item, index) in bridgeData" :key="index" @click="dataChnage(item.name)"
-                        class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] flex justify-between h-14 px-2 m-2 items-center">
+                        class="bg-[url(assets/imgs/infrastructure/road-item-bg.png)] bg-size w-[45%] my-4 flex justify-between h-14 px-2 m-2 items-center">
                         <div class="flex items-center">
                             <div v-if="dataActive === item.name"
                                 class="w-6 h-6 bg-[url('assets/imgs/infrastructure/road-item-1.png')] bg-size">
@@ -165,4 +165,12 @@ const tableData1 = [
     </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.station-even {
+    background-image: url('@/assets/imgs/infrastructure/top-icon-1.png');
+}
+
+.station-odd {
+    background-image: url('@/assets/imgs/infrastructure/top-icon-2.png');
+}
+</style>

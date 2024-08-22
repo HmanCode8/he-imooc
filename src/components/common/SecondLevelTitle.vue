@@ -15,7 +15,7 @@ const props = defineProps({
 <template>
     <div class="my-4 bg-[url('assets/imgs/main/title-h-two.png')] h-10 bg-size">
         <div class="flex items-center justify-between">
-            <h2 class="title text-white font-bold text-2xl 4k:ml-6 8k:ml-8">{{ title }}</h2>
+            <h2 class="title text-white font-bold text-xl 4k:ml-6 8k:ml-8">{{ title }}</h2>
             <div class="slot-container">
                 <slot name="title-slot"></slot>
             </div>

@@ -29,7 +29,8 @@ const currentComp = ref('项目规模');
       <!-- 第一部分 -->
       <div class="w-full flex justify-between flex-wrap">
         <div class="w-full flex flex-wrap justify-between items-center mb-4">
-          <div class="bg-[url(assets/imgs/project/tray-item-l.png)] bg-size flex 8k:w-1/2 4k:w-full h-40 items-center">
+          <div
+            class="bg-[url(assets/imgs/project/tray-item-l.png)] bg-size flex ] 8k:w-1/2 4k:w-full h-52 leading-10 items-center">
             <div class="w-1/3 text-center">
               <div>{{ overviewData[0].children[0].name }}</div>
               <div>
@@ -37,8 +38,9 @@ const currentComp = ref('项目规模');
                 {{ overviewData[0].children[0].unit }}
               </div>
               <div class="flex justify-center items-center">
-                <div>
-                  {{ overviewData[0].children[1].name }}:&nbsp;{{ overviewData[0].children[1].value }}{{
+                <div class="text-[#A9D4E6]">
+                  {{ overviewData[0].children[1].name }}:&nbsp;{{
+                    overviewData[0].children[1].value }}{{
                     overviewData[0].children[1].unit }}
                 </div>
                 <div class="bg-[url(assets/imgs/project/up-to.png)] bg-size bg-center w-2 h-4 ml-1"></div>
@@ -56,14 +58,15 @@ const currentComp = ref('项目规模');
               <div>
                 <span class="text-2xl font-bold">&nbsp;</span>&nbsp;--&nbsp;个
               </div>
-              <div>
+              <div class="text-[#A9D4E6]">
                 {{ overviewData[0].children[3].name }}:
                 <span>&nbsp;&nbsp;--</span>&nbsp;
               </div>
             </div>
           </div>
 
-          <div class="bg-[url(assets/imgs/project/tray-item-r.png)] bg-size flex 8k:w-1/2 4k:w-full h-40 items-center">
+          <div
+            class="bg-[url(assets/imgs/project/tray-item-r.png)] bg-size flex 8k:w-1/2 4k:w-full h-52 leading-10 items-center">
             <div class="w-1/3 text-center">
               <div>{{ overviewData[1].children[0].name }}</div>
               <div>
@@ -71,10 +74,10 @@ const currentComp = ref('项目规模');
                 {{ overviewData[1].children[0].unit }}
               </div>
               <div class="flex justify-center items-center">
-                <div>
+                <e class="text-[#A9D4E6]">
                   {{ overviewData[1].children[1].name }}:&nbsp;{{ overviewData[1].children[1].value }}{{
                     overviewData[1].children[1].unit }}
-                </div>
+                </e>
                 <div class="bg-[url(assets/imgs/project/up-to.png)] bg-size bg-center w-2 h-4 ml-1"></div>
               </div>
             </div>
@@ -83,15 +86,15 @@ const currentComp = ref('项目规模');
                 <span class="totalStyle text-3xl font-extrabold">{{ overviewData[1].projectNum.value }}</span>
               </div>
               <div class="text-2xl font-bold">{{ overviewData[1].projectNum.name }}</div>
-              <div>{{ overviewData[1].projectNum.unit }}</div>
+              <div>({{ overviewData[1].projectNum.unit }})</div>
             </div>
             <div class="w-1/3 text-center">
               <div>{{ overviewData[1].children[2].name }}</div>
               <div>
-                <span class="itemStyle text-2xl font-extrabold">{{ overviewData[1].children[2].value }}</span>
+                <e class="itemStyle text-2xl font-extrabold">{{ overviewData[1].children[2].value }}</e>
                 {{ overviewData[1].children[2].unit }}
               </div>
-              <div>
+              <div class="text-[#A9D4E6]">
                 {{ overviewData[1].children[3].name }}:&nbsp;{{ overviewData[1].children[3].value }}{{
                   overviewData[1].children[3].unit }}
               </div>

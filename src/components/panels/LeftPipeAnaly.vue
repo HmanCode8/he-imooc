@@ -87,7 +87,7 @@ watch(pipeActive, (val) => {
             <div class="8k:w-1/2 4k:w-full">
                 <ThirdLevelTitle class="w-full hover:cursor-pointer" title="管龄分析"
                     @click="global.setCurrentModule(pipeActive + '管龄')"></ThirdLevelTitle>
-                <BarRowChart class="w-full h-60" :data="currentData.pipeAgeData" />
+                <BarRowChart class="w-full h-60" :data="currentData.pipeAgeData" :barWidth="20" />
             </div>
 
             <!-- 管径分析 -->

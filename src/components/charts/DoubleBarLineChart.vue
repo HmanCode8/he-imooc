@@ -6,7 +6,7 @@
 import { onMounted, ref, toRef, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import useRootFontSize from "@/hooks/useRootFontSize";
-import _, { max } from 'lodash';
+import _, { max, split } from 'lodash';
 
 const props = defineProps({
     title: {
@@ -127,6 +127,9 @@ const renderChart = (fontSize) => {
                         color: '#fff',
                         type: 'dashed'
                     }
+                },
+                splitLine: {
+                    show: false,
                 }
             }
         ],
@@ -134,6 +137,7 @@ const renderChart = (fontSize) => {
             {
                 name: '巡检完成量',
                 type: 'bar',
+                barWidth: '30%',
                 data: chartData.value.map(item => item.completed),
                 label: {
                     show: true, // 显示数值
@@ -157,6 +161,7 @@ const renderChart = (fontSize) => {
             {
                 name: '计划巡检量',
                 type: 'bar',
+                barWidth: '30%',
                 data: chartData.value.map(item => item.planned),
                 label: {
                     formatter: '{c}',

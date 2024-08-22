@@ -21,6 +21,10 @@ const props = defineProps({
     haveTop: {
         type: Boolean,
         default: false
+    },
+    barWidth: {
+        type: Number,
+        default: 50
     }
 })
 
@@ -46,7 +50,7 @@ watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
 const renderChart = (fontSize) => {
     const data = chartData.value
     const isPrecent = _.some(data, item => item.unit === '%')
-    const barWidth = "50%"
+    const barWidth = props.barWidth + '%'
     // 倒叙排序
     let sum = isPrecent ? 100 : data.reduce((acc, cur) => acc + Number(cur.value), 0)
     if (props.baseSum) {
