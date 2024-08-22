@@ -88,7 +88,7 @@ const getPastDate = daysAgo => {
               patrolData[0].value
             }}{{ patrolData[0].unit }}</span>
         </div>
-        <div class="px-2 mx-5 flex items-center bg-[url('assets/imgs/main//title-h-third.png')] bg-size">
+        <div class="px-2 mx-5 flex items-center bg-[url('assets/imgs/main//title-h-third.png')] bg-size ">
           {{ patrolData[1].name }}:
           <span class="text-[#11FFFB] mx-2 text-2xl">{{ patrolData[1].value }}{{ patrolData[1].unit }}</span>
           <i class="w-2 h-4 ml-2 bg-[url('assets/imgs/project/down.png')] bg-size"></i>

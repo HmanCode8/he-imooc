@@ -5,7 +5,7 @@
         <!-- 主体组件 -->
         <div class="main-panel relative">
             <!-- bg-[url('assets/imgs/right-panel.png')] bg-size -->
-            <div class=" bg-center h-[94.5vh] text-white flex overflow-hidden">
+            <div class=" bg-center h-[90vh] text-white flex overflow-hidden">
                 <div ref="leftPanelRef"
                     :class="`bg-[url('assets/imgs/main/panel-left.png')] bg-size hover:backdrop-blur-md 8k:pr-10 4k:pr-6 overflow-auto  absolute  w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                     <!-- 条件渲染的动态组件 -->

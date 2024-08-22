@@ -60,9 +60,9 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="bg-[url('assets/imgs/main/header-bg.webp')] bg-custom-size relative bg-center h-20 mb-1 text-[#e4f9fe] text-center p-2 flex justify-between items-center ">
+        class="bg-[url('assets/imgs/main/header-bg.webp')] bg-custom-size relative bg-center 8k:h-20 4k:h-14 mb-1 text-[#e4f9fe] text-center p-2 flex justify-between items-center ">
         <!-- 日期展示 ：当前时间年月日，星期 天气-->
-        <div class="date flex items-center text-xl text-gradient mt-[-10px]">
+        <div class="date flex items-center 8k:text-xl text-gradient mt-[-10px]">
             <span class="font-bold font-[Electronic] "> {{ nowDate }}</span>
             <span class="mx-3">|</span>
             <!-- 当前日期： -->
@@ -72,12 +72,12 @@ onUnmounted(() => {
             <span class="mx-3">|</span>
             <span class="font-bold font-[Electronic]"> 盐城市</span>
         </div>
-        <h2 class="tracking-widest absolute text-4xl left-1/2 translate-x-[-50%] font-[pengmenzhengdao] text-gradient"
+        <h2 class="tracking-widest absolute 8k:text-4xl 4k:text-2xl left-1/2 translate-x-[-50%] font-[pengmenzhengdao] text-gradient"
             @click="onChage">
             盐城市生命线综合监管平台
         </h2>
         <!-- 天气-->
-        <div class="weather flex font-[Electronic] text-xl items-center text-gradient mt-[-10px]">
+        <div class="weather flex font-[Electronic] 8k:text-xl items-center text-gradient mt-[-10px]">
             <!-- 阴东南风:<3级 温度: 231C-29C -->
             <!-- <img src="assets/imgs/weather.png" alt="weather" class="w-8 h-8 mr-2"> -->
             <span class=""> {{ weatherInfo.type }}</span>
