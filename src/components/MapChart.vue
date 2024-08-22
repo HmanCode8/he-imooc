@@ -100,7 +100,7 @@
     </div>
 
     <!-- 地图切换 -->
-    <div class="absolute right-[32%] 4k:bottom-[10%] 8k:bottom-20">
+    <div class="absolute right-[28.5%] 4k:bottom-[10%] 8k:bottom-20">
       <MapToggle v-model="mapType" class="" />
     </div>
   </div>
@@ -373,7 +373,7 @@ const removeAllLayerExcept = (stayLayerGroup = ["base"]) => {
 }
 
 const queryPopupDetail = async evt => {
-  const popInfo = await getPopInfo(evt, currentLayerGroup.value, layerConfig.getEnglishKey);
+  const popInfo = await getPopInfo(evt, currentLayerGroup.value, layerConfig.getEnglishKey, layerConfig.popupSearchPixel);
   if (0 < Object.keys(popInfo).length) {
     popupObject.value = popInfo;
     popElement(evt);

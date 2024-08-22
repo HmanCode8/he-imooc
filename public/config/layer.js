@@ -1,4 +1,5 @@
 window.layerConfig = {
+  popupSearchPixel: 10,
   customProjections: {
     "EPSG:4490": "+proj=longlat +ellps=GRS80 +no_defs +type=crs +axis=neu",
   },
@@ -486,9 +487,9 @@ window.layerConfig = {
               remark: "gs_cz",
               type: "layer",
               source: "js",
-              layer: "0",
-              detailLayer: "0",
-              legendLayer: "0"
+              layer: "2",
+              detailLayer: "2",
+              legendLayer: "2"
             }]
           },
           {
@@ -499,22 +500,22 @@ window.layerConfig = {
               remark: "gs_sb",
               type: "layer",
               source: "js",
-              layer: "2",
-              detailLayer: "2",
-              legendLayer: "2"
+              layer: "4",
+              detailLayer: "4",
+              legendLayer: "4"
             }]
           },
           {
             name: "报警情况",
             remark: "baojing_qingkuang",
             children: [{
-              name: "设备分布",
+              name: "报警分布",
               remark: "gs_bj",
               type: "layer",
               source: "js",
-              layer: "1",
-              detailLayer: "1",
-              legendLayer: "1"
+              layer: "3",
+              detailLayer: "3",
+              legendLayer: "3"
             }]
           }
         ]
@@ -972,6 +973,33 @@ window.layerConfig = {
     ],
     "warning-disposal": [
       {
+        name: "基础",
+        remark: "jichu",
+        type: "mainClass",
+        children: [
+          {
+            name: "基础",
+            children: [{
+              name: "大数据产业园",
+              type: "layer",
+              source: "sampleArea",
+              layer: "0",
+              remark: "dsj",
+              detailLayer: "",
+              legendLayer: "0"
+            },{
+              name: "戴庄路",
+              type: "layer",
+              source: "sampleRoad",
+              layer: "0",
+              remark: "dzl",
+              detailLayer: "",
+              legendLayer: "0"
+            }]
+          }
+        ]
+      },
+      {
         name: "燃气",
         remark: "ranqi",
         type: "mainClass",
@@ -1023,7 +1051,49 @@ window.layerConfig = {
         name: "供水",
         remark: "gongshui",
         type: "mainClass",
-        children: [],
+        children: [
+          {
+            name: "监测对象",
+            remark: "jiance_duixiang",
+            children: [{
+              name: "管点管线",
+              remark: "gs_pipe",
+              type: "layer",
+              source: "pipe",
+              layer: "2,3",
+              detailLayer: "",
+              legendLayer: "3"
+            },{
+              name: "供水场站",
+              remark: "gs_station",
+              type: "layer",
+              source: "js",
+              layer: "2",
+              detailLayer: "2",
+              legendLayer: "2"
+            }]
+          },
+          {
+            name: "预警事件",
+            children: [{
+              name: "预警等级",
+              remark: "gs_yj",
+              type: "layer",
+              source: "js",
+              layer: "1",
+              detailLayer: "1",
+              legendLayer: "1"
+            },{
+              name: "处置阶段",
+              remark: "gs_cz",
+              type: "layer",
+              source: "js",
+              layer: "0",
+              detailLayer: "0",
+              legendLayer: "0"
+            }]
+          }
+        ]
       },
       {
         name: "污水",
@@ -1141,7 +1211,7 @@ window.layerConfig = {
     "project-management": ["zh_pipe", "xmfb"],
     "operation-maintenance": ["dsj", "dzl", "rq_xj"],
     "running-monitoring": ["sb_fgl"],
-    "warning-disposal": ["zh_pipe", "yj_dj"],
+    "warning-disposal": ["gs_yj", "dzl"],
     "overview-demonstratedArea": ["sfq"],
     "overview-示范区": ["sfq"],
     "overview-建成区": ["jcq"],
@@ -1188,11 +1258,12 @@ window.layerConfig = {
     "running-monitoring-道路报警": ["dl_bj"],
     "running-monitoring-桥梁报警": ["ql_bj"],
     "warning-disposal-燃气": ["rq_pipe", "rq_yj"],
+    "warning-disposal-供水": ["dzl", "dsj", "gs_pipe", "gs_yj"],
     "warning-disposal-污水": ["ws_pipe", "ws_yj"],
     "warning-disposal-处置阶段分析": ["rq_cz"]
   },
   getEnglishKey: false,
-  staticPopLayers:["ws_yj"],
+  staticPopLayers:["gs_yj"],
   layerList: [
     {
       name: "vectorBase",
