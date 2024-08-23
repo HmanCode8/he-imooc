@@ -2,7 +2,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 const { _screen, base_width } = window.global_config;
 const html = document.documentElement;
-if (_screen) {
+if (_screen || localStorage.getItem("_screen")) {
   html.setAttribute("dpr-screen", "true");
 }
 const mediaQueryLists = [
