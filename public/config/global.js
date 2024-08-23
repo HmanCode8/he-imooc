@@ -1,4 +1,4 @@
 window.global_config = {
-  _screen: false,
+  _screen: true,
   base_width: "48px",
 };
