@@ -55,11 +55,15 @@ const renderChart = fontSize => {
   const option = {
     tooltip: {
       trigger: "axis",
-      formatter: function (params) {
-        return params.map(function (param) {
-          return param.name + " : " + param.value + " " + props.data.unit;
-        }).join("<br/>");
+      textStyle: {
+        fontSize,
+        // color: "#fff"
       },
+      // formatter: function (params) {
+      //   return params.map(function (param) {
+      //     return param.name + " : " + param.value + " " + props.data.unit;
+      //   }).join("<br/>");
+      // },
     },
     title: {
       text: `单位：${props.data.unit}`,
@@ -75,7 +79,8 @@ const renderChart = fontSize => {
         color: "#fff",
         fontSize
       },
-      itemHeight: 3
+      itemWidth: 60,
+      itemHeight: 40,
     },
     calculable: true,
     xAxis: [

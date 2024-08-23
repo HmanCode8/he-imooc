@@ -58,6 +58,9 @@ const renderChart = (fontSize) => {
         },
         tooltip: {
             trigger: 'axis',
+            textStyle: {
+                fontSize // 设置 tooltip 字体大小
+            },
             formatter: function (params) {
                 return params.map(function (item) {
                     let unit = '次';  // 默认单位是“次”
@@ -78,14 +81,16 @@ const renderChart = (fontSize) => {
                 color: '#fff',
                 fontSize // 设置图例字体大小
             },
-            top: '3%',
-            right: '30%',
-            itemWidth: 10,
-            bottom: '13%',
+            top: fontSize * 0.1,
+            right: fontSize * 15,
+            itemWidth: fontSize * 1.5,
+            itemHeight: fontSize,
+            itemGap: fontSize * 2,
+            // bottom: fontSize,
             rich: {
                 a: {
-                    color: '#fff',
-                    fontSize: 16,
+                    color: '#f00',
+                    fontSize,
                     lineHeight: 20,
                     align: 'center'
                 }

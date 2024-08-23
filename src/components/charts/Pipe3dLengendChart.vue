@@ -29,6 +29,10 @@ const props = defineProps({
     graphicTitle: {
         type: String,
         default: '总数'
+    },
+    rightScale: {
+        type: Number,
+        default: 5
     }
 });
 
@@ -165,13 +169,13 @@ const renderChart = (fontSize) => {
             legend: {
                 show: true,
                 type: "scroll",
-                right: 50,
-                top: 20,
+                right: fontSize * props.rightScale,
+                top: fontSize * 2,
                 orient: "vertical", // 纵向
                 icon: "rect", // icon 类型
-                itemHeight: 12, // icon高度
-                itemWidth: 12, // icon 宽度
-                itemGap: 8, // 图例间隔
+                itemHeight: fontSize, // icon高度
+                itemWidth: fontSize, // icon 宽度
+                itemGap: fontSize,
                 textStyle: {
                     color: "#fff",
                     fontSize,
@@ -186,6 +190,9 @@ const renderChart = (fontSize) => {
             },
             color: ["#5394f7", "#fdf551", "#79fb75", "#f2a940", "#5394f7", "#fdf551", "#79fb75", "#f2a940", "#ffda49"],
             tooltip: {
+                textStyle: {
+                    fontSize
+                },
                 formatter: params => {
                     if (params.seriesName !== "mouseoutSeries") {
                         return `${params.marker}${params.seriesName}：${pieData[params.seriesIndex].value}${unit}`;

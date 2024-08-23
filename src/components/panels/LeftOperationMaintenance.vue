@@ -27,13 +27,14 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
       <div class="8k:w-[45%] 4k:w-full ">
         <div class="h-60 mb-8">
           <SecondLevelTitle class="w-full" title="巡检次数"></SecondLevelTitle>
-          <Pipe3dLengendChart class="h-full" :data="inspectionChartData" :total="totalNum" :haveTotal="true" />
+          <Pipe3dLengendChart class="h-full" :data="inspectionChartData" :total="totalNum" :haveTotal="true"
+            :rightScale="2" />
         </div>
       </div>
 
       <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="上报问题数量"></SecondLevelTitle>
-        <div class="w-full grid 8k:grid-cols-2 4k:grid-cols-3 gap-2">
+        <div class="w-full grid grid-cols-3 gap-2">
           <div class="pipe-item m-2 flex" v-for="(item, index) in problems" :key="index">
             <div :class="`inspection_${index + 1}  w-20 h-16 bg-size`"></div>
             <div class="ml-4 flex flex-col justify-center items-center">
@@ -77,7 +78,7 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
       <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="发现问题数量"></SecondLevelTitle>
-        <div class="w-full grid 8k:grid-cols-2 4k:grid-cols-3 gap-2">
+        <div class="w-full grid grid-cols-3 gap-2">
           <div class="pipe-item m-2 flex" v-for="(item, index) in findProblems" :key="index">
             <div :class="`inspection_${index + 1}  w-20 h-16 bg-size`"></div>
             <div class="ml-4 flex flex-col justify-center items-center">

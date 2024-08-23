@@ -331,8 +331,9 @@ const renderChart = (fontSize) => {
                         textStyle: {
                             rich: {
                                 iconName: {
-                                    width: 12,
-                                    height: 12,
+                                    width: fontSize,
+                                    height: fontSize,
+                                    // itemGap: fontSize,
                                     backgroundColor: dItem.itemStyle.color
                                 },
                                 percent: {
@@ -340,50 +341,32 @@ const renderChart = (fontSize) => {
                                 },
                                 name: {
                                     fontSize,
-                                    width: 160, // 增加宽度
-                                    padding: [0, 0, 0, 15] // 增加padding
+                                    width: fontSize * 4, // 增加宽度
+                                    padding: [0, 0, 0, fontSize * 0.5] // 增加padding
                                 },
                                 value: {
                                     fontFamily: "PangMenZhengDao",
                                     fontSize,
-                                    width: 140, // 增加宽度
-                                    padding: [0, 0, 0, 35] // 增加padding
+                                    width: fontSize * 4, // 增加宽度
+                                    padding: [0, 0, 0, fontSize * 0.5] // 增加padding
                                 },
                                 percent: {
                                     fontFamily: "PangMenZhengDao",
                                     fontSize,
-                                    padding: [0, 0, 0, 35] // 增加padding
+                                    padding: [0, 0, 0, fontSize] // 增加padding
                                 },
                             }
                         }
                     };
                 }),
-                left: "40%", // 调整位置
-                top: "26%", // 调整位置
-                itemGap: 10, // 调整间距
-                itemWidth: 12,
-                itemHeight: 12,
+                left: fontSize * 14, // 调整位置
+                top: fontSize * 4, // 调整位置
+                itemGap: fontSize * 0.3, // 调整间距
+                itemWidth: fontSize,
+                itemHeight: fontSize,
                 selectedMode: false, // Disable legend selection
                 textStyle: {
                     color: "#fff",
-                    fontSize,
-                    fontFamily: "Source Han Sans CN",
-                    rich: {
-                        name: {
-                            fontSize,
-                            padding: [0, 0, 0, 10]
-                        },
-                        value: {
-                            fontSize,
-                            width: 240,
-                            padding: [0, 0, 0, 30]
-                        },
-                        percent: {
-                            fontSize,
-                            width: 240,
-                            padding: [0, 0, 0, 30]
-                        },
-                    }
                 },
                 formatter: name => {
                     let obj = pieData.find(item => item.name === name);

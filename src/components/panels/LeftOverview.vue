@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { toRef, ref, watch } from 'vue'
 import FristLevelTitle from '../common/FirstLevelTitle.vue'
 import SecondLevelTitle from '../common/SecondLevelTitle.vue'
 import DoubleBarLineChart from '../charts/DoubleBarLineChart.vue'
@@ -13,11 +13,12 @@ const { basicOverview, basicData, combinedData, inspectionDetails, oldRenovation
 const legendData = ['巡检完成量', '计划巡检量', '巡检完成率']
 
 const basicOverviewData = ref(basicOverview)
+
 </script>
 
 <template>
     <div class="overview">
-        <FristLevelTitle title="综合监控"></FristLevelTitle>
+        <FristLevelTitle title="综合监控" />
         <SecondLevelTitle title="基础概况"></SecondLevelTitle>
         <div class="overview-content flex flex-wrap justify-between">
             <div class="4k:w-full 8k:w-[40%]">
@@ -118,7 +119,7 @@ const basicOverviewData = ref(basicOverview)
 
         <SecondLevelTitle title="巡检巡查"></SecondLevelTitle>
 
-        <div class="h-1/3 w-full">
+        <div class="h-80 mb-4 w-full">
             <DoubleBarLineChart title="巡检完成率" :data="combinedData" :legendData="legendData" />
         </div>
 

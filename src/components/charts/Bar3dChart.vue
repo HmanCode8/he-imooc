@@ -62,6 +62,9 @@ const renderChart = (fontSize) => {
         },
         tooltip: {
             trigger: 'axis',
+            textStyle: {
+                fontSize,
+            },
             axisPointer: {
                 type: 'shadow',
             },
@@ -163,7 +166,7 @@ const renderChart = (fontSize) => {
                 stack: "zs",
                 type: "bar",
                 barMaxWidth: 'auto',
-                barWidth: 20,
+                barWidth: fontSize,
                 itemStyle: {
                     color: {
                         x: 0,

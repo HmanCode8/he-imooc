@@ -16,7 +16,7 @@ export default {
         "custom-size": "100% 100%",
       },
       height: {
-        "custom-height": "calc(100vh - 3rem)", // 示例：计算高度
+        "app-height": "calc(100vh - 5rem)", // 示例：计算高度
       },
       screens: {
         "4k": "1080px",

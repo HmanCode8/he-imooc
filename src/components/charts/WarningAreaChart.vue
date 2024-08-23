@@ -48,6 +48,9 @@ const renderChart = fontSize => {
   const option = {
     tooltip: {
       trigger: "axis",
+      textStyle: {
+        fontSize
+      },
       // axisPointer: {
       //   type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
       // },

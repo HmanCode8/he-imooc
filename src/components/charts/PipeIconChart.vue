@@ -112,7 +112,7 @@ const renderChart = (fontSize = chartFontSize) => {
         rich: legendRich
       },
       // itemGap设置各个item之间的间隔，单位px，默认为10，横向布局时为水平间隔，纵向布局时为纵向间隔
-      itemGap: 18,
+      itemGap: fontSize,
 
       formatter: function (name) {
         let str = "";
@@ -133,6 +133,9 @@ const renderChart = (fontSize = chartFontSize) => {
     },
     tooltip: {
       show: true,
+      textStyle: {
+        fontSize,
+      },
       formatter: function (value) {
         let data = value.data;
         return `${data.name} ${data.value} (${data.percent})`;
@@ -159,7 +162,7 @@ const renderChart = (fontSize = chartFontSize) => {
       elements: [
         {
           type: "text",
-          left: "44%",
+          left: fontSize * 14,
           top: "15%",
           style: {
             text: "总数",
@@ -170,7 +173,7 @@ const renderChart = (fontSize = chartFontSize) => {
         },
         {
           type: "text",
-          right: "10%",
+          right: fontSize * 10,
           top: "15%",
           style: {
             text: `${total}${unit}`,
@@ -181,12 +184,12 @@ const renderChart = (fontSize = chartFontSize) => {
         },
         {
           type: "image",
-          left: "44%",
+          left: fontSize * 14,
           top: "20%",
           style: {
             image: bgimage,
-            width: 250,
-            height: 10
+            width: fontSize * 10,
+            height: fontSize
           }
         }
       ]

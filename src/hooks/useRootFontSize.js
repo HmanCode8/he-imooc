@@ -1,11 +1,16 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
+const { _screen, base_width } = window.global_config;
+const html = document.documentElement;
+if (_screen) {
+  html.setAttribute("dpr-screen", "true");
+}
 const mediaQueryLists = [
   window.matchMedia("(min-width: 3840px)"),
   window.matchMedia("(min-width: 9999px)"),
   window.matchMedia("(min-width: 11520px)"),
 ];
-const fontSize = getComputedStyle(document.documentElement).fontSize;
+const fontSize = _screen ? base_width : getComputedStyle(html).fontSize;
 const rootFontSize = ref(parseFloat(fontSize));
 
 onMounted(() => {
@@ -16,9 +21,7 @@ onMounted(() => {
 });
 
 const updateFontSize = () => {
-  rootFontSize.value = parseFloat(
-    getComputedStyle(document.documentElement).fontSize
-  );
+  rootFontSize.value = parseFloat(getComputedStyle(html).fontSize);
 };
 
 const handlers = mediaQueryLists.map((mql) => (event) => {

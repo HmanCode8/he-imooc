@@ -58,6 +58,10 @@ const renderChart = (fontSize) => {
         // backgroundColor: '#fff',
         tooltip: {
             trigger: 'item',
+            textStyle: {
+                fontSize: fontSize,
+                fontFamily: 'FZYaoti',
+            }
         },
         grid: {
             top: 50,

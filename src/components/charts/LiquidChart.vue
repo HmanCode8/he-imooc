@@ -24,12 +24,12 @@ const props = defineProps({
 
 const rootFontSize = useRootFontSize();
 const target = ref(null);
-const data = toRef(props, "liquidData");
+const data = toRef(props.liquidData);
 let mChart = null;
 
 onMounted(() => {
   mChart = echarts.init(target.value);
-  renderChart()
+  renderChart(rootFontSize.value)
 });
 
 onUnmounted(() => {

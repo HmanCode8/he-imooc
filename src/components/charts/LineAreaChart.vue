@@ -114,6 +114,9 @@ const renderChart = (fontSize = 12) => {
         tooltip: {
             show: true,
             trigger: 'axis',
+            textStyle: {
+                fontSize // 设置 tooltip 字体大小
+            },
         },
         series: [
             {

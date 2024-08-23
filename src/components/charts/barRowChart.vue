@@ -50,7 +50,7 @@ watch([chartData, rootFontSize], ([newChartData, newFontSize]) => {
 const renderChart = (fontSize) => {
     const data = chartData.value
     const isPrecent = _.some(data, item => item.unit === '%')
-    const barWidth = props.barWidth + '%'
+    const barWidth = fontSize
     // 倒叙排序
     let sum = isPrecent ? 100 : data.reduce((acc, cur) => acc + Number(cur.value), 0)
     if (props.baseSum) {
@@ -128,6 +128,9 @@ const renderChart = (fontSize) => {
         },
         tooltip: {
             trigger: 'axis',
+            textStyle: {
+                fontSize
+            },
             axisPointer: {
                 type: 'shadow'
             },
