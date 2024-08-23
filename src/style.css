@@ -12,6 +12,21 @@ html {
   font-size: 12px; /* 默认 */
 }
 
+@media (min-width: 3840px) { /* 4k 分辨率 */
+  html {
+    font-size: 16px; /* 调整基准值 */
+  }
+}
+@media (min-width: 9999px) { /* 浏览器预览测试的最大值 */
+  html {
+    font-size: 41px; /* 调整基准值 */
+  }
+}
+@media (min-width: 11520px) { /* 12k 分辨率 */
+  html {
+    font-size: 48px; /* 调整基准值 */
+  }
+}
 /**
  * 设计稿宽度为 11520px，高度为 2160px
  * 设计稿宽度为 12k，高度为 2160px
