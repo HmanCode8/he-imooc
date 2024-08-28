@@ -1,11 +1,11 @@
 <template>
     <div class="w-full h-full bg-[#051439] ">
         <!-- 头部组件 -->
-        <Header @onChageSizeType="(k) => sizeType = k" />
+        <Header class="8k:h-20 4k:h-14" @onChageSizeType="(k) => sizeType = k" />
         <!-- 主体组件 -->
-        <div class="main-panel relative">
+        <div class="main-panel bg relative 8k:h-8k-app-height 4k:h-4k-app-height">
             <!-- bg-[url('assets/imgs/right-panel.png')] bg-size -->
-            <div class=" bg-center h-app-height text-white flex overflow-hidden">
+            <div class=" bg-center h-full text-white flex overflow-hidden">
                 <div ref="leftPanelRef"
                     :class="`bg-[url('assets/imgs/main/panel-left.png')] bg-size hover:backdrop-blur-md 8k:pr-10 4k:pr-6 overflow-auto  absolute  w-[28.57%] z-10 top-0 left-0 h-full flex-1 bg-opacity-90 p-1 flex flex-col`">
                     <!-- 条件渲染的动态组件 -->
@@ -57,14 +57,15 @@ import RightProjectManagement from '@/components/panels/RightProjectManagement.v
 import RightOperationMaintenance from '@/components/panels/RightOperationMaintenance.vue'
 import RightRunningMonitoring from '@/components/panels/RightRunningMonitoring.vue'
 import RightWarningDisposal from '@/components/panels/RightWarningDisposal.vue'
+// import { ElNotification } from 'element-plus'
 
 import { useGlobalStore } from '@/store'  // 引入全局状态管理
+import { onMounted } from 'vue'
 
 const gsap = inject('gsap')
 
 const store = useGlobalStore()
 
-const mapType = ref('')
 
 const sizeType = ref('small')
 
@@ -73,6 +74,18 @@ const currentComponent = ref('')
 const leftPanelRef = ref(null)
 const rightPanelRef = ref(null)
 
+const message = () => {
+    ElNotification({
+        title: '演示助手～',
+        dangerouslyUseHTMLString: true,
+        message: "开启/关闭全屏适配模式（11520）请按 <span class='text-[#051631] text-xl font-bold'>F2</span> (电脑分辨率缩放到25%以下布局)",
+        position: 'top-left',
+        offset: 200,
+    })
+}
+onMounted(() => {
+    message()
+})
 // 组件映射对象
 const currentComponentMap = {
     'infrastructure': [LeftPipeAnaly, RightPipeAnaly], // 基础设施

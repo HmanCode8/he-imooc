@@ -2,8 +2,9 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 const { _screen, base_width } = window.global_config;
 const html = document.documentElement;
-if (_screen || localStorage.getItem("_screen")) {
+if (_screen || JSON.parse(localStorage.getItem("_screen"))) {
   html.setAttribute("dpr-screen", "true");
+  // location.reload();
 }
 const mediaQueryLists = [
   window.matchMedia("(min-width: 3840px)"),

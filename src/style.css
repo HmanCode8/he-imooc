@@ -33,7 +33,7 @@ html {
  */
 html[dpr-screen="true"] {
   width: 11520px; 
-  height: 2160px;
+  height: 100%;
   font-size: 48px;
   margin: 0 auto;
 }

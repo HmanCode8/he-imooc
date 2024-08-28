@@ -74,14 +74,17 @@ const iconList = [
   {
     name: "图层",
     value: "icon-tuceng",
+    activeColor: "#00BAFF",
   },
   {
     name: "清除",
     value: "icon-delete",
+    activeColor: "#FF5722",
   },
   {
     name: "展开",
     value: "icon-zhankai",
+    activeColor: "#FF9800",
   },
 ];
 

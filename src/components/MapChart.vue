@@ -30,7 +30,7 @@
       </div>
     </div>
     <!-- 导航栏 -->
-    <div class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-0 z-10">
+    <div class="bottom-tabs w-full flex items-center justify-center absolute left-1/2 translate-x-[-50%] bottom-1 z-10">
       <div class="flex h-full bg-[url('assets/imgs/main/b-tabs.png')] bg-size">
         <div
           :class="`flex flex-col hover:cursor-pointer items-center px-2 ${currentBottomTab === tab.value ? ' translate-y-[-20px] duration-150' : ''}`"
