@@ -57,7 +57,6 @@ import RightProjectManagement from '@/components/panels/RightProjectManagement.v
 import RightOperationMaintenance from '@/components/panels/RightOperationMaintenance.vue'
 import RightRunningMonitoring from '@/components/panels/RightRunningMonitoring.vue'
 import RightWarningDisposal from '@/components/panels/RightWarningDisposal.vue'
-// import { ElNotification } from 'element-plus'
 
 import { useGlobalStore } from '@/store'  // 引入全局状态管理
 import { onMounted } from 'vue'
@@ -78,8 +77,9 @@ const message = () => {
     ElNotification({
         title: '演示助手～',
         dangerouslyUseHTMLString: true,
-        message: "开启/关闭全屏适配模式（11520）请按 <span class='text-[#051631] text-xl font-bold'>F2</span> (电脑分辨率缩放到25%以下布局)",
+        message: "开启/关闭全屏适配模式（11520）请按 <span class='text-[#051631] text-xl font-bold'>F1</span> (电脑分辨率缩放到50%以下布局)",
         position: 'top-left',
+        // type: 'success',
         offset: 200,
     })
 }

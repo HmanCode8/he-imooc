@@ -52,7 +52,7 @@ const barChartData = disposalReactData.children.sort((a, b) => Number(a.value) -
     <div class="flex w-full flex-wrap justify-between">
       <div class="8k:w-[48%] 4k:w-full">
         <SecondLevelTitle title="处置阶段分析" class="hover:cursor-pointer" @click="global.setCurrentModule('处置阶段分析')" />
-        <Pipe3dChart class="h-full" :data="Pie3DChartData" :total="totalNum" :haveTotal="true" />
+        <Pipe3dChart class="h-60" :data="Pie3DChartData" :total="totalNum" :haveTotal="true" />
       </div>
 
       <div class="8k:w-[48%] 4k:w-full">

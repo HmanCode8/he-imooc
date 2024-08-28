@@ -34,11 +34,11 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
       <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="上报问题数量"></SecondLevelTitle>
-        <div class="w-full grid grid-cols-3 gap-2">
+        <div class="w-full flex  flex-wrap justify-between">
           <div class="pipe-item m-2 flex" v-for="(item, index) in problems" :key="index">
-            <div :class="`inspection_${index + 1}  w-20 h-16 bg-size`"></div>
+            <div :class="`inspection_${index + 1}  w-14 h-14 bg-size`"></div>
             <div class="ml-4 flex flex-col justify-center items-center">
-              <div class="problemType">{{ item.name }}({{ item.unit }})</div>
+              <div class="problemType ">{{ item.name }}({{ item.unit }})</div>
               <div class="problemNumber">{{ item.value }}</div>
             </div>
           </div>
@@ -78,9 +78,9 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
       <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full" title="发现问题数量"></SecondLevelTitle>
-        <div class="w-full grid grid-cols-3 gap-2">
+        <div class="w-full flex flex-wrap justify-between">
           <div class="pipe-item m-2 flex" v-for="(item, index) in findProblems" :key="index">
-            <div :class="`inspection_${index + 1}  w-20 h-16 bg-size`"></div>
+            <div :class="`inspection_${index + 1}  w-14 h-14 bg-size`"></div>
             <div class="ml-4 flex flex-col justify-center items-center">
               <div class="problemType">{{ item.name }}({{ item.unit }})</div>
               <div class="problemNumber">{{ item.value }}</div>
@@ -98,11 +98,20 @@ const freqChartData = _.filter(frequNums, (item) => item.name !== "总数")
 
       <div class="8k:w-[45%] 4k:w-full">
         <SecondLevelTitle class="w-full hover:cursor-pointer" title="管养完成率" @click="global.setCurrentModule('管养完成率')" />
-        <div class="w-full grid grid-cols-4 gap-2">
+        <!-- <div class="w-full grid grid-cols-4 gap-2">
           <div :class="`inspection_success_1 m-2 flex flex-col items-center w-full h-20 bg-size`"
             v-for="(item, index) in custodycompletioRate" :key="index">
             <div class="pipe-point">{{ item.value }}</div>
             <div class="name">{{ item.name }}</div>
+          </div>
+        </div> -->
+        <div class="w-full flex">
+          <div class="chart-container w-full h-60 flex flex-wrap justify-between">
+            <div :class="`inspection_success_1 m-2 flex flex-col items-center w-1/5 h-20 bg-size`"
+              v-for="(item, index) in custodycompletioRate" :key="index">
+              <div class="pipe-point">{{ item.value }}</div>
+              <div class="name">{{ item.name }}</div>
+            </div>
           </div>
         </div>
       </div>

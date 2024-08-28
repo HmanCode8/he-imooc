@@ -35,14 +35,14 @@ const ths = ref([
     <table>
       <thead>
         <tr>
-          <th v-for="(col) in ths" :key="col.id" class="h-9">{{ col.title }}</th>
+          <th v-for="(col) in ths" :key="col.id" class="h-10">{{ col.title }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
           <td v-for="(col, colIndex) in ths" :key="col.key">
-            <div v-if="colIndex === 0" :class="`warningtype_${rowIndex + 1} bg-size h-9 w-7 ml-10`"></div>
-            <div v-else class="">{{ row[col.prop] }}</div>
+            <div v-if="colIndex === 0" :class="`warningtype_${rowIndex + 1} bg-size h-6 w-4 ml-10`"></div>
+            <div v-else class="h-9">{{ row[col.prop] }}</div>
           </td>
         </tr>
       </tbody>

@@ -10,7 +10,7 @@ console.log(
 // 想实现全屏适配，需要在浏览器中按下F11，然后刷新页面，即可开启全屏适配模式。
 window.addEventListener("keydown", function (event) {
   const k = JSON.parse(localStorage.getItem("_screen")) || false;
-  if (event.key === "F2") {
+  if (event.key === "F1") {
     event.preventDefault(); // 阻止默认行为
     localStorage.setItem("_screen", !k);
     window.location.reload(); // 刷新页面

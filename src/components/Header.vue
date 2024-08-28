@@ -62,8 +62,8 @@ onUnmounted(() => {
     <div
         class="bg-[url('assets/imgs/main/header-bg.webp')] bg-custom-size relative bg-center  mb-1 text-[#e4f9fe] text-center p-2 flex justify-between items-center ">
         <!-- 日期展示 ：当前时间年月日，星期 天气-->
-        <div class="date flex items-center 8k:text-xl text-gradient mt-[-10px]">
-            <span class="font-bold font-[Electronic] "> {{ nowDate }}</span>
+        <div class="date flex items-center 8k:text-xl text-gradient mt-[-20px]">
+            <span class="font-bold font-[Electronic] text-xl"> {{ nowDate }}</span>
             <span class="mx-3">|</span>
             <!-- 当前日期： -->
             <span class="font-bold font-[Electronic]"> {{ year }}年{{ month }}月{{ day }}日</span>
